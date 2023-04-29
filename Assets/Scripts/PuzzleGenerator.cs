@@ -45,8 +45,6 @@ public class PuzzleGenerator : MonoBehaviour {
         int totalCount = transform.childCount;
         int width = Mathf.FloorToInt(GetComponent<GridLayoutGroup>().constraintCount);
         int height = Mathf.FloorToInt(totalCount / width);
-        if (totalCount != (width * height))
-            print("your puzzle shape is not a square!!!! idiot moron");
         letterSpaces = new LetterSpace[height, width];
         letters = new char[height, width];
         for (int i = 0; i < height; i++){

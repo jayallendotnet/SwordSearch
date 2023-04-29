@@ -51,10 +51,14 @@ public class LetterSpace : MonoBehaviour{
     }
 
     private void RemoveLetter(){
+        StopDisplayingLetter();
+        wordDisplay.RemoveLetter(this);
+    }
+
+    public void StopDisplayingLetter(){
         selectedSignifier.SetActive(false);
         HideAllDirectionLines();
         text.color = Color.black;
-        wordDisplay.RemoveLetter(this);
     }
 
     private void HideAllDirectionLines(){
