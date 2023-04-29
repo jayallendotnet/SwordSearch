@@ -8,10 +8,11 @@ public class PuzzleGenerator : MonoBehaviour {
 
     //representations of the game board as 2d arrays
     //the first dimension is height, second dimension is width. [0,2] represents the third element of the top row
-    private GameObject[,] letterSpaces;
-    private string[,] letters;
+    private LetterSpace[,] letterSpaces;
+    private char[,] letters;
 
-    private List<string> randomLetterPool = new List<string>{"A", "B", "C", "D", "E", "F", "G", "H"};
+    private List<char> randomLetterPool = new List<char>{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+    public WordDisplay wordDisplay;
 
 
     void Start() {
@@ -34,7 +35,7 @@ public class PuzzleGenerator : MonoBehaviour {
     private void RenderLetters(){    
         for (int i = 0; i < letterSpaces.GetLength(0); i++){
             for (int j = 0; j < letterSpaces.GetLength(1); j++){
-                letterSpaces[i, j].transform.GetChild(0).GetComponent<Text>().text = letters[i,j];
+                letterSpaces[i, j].UpdateLetter(letters[i,j]);
             }
         }
 
@@ -46,16 +47,16 @@ public class PuzzleGenerator : MonoBehaviour {
         int height = Mathf.FloorToInt(totalCount / width);
         if (totalCount != (width * height))
             print("your puzzle shape is not a square!!!! idiot moron");
-        letterSpaces = new GameObject[height, width];
-        letters = new string[height, width];
+        letterSpaces = new LetterSpace[height, width];
+        letters = new char[height, width];
         for (int i = 0; i < height; i++){
             for (int j = 0; j < width; j++){
-                letterSpaces[i, j] = transform.GetChild((i * width) + j).gameObject;
-                letters[i,j] = "";
+                letterSpaces[i, j] = transform.GetChild((i * width) + j).GetComponent<LetterSpace>();
+                letterSpaces[i,j].wordDisplay = wordDisplay;
+                letterSpaces[i,j].position = new Vector2(i,j);
+                letters[i,j] = '-';
             }
         }
 
-
     }
-
 }
