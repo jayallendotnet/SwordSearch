@@ -11,22 +11,56 @@ public class PuzzleGenerator : MonoBehaviour {
     private LetterSpace[,] letterSpaces;
     private char[,] letters;
 
-    private List<char> randomLetterPool = new List<char>{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+    private List<char> randomLetterPool = new List<char>{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}; //update with realistic ratios of letters
     public WordDisplay wordDisplay;
     System.Random rand = new System.Random();
 
     bool useStartingLayout = false;
     private char[,] startingLayout = {{'-', '-', '-', '-', 'A'}, {'O', 'R', '-', 'L', 'V'}, {'W', 'S', 'D', 'S', 'I'}, {'-', 'A', 'R', 'R', 'U'}, {'-', '-', '-', 'P', 'Y'}, {'-', 'L', 'A', 'T', '-'}, {'P', '-', '-', '-', '-'}};
 
+    public int maxAttemptsPerPuzzle = 3;
 
     void Start() {
         GetPuzzleDimensions();
-        GenerateLetters("SWORD");
-        GenerateLetters("PLATYPUS");
-        GenerateLetters("ARRIVAL");
-        GenerateLetters("SPHINCTER");
-        FillRestOfPuzzle();
+        ClearPuzzle();
+        bool succeeded = PickWordsAndAttemptToGenerateSolution();
+        //next: if that fails, then pick new words and attempt again
+        //repeat until a valid puzzle is found
+        //maybe have constraints on the length of words you can select? 1 4-letter, 1 5-letter, 1 6-letter? idk
+        if (succeeded)
+            FillRestOfPuzzle();
         RenderLetters();
+    }
+
+    private bool PickWordsAndAttemptToGenerateSolution(){
+        string[] words = {"sword", "platypus", "geraniums", "sphincter"};
+        return AttemptToGenerateSolution(words);
+    }
+
+    private bool AttemptToGenerateSolution(string[] words){
+        int attemptCount = 0;
+        bool succeeded = true;
+
+        while (attemptCount < maxAttemptsPerPuzzle){
+            foreach (string word in words){
+                bool couldGenerateWord = GenerateLetters(word);
+                if (!couldGenerateWord){
+                    succeeded = false;
+                }
+            }
+            if (succeeded)
+                attemptCount += maxAttemptsPerPuzzle;
+            else
+                ClearPuzzle();
+            attemptCount++;
+        }
+        if (succeeded)
+            print("puzzle generation completed on attempt " + (attemptCount - maxAttemptsPerPuzzle));
+        else
+            print("puzzle generation failed. attempts made: " + attemptCount);
+
+        return succeeded;
+
     }
 
 
@@ -39,9 +73,9 @@ public class PuzzleGenerator : MonoBehaviour {
         }
     }
 
-    private void GenerateLetters(string requiredWord){
+    private bool GenerateLetters(string requiredWord){
 
-        string remainingWord = requiredWord;
+        string remainingWord = requiredWord.ToUpper();;
         Vector2 previousSpace = new Vector2(-1,-1);
         int remainingLength = requiredWord.Length;
         //Vector2 previousSpace = PlaceLetter(requiredWord[0], new Vector2(-1,-1), (requiredWord.Length - 1));
@@ -54,8 +88,9 @@ public class PuzzleGenerator : MonoBehaviour {
             if (remainingLength == -1)
                 cont = false;
             if ((previousSpace[0] == -1) && (previousSpace[1] == -1))
-                cont = false;
+                return false;
         }
+        return true;
 
     }
 
@@ -74,13 +109,13 @@ public class PuzzleGenerator : MonoBehaviour {
 
         //pick one at random
         if (candidates3.Count == 0){
-            print("there is no space to finish the word.");
+            //print("there is no space to finish the word.");
             return new Vector2(-1,-1);
         }
         int temp = rand.Next(candidates3.Count);
         Vector2 selectedSpot = candidates3[temp];
         letters[(int)selectedSpot[0], (int)selectedSpot[1]] = letter;
-        print("placed letter (" + letter + ") in position [" + selectedSpot[0] + "," + selectedSpot[1] + "]");
+        //print("placed letter (" + letter + ") in position [" + selectedSpot[0] + "," + selectedSpot[1] + "]");
         return selectedSpot;
     }
 
@@ -163,8 +198,6 @@ public class PuzzleGenerator : MonoBehaviour {
             }
             if (isValid)
                 candidates4.Add(candidate);
-            else
-                print("cannot place letter at position " + candidate + " because it would separate the region");
             letters[(int)candidate[0], (int)candidate[1]] = '-';
         }
 
@@ -283,9 +316,6 @@ public class PuzzleGenerator : MonoBehaviour {
                 letterSpaces[i, j] = transform.GetChild((i * width) + j).GetComponent<LetterSpace>();
                 letterSpaces[i,j].wordDisplay = wordDisplay;
                 letterSpaces[i,j].position = new Vector2(i,j);
-                letters[i,j] = '-';
-                if (useStartingLayout)
-                    letters[i,j] = startingLayout[i,j];
             }
         }
 
@@ -298,6 +328,16 @@ public class PuzzleGenerator : MonoBehaviour {
                     result += letters[i, j] + " ";
             print(result);
             result = "";
+        }
+    }
+
+    private void ClearPuzzle(){
+        for (int i = 0; i < letters.GetLength(0); i++){
+            for (int j = 0; j < letters.GetLength(1); j++){
+                letters[i,j] = '-';
+                if (useStartingLayout)
+                    letters[i,j] = startingLayout[i,j];
+            }
         }
     }
 }
