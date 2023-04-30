@@ -73,6 +73,8 @@ public class WordDisplay : MonoBehaviour {
     }
 
     public bool CanAddLetter(LetterSpace letterSpace){
+        if (letterSpace.hasBeenUsedInAWordAlready)
+            return false;
         if (letterSpacesForWord.Contains(letterSpace))
             return false;
         if (letterSpacesForWord.Count == 0)
@@ -95,6 +97,7 @@ public class WordDisplay : MonoBehaviour {
             ls.StopDisplayingLetter();
             ls.previousLetterSpace = null;
             ls.nextLetterSpace = null;
+            ls.ShowHasBeenUsedForWord();
         }
         letterSpacesForWord = new List<LetterSpace>();
         SetLastTwoLetterSpaces();

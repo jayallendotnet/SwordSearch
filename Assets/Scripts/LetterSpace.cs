@@ -32,6 +32,9 @@ public class LetterSpace : MonoBehaviour{
 
     public Vector2 position = Vector2.zero;
 
+    [HideInInspector]
+    public bool hasBeenUsedInAWordAlready = false;
+
     public void UpdateLetter(char letter){
         this.letter = letter;
         text.text = "" + letter;
@@ -116,5 +119,13 @@ public class LetterSpace : MonoBehaviour{
         if ((Mathf.Abs(distance[0]) < 2) && (Mathf.Abs(distance[1]) < 2))
             return true;
         return false;
+    }
+
+    public void ShowHasBeenUsedForWord(){
+        if (hasBeenUsedInAWordAlready){
+            text.color = Color.gray;
+        }
+        else
+            text.color = Color.black;
     }
 }

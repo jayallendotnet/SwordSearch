@@ -56,6 +56,8 @@ public class BattleManager : MonoBehaviour {
     public void PressSubmitWordButton(){
         if (IsValidWord()){
             DamageEnemyHealth(calculateDamage());
+            foreach (LetterSpace ls in wordDisplay.letterSpacesForWord)
+                ls.hasBeenUsedInAWordAlready = true;
             wordDisplay.ClearWord();
         }
 

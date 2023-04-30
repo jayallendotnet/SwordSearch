@@ -15,10 +15,17 @@ public class PuzzleGenerator : MonoBehaviour {
     public WordDisplay wordDisplay;
     System.Random rand = new System.Random();
 
+    bool useStartingLayout = false;
+    private char[,] startingLayout = {{'-', '-', '-', '-', 'A'}, {'O', 'R', '-', 'L', 'V'}, {'W', 'S', 'D', 'S', 'I'}, {'-', 'A', 'R', 'R', 'U'}, {'-', '-', '-', 'P', 'Y'}, {'-', 'L', 'A', 'T', '-'}, {'P', '-', '-', '-', '-'}};
+
 
     void Start() {
         GetPuzzleDimensions();
         GenerateLetters("SWORD");
+        GenerateLetters("PLATYPUS");
+        GenerateLetters("ARRIVAL");
+        GenerateLetters("SPHINCTER");
+        FillRestOfPuzzle();
         RenderLetters();
     }
 
@@ -36,22 +43,23 @@ public class PuzzleGenerator : MonoBehaviour {
 
         string remainingWord = requiredWord;
         Vector2 previousSpace = new Vector2(-1,-1);
-        int remainingLength = requiredWord.Length - 1;
+        int remainingLength = requiredWord.Length;
         //Vector2 previousSpace = PlaceLetter(requiredWord[0], new Vector2(-1,-1), (requiredWord.Length - 1));
         bool cont = true;
         while (cont){
-            previousSpace = PlaceLetter(remainingWord[0], previousSpace, (remainingWord.Length - 1));
+            previousSpace = PlaceLetter(remainingWord[0], previousSpace, remainingWord.Length);
             remainingWord = remainingWord.Substring(1);
-            print("remaining word is " + remainingWord);
+            //print("remaining word is " + remainingWord);
             remainingLength = remainingWord.Length - 1;
             if (remainingLength == -1)
                 cont = false;
+            if ((previousSpace[0] == -1) && (previousSpace[1] == -1))
+                cont = false;
         }
 
-        FillRestOfPuzzle();
     }
 
-    private Vector2 PlaceLetter(char letter, Vector2 previousSpace, int remainingLettersAfter){
+    private Vector2 PlaceLetter(char letter, Vector2 previousSpace, int numberOfSpacesRequiredForWordToFit){
 
         //get a list of all possible spaces this letter can go in
         List<Vector2> candidates1 = GetAllPossibleSpacesForLetter(previousSpace);
@@ -60,14 +68,19 @@ public class PuzzleGenerator : MonoBehaviour {
         List<Vector2> candidates2 = RemoveImpossibleSpaces(candidates1);
 
         //remove all candidates that are inside a closed loop, if the loop is too small
-        List<Vector2> candidates3 = RemoveSpacesInsideSmallLoop(candidates2);
+        List<Vector2> candidates3 = RemoveSpacesInsideSmallRegion(candidates2, numberOfSpacesRequiredForWordToFit);
+
+        //print("picking the final spot from " + candidates3.Count + " possible candidates");
 
         //pick one at random
+        if (candidates3.Count == 0){
+            print("there is no space to finish the word.");
+            return new Vector2(-1,-1);
+        }
         int temp = rand.Next(candidates3.Count);
         Vector2 selectedSpot = candidates3[temp];
         letters[(int)selectedSpot[0], (int)selectedSpot[1]] = letter;
         print("placed letter (" + letter + ") in position [" + selectedSpot[0] + "," + selectedSpot[1] + "]");
-        //PrintPuzzle();
         return selectedSpot;
     }
 
@@ -84,14 +97,7 @@ public class PuzzleGenerator : MonoBehaviour {
         }
 
         //this letter is part of a pre-existing word. get all of the previous letter's neighbors        
-        candidates1.Add(previousSpace + Vector2.up);
-        candidates1.Add(previousSpace + Vector2.right + Vector2.up);
-        candidates1.Add(previousSpace + Vector2.right);
-        candidates1.Add(previousSpace + Vector2.right + Vector2.down);
-        candidates1.Add(previousSpace + Vector2.down);
-        candidates1.Add(previousSpace + Vector2.left + Vector2.down);
-        candidates1.Add(previousSpace + Vector2.left);
-        candidates1.Add(previousSpace + Vector2.left + Vector2.up);
+        candidates1 = GetNeighbors(previousSpace);
         
         return candidates1;
     }
@@ -99,7 +105,7 @@ public class PuzzleGenerator : MonoBehaviour {
     private List<Vector2> RemoveImpossibleSpaces(List<Vector2> candidates1){
         List<Vector2> candidates2 = new List<Vector2>();
         foreach (Vector2 candidate in candidates1){
-            if ((candidate[0] > 0) && (candidate[0] < (letterSpaces.GetLength(0) - 1)) && (candidate[1] > 0) && (candidate[1] < (letterSpaces.GetLength(1) - 1))){
+            if ((candidate[0] >= 0) && (candidate[0] < letterSpaces.GetLength(0)) && (candidate[1] >= 0) && (candidate[1] < letterSpaces.GetLength(1))){
                 if (letters[(int)candidate[0], (int)candidate[1]].Equals('-')){
                     candidates2.Add(candidate);
                 }
@@ -108,16 +114,149 @@ public class PuzzleGenerator : MonoBehaviour {
         return candidates2;
     }
 
-    private List<Vector2> RemoveSpacesInsideSmallLoop(List<Vector2> candidates2){
-        return candidates2;
+    private List<Vector2> GetNeighbors(Vector2 position){
+        //returns a list of coordinates adjacent to the provided position. Includes out-of-bounds options
+        List<Vector2> neighbors = new List<Vector2>();
+        neighbors.Add(position + Vector2.up);
+        neighbors.Add(position + Vector2.right + Vector2.up);
+        neighbors.Add(position + Vector2.right);
+        neighbors.Add(position + Vector2.right + Vector2.down);
+        neighbors.Add(position + Vector2.down);
+        neighbors.Add(position + Vector2.left + Vector2.down);
+        neighbors.Add(position + Vector2.left);
+        neighbors.Add(position + Vector2.left + Vector2.up);
+        return neighbors;
+    }
+
+    private List<Vector2> RemoveSpacesInsideSmallRegion(List<Vector2> candidates2, int requiredSizeOfRegion){
+        List<Vector2> candidates3 = new List<Vector2>();
+
+        List<List<Vector2>> regions = GetSeparateRegions(GetListOfAllSpaces());
+        foreach (List<Vector2> region in regions){
+            if (region.Count >= requiredSizeOfRegion){
+                foreach(Vector2 space in region)
+                    foreach (Vector2 candidate in candidates2){
+                        if (candidate == space)
+                            candidates3.Add(space);
+                    }
+            }
+        }
+
+
+        if (requiredSizeOfRegion == 1)
+            return candidates3;
+
+        //check if placing the letter in a spot would create separate regions
+        List<Vector2> candidates4 = new List<Vector2>();
+        foreach (Vector2 candidate in candidates3){
+            letters[(int)candidate[0], (int)candidate[1]] = '#';
+            List<Vector2> regionContainingCandidate = regions[0];
+            foreach (List<Vector2> region in regions){
+                if (region.Contains(candidate))
+                    regionContainingCandidate = region;
+            }
+            List<List<Vector2>> subRegions = GetSeparateRegions(regionContainingCandidate);
+            bool isValid = false;
+            foreach (List<Vector2> subRegion in subRegions){
+                if (subRegion.Count >= requiredSizeOfRegion - 1)
+                    isValid = true;
+            }
+            if (isValid)
+                candidates4.Add(candidate);
+            else
+                print("cannot place letter at position " + candidate + " because it would separate the region");
+            letters[(int)candidate[0], (int)candidate[1]] = '-';
+        }
+
+
+        return candidates4;
+    }
+
+    private List<Vector2> GetListOfAllSpaces(){
+        List<Vector2> allSpaces = new List<Vector2>();
+        for (int i = 0; i < letterSpaces.GetLength(0); i++){
+            for (int j = 0; j < letterSpaces.GetLength(1); j++){
+                //if (letters[i,j].Equals('-'))
+                    allSpaces.Add(new Vector2(i, j));
+            }
+        }
+        return allSpaces;
+    }
+
+
+    private List<List<Vector2>> GetSeparateRegions(List<Vector2> spacesToCheck){
+        //creates a list of separate regions in the puzzle area
+        //each region is bounded by the walls of the puzzle or filled spaces
+
+        //start with a list of all unfilled spaces
+        List<Vector2> allSpaces = new List<Vector2>();
+        foreach (Vector2 s in spacesToCheck){
+            if (letters[(int)s[0],(int)s[1]].Equals('-'))
+                allSpaces.Add(s);
+        }
+
+
+        List<List<Vector2>> regions = new List<List<Vector2>>();
+        if (allSpaces.Count == 0)
+            return regions;
+        List<Vector2> firstRegion = new List<Vector2>();
+        firstRegion.Add(allSpaces[0]);
+        regions.Add(firstRegion);
+        allSpaces.RemoveAt(0);
+
+        foreach(Vector2 space in allSpaces){ //35 iterations
+
+            //check if any of its neighbors are in a region already
+            List<int> regionsThisBelongsTo = new List<int>();
+            int regionIndex = 0;
+            List<Vector2> neighbors = GetNeighbors(space);
+            foreach (List<Vector2> region in regions){ //low int number of regions
+                //check if a neighbor is in the region
+                bool isNeighborInRegion = false;
+                foreach (Vector2 neighbor in neighbors){ //8 iterations
+                    if (region.Contains(neighbor)) //35 iterations
+                        isNeighborInRegion = true;
+                }
+                if (isNeighborInRegion){
+                    regionsThisBelongsTo.Add(regionIndex);
+                    if (regionsThisBelongsTo.Count == 1)
+                        region.Add(space); //only add the space to the first region. the regions will be combined later
+                }
+                regionIndex++;
+            }
+
+
+            if (regionsThisBelongsTo.Count > 1){
+                //add the contents of each other region to the first region that this space belongs to
+                foreach (int i in regionsThisBelongsTo){
+                    if (i != regionsThisBelongsTo[0]){
+                        foreach(Vector2 newSpaceToAdd in regions[i]){
+                            regions[regionsThisBelongsTo[0]].Add(newSpaceToAdd);
+                        }
+                    }
+                }
+                //remove the other regions. they have been combined and are no longer required
+                for (int z = regionsThisBelongsTo.Count - 1; z > 0; z--){
+                    regions.RemoveAt(regionsThisBelongsTo[z]);
+                }
+            }
+            else if (regionsThisBelongsTo.Count == 0){
+                List<Vector2> newRegion = new List<Vector2>();
+                newRegion.Add(space);
+                regions.Add(newRegion);
+            }
+        }
+
+        return regions;
+
     }
 
     private void FillRestOfPuzzle(){
         for (int i = 0; i < letterSpaces.GetLength(0); i++){
             for (int j = 0; j < letterSpaces.GetLength(1); j++){
                 if (letters[i,j].Equals('-')){
-                int temp = rand.Next(randomLetterPool.Count);
-                letters[i,j] = randomLetterPool[temp];
+                    int temp = rand.Next(randomLetterPool.Count);
+                    letters[i,j] = randomLetterPool[temp];
                 }
                 
             }
@@ -145,6 +284,8 @@ public class PuzzleGenerator : MonoBehaviour {
                 letterSpaces[i,j].wordDisplay = wordDisplay;
                 letterSpaces[i,j].position = new Vector2(i,j);
                 letters[i,j] = '-';
+                if (useStartingLayout)
+                    letters[i,j] = startingLayout[i,j];
             }
         }
 
