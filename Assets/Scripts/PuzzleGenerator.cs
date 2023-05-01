@@ -34,12 +34,20 @@ public class PuzzleGenerator : MonoBehaviour {
         wordLibraryForGeneration = wordLibraryForGenerationFile.text.Split("\r\n");
         randomLetterPool = randomLetterPoolFile.text.ToCharArray();
         GetPuzzleDimensions();
+        GenerateNewPuzzle();
+    }
+
+    public void GenerateNewPuzzle(){
+        foreach (LetterSpace ls in letterSpaces){
+            ls.hasBeenUsedInAWordAlready = false;
+            ls.ShowHasBeenUsedForWord();
+        }
         ClearPuzzle();
         bool succeeded = false;
         while (!succeeded)
             succeeded = PickWordsAndAttemptToGenerateSolution();
         FillRestOfPuzzle();
-        RenderLetters();
+        RenderLetters();        
     }
 
     private bool PickWordsAndAttemptToGenerateSolution(){

@@ -122,9 +122,8 @@ public class LetterSpace : MonoBehaviour{
     }
 
     public void ShowHasBeenUsedForWord(){
-        if (hasBeenUsedInAWordAlready){
+        if (hasBeenUsedInAWordAlready)
             text.color = Color.gray;
-        }
         else
             text.color = Color.black;
     }

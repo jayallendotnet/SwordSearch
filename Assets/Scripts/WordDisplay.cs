@@ -13,10 +13,10 @@ public class WordDisplay : MonoBehaviour {
     private LetterSpace secondToLastLetterSpace = null;
 
     public BattleManager battleManager;
-    Color validWordColor;
-    Color invalidWordColor;
-    Color validButtonColor;
-    Color invalidButtonColor;
+    private Color validWordColor;
+    private Color invalidWordColor;
+    private Color validButtonColor;
+    private Color invalidButtonColor;
 
     public GameObject sendWordButton;
 

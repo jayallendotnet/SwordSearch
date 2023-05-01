@@ -20,11 +20,22 @@ public class BattleManager : MonoBehaviour {
     private string[] wordLibraryForChecking;
     public int minCheckingWordLength = 3;
 
+    public Image refreshPuzzleButtonImage;
+    public Text refreshPuzzleCountdownText;
+
+    public int maxPuzzleCountdown = 3;
+    private int currentPuzzleCountdown;
+    private Color canRefreshPuzzleColor;
+    private Color cannotRefreshPuzzleColor;
+
 
     void Start(){
         wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
+        currentPuzzleCountdown = maxPuzzleCountdown;
         enemyHealth = startingEnemyHealth;
         playerHealth = startingPlayerHealth;
+        ColorUtility.TryParseHtmlString("#8DE1FF", out canRefreshPuzzleColor);
+        ColorUtility.TryParseHtmlString("#E7BD86", out cannotRefreshPuzzleColor);
         DisplayHealths();
     }
     
@@ -67,11 +78,36 @@ public class BattleManager : MonoBehaviour {
             foreach (LetterSpace ls in wordDisplay.letterSpacesForWord)
                 ls.hasBeenUsedInAWordAlready = true;
             wordDisplay.ClearWord();
+            DecrementRefreshPuzzleCountdown();
         }
 
 
         //make the word fly toward the enemy and hit them?
 
+    }
+
+    private void DecrementRefreshPuzzleCountdown(){
+        currentPuzzleCountdown --;
+        if (currentPuzzleCountdown < 0)
+            currentPuzzleCountdown = 0;
+        UpdateRefreshPuzzleButton();
+    }
+
+    public void PressRefreshPuzzleButton(){
+        if (currentPuzzleCountdown == 0){
+            puzzleGenerator.GenerateNewPuzzle();
+            currentPuzzleCountdown = maxPuzzleCountdown;
+            UpdateRefreshPuzzleButton();
+        }
+    }
+
+    private void UpdateRefreshPuzzleButton(){
+        refreshPuzzleCountdownText.text = "" + currentPuzzleCountdown;
+        if (currentPuzzleCountdown > 0)
+            refreshPuzzleButtonImage.color = cannotRefreshPuzzleColor;
+        else
+            refreshPuzzleButtonImage.color = canRefreshPuzzleColor;
+        
     }
 
 
