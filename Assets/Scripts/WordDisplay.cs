@@ -102,6 +102,7 @@ public class WordDisplay : MonoBehaviour {
         letterSpacesForWord = new List<LetterSpace>();
         SetLastTwoLetterSpaces();
         text.text = "";
+        CheckIfWordIsValid();
     }
 
     private void CheckIfWordIsValid(){

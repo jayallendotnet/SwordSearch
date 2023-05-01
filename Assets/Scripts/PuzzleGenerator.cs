@@ -11,7 +11,9 @@ public class PuzzleGenerator : MonoBehaviour {
     private LetterSpace[,] letterSpaces;
     private char[,] letters;
 
-    private List<char> randomLetterPool = new List<char>{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}; //update with realistic ratios of letters
+    public TextAsset randomLetterPoolFile;
+    private char[] randomLetterPool;
+    //private List<char> randomLetterPool = new List<char>{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}; //update with realistic ratios of letters
     public WordDisplay wordDisplay;
     System.Random rand = new System.Random();
 
@@ -20,21 +22,52 @@ public class PuzzleGenerator : MonoBehaviour {
 
     public int maxAttemptsPerPuzzle = 3;
 
+    public TextAsset wordLibraryForGenerationFile; //all words that can be used to generate the puzzle
+    private string[] wordLibraryForGeneration;
+
+    [Header("Word Rules")]
+    public int wordCount = 3;
+    public int minGenerationWordLength = 3;
+    public int maxGenerationWordLength = 6;
+
     void Start() {
+        wordLibraryForGeneration = wordLibraryForGenerationFile.text.Split("\r\n");
+        randomLetterPool = randomLetterPoolFile.text.ToCharArray();
         GetPuzzleDimensions();
         ClearPuzzle();
-        bool succeeded = PickWordsAndAttemptToGenerateSolution();
-        //next: if that fails, then pick new words and attempt again
-        //repeat until a valid puzzle is found
-        //maybe have constraints on the length of words you can select? 1 4-letter, 1 5-letter, 1 6-letter? idk
-        if (succeeded)
-            FillRestOfPuzzle();
+        bool succeeded = false;
+        while (!succeeded)
+            succeeded = PickWordsAndAttemptToGenerateSolution();
+        FillRestOfPuzzle();
         RenderLetters();
     }
 
     private bool PickWordsAndAttemptToGenerateSolution(){
-        string[] words = {"sword", "platypus", "geraniums", "sphincter"};
+        string[] words = GetRandomWordsFromLibrary();
         return AttemptToGenerateSolution(words);
+    }
+
+    private string[] GetRandomWordsFromLibrary(){
+        string[] result = new string[wordCount];
+        for (int i = 0; i < wordCount; i++){
+            bool searching = true;
+            while (searching){
+                string word = wordLibraryForGeneration[rand.Next(wordLibraryForGeneration.Length)];  
+                if (DoesWordFitCriteria(word)){
+                    searching = false;     
+                    result[i] = word;
+                }
+            }
+        }
+        return result;
+    }
+
+    private bool DoesWordFitCriteria(string word){
+        if (word.Length < minGenerationWordLength)
+            return false;
+        if (word.Length > maxGenerationWordLength)
+            return false;
+        return true;
     }
 
     private bool AttemptToGenerateSolution(string[] words){
@@ -67,7 +100,7 @@ public class PuzzleGenerator : MonoBehaviour {
     private void GenerateLetters(){
         for (int i = 0; i < letterSpaces.GetLength(0); i++){
             for (int j = 0; j < letterSpaces.GetLength(1); j++){
-                int temp = rand.Next(randomLetterPool.Count);
+                int temp = rand.Next(randomLetterPool.Length);
                 letters[i,j] = randomLetterPool[temp];
             }
         }
@@ -177,7 +210,6 @@ public class PuzzleGenerator : MonoBehaviour {
             }
         }
 
-
         if (requiredSizeOfRegion == 1)
             return candidates3;
 
@@ -209,8 +241,7 @@ public class PuzzleGenerator : MonoBehaviour {
         List<Vector2> allSpaces = new List<Vector2>();
         for (int i = 0; i < letterSpaces.GetLength(0); i++){
             for (int j = 0; j < letterSpaces.GetLength(1); j++){
-                //if (letters[i,j].Equals('-'))
-                    allSpaces.Add(new Vector2(i, j));
+                allSpaces.Add(new Vector2(i, j));
             }
         }
         return allSpaces;
@@ -288,8 +319,15 @@ public class PuzzleGenerator : MonoBehaviour {
         for (int i = 0; i < letterSpaces.GetLength(0); i++){
             for (int j = 0; j < letterSpaces.GetLength(1); j++){
                 if (letters[i,j].Equals('-')){
-                    int temp = rand.Next(randomLetterPool.Count);
-                    letters[i,j] = randomLetterPool[temp];
+                    int index = rand.Next(randomLetterPool.Length);
+                    char l = randomLetterPool[index];
+                    letters[i,j] = l;
+                    if (l.Equals('Q')){
+                        Vector2 temp = PlaceLetter('U', new Vector2(i,j), 1);
+                        if ((temp[0] == -1) && (temp[1] == -1)){ //could not place a U nearby
+                            letters[i,j] = 'E';
+                        }
+                    }
                 }
                 
             }

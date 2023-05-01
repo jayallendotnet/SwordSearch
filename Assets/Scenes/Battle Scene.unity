@@ -1864,7 +1864,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb2885709b559db4c9f3c4350094d36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  randomLetterPoolFile: {fileID: 4900000, guid: cab73a9fcac6c2a458ea94d8e1f965ca, type: 3}
   wordDisplay: {fileID: 1145730610}
+  maxAttemptsPerPuzzle: 3
+  wordLibraryForGenerationFile: {fileID: 4900000, guid: 3a2bc20f6d5e5074e8ee97d5cbd856d2, type: 3}
+  wordCount: 3
+  minGenerationWordLength: 3
+  maxGenerationWordLength: 6
 --- !u!1001 &744180580
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2162,6 +2168,9 @@ MonoBehaviour:
   startingEnemyHealth: 16
   startingPlayerHealth: 25
   maxHealth: 99
+  puzzleGenerator: {fileID: 742626212}
+  wordLibraryForCheckingFile: {fileID: 4900000, guid: 01675d9a4e9897643b6bde6d826be2cd, type: 3}
+  minCheckingWordLength: 3
 --- !u!224 &763323255 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6747228974919254350, guid: 9d1c054e288b39e4abfe704fe137b1dc, type: 3}

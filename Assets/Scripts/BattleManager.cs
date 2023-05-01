@@ -15,9 +15,14 @@ public class BattleManager : MonoBehaviour {
 
     private int enemyHealth = 0;
     private int playerHealth = 0;
+    public PuzzleGenerator puzzleGenerator;
+    public TextAsset wordLibraryForCheckingFile; //all words that can be considered valid, even if they are not in the generating list
+    private string[] wordLibraryForChecking;
+    public int minCheckingWordLength = 3;
 
 
     void Start(){
+        wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
         enemyHealth = startingEnemyHealth;
         playerHealth = startingPlayerHealth;
         DisplayHealths();
@@ -30,15 +35,18 @@ public class BattleManager : MonoBehaviour {
     }
 
     public bool IsValidWord(){
-        if (wordDisplay.text.text.Length > 3)
+        string w = wordDisplay.text.text;
+        if (w.Length < minCheckingWordLength)
+            return false;
+        if (SearchLibraryForWord(w))
             return true;
         return false;
+    }
 
-        //check the dictionary
-        //have an adult setting for mature words?
-        //some protection against the same (or similar?) words being used again
-        //can't use more than 1 of the exact same letter in a future word (after 3 words you can get a new search)
-        //no rule against submitting the same word more than once if you can make it
+    private bool SearchLibraryForWord(string word){
+        //returns true if the library contains the word
+        int result = System.Array.BinarySearch<string>(wordLibraryForChecking, word);
+        return (result > -1);
     }
 
     private int calculateDamage(){
