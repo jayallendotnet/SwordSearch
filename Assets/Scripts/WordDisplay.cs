@@ -106,15 +106,6 @@ public class WordDisplay : MonoBehaviour {
             ls2.ShowAsPartOfWord(textColorForWord, backgroundColorForWord);
     }
 
-    /*
-    private void UpdateNeighborsForLastTwoLetterSpaces(){
-        SetLastTwoLetterSpaces();
-        if (lastLetterSpace != null)
-            lastLetterSpace.ShowDirectionsToNeighbors();
-        if (secondToLastLetterSpace != null)
-            secondToLastLetterSpace.ShowDirectionsToNeighbors();
-    }
-    */
     private void SetLastTwoLetterSpaces(){
         lastLetterSpace = null;
         secondToLastLetterSpace = null;
@@ -160,18 +151,14 @@ public class WordDisplay : MonoBehaviour {
 
     private void CheckIfWordIsValid(){
         if (battleManager.IsValidWord()){
-            //text.color = validWordColor;
-            //sendWordButton.GetComponent<Image>().color = validButtonColor;
             text.color = textColorForWord;
             sendWordButton.GetComponent<Image>().color = backgroundColorForWord;
             sendWordButtonBorder.SetActive(true);
-            //sendWordButton.SetActive(true);
         }
         else{
             text.color = invalidWordColor;
             sendWordButton.GetComponent<Image>().color = invalidButtonColor;
             sendWordButtonBorder.SetActive(false);
-            //sendWordButton.SetActive(false);
         }
 
         //if valid, start a dotween to pulse the color

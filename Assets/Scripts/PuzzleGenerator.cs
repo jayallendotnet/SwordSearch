@@ -13,7 +13,6 @@ public class PuzzleGenerator : MonoBehaviour {
 
     public TextAsset randomLetterPoolFile;
     private char[] randomLetterPool;
-    //private List<char> randomLetterPool = new List<char>{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}; //update with realistic ratios of letters
     public WordDisplay wordDisplay;
     System.Random rand = new System.Random();
 
