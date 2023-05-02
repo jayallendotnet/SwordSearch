@@ -28,6 +28,8 @@ public class BattleManager : MonoBehaviour {
     private Color canRefreshPuzzleColor;
     private Color cannotRefreshPuzzleColor;
 
+    public enum PowerupTypes{None, Ice, Fire, Heal};
+
 
     void Start(){
         wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
@@ -74,9 +76,21 @@ public class BattleManager : MonoBehaviour {
 
     public void PressSubmitWordButton(){
         if (IsValidWord()){
-            DamageEnemyHealth(calculateDamage());
-            foreach (LetterSpace ls in wordDisplay.letterSpacesForWord)
+            List<PowerupTypes> typesInWord = new List<PowerupTypes>();
+            foreach (LetterSpace ls in wordDisplay.letterSpacesForWord){
                 ls.hasBeenUsedInAWordAlready = true;
+                if (ls.powerupType != PowerupTypes.None){
+                    if (!typesInWord.Contains(ls.powerupType))
+                        typesInWord.Add(ls.powerupType);
+                }
+                ls.SetPowerup(PowerupTypes.None);
+            }
+            if (typesInWord.Count > 0){
+                print("submitted a word with a power up! types are:");
+                foreach (PowerupTypes t in typesInWord)
+                    print(t);
+            }
+            DamageEnemyHealth(calculateDamage());
             wordDisplay.ClearWord();
             DecrementRefreshPuzzleCountdown();
         }

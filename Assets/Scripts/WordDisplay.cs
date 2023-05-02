@@ -20,12 +20,15 @@ public class WordDisplay : MonoBehaviour {
 
     public GameObject sendWordButton;
 
+    public List<PowerupDisplayData> powerupDisplayDataList;
+
+
     void Start() {
         text.text = "";
         ColorUtility.TryParseHtmlString("#4B4B4B", out validWordColor);
         ColorUtility.TryParseHtmlString("#C8C8C8", out invalidWordColor);
         ColorUtility.TryParseHtmlString("#8DE1FF", out validButtonColor);
-        ColorUtility.TryParseHtmlString("#B34A50", out invalidButtonColor);
+        ColorUtility.TryParseHtmlString("#B34A50", out invalidButtonColor);           
         
         CheckIfWordIsValid();
     }
@@ -120,5 +123,22 @@ public class WordDisplay : MonoBehaviour {
         //if valid, start a dotween to pulse the color
     }
 
+
+    public PowerupDisplayData GetPowerupDisplayDataWithType(BattleManager.PowerupTypes t){
+        foreach (PowerupDisplayData d in powerupDisplayDataList){
+            if (d.type == t)
+                return d;
+        }
+        return null;
+    }
+
+
+}
+
+[System.Serializable]
+public class PowerupDisplayData{
+    public BattleManager.PowerupTypes type;
+    public Color textColor = Color.white;
+    public Color backgroundColor = Color.white;
 
 }

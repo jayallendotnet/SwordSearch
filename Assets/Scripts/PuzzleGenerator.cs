@@ -30,6 +30,8 @@ public class PuzzleGenerator : MonoBehaviour {
     public int minGenerationWordLength = 3;
     public int maxGenerationWordLength = 6;
 
+    public BattleManager battleManager;
+
     void Start() {
         wordLibraryForGeneration = wordLibraryForGenerationFile.text.Split("\r\n");
         randomLetterPool = randomLetterPoolFile.text.ToCharArray();
@@ -47,7 +49,11 @@ public class PuzzleGenerator : MonoBehaviour {
         while (!succeeded)
             succeeded = PickWordsAndAttemptToGenerateSolution();
         FillRestOfPuzzle();
-        RenderLetters();        
+        RenderLetters();   
+        ClearAllPowerups();
+        PickRandomSpaceForPowerup();    
+        PickRandomSpaceForPowerup();  
+        PickRandomSpaceForPowerup();   
     }
 
     private bool PickWordsAndAttemptToGenerateSolution(){
@@ -385,5 +391,40 @@ public class PuzzleGenerator : MonoBehaviour {
                     letters[i,j] = startingLayout[i,j];
             }
         }
+    }
+
+    private void ClearAllPowerups(){
+        for (int i = 0; i < letters.GetLength(0); i++){
+            for (int j = 0; j < letters.GetLength(1); j++){
+                letterSpaces[i,j].SetPowerup(BattleManager.PowerupTypes.None);
+            }
+        }
+    }
+
+    private void PickRandomSpaceForPowerup(){
+        int t1 = rand.Next(letters.GetLength(0));
+        int t2 = rand.Next(letters.GetLength(1));
+        LetterSpace ls = letterSpaces[t1,t2];
+        if (ls.powerupType != BattleManager.PowerupTypes.None)
+            PickRandomSpaceForPowerup();
+        else
+            letterSpaces[t1,t2].SetPowerup(SelectPowerupType());
+    }
+    
+    private BattleManager.PowerupTypes SelectPowerupType(){
+        int i = rand.Next(0,3);
+        BattleManager.PowerupTypes type = BattleManager.PowerupTypes.None;
+        switch (i){
+            case 0:
+                type = BattleManager.PowerupTypes.Ice;
+                break;
+            case 1:
+                type = BattleManager.PowerupTypes.Fire;
+                break;
+            case 2:
+                type = BattleManager.PowerupTypes.Heal;
+                break;
+        }
+        return type;
     }
 }

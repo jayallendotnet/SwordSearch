@@ -9,6 +9,7 @@ public class LetterSpace : MonoBehaviour{
     public char letter;
     public Text text;
     public GameObject selectedSignifier;
+    public GameObject powerupIcon;
 
     //directional connectors
     public GameObject topConnector;
@@ -31,6 +32,7 @@ public class LetterSpace : MonoBehaviour{
 
 
     public Vector2 position = Vector2.zero;
+    public BattleManager.PowerupTypes powerupType = BattleManager.PowerupTypes.None;
 
     [HideInInspector]
     public bool hasBeenUsedInAWordAlready = false;
@@ -126,5 +128,24 @@ public class LetterSpace : MonoBehaviour{
             text.color = Color.gray;
         else
             text.color = Color.black;
+    }
+
+    public void ShowPowerup(){
+        if (powerupType == BattleManager.PowerupTypes.None)
+            powerupIcon.SetActive(false);
+        else{
+            powerupIcon.SetActive(true);
+            PowerupDisplayData d = wordDisplay.GetPowerupDisplayDataWithType(powerupType);
+            Color t = d.textColor;
+            Color b = d.backgroundColor;
+            text.color = t;
+            powerupIcon.GetComponent<Image>().color = b;
+        }
+
+    }
+
+    public void SetPowerup(BattleManager.PowerupTypes type){
+        powerupType = type;
+        ShowPowerup();
     }
 }

@@ -1999,7 +1999,7 @@ RectTransform:
   - {fileID: 1592973494}
   - {fileID: 2144790544}
   m_Father: {fileID: 811241014}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2087,6 +2087,7 @@ MonoBehaviour:
   wordCount: 3
   minGenerationWordLength: 3
   maxGenerationWordLength: 6
+  battleManager: {fileID: 0}
 --- !u!1001 &744180580
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2499,8 +2500,8 @@ RectTransform:
   m_Children:
   - {fileID: 1140911811}
   - {fileID: 1930130379}
-  - {fileID: 742626208}
   - {fileID: 1145730607}
+  - {fileID: 742626208}
   - {fileID: 1754695648}
   - {fileID: 751364933}
   - {fileID: 2036988222}
@@ -3330,7 +3331,7 @@ RectTransform:
   - {fileID: 246679436}
   - {fileID: 2006783609}
   m_Father: {fileID: 811241014}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3361,6 +3362,19 @@ MonoBehaviour:
   letterSpacesForWord: []
   battleManager: {fileID: 751364934}
   sendWordButton: {fileID: 246679435}
+  powerupDisplayDataList:
+  - type: 1
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+    backgroundColor: {r: 0.33748665, g: 0.78890276, b: 0.9056604, a: 1}
+  - type: 2
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+    backgroundColor: {r: 0.8962264, g: 0.14796188, b: 0.5871631, a: 1}
+  - type: 3
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+    backgroundColor: {r: 0.12922749, g: 0.39463857, b: 0.8301887, a: 1}
+  - type: 0
+    textColor: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
+    backgroundColor: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
 --- !u!224 &1167479957 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6747228974919254350, guid: 9d1c054e288b39e4abfe704fe137b1dc, type: 3}
