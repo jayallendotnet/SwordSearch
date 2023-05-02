@@ -37,6 +37,8 @@ public class LetterSpace : MonoBehaviour{
     [HideInInspector]
     public bool hasBeenUsedInAWordAlready = false;
 
+    public Image[] colorableBackgroundImages = new Image[9];
+
     public void UpdateLetter(char letter){
         this.letter = letter;
         text.text = "" + letter;
@@ -44,11 +46,14 @@ public class LetterSpace : MonoBehaviour{
 
     public void ClickedLetter(){
         if (wordDisplay.CanAddLetter(this))
-            AddLetter();
+            wordDisplay.AddLetter(this);
+            //AddLetter();
         else if (wordDisplay.CanRemoveLetter(this))
-            RemoveLetter();
+            wordDisplay.RemoveLetter(this);
+            //RemoveLetter();
+            
     }
-
+    /*
     private void AddLetter(){
         selectedSignifier.SetActive(true);
         text.color = Color.white;
@@ -59,13 +64,47 @@ public class LetterSpace : MonoBehaviour{
         StopDisplayingLetter();
         wordDisplay.RemoveLetter(this);
     }
+    */
+    public void ShowAsPartOfWord(Color textColor, Color backgroundColor){
+        selectedSignifier.SetActive(true);
+        ShowDirectionsToNeighbors();
+        HidePowerupIcon();
+        text.color = textColor;
+        UpdateBackgroundColors(backgroundColor);
+    }
 
+    public void ShowAsNotPartOfWord(){
+        selectedSignifier.SetActive(false);
+        HideAllDirectionLines();
+        if (hasBeenUsedInAWordAlready){
+            text.color = Color.gray;
+            HidePowerupIcon();
+        }
+        else{
+            text.color = Color.black;
+            ShowPowerup();
+        }
+            
+        
+    }
+
+    private void HidePowerupIcon(){
+        powerupIcon.SetActive(false);
+    }
+
+    private void UpdateBackgroundColors(Color c){
+        foreach (Image im in colorableBackgroundImages){
+            im.color = c;
+        }
+    }
+
+    /*
     public void StopDisplayingLetter(){
         selectedSignifier.SetActive(false);
         HideAllDirectionLines();
         text.color = Color.black;
     }
-
+    */
     private void HideAllDirectionLines(){
         foreach (Transform t in topLeftConnector.transform.parent)
             t.gameObject.SetActive(false);
@@ -123,12 +162,14 @@ public class LetterSpace : MonoBehaviour{
         return false;
     }
 
+    /*
     public void ShowHasBeenUsedForWord(){
         if (hasBeenUsedInAWordAlready)
             text.color = Color.gray;
         else
             text.color = Color.black;
     }
+    */
 
     public void ShowPowerup(){
         if (powerupType == BattleManager.PowerupTypes.None)

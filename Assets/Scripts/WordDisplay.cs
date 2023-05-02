@@ -19,8 +19,17 @@ public class WordDisplay : MonoBehaviour {
     private Color invalidButtonColor;
 
     public GameObject sendWordButton;
+    public GameObject sendWordButtonBorder;
 
     public List<PowerupDisplayData> powerupDisplayDataList;
+
+    private Color textColorForWord = Color.black;
+    private Color backgroundColorForWord = Color.grey;
+
+    [HideInInspector]
+    public BattleManager.PowerupTypes powerupTypeForWord;
+    [HideInInspector]
+    public int powerupStrength;
 
 
     void Start() {
@@ -39,7 +48,10 @@ public class WordDisplay : MonoBehaviour {
             lastLetterSpace.nextLetterSpace = ls;
             ls.previousLetterSpace = lastLetterSpace;
         }
-        UpdateNeighborsForLastTwoLetterSpaces();
+        SetLastTwoLetterSpaces();
+        UpdatePowerupTypeAndStrengthForWord();
+        UpdateColorsForWord();
+        UpdateVisualsForLettersInWord();
         CheckIfWordIsValid();
     }
 
@@ -50,14 +62,51 @@ public class WordDisplay : MonoBehaviour {
         else
             text.text = text.text.Substring(0, (text.text.Length - 1));
         letterSpacesForWord.Remove(ls);
+        ls.ShowAsNotPartOfWord();
         if (secondToLastLetterSpace != null){
             secondToLastLetterSpace.nextLetterSpace = null;
             lastLetterSpace.previousLetterSpace = null;
         }
-        UpdateNeighborsForLastTwoLetterSpaces();
+        SetLastTwoLetterSpaces();
+        UpdatePowerupTypeAndStrengthForWord();
+        UpdateColorsForWord();
+        UpdateVisualsForLettersInWord();
         CheckIfWordIsValid();
     }
 
+    private void UpdatePowerupTypeAndStrengthForWord(){
+        if (letterSpacesForWord.Count == 0)
+            return;
+        powerupTypeForWord = BattleManager.PowerupTypes.None;
+        powerupStrength = 0;
+        foreach (LetterSpace ls in letterSpacesForWord){
+            if (ls.powerupType != BattleManager.PowerupTypes.None){
+                powerupStrength++;
+                if (powerupStrength == 1)
+                    powerupTypeForWord = ls.powerupType;
+            }
+
+        }
+    }
+
+    private void UpdateColorsForWord(){
+        if (letterSpacesForWord.Count == 0)
+            return;
+        foreach (PowerupDisplayData d in powerupDisplayDataList){
+            if (d.type == powerupTypeForWord){
+                textColorForWord = d.textColor;
+                backgroundColorForWord = d.backgroundColor;
+            }
+        }
+
+    }
+
+    private void UpdateVisualsForLettersInWord(){
+        foreach (LetterSpace ls2 in letterSpacesForWord)
+            ls2.ShowAsPartOfWord(textColorForWord, backgroundColorForWord);
+    }
+
+    /*
     private void UpdateNeighborsForLastTwoLetterSpaces(){
         SetLastTwoLetterSpaces();
         if (lastLetterSpace != null)
@@ -65,6 +114,7 @@ public class WordDisplay : MonoBehaviour {
         if (secondToLastLetterSpace != null)
             secondToLastLetterSpace.ShowDirectionsToNeighbors();
     }
+    */
     private void SetLastTwoLetterSpaces(){
         lastLetterSpace = null;
         secondToLastLetterSpace = null;
@@ -97,10 +147,10 @@ public class WordDisplay : MonoBehaviour {
 
     public void ClearWord(){
         foreach (LetterSpace ls in letterSpacesForWord){
-            ls.StopDisplayingLetter();
             ls.previousLetterSpace = null;
             ls.nextLetterSpace = null;
-            ls.ShowHasBeenUsedForWord();
+            ls.hasBeenUsedInAWordAlready = true;
+            ls.ShowAsNotPartOfWord();
         }
         letterSpacesForWord = new List<LetterSpace>();
         SetLastTwoLetterSpaces();
@@ -110,13 +160,17 @@ public class WordDisplay : MonoBehaviour {
 
     private void CheckIfWordIsValid(){
         if (battleManager.IsValidWord()){
-            text.color = validWordColor;
-            sendWordButton.GetComponent<Image>().color = validButtonColor;
+            //text.color = validWordColor;
+            //sendWordButton.GetComponent<Image>().color = validButtonColor;
+            text.color = textColorForWord;
+            sendWordButton.GetComponent<Image>().color = backgroundColorForWord;
+            sendWordButtonBorder.SetActive(true);
             //sendWordButton.SetActive(true);
         }
         else{
             text.color = invalidWordColor;
             sendWordButton.GetComponent<Image>().color = invalidButtonColor;
+            sendWordButtonBorder.SetActive(false);
             //sendWordButton.SetActive(false);
         }
 

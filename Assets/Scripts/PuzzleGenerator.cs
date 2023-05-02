@@ -40,10 +40,8 @@ public class PuzzleGenerator : MonoBehaviour {
     }
 
     public void GenerateNewPuzzle(){
-        foreach (LetterSpace ls in letterSpaces){
+        foreach (LetterSpace ls in letterSpaces)
             ls.hasBeenUsedInAWordAlready = false;
-            ls.ShowHasBeenUsedForWord();
-        }
         ClearPuzzle();
         bool succeeded = false;
         while (!succeeded)
@@ -351,7 +349,9 @@ public class PuzzleGenerator : MonoBehaviour {
     private void RenderLetters(){    
         for (int i = 0; i < letterSpaces.GetLength(0); i++){
             for (int j = 0; j < letterSpaces.GetLength(1); j++){
-                letterSpaces[i, j].UpdateLetter(letters[i,j]);
+                LetterSpace ls = letterSpaces[i,j];
+                ls.UpdateLetter(letters[i,j]);
+                ls.ShowAsNotPartOfWord();
             }
         }
 
@@ -412,19 +412,9 @@ public class PuzzleGenerator : MonoBehaviour {
     }
     
     private BattleManager.PowerupTypes SelectPowerupType(){
-        int i = rand.Next(0,3);
-        BattleManager.PowerupTypes type = BattleManager.PowerupTypes.None;
-        switch (i){
-            case 0:
-                type = BattleManager.PowerupTypes.Ice;
-                break;
-            case 1:
-                type = BattleManager.PowerupTypes.Fire;
-                break;
-            case 2:
-                type = BattleManager.PowerupTypes.Heal;
-                break;
-        }
-        return type;
+        int range = battleManager.powerupArray.Length - 1; //"None" is not an option we want to select
+
+        int i = rand.Next(0,range) + 1;
+        return (BattleManager.PowerupTypes)battleManager.powerupArray.GetValue(i);
     }
 }
