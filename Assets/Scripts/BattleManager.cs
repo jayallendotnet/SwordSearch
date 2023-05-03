@@ -33,7 +33,6 @@ public class BattleManager : MonoBehaviour {
     public System.Array powerupArray = BattleManager.PowerupTypes.GetValues(typeof(BattleManager.PowerupTypes));
 
     public Animator playerAnimator;
-    public GameObject playerDeathBubble;
 
     void Start(){
         wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
@@ -55,16 +54,12 @@ public class BattleManager : MonoBehaviour {
         if (amount > 0){
             if (playerHealth == 0){
                 playerAnimator.SetTrigger("Die");
-                StaticVariables.WaitTimeThenCallFunction(1.5f, ShowPlayerDeathBubble);
             }
             else
                 playerAnimator.SetTrigger("TakeDamage");
         }
     }
 
-    private void ShowPlayerDeathBubble(){
-        playerDeathBubble.SetActive(true);
-    }
 
     public bool IsValidWord(){
         string w = wordDisplay.text.text;
@@ -107,6 +102,7 @@ public class BattleManager : MonoBehaviour {
                 print("your word has a powerup! type[" + wordDisplay.powerupTypeForWord + "] strength[" + wordDisplay.powerupStrength + "]");
             playerAnimator.SetTrigger("StartCast");
             DamageEnemyHealth(calculateDamage());
+            //DamagePlayerHealth(20);
             wordDisplay.ClearWord();
             DecrementRefreshPuzzleCountdown();
         }

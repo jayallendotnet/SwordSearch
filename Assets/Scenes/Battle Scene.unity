@@ -2594,7 +2594,6 @@ MonoBehaviour:
   refreshPuzzleCountdownText: {fileID: 639780489}
   maxPuzzleCountdown: 3
   playerAnimator: {fileID: 1651152515}
-  playerDeathBubble: {fileID: 1162864331}
 --- !u!224 &763323255 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6747228974919254350, guid: 9d1c054e288b39e4abfe704fe137b1dc, type: 3}
@@ -3681,7 +3680,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1162864332
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3699,8 +3698,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 48, y: 134}
-  m_SizeDelta: {x: -339.3427, y: -367.7487}
+  m_AnchoredPosition: {x: 91, y: 130}
+  m_SizeDelta: {x: -371.0122, y: -396.2135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1162864333
 MonoBehaviour:
@@ -5248,6 +5247,7 @@ GameObject:
   - component: {fileID: 1651152515}
   - component: {fileID: 1651152519}
   - component: {fileID: 1651152518}
+  - component: {fileID: 1651152520}
   m_Layer: 0
   m_Name: Sorcerer
   m_TagString: Untagged
@@ -5335,6 +5335,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1651152513}
   m_CullTransparentMesh: 1
+--- !u!114 &1651152520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651152513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59b04fdaf782ded418b98f8190382b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeathBubble: {fileID: 1162864331}
 --- !u!1001 &1678879639
 PrefabInstance:
   m_ObjectHideFlags: 0
