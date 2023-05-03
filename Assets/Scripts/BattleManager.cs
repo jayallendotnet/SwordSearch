@@ -28,7 +28,7 @@ public class BattleManager : MonoBehaviour {
     private Color canRefreshPuzzleColor;
     private Color cannotRefreshPuzzleColor;
 
-    public enum PowerupTypes{None, Ice, Fire, Heal};
+    public enum PowerupTypes{None, Water, Fire, Heal};
     [HideInInspector]
     public System.Array powerupArray = PowerupTypes.GetValues(typeof(BattleManager.PowerupTypes));
 

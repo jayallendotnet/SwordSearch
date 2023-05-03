@@ -8,6 +8,7 @@ using DG.Tweening;
 public class StaticVariables
 {
     static public Transform tweenDummy;
+    static public System.Random rand = new System.Random();
 
 
     static public void WaitTimeThenCallFunction(float delay, TweenCallback function) {

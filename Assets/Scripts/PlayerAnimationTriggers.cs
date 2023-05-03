@@ -9,15 +9,44 @@ public class PlayerAnimationTriggers : MonoBehaviour{
 
     [Header("Animation Objects")]
     public GameObject DeathBubble;
-    public GameObject fireBall;
+    public GameObject basicFire;
+    public GameObject basicWater;
+    public GameObject powerWater;
 
-    public void StartFireball(){
-        //if (wordDisplay.powerupTypeForWord == BattleManager.PowerupTypes.Fire){
+    void Start(){
+        foreach (Transform t in transform)
+            t.gameObject.SetActive(false);
+    }
 
-        //}
-        //print("fire!");
-        fireBall.SetActive(true);
-        fireBall.GetComponent<Animator>().Play("Fire");
+    public void StartAttack(){
+        BattleManager.PowerupTypes type = wordDisplay.powerupTypeForWord;
+        GameObject o = basicFire;
+        switch (type){
+            case BattleManager.PowerupTypes.Fire:
+                o = basicFire;
+                break;
+            case BattleManager.PowerupTypes.Water:
+                o = powerWater;
+                break;
+            default:
+                o = ChooseAnimationForPowerupTypeNone();
+                break;
+        }
+        //o = powerWater;
+        o.SetActive(true);
+            
+    }
+
+    public GameObject ChooseAnimationForPowerupTypeNone(){
+        int range = 2;
+        int i = StaticVariables.rand.Next(0, range);
+        switch (i){
+            case 0:
+                return basicFire;
+            case 1:
+                return basicWater;
+        }
+        return basicFire;
     }
 
     public void ShowDeathBubble(){

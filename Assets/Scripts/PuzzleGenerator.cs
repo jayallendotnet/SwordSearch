@@ -14,7 +14,6 @@ public class PuzzleGenerator : MonoBehaviour {
     public TextAsset randomLetterPoolFile;
     private char[] randomLetterPool;
     public WordDisplay wordDisplay;
-    System.Random rand = new System.Random();
 
     bool useStartingLayout = false;
     private char[,] startingLayout = {{'-', '-', '-', '-', 'A'}, {'O', 'R', '-', 'L', 'V'}, {'W', 'S', 'D', 'S', 'I'}, {'-', 'A', 'R', 'R', 'U'}, {'-', '-', '-', 'P', 'Y'}, {'-', 'L', 'A', 'T', '-'}, {'P', '-', '-', '-', '-'}};
@@ -63,7 +62,7 @@ public class PuzzleGenerator : MonoBehaviour {
         for (int i = 0; i < wordCount; i++){
             bool searching = true;
             while (searching){
-                string word = wordLibraryForGeneration[rand.Next(wordLibraryForGeneration.Length)];  
+                string word = wordLibraryForGeneration[StaticVariables.rand.Next(wordLibraryForGeneration.Length)];  
                 if (DoesWordFitCriteria(word)){
                     searching = false;     
                     result[i] = word;
@@ -111,7 +110,7 @@ public class PuzzleGenerator : MonoBehaviour {
     private void GenerateLetters(){
         for (int i = 0; i < letterSpaces.GetLength(0); i++){
             for (int j = 0; j < letterSpaces.GetLength(1); j++){
-                int temp = rand.Next(randomLetterPool.Length);
+                int temp = StaticVariables.rand.Next(randomLetterPool.Length);
                 letters[i,j] = randomLetterPool[temp];
             }
         }
@@ -156,7 +155,7 @@ public class PuzzleGenerator : MonoBehaviour {
             //print("there is no space to finish the word.");
             return new Vector2(-1,-1);
         }
-        int temp = rand.Next(candidates3.Count);
+        int temp = StaticVariables.rand.Next(candidates3.Count);
         Vector2 selectedSpot = candidates3[temp];
         letters[(int)selectedSpot[0], (int)selectedSpot[1]] = letter;
         //print("placed letter (" + letter + ") in position [" + selectedSpot[0] + "," + selectedSpot[1] + "]");
@@ -330,7 +329,7 @@ public class PuzzleGenerator : MonoBehaviour {
         for (int i = 0; i < letterSpaces.GetLength(0); i++){
             for (int j = 0; j < letterSpaces.GetLength(1); j++){
                 if (letters[i,j].Equals('-')){
-                    int index = rand.Next(randomLetterPool.Length);
+                    int index = StaticVariables.rand.Next(randomLetterPool.Length);
                     char l = randomLetterPool[index];
                     letters[i,j] = l;
                     if (l.Equals('Q')){
@@ -401,8 +400,8 @@ public class PuzzleGenerator : MonoBehaviour {
     }
 
     private void PickRandomSpaceForPowerup(){
-        int t1 = rand.Next(letters.GetLength(0));
-        int t2 = rand.Next(letters.GetLength(1));
+        int t1 = StaticVariables.rand.Next(letters.GetLength(0));
+        int t2 = StaticVariables.rand.Next(letters.GetLength(1));
         LetterSpace ls = letterSpaces[t1,t2];
         if (ls.powerupType != BattleManager.PowerupTypes.None)
             PickRandomSpaceForPowerup();
@@ -413,7 +412,7 @@ public class PuzzleGenerator : MonoBehaviour {
     private BattleManager.PowerupTypes SelectPowerupType(){
         int range = battleManager.powerupArray.Length - 1; //"None" is not an option we want to select
 
-        int i = rand.Next(0,range) + 1;
+        int i = StaticVariables.rand.Next(0,range) + 1;
         return (BattleManager.PowerupTypes)battleManager.powerupArray.GetValue(i);
     }
 }
