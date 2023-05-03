@@ -32,6 +32,8 @@ public class BattleManager : MonoBehaviour {
     [HideInInspector]
     public System.Array powerupArray = BattleManager.PowerupTypes.GetValues(typeof(BattleManager.PowerupTypes));
 
+    public Animator playerAnimator;
+    public GameObject playerDeathBubble;
 
     void Start(){
         wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
@@ -47,6 +49,21 @@ public class BattleManager : MonoBehaviour {
         enemyHealthText.text = enemyHealth + "";
         playerHealthText.text = playerHealth + "";
 
+    }
+
+    private void ShowPlayerTakingDamage(int amount){
+        if (amount > 0){
+            if (playerHealth == 0){
+                playerAnimator.SetTrigger("Die");
+                StaticVariables.WaitTimeThenCallFunction(1.5f, ShowPlayerDeathBubble);
+            }
+            else
+                playerAnimator.SetTrigger("TakeDamage");
+        }
+    }
+
+    private void ShowPlayerDeathBubble(){
+        playerDeathBubble.SetActive(true);
     }
 
     public bool IsValidWord(){
@@ -76,17 +93,23 @@ public class BattleManager : MonoBehaviour {
         DisplayHealths();
     }
 
+    private void DamagePlayerHealth(int amount){
+        playerHealth -= amount;
+        if (playerHealth < 0)
+            playerHealth = 0;
+        DisplayHealths();
+        ShowPlayerTakingDamage(amount);
+    }
+
     public void PressSubmitWordButton(){
         if (IsValidWord()){
             if (wordDisplay.powerupTypeForWord != PowerupTypes.None)
                 print("your word has a powerup! type[" + wordDisplay.powerupTypeForWord + "] strength[" + wordDisplay.powerupStrength + "]");
+            playerAnimator.SetTrigger("StartCast");
             DamageEnemyHealth(calculateDamage());
             wordDisplay.ClearWord();
             DecrementRefreshPuzzleCountdown();
         }
-
-
-        //make the word fly toward the enemy and hit them?
 
     }
 
