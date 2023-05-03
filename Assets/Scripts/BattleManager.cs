@@ -30,9 +30,13 @@ public class BattleManager : MonoBehaviour {
 
     public enum PowerupTypes{None, Ice, Fire, Heal};
     [HideInInspector]
-    public System.Array powerupArray = BattleManager.PowerupTypes.GetValues(typeof(BattleManager.PowerupTypes));
+    public System.Array powerupArray = PowerupTypes.GetValues(typeof(BattleManager.PowerupTypes));
 
     public Animator playerAnimator;
+
+    private int currentAttackDamage = 0;
+    private PowerupTypes currentAttackType;
+    private int currentAttackStrength = 0;
 
     void Start(){
         wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
@@ -98,15 +102,27 @@ public class BattleManager : MonoBehaviour {
 
     public void PressSubmitWordButton(){
         if (IsValidWord()){
-            if (wordDisplay.powerupTypeForWord != PowerupTypes.None)
-                print("your word has a powerup! type[" + wordDisplay.powerupTypeForWord + "] strength[" + wordDisplay.powerupStrength + "]");
+            //if (wordDisplay.powerupTypeForWord != PowerupTypes.None)
+            //    print("your word has a powerup! type[" + wordDisplay.powerupTypeForWord + "] strength[" + wordDisplay.powerupStrength + "]");
             playerAnimator.SetTrigger("StartCast");
-            DamageEnemyHealth(calculateDamage());
+            SetCurrentAttackData();
+            //DamageEnemyHealth(calculateDamage());
             //DamagePlayerHealth(20);
             wordDisplay.ClearWord();
             DecrementRefreshPuzzleCountdown();
         }
 
+    }
+
+    private void SetCurrentAttackData(){
+        currentAttackDamage = calculateDamage();
+        currentAttackType = wordDisplay.powerupTypeForWord;
+        currentAttackStrength = wordDisplay.powerupStrength;
+    }
+
+    public void ApplyAttackToEnemy(){
+        print("attack hits enemy! damage [" + currentAttackDamage + "] type [" + currentAttackType + "] strength [" + currentAttackStrength +"]");
+        DamageEnemyHealth(currentAttackDamage);
     }
 
     private void DecrementRefreshPuzzleCountdown(){
