@@ -10,6 +10,7 @@ public class PlayerAnimationTriggers : MonoBehaviour{
     [Header("Animation Objects")]
     public GameObject DeathBubble;
     public GameObject basicFire;
+    public GameObject powerFire;
     public GameObject basicWater;
     public GameObject powerWater;
 
@@ -23,7 +24,7 @@ public class PlayerAnimationTriggers : MonoBehaviour{
         GameObject o = basicFire;
         switch (type){
             case BattleManager.PowerupTypes.Fire:
-                o = basicFire;
+                o = powerFire;
                 break;
             case BattleManager.PowerupTypes.Water:
                 o = powerWater;
@@ -32,7 +33,7 @@ public class PlayerAnimationTriggers : MonoBehaviour{
                 o = ChooseAnimationForPowerupTypeNone();
                 break;
         }
-        //o = powerWater;
+        //o = powerFire;
         o.SetActive(true);
             
     }
