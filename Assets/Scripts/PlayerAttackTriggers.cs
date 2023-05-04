@@ -13,4 +13,5 @@ public class PlayerAttackTriggers : MonoBehaviour{
     public void AttackHitsEnemy(){
         FindObjectOfType<BattleManager>().ApplyAttackToEnemy();
     }
+
 }

@@ -28,7 +28,7 @@ public class BattleManager : MonoBehaviour {
     private Color canRefreshPuzzleColor;
     private Color cannotRefreshPuzzleColor;
 
-    public enum PowerupTypes{None, Water, Fire, Heal};
+    public enum PowerupTypes{None, Water, Fire, Heal, Dark, Earth, Lightning};
     [HideInInspector]
     public System.Array powerupArray = PowerupTypes.GetValues(typeof(BattleManager.PowerupTypes));
 
@@ -85,7 +85,7 @@ public class BattleManager : MonoBehaviour {
     }
 
     private void DamageEnemyHealth(int amount){
-        print("damaging health by: " + amount);
+        //print("damaging health by: " + amount);
         enemyHealth -= amount;
         if (enemyHealth < 0)
             enemyHealth = 0;
@@ -102,9 +102,12 @@ public class BattleManager : MonoBehaviour {
 
     public void PressSubmitWordButton(){
         if (IsValidWord()){
+            if (wordDisplay.powerupTypeForWord == PowerupTypes.Heal)
+                playerAnimator.SetTrigger("StartHeal");
             //if (wordDisplay.powerupTypeForWord != PowerupTypes.None)
             //    print("your word has a powerup! type[" + wordDisplay.powerupTypeForWord + "] strength[" + wordDisplay.powerupStrength + "]");
-            playerAnimator.SetTrigger("StartCast");
+            else
+                playerAnimator.SetTrigger("StartCast");
             SetCurrentAttackData();
             //DamageEnemyHealth(calculateDamage());
             //DamagePlayerHealth(20);
@@ -123,6 +126,19 @@ public class BattleManager : MonoBehaviour {
     public void ApplyAttackToEnemy(){
         print("attack hits enemy! damage [" + currentAttackDamage + "] type [" + currentAttackType + "] strength [" + currentAttackStrength +"]");
         DamageEnemyHealth(currentAttackDamage);
+    }
+
+    public void ApplyHealToSelf(){
+        int healAmount = currentAttackDamage * 3;
+        print("heal hits self! amount [" + healAmount + "] type [" + currentAttackType + "] strength [" + currentAttackStrength +"]");
+        HealPlayerHealth(healAmount * 3);
+    }
+
+    private void HealPlayerHealth(int amount){
+        playerHealth += amount;
+        if (playerHealth > 99)
+            playerHealth = 99;
+        DisplayHealths();
     }
 
     private void DecrementRefreshPuzzleCountdown(){

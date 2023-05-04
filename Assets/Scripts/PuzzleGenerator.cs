@@ -45,8 +45,8 @@ public class PuzzleGenerator : MonoBehaviour {
         while (!succeeded)
             succeeded = PickWordsAndAttemptToGenerateSolution();
         FillRestOfPuzzle();
-        RenderLetters();   
         ClearAllPowerups();
+        RenderLetters();   
         PickRandomSpaceForPowerup();    
         PickRandomSpaceForPowerup();  
         PickRandomSpaceForPowerup();   
@@ -414,5 +414,6 @@ public class PuzzleGenerator : MonoBehaviour {
 
         int i = StaticVariables.rand.Next(0,range) + 1;
         return (BattleManager.PowerupTypes)battleManager.powerupArray.GetValue(i);
+        //return (BattleManager.PowerupTypes.Heal);
     }
 }
