@@ -55,7 +55,7 @@ public class PlayerAnimationTriggers : MonoBehaviour{
                 o = ChooseAnimationForPowerupTypeNone();
                 break;
         }
-        //o = powerFire;
+        //o = powerHeal;
         o.SetActive(true);
             
     }
