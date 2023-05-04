@@ -55,7 +55,7 @@ public class PlayerAnimationTriggers : MonoBehaviour{
                 o = ChooseAnimationForPowerupTypeNone();
                 break;
         }
-        o = powerLightning;
+        //o = powerLightning;
         o.SetActive(true);
             
     }

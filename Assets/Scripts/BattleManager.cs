@@ -80,8 +80,11 @@ public class BattleManager : MonoBehaviour {
         return (result > -1);
     }
 
-    private int calculateDamage(){
-        return Mathf.FloorToInt(Mathf.Pow((wordDisplay.text.text.Length - 2), 2));
+    public int calculateDamage(){
+        int val =  Mathf.FloorToInt(Mathf.Pow((wordDisplay.text.text.Length - 2), 2));
+        if (wordDisplay.text.text.Length < 2)
+            val = 0;
+        return val;
     }
 
     private void DamageEnemyHealth(int amount){
@@ -150,6 +153,7 @@ public class BattleManager : MonoBehaviour {
 
     public void PressRefreshPuzzleButton(){
         if (currentPuzzleCountdown == 0){
+            wordDisplay.ClearWord();
             puzzleGenerator.GenerateNewPuzzle();
             currentPuzzleCountdown = maxPuzzleCountdown;
             UpdateRefreshPuzzleButton();

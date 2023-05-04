@@ -18,8 +18,11 @@ public class WordDisplay : MonoBehaviour {
     private Color validButtonColor;
     private Color invalidButtonColor;
 
-    public GameObject sendWordButton;
-    public GameObject sendWordButtonBorder;
+    public Image submitWordButtonImage;
+    public GameObject submitWordBorder;
+    public GameObject wordStrengthDivider;
+    public Text wordStrengthText;
+    public GameObject wordTypeDivider;
 
     public List<PowerupDisplayData> powerupDisplayDataList;
 
@@ -39,7 +42,7 @@ public class WordDisplay : MonoBehaviour {
         ColorUtility.TryParseHtmlString("#8DE1FF", out validButtonColor);
         ColorUtility.TryParseHtmlString("#B34A50", out invalidButtonColor);           
         
-        CheckIfWordIsValid();
+        UpdateWordDisplay();
     }
     public void AddLetter(LetterSpace ls){
         text.text += ls.letter;
@@ -52,7 +55,7 @@ public class WordDisplay : MonoBehaviour {
         UpdatePowerupTypeAndStrengthForWord();
         UpdateColorsForWord();
         UpdateVisualsForLettersInWord();
-        CheckIfWordIsValid();
+        UpdateWordDisplay();
     }
 
     public void RemoveLetter(LetterSpace ls){
@@ -71,7 +74,7 @@ public class WordDisplay : MonoBehaviour {
         UpdatePowerupTypeAndStrengthForWord();
         UpdateColorsForWord();
         UpdateVisualsForLettersInWord();
-        CheckIfWordIsValid();
+        UpdateWordDisplay();
     }
 
     private void UpdatePowerupTypeAndStrengthForWord(){
@@ -146,22 +149,37 @@ public class WordDisplay : MonoBehaviour {
         letterSpacesForWord = new List<LetterSpace>();
         SetLastTwoLetterSpaces();
         text.text = "";
-        CheckIfWordIsValid();
+        UpdateWordDisplay();
     }
 
-    private void CheckIfWordIsValid(){
+    private void UpdateWordDisplay(){
         if (battleManager.IsValidWord()){
             text.color = textColorForWord;
-            sendWordButton.GetComponent<Image>().color = backgroundColorForWord;
-            sendWordButtonBorder.SetActive(true);
+            wordStrengthText.color = textColorForWord;
+            submitWordButtonImage.color = backgroundColorForWord;
+            submitWordBorder.SetActive(true);
+            wordStrengthDivider.SetActive(true);
+            wordTypeDivider.SetActive(true);
+            wordStrengthText.gameObject.SetActive(true);
+            UpdateWordStrengthText();
         }
         else{
             text.color = invalidWordColor;
-            sendWordButton.GetComponent<Image>().color = invalidButtonColor;
-            sendWordButtonBorder.SetActive(false);
+            wordStrengthText.color = invalidWordColor;
+            submitWordButtonImage.color = invalidButtonColor;
+            submitWordBorder.SetActive(false);
+            wordStrengthDivider.SetActive(false);
+            wordTypeDivider.SetActive(false);
+            wordStrengthText.gameObject.SetActive(false);
         }
+    }
 
-        //if valid, start a dotween to pulse the color
+    private void UpdateWordStrengthText(){
+        int strength = battleManager.calculateDamage();
+            wordStrengthText.fontSize = 120;
+        if (strength > 9)
+            wordStrengthText.fontSize = 85;
+        wordStrengthText.text = "" + strength;
     }
 
 
