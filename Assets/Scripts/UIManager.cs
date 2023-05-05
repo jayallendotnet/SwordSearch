@@ -42,7 +42,6 @@ public class UIManager : MonoBehaviour {
         ColorUtility.TryParseHtmlString("#C8C8C8", out invalidWordColor);
         ColorUtility.TryParseHtmlString("#8DE1FF", out validButtonColor);
         ColorUtility.TryParseHtmlString("#B34A50", out invalidButtonColor);   
-        //ColorUtility.TryParseHtmlString("#B34A50", out canRefreshPuzzleColor);   
     }
 
 
@@ -100,7 +99,6 @@ public class UIManager : MonoBehaviour {
             submitWordBorder.SetActive(true);
             wordStrengthDivider.SetActive(true);
             countdownDivider.SetActive(true);
-            //wordStrengthText.gameObject.SetActive(true);
             refreshPuzzleCountdownText.text = "" + countdown;
             UpdateWordStrengthText(strength);
         }
@@ -114,7 +112,6 @@ public class UIManager : MonoBehaviour {
             submitWordBorder.SetActive(true);
             wordStrengthDivider.SetActive(true);
             countdownDivider.SetActive(true);
-            //wordStrengthText.gameObject.SetActive(true);
             refreshPuzzleCountdownText.text = "" + countdown;
             UpdateWordStrengthText(strength);
         }
@@ -128,7 +125,6 @@ public class UIManager : MonoBehaviour {
             submitWordBorder.SetActive(false);
             wordStrengthDivider.SetActive(false);
             countdownDivider.SetActive(false);
-            //wordStrengthText.gameObject.SetActive(false);
             refreshPuzzleCountdownText.text = "" + countdown;
             UpdateWordStrengthText(strength);
         }

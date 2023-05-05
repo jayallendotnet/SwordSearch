@@ -212,8 +212,6 @@ AnimationClip:
       value: {fileID: 735221639, guid: 3511ca861d0689b4fb3bc878a3a1737e, type: 3}
     - time: 2.1666667
       value: {fileID: 963731150, guid: 3511ca861d0689b4fb3bc878a3a1737e, type: 3}
-    - time: 2.3333333
-      value: {fileID: 436792423, guid: b5d22b08317f3e745ab6491bb718aa05, type: 3}
     attribute: m_Sprite
     path: 
     classID: 114
@@ -288,13 +286,12 @@ AnimationClip:
     - {fileID: 1461888060, guid: 3511ca861d0689b4fb3bc878a3a1737e, type: 3}
     - {fileID: 735221639, guid: 3511ca861d0689b4fb3bc878a3a1737e, type: 3}
     - {fileID: 963731150, guid: 3511ca861d0689b4fb3bc878a3a1737e, type: 3}
-    - {fileID: 436792423, guid: b5d22b08317f3e745ab6491bb718aa05, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 2.4166665
+    m_StopTime: 2.25
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -454,14 +451,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 1.4166666
-    functionName: AttackHitsEnemy
+    functionName: DoAttackEffect
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 2.25
-    functionName: DisableSelf
+    functionName: DestroySelf
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

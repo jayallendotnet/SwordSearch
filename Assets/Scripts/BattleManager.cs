@@ -24,9 +24,6 @@ public class BattleManager : MonoBehaviour {
     public enum PowerupTypes{None, Water, Fire, Heal, Dark, Earth, Lightning};
     [HideInInspector]
     public System.Array powerupArray = PowerupTypes.GetValues(typeof(BattleManager.PowerupTypes));
-    private int inProgressAttackStrength = 0;
-    private PowerupTypes inProgressAttackType;
-    private int inProgressAttackPowerupLevel = 0;
 
     private bool isValidWord = false;
     private int wordStrength = 0;
@@ -42,6 +39,7 @@ public class BattleManager : MonoBehaviour {
     [Header("Scripts")]
     public UIManager uiManager;
     public PuzzleGenerator puzzleGenerator;
+    public PlayerAnimatorFunctions playerAnimatorFunctions;
 
     [Header("Libraries")]
     public TextAsset wordLibraryForGenerationFile; //all words that can be used to generate the puzzle
@@ -60,10 +58,6 @@ public class BattleManager : MonoBehaviour {
         uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
     }
     
-
-
-
-
     public void SetIsValidWord(){
         if (word.Length < minCheckingWordLength)
             isValidWord = false;
@@ -87,7 +81,6 @@ public class BattleManager : MonoBehaviour {
 
 
     private void DamageEnemyHealth(int amount){
-        //print("damaging health by: " + amount);
         enemyHealth -= amount;
         if (enemyHealth < 0)
             enemyHealth = 0;
@@ -120,20 +113,28 @@ public class BattleManager : MonoBehaviour {
     }
 
     private void SetCurrentAttackData(){
-        inProgressAttackStrength = wordStrength;
-        inProgressAttackType = powerupTypeForWord;
-        inProgressAttackPowerupLevel = powerupLevel;
+        playerAnimatorFunctions.CreateAnimation(powerupTypeForWord, wordStrength, powerupLevel);
     }
 
-    public void ApplyAttackToEnemy(){
-        //print("attack hits enemy! damage [" + currentAttackDamage + "] type [" + currentAttackType + "] strength [" + currentAttackStrength +"]");
-        DamageEnemyHealth(inProgressAttackStrength);
+    public void DoAttackEffect(PowerupTypes type, int strength, int powerupLevel){
+        switch (type){
+            case PowerupTypes.Heal:
+                ApplyHealToSelf(strength, powerupLevel);
+                break;
+            default:
+                ApplyAttackToEnemy(type, strength, powerupLevel);
+                break;
+        }
     }
 
-    public void ApplyHealToSelf(){
-        int healAmount = inProgressAttackStrength * 3;
-        //print("heal hits self! amount [" + healAmount + "] type [" + currentAttackType + "] strength [" + currentAttackStrength +"]");
-        HealPlayerHealth(healAmount * 3);
+
+    public void ApplyAttackToEnemy(PowerupTypes type, int strength, int powerupLevel){
+        DamageEnemyHealth(strength);
+    }
+
+    public void ApplyHealToSelf(int strength, int powerupLevel){
+        int healAmount = strength * 3;
+        HealPlayerHealth(healAmount);
     }
 
     private void HealPlayerHealth(int amount){
@@ -153,18 +154,13 @@ public class BattleManager : MonoBehaviour {
         word += ls.letter;
         SetIsValidWord();
         CalcWordStrength();
-        //text.text += ls.letter;
         letterSpacesForWord.Add(ls);
         if (lastLetterSpace != null){
             lastLetterSpace.nextLetterSpace = ls;
             ls.previousLetterSpace = lastLetterSpace;
         }
         SetLastTwoLetterSpaces();
-        UpdatePowerupTypeAndStrengthForWord();
-        uiManager.UpdateColorsForWord(word, powerupTypeForWord);
-        uiManager.UpdatePowerupIcon(powerupTypeForWord);
-        uiManager.UpdateVisualsForLettersInWord(letterSpacesForWord);
-        uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
+        UpdateSubmitVisuals();
     }
 
     public void RemoveLetter(LetterSpace ls){
@@ -182,18 +178,23 @@ public class BattleManager : MonoBehaviour {
             lastLetterSpace.previousLetterSpace = null;
         }
         SetLastTwoLetterSpaces();
-        UpdatePowerupTypeAndStrengthForWord();
+        UpdateSubmitVisuals();
+    }
+
+    private void UpdateSubmitVisuals(){
+        UpdatePowerupTypeAndLevel();
         uiManager.UpdateColorsForWord(word, powerupTypeForWord);
         uiManager.UpdatePowerupIcon(powerupTypeForWord);
         uiManager.UpdateVisualsForLettersInWord(letterSpacesForWord);
         uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
     }
 
-    private void UpdatePowerupTypeAndStrengthForWord(){
+
+    private void UpdatePowerupTypeAndLevel(){
+        powerupTypeForWord = BattleManager.PowerupTypes.None;
+        powerupLevel = 0;        
         if (letterSpacesForWord.Count == 0)
             return;
-        powerupTypeForWord = BattleManager.PowerupTypes.None;
-        powerupLevel = 0;
         foreach (LetterSpace ls in letterSpacesForWord){
             if (ls.powerupType != BattleManager.PowerupTypes.None){
                 powerupLevel++;
@@ -248,9 +249,8 @@ public class BattleManager : MonoBehaviour {
         SetLastTwoLetterSpaces();
         word = "";
         isValidWord = false;
-        wordStrength = 0;
-        uiManager.UpdatePowerupIcon(PowerupTypes.None);
-        uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
+        CalcWordStrength();
+        UpdateSubmitVisuals();
     }
 
 
