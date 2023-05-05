@@ -19,14 +19,12 @@ public class BattleManager : MonoBehaviour {
     public TextAsset wordLibraryForCheckingFile; //all words that can be considered valid, even if they are not in the generating list
     private string[] wordLibraryForChecking;
     public int minCheckingWordLength = 3;
-
-    public Image refreshPuzzleButtonImage;
     public Text refreshPuzzleCountdownText;
 
     public int maxPuzzleCountdown = 3;
-    private int currentPuzzleCountdown;
-    private Color canRefreshPuzzleColor;
-    private Color cannotRefreshPuzzleColor;
+    public int currentPuzzleCountdown;
+    public Color canRefreshPuzzleColor;
+    public Color cannotRefreshPuzzleColor;
 
     public enum PowerupTypes{None, Water, Fire, Heal, Dark, Earth, Lightning};
     [HideInInspector]
@@ -66,7 +64,7 @@ public class BattleManager : MonoBehaviour {
 
 
     public bool IsValidWord(){
-        string w = wordDisplay.text.text;
+        string w = wordDisplay.word;
         if (w.Length < minCheckingWordLength)
             return false;
         if (SearchLibraryForWord(w))
@@ -81,8 +79,8 @@ public class BattleManager : MonoBehaviour {
     }
 
     public int calculateDamage(){
-        int val =  Mathf.FloorToInt(Mathf.Pow((wordDisplay.text.text.Length - 2), 2));
-        if (wordDisplay.text.text.Length < 2)
+        int val =  Mathf.FloorToInt(Mathf.Pow((wordDisplay.word.Length - 2), 2));
+        if (wordDisplay.word.Length < 2)
             val = 0;
         return val;
     }
@@ -114,8 +112,16 @@ public class BattleManager : MonoBehaviour {
             SetCurrentAttackData();
             //DamageEnemyHealth(calculateDamage());
             //DamagePlayerHealth(20);
-            wordDisplay.ClearWord();
             DecrementRefreshPuzzleCountdown();
+            wordDisplay.ClearWord();
+        }
+        else{
+            if (wordDisplay.word.Length == 0){
+                if (currentPuzzleCountdown == 0)
+                    PressRefreshPuzzleButton();
+            }
+                
+
         }
 
     }
@@ -153,20 +159,15 @@ public class BattleManager : MonoBehaviour {
 
     public void PressRefreshPuzzleButton(){
         if (currentPuzzleCountdown == 0){
-            wordDisplay.ClearWord();
             puzzleGenerator.GenerateNewPuzzle();
             currentPuzzleCountdown = maxPuzzleCountdown;
+            wordDisplay.ClearWord();
             UpdateRefreshPuzzleButton();
         }
     }
 
     private void UpdateRefreshPuzzleButton(){
         refreshPuzzleCountdownText.text = "" + currentPuzzleCountdown;
-        if (currentPuzzleCountdown > 0)
-            refreshPuzzleButtonImage.color = cannotRefreshPuzzleColor;
-        else
-            refreshPuzzleButtonImage.color = canRefreshPuzzleColor;
-        
     }
 
 

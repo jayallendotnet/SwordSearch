@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class WordDisplay : MonoBehaviour {
 
+    [HideInInspector]
+    public string word = "";
     public Text text;
     [HideInInspector]
     public List<LetterSpace> letterSpacesForWord = new List<LetterSpace>(){};
@@ -45,7 +47,8 @@ public class WordDisplay : MonoBehaviour {
         UpdateWordDisplay();
     }
     public void AddLetter(LetterSpace ls){
-        text.text += ls.letter;
+        word += ls.letter;
+        //text.text += ls.letter;
         letterSpacesForWord.Add(ls);
         if (lastLetterSpace != null){
             lastLetterSpace.nextLetterSpace = ls;
@@ -60,10 +63,10 @@ public class WordDisplay : MonoBehaviour {
 
     public void RemoveLetter(LetterSpace ls){
         //assumes the last letter in the list is the provided letter
-        if (text.text.Length < 2)
-            text.text = "";
+        if (word.Length < 2)
+            word = "";
         else
-            text.text = text.text.Substring(0, (text.text.Length - 1));
+            word = word.Substring(0, (word.Length - 1));
         letterSpacesForWord.Remove(ls);
         ls.ShowAsNotPartOfWord();
         if (secondToLastLetterSpace != null){
@@ -148,12 +151,13 @@ public class WordDisplay : MonoBehaviour {
         }
         letterSpacesForWord = new List<LetterSpace>();
         SetLastTwoLetterSpaces();
-        text.text = "";
+        word = "";
         UpdateWordDisplay();
     }
 
     private void UpdateWordDisplay(){
         if (battleManager.IsValidWord()){
+            text.text = word;
             text.color = textColorForWord;
             wordStrengthText.color = textColorForWord;
             submitWordButtonImage.color = backgroundColorForWord;
@@ -163,7 +167,19 @@ public class WordDisplay : MonoBehaviour {
             wordStrengthText.gameObject.SetActive(true);
             UpdateWordStrengthText();
         }
-        else{
+        else if ((battleManager.currentPuzzleCountdown == 0) && (word.Length == 0)){
+            text.text = "NEW PUZZLE";
+            text.color = Color.black;
+            wordStrengthText.color = invalidWordColor;
+            submitWordButtonImage.color = battleManager.canRefreshPuzzleColor;
+            submitWordBorder.SetActive(true);
+            wordStrengthDivider.SetActive(true);
+            wordTypeDivider.SetActive(true);
+            wordStrengthText.gameObject.SetActive(true);
+            UpdateWordStrengthText();
+        }
+        else {
+            text.text = word;
             text.color = invalidWordColor;
             wordStrengthText.color = invalidWordColor;
             submitWordButtonImage.color = invalidButtonColor;
