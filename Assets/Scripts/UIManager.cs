@@ -14,9 +14,11 @@ public class UIManager : MonoBehaviour {
     public Text wordDisplay;
     public Image submitWordButtonImage;
     public GameObject submitWordBorder;
-    public Text refreshPuzzleCountdownText;
+    public Image countdownNumber;
     public GameObject countdownDivider;
-    public Text wordStrengthText;
+    public Image wordStrengthImageSingle;
+    public Image wordStrengthImageOnes;
+    public Image wordStrengthImageTens;
     public GameObject wordStrengthDivider;
     public Image wordStrengthIcon;
 
@@ -24,7 +26,8 @@ public class UIManager : MonoBehaviour {
     [Header("Colors")]
     public Color canRefreshPuzzleColor;
     public List<PowerupDisplayData> powerupDisplayDataList;
-
+    [Header("Numbers")]
+    public Sprite[] numberSprites;
 
     [Header("Misc")]
     public BattleManager battleManager;
@@ -36,7 +39,8 @@ public class UIManager : MonoBehaviour {
     private Color invalidButtonColor;
     private Color textColorForWord = Color.black;
     private Color backgroundColorForWord = Color.grey;
-    
+
+
     public void InitializeColors(){
         ColorUtility.TryParseHtmlString("#4B4B4B", out validWordColor);
         ColorUtility.TryParseHtmlString("#C8C8C8", out invalidWordColor);
@@ -93,48 +97,64 @@ public class UIManager : MonoBehaviour {
             wordDisplay.text = word;
             wordDisplay.fontSize = 150;
             wordDisplay.color = textColorForWord;
-            wordStrengthText.color = textColorForWord;
-            refreshPuzzleCountdownText.color = textColorForWord;
             submitWordButtonImage.color = backgroundColorForWord;
             submitWordBorder.SetActive(true);
             wordStrengthDivider.SetActive(true);
             countdownDivider.SetActive(true);
-            refreshPuzzleCountdownText.text = "" + countdown;
-            UpdateWordStrengthText(strength);
+            UpdateWordStrengthDisplay(strength);
+            UpdateCountdownDisplay(countdown);
         }
         else if ((countdown == 0) && (word.Length == 0)){
             wordDisplay.text = "NEW\nPUZZLE";
             wordDisplay.fontSize = 85;
             wordDisplay.color = validWordColor;
-            wordStrengthText.color = validWordColor;
-            refreshPuzzleCountdownText.color = validWordColor;
             submitWordButtonImage.color = canRefreshPuzzleColor;
             submitWordBorder.SetActive(true);
             wordStrengthDivider.SetActive(true);
             countdownDivider.SetActive(true);
-            refreshPuzzleCountdownText.text = "" + countdown;
-            UpdateWordStrengthText(strength);
+            UpdateWordStrengthDisplay(strength);
+            UpdateCountdownDisplay(countdown);
         }
         else {
             wordDisplay.text = word;
             wordDisplay.fontSize = 150;
             wordDisplay.color = invalidWordColor;
-            wordStrengthText.color = invalidWordColor;
-            refreshPuzzleCountdownText.color = invalidWordColor;
             submitWordButtonImage.color = invalidButtonColor;
             submitWordBorder.SetActive(false);
             wordStrengthDivider.SetActive(false);
             countdownDivider.SetActive(false);
-            refreshPuzzleCountdownText.text = "" + countdown;
-            UpdateWordStrengthText(strength);
+            UpdateWordStrengthDisplay(strength);
+            UpdateCountdownDisplay(countdown);
         }
     }
 
-    public void UpdateWordStrengthText(int strength){
-        wordStrengthText.fontSize = 120;
-        if (strength > 9)
-            wordStrengthText.fontSize = 85;
-        wordStrengthText.text = "" + strength;
+    public void UpdateWordStrengthDisplay(int strength){
+        if (strength < 10){
+            wordStrengthImageSingle.sprite = numberSprites[strength];
+            wordStrengthImageSingle.gameObject.SetActive(true);
+            wordStrengthImageOnes.gameObject.SetActive(false);
+            wordStrengthImageTens.gameObject.SetActive(false);
+        }
+        else{
+            int tens = (strength / 10);
+            int ones = strength - (tens * 10);
+            if (strength > 99){
+                ones = 9;
+                tens = 9;
+            }
+            wordStrengthImageOnes.sprite = numberSprites[ones];
+            wordStrengthImageTens.sprite = numberSprites[tens];
+            wordStrengthImageSingle.gameObject.SetActive(false);
+            wordStrengthImageOnes.gameObject.SetActive(true);
+            wordStrengthImageTens.gameObject.SetActive(true);
+        }
+    }
+
+    public void UpdateCountdownDisplay(int countdown){
+        if (countdown > 9)
+            countdown = 9;
+        countdownNumber.sprite = numberSprites[countdown];
+
     }
 
 
