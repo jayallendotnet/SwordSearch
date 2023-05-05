@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerAnimationTriggers : MonoBehaviour{
 
-    public WordDisplay wordDisplay;
+    public BattleManager battleManager;
     public Animator animator;
 
     [Header("Animation Objects")]
@@ -29,7 +29,7 @@ public class PlayerAnimationTriggers : MonoBehaviour{
     }
 
     public void StartAttack(){
-        BattleManager.PowerupTypes type = wordDisplay.powerupTypeForWord;
+        BattleManager.PowerupTypes type = battleManager.powerupTypeForWord;
         GameObject o = basicFire;
         switch (type){
             case BattleManager.PowerupTypes.Fire:

@@ -5,71 +5,70 @@ using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour {
 
-    public WordDisplay wordDisplay;
-    public Text enemyHealthText;
-    public Text playerHealthText;
+    private string word = "";
+    
+    [HideInInspector]
+    public List<LetterSpace> letterSpacesForWord = new List<LetterSpace>(){};
 
-    public int startingEnemyHealth = 30;
-    public int startingPlayerHealth = 30;
-    public int maxHealth = 99; //for display purposes
+    private LetterSpace lastLetterSpace = null;
+    private LetterSpace secondToLastLetterSpace = null;
 
+    [HideInInspector]
+    public BattleManager.PowerupTypes powerupTypeForWord;
+    [HideInInspector]
+    public int powerupLevel;
     private int enemyHealth = 0;
     private int playerHealth = 0;
-    public PuzzleGenerator puzzleGenerator;
-    public TextAsset wordLibraryForCheckingFile; //all words that can be considered valid, even if they are not in the generating list
     private string[] wordLibraryForChecking;
-    public int minCheckingWordLength = 3;
-    public Text refreshPuzzleCountdownText;
-
-    public int maxPuzzleCountdown = 3;
-    public int currentPuzzleCountdown;
-    public Color canRefreshPuzzleColor;
-    public Color cannotRefreshPuzzleColor;
-
+    private int countdownToRefresh;
     public enum PowerupTypes{None, Water, Fire, Heal, Dark, Earth, Lightning};
     [HideInInspector]
     public System.Array powerupArray = PowerupTypes.GetValues(typeof(BattleManager.PowerupTypes));
+    private int inProgressAttackStrength = 0;
+    private PowerupTypes inProgressAttackType;
+    private int inProgressAttackPowerupLevel = 0;
 
-    public Animator playerAnimator;
+    private bool isValidWord = false;
+    private int wordStrength = 0;
 
-    private int currentAttackDamage = 0;
-    private PowerupTypes currentAttackType;
-    private int currentAttackStrength = 0;
+
+    [Header("Game Variables")]
+    public int startingEnemyHealth = 30;
+    public int startingPlayerHealth = 30;
+    public int maxHealth = 99; //for display purposes
+    public int minCheckingWordLength = 3;
+    public int maxPuzzleCountdown = 3;
+
+    [Header("Scripts")]
+    public UIManager uiManager;
+    public PuzzleGenerator puzzleGenerator;
+
+    [Header("Libraries")]
+    public TextAsset wordLibraryForGenerationFile; //all words that can be used to generate the puzzle
+    public TextAsset wordLibraryForCheckingFile; //all words that can be considered valid, even if they are not in the generating list
+    public TextAsset randomLetterPoolFile;
+
 
     void Start(){
         wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
-        currentPuzzleCountdown = maxPuzzleCountdown;
+        countdownToRefresh = maxPuzzleCountdown;
         enemyHealth = startingEnemyHealth;
         playerHealth = startingPlayerHealth;
-        ColorUtility.TryParseHtmlString("#8DE1FF", out canRefreshPuzzleColor);
-        ColorUtility.TryParseHtmlString("#E7BD86", out cannotRefreshPuzzleColor);
-        DisplayHealths();
+
+        uiManager.InitializeColors();
+        uiManager.DisplayHealths(playerHealth, enemyHealth);
+        uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
     }
     
-    private void DisplayHealths(){
-        enemyHealthText.text = enemyHealth + "";
-        playerHealthText.text = playerHealth + "";
-
-    }
-
-    private void ShowPlayerTakingDamage(int amount){
-        if (amount > 0){
-            if (playerHealth == 0){
-                playerAnimator.SetTrigger("Die");
-            }
-            else
-                playerAnimator.SetTrigger("TakeDamage");
-        }
-    }
 
 
-    public bool IsValidWord(){
-        string w = wordDisplay.word;
-        if (w.Length < minCheckingWordLength)
-            return false;
-        if (SearchLibraryForWord(w))
-            return true;
-        return false;
+
+
+    public void SetIsValidWord(){
+        if (word.Length < minCheckingWordLength)
+            isValidWord = false;
+        else
+            isValidWord = SearchLibraryForWord(word);
     }
 
     private bool SearchLibraryForWord(string word){
@@ -78,68 +77,62 @@ public class BattleManager : MonoBehaviour {
         return (result > -1);
     }
 
-    public int calculateDamage(){
-        int val =  Mathf.FloorToInt(Mathf.Pow((wordDisplay.word.Length - 2), 2));
-        if (wordDisplay.word.Length < 2)
-            val = 0;
-        return val;
+    public void CalcWordStrength(){
+        if (word.Length < 2)
+            wordStrength = 0;
+        else
+            wordStrength =  Mathf.FloorToInt(Mathf.Pow((word.Length - 2), 2));
     }
+
+
 
     private void DamageEnemyHealth(int amount){
         //print("damaging health by: " + amount);
         enemyHealth -= amount;
         if (enemyHealth < 0)
             enemyHealth = 0;
-        DisplayHealths();
+        uiManager.DisplayHealths(playerHealth, enemyHealth);
     }
 
     private void DamagePlayerHealth(int amount){
         playerHealth -= amount;
         if (playerHealth < 0)
             playerHealth = 0;
-        DisplayHealths();
-        ShowPlayerTakingDamage(amount);
+        uiManager.ShowPlayerTakingDamage(amount, playerHealth > 0);
+        uiManager.DisplayHealths(playerHealth, enemyHealth);
     }
 
     public void PressSubmitWordButton(){
-        if (IsValidWord()){
-            if (wordDisplay.powerupTypeForWord == PowerupTypes.Heal)
-                playerAnimator.SetTrigger("StartHeal");
-            //if (wordDisplay.powerupTypeForWord != PowerupTypes.None)
-            //    print("your word has a powerup! type[" + wordDisplay.powerupTypeForWord + "] strength[" + wordDisplay.powerupStrength + "]");
+        if (isValidWord){
+            if (powerupTypeForWord == PowerupTypes.Heal)
+                uiManager.StartPlayerHealAnimation();
             else
-                playerAnimator.SetTrigger("StartCast");
+                uiManager.StartPlayerCastAnimation();
             SetCurrentAttackData();
-            //DamageEnemyHealth(calculateDamage());
-            //DamagePlayerHealth(20);
             DecrementRefreshPuzzleCountdown();
-            wordDisplay.ClearWord();
+            ClearWord();
         }
-        else{
-            if (wordDisplay.word.Length == 0){
-                if (currentPuzzleCountdown == 0)
-                    PressRefreshPuzzleButton();
-            }
-                
-
+        else if ((word.Length == 0) && (countdownToRefresh == 0)){
+            puzzleGenerator.GenerateNewPuzzle();
+            countdownToRefresh = maxPuzzleCountdown;
+            ClearWord();           
         }
-
     }
 
     private void SetCurrentAttackData(){
-        currentAttackDamage = calculateDamage();
-        currentAttackType = wordDisplay.powerupTypeForWord;
-        currentAttackStrength = wordDisplay.powerupStrength;
+        inProgressAttackStrength = wordStrength;
+        inProgressAttackType = powerupTypeForWord;
+        inProgressAttackPowerupLevel = powerupLevel;
     }
 
     public void ApplyAttackToEnemy(){
-        print("attack hits enemy! damage [" + currentAttackDamage + "] type [" + currentAttackType + "] strength [" + currentAttackStrength +"]");
-        DamageEnemyHealth(currentAttackDamage);
+        //print("attack hits enemy! damage [" + currentAttackDamage + "] type [" + currentAttackType + "] strength [" + currentAttackStrength +"]");
+        DamageEnemyHealth(inProgressAttackStrength);
     }
 
     public void ApplyHealToSelf(){
-        int healAmount = currentAttackDamage * 3;
-        print("heal hits self! amount [" + healAmount + "] type [" + currentAttackType + "] strength [" + currentAttackStrength +"]");
+        int healAmount = inProgressAttackStrength * 3;
+        //print("heal hits self! amount [" + healAmount + "] type [" + currentAttackType + "] strength [" + currentAttackStrength +"]");
         HealPlayerHealth(healAmount * 3);
     }
 
@@ -147,27 +140,117 @@ public class BattleManager : MonoBehaviour {
         playerHealth += amount;
         if (playerHealth > 99)
             playerHealth = 99;
-        DisplayHealths();
+        uiManager.DisplayHealths(playerHealth, enemyHealth);
     }
 
     private void DecrementRefreshPuzzleCountdown(){
-        currentPuzzleCountdown --;
-        if (currentPuzzleCountdown < 0)
-            currentPuzzleCountdown = 0;
-        UpdateRefreshPuzzleButton();
+        countdownToRefresh --;
+        if (countdownToRefresh < 0)
+            countdownToRefresh = 0;
     }
 
-    public void PressRefreshPuzzleButton(){
-        if (currentPuzzleCountdown == 0){
-            puzzleGenerator.GenerateNewPuzzle();
-            currentPuzzleCountdown = maxPuzzleCountdown;
-            wordDisplay.ClearWord();
-            UpdateRefreshPuzzleButton();
+    public void AddLetter(LetterSpace ls){
+        word += ls.letter;
+        SetIsValidWord();
+        CalcWordStrength();
+        //text.text += ls.letter;
+        letterSpacesForWord.Add(ls);
+        if (lastLetterSpace != null){
+            lastLetterSpace.nextLetterSpace = ls;
+            ls.previousLetterSpace = lastLetterSpace;
+        }
+        SetLastTwoLetterSpaces();
+        UpdatePowerupTypeAndStrengthForWord();
+        uiManager.UpdateColorsForWord(word, powerupTypeForWord);
+        uiManager.UpdatePowerupIcon(powerupTypeForWord);
+        uiManager.UpdateVisualsForLettersInWord(letterSpacesForWord);
+        uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
+    }
+
+    public void RemoveLetter(LetterSpace ls){
+        //assumes the last letter in the list is the provided letter
+        if (word.Length < 2)
+            word = "";
+        else
+            word = word.Substring(0, (word.Length - 1));
+        SetIsValidWord();
+        CalcWordStrength();
+        letterSpacesForWord.Remove(ls);
+        ls.ShowAsNotPartOfWord();
+        if (secondToLastLetterSpace != null){
+            secondToLastLetterSpace.nextLetterSpace = null;
+            lastLetterSpace.previousLetterSpace = null;
+        }
+        SetLastTwoLetterSpaces();
+        UpdatePowerupTypeAndStrengthForWord();
+        uiManager.UpdateColorsForWord(word, powerupTypeForWord);
+        uiManager.UpdatePowerupIcon(powerupTypeForWord);
+        uiManager.UpdateVisualsForLettersInWord(letterSpacesForWord);
+        uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
+    }
+
+    private void UpdatePowerupTypeAndStrengthForWord(){
+        if (letterSpacesForWord.Count == 0)
+            return;
+        powerupTypeForWord = BattleManager.PowerupTypes.None;
+        powerupLevel = 0;
+        foreach (LetterSpace ls in letterSpacesForWord){
+            if (ls.powerupType != BattleManager.PowerupTypes.None){
+                powerupLevel++;
+                if (powerupLevel == 1)
+                    powerupTypeForWord = ls.powerupType;
+            }
+
         }
     }
 
-    private void UpdateRefreshPuzzleButton(){
-        refreshPuzzleCountdownText.text = "" + currentPuzzleCountdown;
+
+        private void SetLastTwoLetterSpaces(){
+        lastLetterSpace = null;
+        secondToLastLetterSpace = null;
+        if (letterSpacesForWord.Count > 0)
+            lastLetterSpace = letterSpacesForWord[letterSpacesForWord.Count - 1];
+        if (letterSpacesForWord.Count > 1)
+            secondToLastLetterSpace = letterSpacesForWord[letterSpacesForWord.Count - 2];
+
+    }
+
+
+
+    public bool CanAddLetter(LetterSpace letterSpace){
+        if (letterSpace.hasBeenUsedInAWordAlready)
+            return false;
+        if (letterSpacesForWord.Contains(letterSpace))
+            return false;
+        if (letterSpacesForWord.Count == 0)
+            return true;
+        if (letterSpacesForWord.Count > 8) //decide on some limit, based on screen / text size?
+            return false;
+        if (letterSpace.IsAdjacentToLetterSpace(lastLetterSpace))
+            return true;
+        return false;
+    }
+
+    public bool CanRemoveLetter(LetterSpace letterSpace){
+        if (letterSpacesForWord.Count == 0)
+            return false;
+        return (lastLetterSpace == letterSpace);
+    }
+
+    public void ClearWord(){
+        foreach (LetterSpace ls in letterSpacesForWord){
+            ls.previousLetterSpace = null;
+            ls.nextLetterSpace = null;
+            ls.hasBeenUsedInAWordAlready = true;
+            ls.ShowAsNotPartOfWord();
+        }
+        letterSpacesForWord = new List<LetterSpace>();
+        SetLastTwoLetterSpaces();
+        word = "";
+        isValidWord = false;
+        wordStrength = 0;
+        uiManager.UpdatePowerupIcon(PowerupTypes.None);
+        uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
     }
 
 

@@ -10,29 +10,23 @@ public class PuzzleGenerator : MonoBehaviour {
     //the first dimension is height, second dimension is width. [0,2] represents the third element of the top row
     private LetterSpace[,] letterSpaces;
     private char[,] letters;
-
-    public TextAsset randomLetterPoolFile;
     private char[] randomLetterPool;
-    public WordDisplay wordDisplay;
-
-    bool useStartingLayout = false;
+    private bool useStartingLayout = false;
     private char[,] startingLayout = {{'-', '-', '-', '-', 'A'}, {'O', 'R', '-', 'L', 'V'}, {'W', 'S', 'D', 'S', 'I'}, {'-', 'A', 'R', 'R', 'U'}, {'-', '-', '-', 'P', 'Y'}, {'-', 'L', 'A', 'T', '-'}, {'P', '-', '-', '-', '-'}};
-
-    public int maxAttemptsPerPuzzle = 3;
-
-    public TextAsset wordLibraryForGenerationFile; //all words that can be used to generate the puzzle
     private string[] wordLibraryForGeneration;
 
-    [Header("Word Rules")]
+    [Header("Puzle Generation Rules")]
     public int wordCount = 3;
+    public int maxAttemptsPerPuzzle = 3;
     public int minGenerationWordLength = 3;
     public int maxGenerationWordLength = 6;
 
+    [Header("Scripts")]
     public BattleManager battleManager;
 
     void Start() {
-        wordLibraryForGeneration = wordLibraryForGenerationFile.text.Split("\r\n");
-        randomLetterPool = randomLetterPoolFile.text.ToCharArray();
+        wordLibraryForGeneration = battleManager.wordLibraryForGenerationFile.text.Split("\r\n");
+        randomLetterPool = battleManager.randomLetterPoolFile.text.ToCharArray();
         GetPuzzleDimensions();
         GenerateNewPuzzle();
     }
@@ -97,10 +91,10 @@ public class PuzzleGenerator : MonoBehaviour {
                 ClearPuzzle();
             attemptCount++;
         }
-        if (succeeded)
-            print("puzzle generation completed on attempt " + (attemptCount - maxAttemptsPerPuzzle));
-        else
-            print("puzzle generation failed. attempts made: " + attemptCount);
+        //if (succeeded)
+        //    print("puzzle generation completed on attempt " + (attemptCount - maxAttemptsPerPuzzle));
+        //else
+        //    print("puzzle generation failed. attempts made: " + attemptCount);
 
         return succeeded;
 
@@ -364,7 +358,7 @@ public class PuzzleGenerator : MonoBehaviour {
         for (int i = 0; i < height; i++){
             for (int j = 0; j < width; j++){
                 letterSpaces[i, j] = transform.GetChild((i * width) + j).GetComponent<LetterSpace>();
-                letterSpaces[i,j].wordDisplay = wordDisplay;
+                letterSpaces[i,j].battleManager = battleManager;
                 letterSpaces[i,j].position = new Vector2(i,j);
             }
         }

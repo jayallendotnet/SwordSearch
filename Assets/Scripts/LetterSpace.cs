@@ -7,6 +7,23 @@ public class LetterSpace : MonoBehaviour{
 
     [HideInInspector]
     public char letter;
+
+    //when the letter space is part of the word, previousletterspace and nextletterspace link to other letters in the word
+    [HideInInspector]
+    public LetterSpace previousLetterSpace = null;
+    [HideInInspector]
+    public LetterSpace nextLetterSpace = null;    
+    [HideInInspector]
+    public Vector2 position = Vector2.zero;
+    [HideInInspector]
+    public BattleManager.PowerupTypes powerupType = BattleManager.PowerupTypes.None;
+    [HideInInspector]
+    public bool hasBeenUsedInAWordAlready = false;
+    [HideInInspector]
+    public BattleManager battleManager;
+
+
+    [Header("GameObjects")]
     public Text text;
     public GameObject selectedSignifier;
     public GameObject powerupIcon;
@@ -20,23 +37,6 @@ public class LetterSpace : MonoBehaviour{
     public GameObject bottomLeftConnector;
     public GameObject leftConnector;
     public GameObject topLeftConnector;
-
-    [HideInInspector]
-    public WordDisplay wordDisplay;
-
-    //when the letter space is part of the word, previousletterspace and nextletterspace link to other letters in the word
-    [HideInInspector]
-    public LetterSpace previousLetterSpace = null;
-    [HideInInspector]
-    public LetterSpace nextLetterSpace = null;
-
-
-    public Vector2 position = Vector2.zero;
-    public BattleManager.PowerupTypes powerupType = BattleManager.PowerupTypes.None;
-
-    [HideInInspector]
-    public bool hasBeenUsedInAWordAlready = false;
-
     public Image[] colorableBackgroundImages = new Image[9];
 
     public void UpdateLetter(char letter){
@@ -45,10 +45,10 @@ public class LetterSpace : MonoBehaviour{
     }
 
     public void ClickedLetter(){
-        if (wordDisplay.CanAddLetter(this))
-            wordDisplay.AddLetter(this);
-        else if (wordDisplay.CanRemoveLetter(this))
-            wordDisplay.RemoveLetter(this);
+        if (battleManager.CanAddLetter(this))
+            battleManager.AddLetter(this);
+        else if (battleManager.CanRemoveLetter(this))
+            battleManager.RemoveLetter(this);
             
     }
 
@@ -147,7 +147,7 @@ public class LetterSpace : MonoBehaviour{
             powerupIcon.SetActive(false);
         else{
             powerupIcon.SetActive(true);
-            PowerupDisplayData d = wordDisplay.GetPowerupDisplayDataWithType(powerupType);
+            PowerupDisplayData d = battleManager.uiManager.GetPowerupDisplayDataWithType(powerupType);
             Color t = d.textColor;
             Color b = d.backgroundColor;
             text.color = t;
