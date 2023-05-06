@@ -56,8 +56,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
                 break;
         }
         //o = powerLightning;
-        GameObject newAttack = Instantiate(o);
-        newAttack.transform.SetParent(transform);
+        GameObject newAttack = Instantiate(o, transform);
         newAttack.SetActive(false);
         newAttack.GetComponent<AttackAnimatorFunctions>().SetStats(type, strength, powerupLevel, battleManager);
         attacksInProgress.Add(newAttack);   
