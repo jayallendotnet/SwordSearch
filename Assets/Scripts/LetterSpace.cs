@@ -44,14 +44,6 @@ public class LetterSpace : MonoBehaviour{
         text.text = "" + letter;
     }
 
-    public void ClickedLetter(){
-        if (battleManager.CanAddLetter(this))
-            battleManager.AddLetter(this);
-        else if (battleManager.CanRemoveLetter(this))
-            battleManager.RemoveLetter(this);
-            
-    }
-
     public void ShowAsPartOfWord(Color textColor, Color backgroundColor){
         selectedSignifier.SetActive(true);
         ShowDirectionsToNeighbors();

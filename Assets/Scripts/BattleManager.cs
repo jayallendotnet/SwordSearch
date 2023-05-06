@@ -253,6 +253,61 @@ public class BattleManager : MonoBehaviour {
         UpdateSubmitVisuals();
     }
 
+    public void ProcessBeginSwipeOnLetterSpace(LetterSpace space){
+        if (CanAddLetter(space))
+            AddLetter(space);
+        /*
+        else if ((CanRemoveLetter(space)) && (word.Length == 1)){
+            RemoveLetter(space);
+        }
+        */
+    }
 
+    public void ProcessSwipeOffLetterSpace(LetterSpace space){        
+        if (word.Length == 0){
+            if (CanAddLetter(space))
+                AddLetter(space);
+        }
+
+        else if (CanAddLetter(space))
+            AddLetter(space);
+
+        //print("swiped off letter space: " + space.position);
+
+    }
+
+    public void ProcessSwipeOnLetterSpace(LetterSpace space){
+        if (word.Length == 0){
+            if (CanAddLetter(space))
+                AddLetter(space);
+        }
+
+        else if (CanAddLetter(space))
+            AddLetter(space);
+
+        else if (space == secondToLastLetterSpace){
+            if (CanRemoveLetter(lastLetterSpace))
+                RemoveLetter(lastLetterSpace);
+        }
+        //print("swiped on letter space: " + space.position);
+
+    }
+
+    public void ProcessSwipeReleaseOnLetterSpace(LetterSpace space){
+        if ((word.Length == 1) && (CanRemoveLetter(space)))
+            RemoveLetter(space);
+        //print("swipe released on letter space: " + space.position);
+
+    }
+
+    public void ProcessTapReleaseOnLetterSpace(LetterSpace space){
+        if (CanAddLetter(space))
+            AddLetter(space);
+        else if (CanRemoveLetter(space))
+            RemoveLetter(space);
+        //print("tap released on letter space: " + space.position);
+
+    }
+    
 }
  

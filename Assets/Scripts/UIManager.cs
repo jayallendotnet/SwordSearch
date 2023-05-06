@@ -154,7 +154,6 @@ public class UIManager : MonoBehaviour {
         if (countdown > 9)
             countdown = 9;
         countdownNumber.sprite = numberSprites[countdown];
-
     }
 
 
@@ -165,8 +164,6 @@ public class UIManager : MonoBehaviour {
         }
         return null;
     }
-
-
 }
 
 [System.Serializable]
