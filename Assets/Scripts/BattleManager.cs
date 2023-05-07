@@ -85,6 +85,7 @@ public class BattleManager : MonoBehaviour {
         enemyHealth -= amount;
         if (enemyHealth < 0)
             enemyHealth = 0;
+        uiManager.ShowEnemyTakingDamage(amount, enemyHealth > 0);
         uiManager.DisplayHealths(playerHealth, enemyHealth);
     }
 
@@ -114,7 +115,7 @@ public class BattleManager : MonoBehaviour {
     }
 
     private void SetCurrentAttackData(){
-        playerAnimatorFunctions.CreateAnimation(powerupTypeForWord, wordStrength, powerupLevel);
+        playerAnimatorFunctions.CreateAttackAnimation(powerupTypeForWord, wordStrength, powerupLevel);
     }
 
     public void DoAttackEffect(PowerupTypes type, int strength, int powerupLevel){
@@ -142,6 +143,15 @@ public class BattleManager : MonoBehaviour {
         playerHealth += amount;
         if (playerHealth > 99)
             playerHealth = 99;
+        uiManager.ShowPlayerGettingHealed(amount);
+        uiManager.DisplayHealths(playerHealth, enemyHealth);
+    }
+
+    private void HealEnemyHealth(int amount){
+        enemyHealth += amount;
+        if (enemyHealth > 99)
+            enemyHealth = 99;
+        uiManager.ShowEnemyGettingHealed(amount);
         uiManager.DisplayHealths(playerHealth, enemyHealth);
     }
 

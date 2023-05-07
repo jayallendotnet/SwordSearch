@@ -33,9 +33,21 @@ public class UIManager : MonoBehaviour {
     [Header("Numbers")]
     public Sprite[] numberSprites;
 
+    [Header("Player and Enemy")]
+    public Animator playerAnimator;
+    public Transform playerObject;
+    public GameObject playerHealDoubleDigitPrefab;
+    public GameObject playerHealSingleDigitPrefab;
+    public GameObject playerDamageDoubleDigitPrefab;
+    public GameObject playerDamageSingleDigitPrefab;
+    public Transform enemyObject;
+    public GameObject enemyHealDoubleDigitPrefab;
+    public GameObject enemyHealSingleDigitPrefab;
+    public GameObject enemyDamageDoubleDigitPrefab;
+    public GameObject enemyDamageSingleDigitPrefab;
+
     [Header("Misc")]
     public BattleManager battleManager;
-    public Animator playerAnimator;
 
     private Color validWordColor;
     private Color invalidWordColor;
@@ -63,11 +75,38 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowPlayerTakingDamage(int amount, bool stillAlive){
+        ShowNumbersAsChild(playerDamageSingleDigitPrefab, playerDamageDoubleDigitPrefab, playerObject, amount);
         if (stillAlive)
             playerAnimator.SetTrigger("TakeDamage");
         else
             playerAnimator.SetTrigger("Die");   
     }
+    public void ShowPlayerGettingHealed(int amount){
+        ShowNumbersAsChild(playerHealSingleDigitPrefab, playerHealDoubleDigitPrefab, playerObject, amount);
+    }
+
+    public void ShowEnemyTakingDamage(int amount, bool stillAlive){
+        ShowNumbersAsChild(enemyDamageSingleDigitPrefab, enemyDamageDoubleDigitPrefab, enemyObject, amount);
+    }
+
+    public void ShowEnemyGettingHealed(int amount){
+        ShowNumbersAsChild(enemyHealSingleDigitPrefab, enemyHealDoubleDigitPrefab, enemyObject, amount);
+        
+    }
+
+    private void ShowNumbersAsChild(GameObject singleDigitPrefab, GameObject doubleDigitPrefab, Transform parent, int amount){
+        if (amount < 10){
+            GameObject obj = Instantiate(singleDigitPrefab, parent);
+            obj.transform.Find("Ones").GetComponent<Image>().sprite = numberSprites[amount];
+        }
+        else{
+            Vector2 temp = GetTensAndOnes(amount);
+            GameObject obj = Instantiate(doubleDigitPrefab, parent);
+            obj.transform.Find("Ones").GetComponent<Image>().sprite = numberSprites[(int)temp[1]];
+            obj.transform.Find("Tens").GetComponent<Image>().sprite = numberSprites[(int)temp[0]];
+        }
+    }
+
 
     public void StartPlayerCastAnimation(){
         playerAnimator.SetTrigger("StartCast");

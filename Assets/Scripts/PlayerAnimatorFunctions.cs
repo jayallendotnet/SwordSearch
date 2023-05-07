@@ -10,7 +10,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
 
     private List<GameObject> attacksInProgress = new List<GameObject>();
 
-    [Header("Animation Objects")]
+    [Header("Attack Animation Objects")]
     public GameObject DeathBubble;
     public GameObject basicFirePrefab;
     public GameObject powerFirePrefab;
@@ -23,6 +23,12 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
     public GameObject basicLightningPrefab;
     public GameObject powerLightningPrefab;
     public GameObject powerHealPrefab;
+
+    [Header("Health Change Animation Objects")]
+    public GameObject playerHealSingleDigitPrefab;
+    public GameObject playerHealDoubleDigitPrefab;
+
+
     
 
     void Start(){
@@ -30,7 +36,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
             t.gameObject.SetActive(false);
     }
 
-    public void CreateAnimation(BattleManager.PowerupTypes type, int strength, int powerupLevel){
+    public void CreateAttackAnimation(BattleManager.PowerupTypes type, int strength, int powerupLevel){
         GameObject o = basicFirePrefab;
         switch (type){
             case BattleManager.PowerupTypes.Fire:
