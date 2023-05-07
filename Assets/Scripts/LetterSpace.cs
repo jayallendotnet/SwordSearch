@@ -21,6 +21,8 @@ public class LetterSpace : MonoBehaviour{
     public bool hasBeenUsedInAWordAlready = false;
     [HideInInspector]
     public BattleManager battleManager;
+    [HideInInspector]
+    public bool wasActiveBeforeFingerDown = false;
 
 
     [Header("GameObjects")]

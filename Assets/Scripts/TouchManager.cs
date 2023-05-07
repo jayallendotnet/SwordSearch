@@ -35,6 +35,7 @@ public class TouchManager : MonoBehaviour {
             startingFingerPlacement = Input.mousePosition;
             tapping = true;
             SetLetterSpaceUnderFinger();
+            ProcessFingerDownOnLetter(spaceUnderFinger);
         }
         else if (Input.GetMouseButton(0)){
             bool wasTapping = tapping;
@@ -62,7 +63,15 @@ public class TouchManager : MonoBehaviour {
         }
     }
 
+    private void ProcessFingerDownOnLetter(LetterSpace space){
+        battleManager.ProcessFingerDown();
+        if (space == null)
+            return;
+        battleManager.ProcessFingerDownOnLetter(space);
+    }
+
     private void ProcessBeginSwipeOnLetterSpace(LetterSpace space){
+        battleManager.ProcessBeginSwipe();
         if (space == null)
             return;
         battleManager.ProcessBeginSwipeOnLetterSpace(space);

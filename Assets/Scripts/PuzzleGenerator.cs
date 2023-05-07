@@ -8,7 +8,8 @@ public class PuzzleGenerator : MonoBehaviour {
 
     //representations of the game board as 2d arrays
     //the first dimension is height, second dimension is width. [0,2] represents the third element of the top row
-    private LetterSpace[,] letterSpaces;
+    [HideInInspector]
+    public LetterSpace[,] letterSpaces;
     private char[,] letters;
     private char[] randomLetterPool;
     private bool useStartingLayout = false;

@@ -27,6 +27,7 @@ public class BattleManager : MonoBehaviour {
 
     private bool isValidWord = false;
     private int wordStrength = 0;
+    private bool hasSwipedOffALetter = false;
 
 
     [Header("Game Variables")]
@@ -253,60 +254,57 @@ public class BattleManager : MonoBehaviour {
         UpdateSubmitVisuals();
     }
 
+    public void ProcessFingerDown(){
+        SetLetterSpaceActiveBeforeFingerDown();
+        hasSwipedOffALetter = false;
+    }
+
+    public void ProcessBeginSwipe(){
+    }
+
     public void ProcessBeginSwipeOnLetterSpace(LetterSpace space){
         if (CanAddLetter(space))
             AddLetter(space);
-        /*
-        else if ((CanRemoveLetter(space)) && (word.Length == 1)){
-            RemoveLetter(space);
-        }
-        */
     }
 
-    public void ProcessSwipeOffLetterSpace(LetterSpace space){        
-        if (word.Length == 0){
-            if (CanAddLetter(space))
-                AddLetter(space);
-        }
-
-        else if (CanAddLetter(space))
+    public void ProcessSwipeOffLetterSpace(LetterSpace space){      
+        hasSwipedOffALetter = true;  
+        if (CanAddLetter(space))
             AddLetter(space);
-
-        //print("swiped off letter space: " + space.position);
-
     }
 
     public void ProcessSwipeOnLetterSpace(LetterSpace space){
-        if (word.Length == 0){
-            if (CanAddLetter(space))
-                AddLetter(space);
-        }
-
-        else if (CanAddLetter(space))
+        if (CanAddLetter(space))
             AddLetter(space);
-
         else if (space == secondToLastLetterSpace){
             if (CanRemoveLetter(lastLetterSpace))
                 RemoveLetter(lastLetterSpace);
         }
-        //print("swiped on letter space: " + space.position);
+    }
 
+    public void ProcessFingerDownOnLetter(LetterSpace space){
+        if (CanAddLetter(space))
+            AddLetter(space);
     }
 
     public void ProcessSwipeReleaseOnLetterSpace(LetterSpace space){
-        if ((word.Length == 1) && (CanRemoveLetter(space)))
+        if ((space.wasActiveBeforeFingerDown) && (CanRemoveLetter(space)) && (!hasSwipedOffALetter))
             RemoveLetter(space);
-        //print("swipe released on letter space: " + space.position);
-
+        else if ((word.Length == 1) && (hasSwipedOffALetter) && (CanRemoveLetter(space)))
+            RemoveLetter(space);
     }
 
     public void ProcessTapReleaseOnLetterSpace(LetterSpace space){
-        if (CanAddLetter(space))
-            AddLetter(space);
-        else if (CanRemoveLetter(space))
+        if ((space.wasActiveBeforeFingerDown) && (CanRemoveLetter(space)))
             RemoveLetter(space);
-        //print("tap released on letter space: " + space.position);
+    }
 
+    private void SetLetterSpaceActiveBeforeFingerDown(){
+        foreach (LetterSpace ls in puzzleGenerator.letterSpaces){
+            ls.wasActiveBeforeFingerDown = false;
+            if (letterSpacesForWord.Contains(ls))
+                ls.wasActiveBeforeFingerDown = true;
+        }
     }
     
 }
