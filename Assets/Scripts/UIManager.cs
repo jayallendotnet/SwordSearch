@@ -6,8 +6,12 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour {
 
     [Header("GameObjects")]
-    public Text playerHealthDisplay;
-    public Text enemyHealthDisplay;
+    public Image playerHealthOnes;
+    public Image playerHealthTens;
+    public Image enemyHealthOnes;
+    public Image enemyHealthTens;
+    //public Text playerHealthDisplay;
+    //public Text enemyHealthDisplay;
 
 
     [Header("Submit Word Button")]
@@ -50,9 +54,12 @@ public class UIManager : MonoBehaviour {
 
 
     public void DisplayHealths(int playerHealth, int enemyHealth){
-        enemyHealthDisplay.text = enemyHealth + "";
-        playerHealthDisplay.text = playerHealth + "";
-
+        Vector2 enemyHP = GetTensAndOnes(enemyHealth);
+        Vector2 playerHP = GetTensAndOnes(playerHealth);
+        playerHealthOnes.sprite = numberSprites[(int)playerHP[1]];
+        playerHealthTens.sprite = numberSprites[(int)playerHP[0]];
+        enemyHealthOnes.sprite = numberSprites[(int)enemyHP[1]];
+        enemyHealthTens.sprite = numberSprites[(int)enemyHP[0]];
     }
 
     public void ShowPlayerTakingDamage(int amount, bool stillAlive){
@@ -136,18 +143,23 @@ public class UIManager : MonoBehaviour {
             wordStrengthImageTens.gameObject.SetActive(false);
         }
         else{
-            int tens = (strength / 10);
-            int ones = strength - (tens * 10);
-            if (strength > 99){
-                ones = 9;
-                tens = 9;
-            }
-            wordStrengthImageOnes.sprite = numberSprites[ones];
-            wordStrengthImageTens.sprite = numberSprites[tens];
+            Vector2 str = GetTensAndOnes(strength);
+            wordStrengthImageOnes.sprite = numberSprites[(int)str[1]];
+            wordStrengthImageTens.sprite = numberSprites[(int)str[0]];
             wordStrengthImageSingle.gameObject.SetActive(false);
             wordStrengthImageOnes.gameObject.SetActive(true);
             wordStrengthImageTens.gameObject.SetActive(true);
         }
+    }
+
+    private Vector2 GetTensAndOnes(int val){
+        int tens = (val / 10);
+        int ones = val - (tens * 10);
+        if (val > 99){
+            ones = 9;
+            tens = 9;
+        }
+        return new Vector2(tens, ones);
     }
 
     public void UpdateCountdownDisplay(int countdown){
