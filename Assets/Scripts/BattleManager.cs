@@ -129,6 +129,10 @@ public class BattleManager : MonoBehaviour {
         }
     }
 
+    public void DoEnemyAttackEffect(){
+        DamagePlayerHealth(1);
+    }
+
 
     public void ApplyAttackToEnemy(PowerupTypes type, int strength, int powerupLevel){
         DamageEnemyHealth(strength);

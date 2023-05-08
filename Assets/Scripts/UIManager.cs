@@ -10,8 +10,7 @@ public class UIManager : MonoBehaviour {
     public Image playerHealthTens;
     public Image enemyHealthOnes;
     public Image enemyHealthTens;
-    //public Text playerHealthDisplay;
-    //public Text enemyHealthDisplay;
+    public Transform playerAttackAnimationParent;
 
 
     [Header("Submit Word Button")]
@@ -40,6 +39,7 @@ public class UIManager : MonoBehaviour {
     public GameObject playerHealSingleDigitPrefab;
     public GameObject playerDamageDoubleDigitPrefab;
     public GameObject playerDamageSingleDigitPrefab;
+    public Animator enemyAnimator;
     public Transform enemyObject;
     public GameObject enemyHealDoubleDigitPrefab;
     public GameObject enemyHealSingleDigitPrefab;
@@ -86,7 +86,11 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowEnemyTakingDamage(int amount, bool stillAlive){
-        ShowNumbersAsChild(enemyDamageSingleDigitPrefab, enemyDamageDoubleDigitPrefab, enemyObject, amount);
+        ShowNumbersAsChild(enemyDamageSingleDigitPrefab, enemyDamageDoubleDigitPrefab, enemyObject, amount);        
+        if (stillAlive)
+            enemyAnimator.SetTrigger("TakeDamage");
+        else
+            enemyAnimator.SetTrigger("Die");   
     }
 
     public void ShowEnemyGettingHealed(int amount){
