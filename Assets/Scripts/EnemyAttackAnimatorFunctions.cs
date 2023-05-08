@@ -5,8 +5,18 @@ using UnityEngine.UI;
 
 public class EnemyAttackAnimatorFunctions : MonoBehaviour{
 
+    public BattleManager battleManager;
+
     public void DoEnemyAttackEffect(){
-        FindObjectOfType<BattleManager>().DoEnemyAttackEffect();
+        battleManager.DoEnemyAttackEffect();
+    }
+
+    public void QueueNextAttack(){
+        battleManager.QueueEnemyAttack();
+    }
+
+    public void ReturnedToIdle(){
+        battleManager.EnemyReturnedToIdle();
     }
 
 }

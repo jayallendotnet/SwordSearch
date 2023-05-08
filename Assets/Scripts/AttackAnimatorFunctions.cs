@@ -18,7 +18,7 @@ public class AttackAnimatorFunctions : MonoBehaviour{
     }
 
     public void DestroySelf(){
-        Destroy(this.gameObject);
+        battleManager.PlayerAttackAnimationFinished(this.gameObject);
     }
 
     public void DoAttackEffect(){

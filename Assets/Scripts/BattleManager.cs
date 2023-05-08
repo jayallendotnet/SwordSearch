@@ -28,6 +28,7 @@ public class BattleManager : MonoBehaviour {
     private bool isValidWord = false;
     private int wordStrength = 0;
     private bool hasSwipedOffALetter = false;
+    private bool waitingForEnemyAttackToFinish = false;
 
 
     [Header("Game Variables")]
@@ -41,6 +42,7 @@ public class BattleManager : MonoBehaviour {
     public UIManager uiManager;
     public PuzzleGenerator puzzleGenerator;
     public PlayerAnimatorFunctions playerAnimatorFunctions;
+    public EnemyData enemyData;
 
     [Header("Libraries")]
     public TextAsset wordLibraryForGenerationFile; //all words that can be used to generate the puzzle
@@ -57,6 +59,7 @@ public class BattleManager : MonoBehaviour {
         uiManager.InitializeColors();
         uiManager.DisplayHealths(playerHealth, enemyHealth);
         uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
+        QueueEnemyAttack();
     }
     
     public void SetIsValidWord(){
@@ -79,14 +82,14 @@ public class BattleManager : MonoBehaviour {
             wordStrength =  Mathf.FloorToInt(Mathf.Pow((word.Length - 2), 2));
     }
 
-
-
     private void DamageEnemyHealth(int amount){
         enemyHealth -= amount;
         if (enemyHealth < 0)
             enemyHealth = 0;
         uiManager.ShowEnemyTakingDamage(amount, enemyHealth > 0);
         uiManager.DisplayHealths(playerHealth, enemyHealth);
+        if (enemyHealth == 0)
+            uiManager.CancelEnemyAttack();
     }
 
     private void DamagePlayerHealth(int amount){
@@ -99,10 +102,11 @@ public class BattleManager : MonoBehaviour {
 
     public void PressSubmitWordButton(){
         if (isValidWord){
-            if (powerupTypeForWord == PowerupTypes.Heal)
-                uiManager.StartPlayerHealAnimation();
-            else
-                uiManager.StartPlayerCastAnimation();
+            if (uiManager.enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                StartPlayingPlayerAttackAnimation();
+            else{
+                PlayPlayerAttackAnimationAfterEnemyFinishes();
+            }
             SetCurrentAttackData();
             DecrementRefreshPuzzleCountdown();
             ClearWord();
@@ -112,6 +116,18 @@ public class BattleManager : MonoBehaviour {
             countdownToRefresh = maxPuzzleCountdown;
             ClearWord();           
         }
+    }
+
+    private void StartPlayingPlayerAttackAnimation(){
+        uiManager.PauseEnemyAttackTimer();
+        if (powerupTypeForWord == PowerupTypes.Heal)
+            uiManager.StartPlayerHealAnimation();
+        else
+            uiManager.StartPlayerCastAnimation();
+    }
+
+    private void PlayPlayerAttackAnimationAfterEnemyFinishes(){
+        waitingForEnemyAttackToFinish = true;
     }
 
     private void SetCurrentAttackData(){
@@ -130,7 +146,7 @@ public class BattleManager : MonoBehaviour {
     }
 
     public void DoEnemyAttackEffect(){
-        DamagePlayerHealth(1);
+        DamagePlayerHealth(enemyData.attackDamage);
     }
 
 
@@ -320,6 +336,40 @@ public class BattleManager : MonoBehaviour {
                 ls.wasActiveBeforeFingerDown = true;
         }
     }
+
+    public void QueueEnemyAttack(){
+        uiManager.StartEnemyAttackTimer(enemyData.attackSpeed);
+    }
+
+    public void EnemyReturnedToIdle(){
+        if (waitingForEnemyAttackToFinish){
+            waitingForEnemyAttackToFinish = false;
+            if (playerAnimatorFunctions.attacksInProgress.Count == 1)
+                StartPlayingPlayerAttackAnimation();
+            else if (playerAnimatorFunctions.attacksInProgress.Count > 1){
+                StartPlayingPlayerAttackAnimation();
+                PlayNextAttackAfterBriefPause();
+            }
+        }
+    }
+
+    private void PlayNextAttackAfterBriefPause(){
+        StaticVariables.WaitTimeThenCallFunction(0.5f, PlayNextAttack);
+    }
+
+    private void PlayNextAttack(){
+        if (playerAnimatorFunctions.attacksInProgress.Count == 1)
+                StartPlayingPlayerAttackAnimation();
+        else if (playerAnimatorFunctions.attacksInProgress.Count > 1){
+            StartPlayingPlayerAttackAnimation();
+            PlayNextAttackAfterBriefPause();
+        }
+    }
     
+    public void PlayerAttackAnimationFinished(GameObject attackObject){
+        Destroy(attackObject);
+        if (uiManager.playerAttackAnimationParent.childCount == 1)
+            uiManager.ResumeEnemyAttackTimer();
+    }
 }
  

@@ -8,7 +8,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
     public BattleManager battleManager;
     public Animator animator;
 
-    private List<GameObject> attacksInProgress = new List<GameObject>();
+    public List<GameObject> attacksInProgress = new List<GameObject>();
 
     [Header("Attack Animation Objects")]
     public GameObject DeathBubble;

@@ -2,8 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour {
+
+    private Color validWordColor;
+    private Color invalidWordColor;
+    private Color validButtonColor;
+    private Color invalidButtonColor;
+    private Color textColorForWord = Color.black;
+    private Color backgroundColorForWord = Color.grey;
+    private bool stopNextAttack = false;
 
     [Header("GameObjects")]
     public Image playerHealthOnes;
@@ -45,16 +54,11 @@ public class UIManager : MonoBehaviour {
     public GameObject enemyHealSingleDigitPrefab;
     public GameObject enemyDamageDoubleDigitPrefab;
     public GameObject enemyDamageSingleDigitPrefab;
+    public Transform enemyTimerBar;
+    public Image enemyTimerBarImage;
 
     [Header("Misc")]
     public BattleManager battleManager;
-
-    private Color validWordColor;
-    private Color invalidWordColor;
-    private Color validButtonColor;
-    private Color invalidButtonColor;
-    private Color textColorForWord = Color.black;
-    private Color backgroundColorForWord = Color.grey;
 
 
     public void InitializeColors(){
@@ -218,6 +222,31 @@ public class UIManager : MonoBehaviour {
                 return d;
         }
         return null;
+    }
+
+    public void StartEnemyAttackTimer(float duration){
+        enemyTimerBar.localScale = Vector3.one;
+        enemyTimerBar.DOScale(new Vector3(0,1,1), duration).SetEase(Ease.Linear).OnComplete(TriggerEnemyAttack);
+    }
+
+    private void TriggerEnemyAttack(){
+        if (!stopNextAttack)
+            enemyAnimator.SetTrigger("Attack");
+    }
+
+    public void CancelEnemyAttack(){
+        stopNextAttack = true;
+        Color newColor = enemyTimerBarImage.color;
+        newColor.a = 0;
+        enemyTimerBarImage.DOColor(newColor, 1);
+    }
+
+    public void PauseEnemyAttackTimer(){
+        DOTween.Pause(enemyTimerBar);
+    }
+
+    public void ResumeEnemyAttackTimer(){
+        DOTween.Play(enemyTimerBar);
     }
 }
 
