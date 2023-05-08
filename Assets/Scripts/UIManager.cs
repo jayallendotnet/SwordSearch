@@ -12,7 +12,6 @@ public class UIManager : MonoBehaviour {
     private Color invalidButtonColor;
     private Color textColorForWord = Color.black;
     private Color backgroundColorForWord = Color.grey;
-    private bool stopNextAttack = false;
 
     [Header("GameObjects")]
     public Image playerHealthOnes;
@@ -55,7 +54,7 @@ public class UIManager : MonoBehaviour {
     public GameObject enemyDamageDoubleDigitPrefab;
     public GameObject enemyDamageSingleDigitPrefab;
     public Transform enemyTimerBar;
-    public Image enemyTimerBarImage;
+    public Transform enemyTimerBarImageParent;
 
     [Header("Misc")]
     public BattleManager battleManager;
@@ -83,7 +82,7 @@ public class UIManager : MonoBehaviour {
         if (stillAlive)
             playerAnimator.SetTrigger("TakeDamage");
         else
-            playerAnimator.SetTrigger("Die");   
+            playerAnimator.SetTrigger("Die");
     }
     public void ShowPlayerGettingHealed(int amount){
         ShowNumbersAsChild(playerHealSingleDigitPrefab, playerHealDoubleDigitPrefab, playerObject, amount);
@@ -93,8 +92,10 @@ public class UIManager : MonoBehaviour {
         ShowNumbersAsChild(enemyDamageSingleDigitPrefab, enemyDamageDoubleDigitPrefab, enemyObject, amount);        
         if (stillAlive)
             enemyAnimator.SetTrigger("TakeDamage");
-        else
+        else{
             enemyAnimator.SetTrigger("Die");   
+            AnimateEnemyAttackBarDisappearing(); 
+        }
     }
 
     public void ShowEnemyGettingHealed(int amount){
@@ -226,19 +227,17 @@ public class UIManager : MonoBehaviour {
 
     public void StartEnemyAttackTimer(float duration){
         enemyTimerBar.localScale = Vector3.one;
-        enemyTimerBar.DOScale(new Vector3(0,1,1), duration).SetEase(Ease.Linear).OnComplete(TriggerEnemyAttack);
+        enemyTimerBar.DOScale(new Vector3(0,1,1), duration).SetEase(Ease.Linear).OnComplete(battleManager.TriggerEnemyAttack);
     }
 
-    private void TriggerEnemyAttack(){
-        if (!stopNextAttack)
-            enemyAnimator.SetTrigger("Attack");
-    }
 
-    public void CancelEnemyAttack(){
-        stopNextAttack = true;
-        Color newColor = enemyTimerBarImage.color;
-        newColor.a = 0;
-        enemyTimerBarImage.DOColor(newColor, 1);
+    public void AnimateEnemyAttackBarDisappearing(){
+        foreach (Transform t in enemyTimerBarImageParent){
+            Image im = t.GetComponent<Image>();
+            Color newColor = im.color;
+            newColor.a = 0;
+            im.DOColor(newColor, 1);
+        }
     }
 
     public void PauseEnemyAttackTimer(){
@@ -247,6 +246,11 @@ public class UIManager : MonoBehaviour {
 
     public void ResumeEnemyAttackTimer(){
         DOTween.Play(enemyTimerBar);
+    }
+
+    public void StartEnemyAttackAnimation(){
+        enemyAnimator.SetTrigger("Attack");
+        enemyTimerBar.DOScale(Vector3.one, 1f).SetEase(Ease.Linear);
     }
 }
 

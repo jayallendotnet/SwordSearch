@@ -24,15 +24,14 @@ public class BattleManager : MonoBehaviour {
     public enum PowerupTypes{None, Water, Fire, Heal, Dark, Earth, Lightning};
     [HideInInspector]
     public System.Array powerupArray = PowerupTypes.GetValues(typeof(BattleManager.PowerupTypes));
-
     private bool isValidWord = false;
     private int wordStrength = 0;
     private bool hasSwipedOffALetter = false;
     private bool waitingForEnemyAttackToFinish = false;
+    private bool stopNextAttack = false;
 
 
     [Header("Game Variables")]
-    public int startingEnemyHealth = 30;
     public int startingPlayerHealth = 30;
     public int maxHealth = 99; //for display purposes
     public int minCheckingWordLength = 3;
@@ -53,7 +52,7 @@ public class BattleManager : MonoBehaviour {
     void Start(){
         wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
         countdownToRefresh = maxPuzzleCountdown;
-        enemyHealth = startingEnemyHealth;
+        enemyHealth = enemyData.startingHealth;
         playerHealth = startingPlayerHealth;
 
         uiManager.InitializeColors();
@@ -88,8 +87,11 @@ public class BattleManager : MonoBehaviour {
             enemyHealth = 0;
         uiManager.ShowEnemyTakingDamage(amount, enemyHealth > 0);
         uiManager.DisplayHealths(playerHealth, enemyHealth);
-        if (enemyHealth == 0)
-            uiManager.CancelEnemyAttack();
+        if (enemyHealth == 0){
+            stopNextAttack = true;
+            uiManager.PauseEnemyAttackTimer();
+            ClearWord(false);
+        }
     }
 
     private void DamagePlayerHealth(int amount){
@@ -98,9 +100,16 @@ public class BattleManager : MonoBehaviour {
             playerHealth = 0;
         uiManager.ShowPlayerTakingDamage(amount, playerHealth > 0);
         uiManager.DisplayHealths(playerHealth, enemyHealth);
+        if (playerHealth == 0){
+            uiManager.PauseEnemyAttackTimer();
+            ClearWord(false);
+        }
+            
     }
 
     public void PressSubmitWordButton(){
+        if ((playerHealth == 0) || (enemyHealth == 0))
+            return;
         if (isValidWord){
             if (uiManager.enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
                 StartPlayingPlayerAttackAnimation();
@@ -109,12 +118,12 @@ public class BattleManager : MonoBehaviour {
             }
             SetCurrentAttackData();
             DecrementRefreshPuzzleCountdown();
-            ClearWord();
+            ClearWord(true);
         }
         else if ((word.Length == 0) && (countdownToRefresh == 0)){
             puzzleGenerator.GenerateNewPuzzle();
             countdownToRefresh = maxPuzzleCountdown;
-            ClearWord();           
+            ClearWord(true);           
         }
     }
 
@@ -175,7 +184,7 @@ public class BattleManager : MonoBehaviour {
         uiManager.DisplayHealths(playerHealth, enemyHealth);
     }
 
-    private void DecrementRefreshPuzzleCountdown(){
+    public void DecrementRefreshPuzzleCountdown(){
         countdownToRefresh --;
         if (countdownToRefresh < 0)
             countdownToRefresh = 0;
@@ -237,7 +246,7 @@ public class BattleManager : MonoBehaviour {
     }
 
 
-        private void SetLastTwoLetterSpaces(){
+    private void SetLastTwoLetterSpaces(){
         lastLetterSpace = null;
         secondToLastLetterSpace = null;
         if (letterSpacesForWord.Count > 0)
@@ -250,6 +259,8 @@ public class BattleManager : MonoBehaviour {
 
 
     public bool CanAddLetter(LetterSpace letterSpace){
+        if ((playerHealth == 0) || (enemyHealth == 0))
+            return false;
         if (letterSpace.hasBeenUsedInAWordAlready)
             return false;
         if (letterSpacesForWord.Contains(letterSpace))
@@ -269,11 +280,12 @@ public class BattleManager : MonoBehaviour {
         return (lastLetterSpace == letterSpace);
     }
 
-    public void ClearWord(){
+    public void ClearWord(bool markLettersAsUsed){
         foreach (LetterSpace ls in letterSpacesForWord){
             ls.previousLetterSpace = null;
             ls.nextLetterSpace = null;
-            ls.hasBeenUsedInAWordAlready = true;
+            if (markLettersAsUsed)
+                ls.hasBeenUsedInAWordAlready = true;
             ls.ShowAsNotPartOfWord();
         }
         letterSpacesForWord = new List<LetterSpace>();
@@ -338,7 +350,8 @@ public class BattleManager : MonoBehaviour {
     }
 
     public void QueueEnemyAttack(){
-        uiManager.StartEnemyAttackTimer(enemyData.attackSpeed);
+        if (playerHealth != 0)
+            uiManager.StartEnemyAttackTimer(enemyData.attackSpeed);
     }
 
     public void EnemyReturnedToIdle(){
@@ -371,5 +384,13 @@ public class BattleManager : MonoBehaviour {
         if (uiManager.playerAttackAnimationParent.childCount == 1)
             uiManager.ResumeEnemyAttackTimer();
     }
+
+    public void TriggerEnemyAttack(){
+        if (!stopNextAttack){
+            DecrementRefreshPuzzleCountdown();
+            uiManager.StartEnemyAttackAnimation();
+        }
+    }
+
 }
  
