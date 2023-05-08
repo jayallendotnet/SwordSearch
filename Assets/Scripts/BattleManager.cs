@@ -388,6 +388,7 @@ public class BattleManager : MonoBehaviour {
     public void TriggerEnemyAttack(){
         if (!stopNextAttack){
             DecrementRefreshPuzzleCountdown();
+            UpdateSubmitVisuals();
             uiManager.StartEnemyAttackAnimation();
         }
     }
