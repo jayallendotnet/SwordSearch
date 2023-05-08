@@ -374,6 +374,8 @@ public class BattleManager : MonoBehaviour {
     }
 
     private void PlayNextAttack(){
+        if (enemyHealth == 0)
+            return;
         if (playerAnimatorFunctions.attacksInProgress.Count == 1)
                 StartPlayingPlayerAttackAnimation();
         else if (playerAnimatorFunctions.attacksInProgress.Count > 1){
@@ -384,7 +386,7 @@ public class BattleManager : MonoBehaviour {
     
     public void PlayerAttackAnimationFinished(GameObject attackObject){
         Destroy(attackObject);
-        if (uiManager.playerAttackAnimationParent.childCount == 1)
+        if ((uiManager.playerAttackAnimationParent.childCount == 1) && (enemyHealth > 0))
             uiManager.ResumeEnemyAttackTimer();
     }
 

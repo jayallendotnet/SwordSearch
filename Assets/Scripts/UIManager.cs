@@ -96,7 +96,8 @@ public class UIManager : MonoBehaviour {
             enemyAnimator.SetTrigger("TakeDamage");
         else{
             enemyAnimator.SetTrigger("Die");   
-            AnimateEnemyAttackBarDisappearing(); 
+            //PauseEnemyAttackTimer();
+            //AnimateEnemyAttackBarDisappearing(); 
         }
     }
 
