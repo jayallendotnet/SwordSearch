@@ -16,14 +16,6 @@ public class UIManager : MonoBehaviour {
     [HideInInspector]
     public Animator enemyAnimator;
 
-    [Header("GameObjects")]
-    public Image playerHealthOnes;
-    public Image playerHealthTens;
-    public Image enemyHealthOnes;
-    public Image enemyHealthTens;
-    public Transform playerAttackAnimationParent;
-
-
     [Header("Submit Word Button")]
     public Text wordDisplay;
     public Image submitWordButtonImage;
@@ -58,8 +50,23 @@ public class UIManager : MonoBehaviour {
     public Transform enemyTimerBar;
     public Transform enemyTimerBarImageParent;
 
+    [Header("Health Display")]
+    public Image playerHP3DigitHundreds;
+    public Image playerHP3DigitTens;
+    public Image playerHP3DigitOnes;
+    public Image playerHP2DigitTens;
+    public Image playerHP2DigitOnes;
+    public Image playerHP1DigitOnes;
+    public Image enemyHP3DigitHundreds;
+    public Image enemyHP3DigitTens;
+    public Image enemyHP3DigitOnes;
+    public Image enemyHP2DigitTens;
+    public Image enemyHP2DigitOnes;
+    public Image enemyHP1DigitOnes;
+
     [Header("Misc")]
     public BattleManager battleManager;
+    public Transform playerAttackAnimationParent;
 
 
     public void InitializeColors(){
@@ -71,12 +78,54 @@ public class UIManager : MonoBehaviour {
 
 
     public void DisplayHealths(int playerHealth, int enemyHealth){
-        Vector2 enemyHP = GetTensAndOnes(enemyHealth);
-        Vector2 playerHP = GetTensAndOnes(playerHealth);
-        playerHealthOnes.sprite = numberSprites[(int)playerHP[1]];
-        playerHealthTens.sprite = numberSprites[(int)playerHP[0]];
-        enemyHealthOnes.sprite = numberSprites[(int)enemyHP[1]];
-        enemyHealthTens.sprite = numberSprites[(int)enemyHP[0]];
+        if (playerHealth < 10){
+            playerHP1DigitOnes.sprite = numberSprites[playerHealth];
+            playerHP1DigitOnes.transform.parent.gameObject.SetActive(true);
+            playerHP2DigitOnes.transform.parent.gameObject.SetActive(false);
+            playerHP3DigitOnes.transform.parent.gameObject.SetActive(false);
+        }
+        else if (playerHealth < 100){
+            Vector2 hp = GetTensAndOnes(playerHealth);
+            playerHP2DigitOnes.sprite = numberSprites[(int)hp[1]];
+            playerHP2DigitTens.sprite = numberSprites[(int)hp[0]];
+            playerHP1DigitOnes.transform.parent.gameObject.SetActive(false);
+            playerHP2DigitOnes.transform.parent.gameObject.SetActive(true);
+            playerHP3DigitOnes.transform.parent.gameObject.SetActive(false);
+        }
+        else{
+            Vector3 hp = GetHundredsTensAndOnes(playerHealth);
+            print(hp);
+            playerHP3DigitOnes.sprite = numberSprites[(int)hp[2]];
+            playerHP3DigitTens.sprite = numberSprites[(int)hp[1]];
+            playerHP3DigitHundreds.sprite = numberSprites[(int)hp[0]];
+            playerHP1DigitOnes.transform.parent.gameObject.SetActive(false);
+            playerHP2DigitOnes.transform.parent.gameObject.SetActive(false);
+            playerHP3DigitOnes.transform.parent.gameObject.SetActive(true);
+        }
+
+        if (enemyHealth < 10){
+            enemyHP1DigitOnes.sprite = numberSprites[enemyHealth];
+            enemyHP1DigitOnes.transform.parent.gameObject.SetActive(true);
+            enemyHP2DigitOnes.transform.parent.gameObject.SetActive(false);
+            enemyHP3DigitOnes.transform.parent.gameObject.SetActive(false);
+        }
+        else if (enemyHealth < 100){
+            Vector2 hp = GetTensAndOnes(enemyHealth);
+            enemyHP2DigitOnes.sprite = numberSprites[(int)hp[1]];
+            enemyHP2DigitTens.sprite = numberSprites[(int)hp[0]];
+            enemyHP1DigitOnes.transform.parent.gameObject.SetActive(false);
+            enemyHP2DigitOnes.transform.parent.gameObject.SetActive(true);
+            enemyHP3DigitOnes.transform.parent.gameObject.SetActive(false);
+        }
+        else{
+            Vector3 hp = GetHundredsTensAndOnes(enemyHealth);
+            enemyHP3DigitOnes.sprite = numberSprites[(int)hp[2]];
+            enemyHP3DigitTens.sprite = numberSprites[(int)hp[1]];
+            enemyHP3DigitHundreds.sprite = numberSprites[(int)hp[0]];
+            enemyHP1DigitOnes.transform.parent.gameObject.SetActive(false);
+            enemyHP2DigitOnes.transform.parent.gameObject.SetActive(false);
+            enemyHP3DigitOnes.transform.parent.gameObject.SetActive(true);
+        }
     }
 
     public void ShowPlayerTakingDamage(int amount, bool stillAlive){
@@ -211,6 +260,18 @@ public class UIManager : MonoBehaviour {
             tens = 9;
         }
         return new Vector2(tens, ones);
+    }    
+    
+    private Vector3 GetHundredsTensAndOnes(int val){
+        int hundreds = val / 100;
+        int tens = (val - (hundreds * 100)) / 10;
+        int ones = val - ((hundreds * 100) + (tens * 10));
+        if (val > 999){
+            ones = 9;
+            tens = 9;
+            hundreds = 9;
+        }
+        return new Vector3(hundreds, tens, ones);
     }
 
     public void UpdateCountdownDisplay(int countdown){
