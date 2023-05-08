@@ -12,6 +12,9 @@ public class UIManager : MonoBehaviour {
     private Color invalidButtonColor;
     private Color textColorForWord = Color.black;
     private Color backgroundColorForWord = Color.grey;
+    private Transform enemyObject;
+    [HideInInspector]
+    public Animator enemyAnimator;
 
     [Header("GameObjects")]
     public Image playerHealthOnes;
@@ -47,8 +50,7 @@ public class UIManager : MonoBehaviour {
     public GameObject playerHealSingleDigitPrefab;
     public GameObject playerDamageDoubleDigitPrefab;
     public GameObject playerDamageSingleDigitPrefab;
-    public Animator enemyAnimator;
-    public Transform enemyObject;
+    public Transform enemyParent;
     public GameObject enemyHealDoubleDigitPrefab;
     public GameObject enemyHealSingleDigitPrefab;
     public GameObject enemyDamageDoubleDigitPrefab;
@@ -251,6 +253,14 @@ public class UIManager : MonoBehaviour {
     public void StartEnemyAttackAnimation(){
         enemyAnimator.SetTrigger("Attack");
         enemyTimerBar.DOScale(Vector3.one, 1f).SetEase(Ease.Linear);
+    }
+
+    public void AddEnemyToScene(GameObject enemyPrefab){
+        GameObject newEnemy = Instantiate(enemyPrefab, enemyParent);
+        enemyObject = newEnemy.transform;
+        enemyAnimator = newEnemy.GetComponent<Animator>();
+        enemyObject.GetComponent<EnemyAttackAnimatorFunctions>().battleManager = battleManager;
+        battleManager.enemyData = enemyObject.GetComponent<EnemyData>();
     }
 }
 

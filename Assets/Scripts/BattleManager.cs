@@ -29,6 +29,8 @@ public class BattleManager : MonoBehaviour {
     private bool hasSwipedOffALetter = false;
     private bool waitingForEnemyAttackToFinish = false;
     private bool stopNextAttack = false;
+    [HideInInspector]
+    public EnemyData enemyData;
 
 
     [Header("Game Variables")]
@@ -36,12 +38,12 @@ public class BattleManager : MonoBehaviour {
     public int maxHealth = 99; //for display purposes
     public int minCheckingWordLength = 3;
     public int maxPuzzleCountdown = 3;
+    public GameObject enemyPrefab;
 
     [Header("Scripts")]
     public UIManager uiManager;
     public PuzzleGenerator puzzleGenerator;
     public PlayerAnimatorFunctions playerAnimatorFunctions;
-    public EnemyData enemyData;
 
     [Header("Libraries")]
     public TextAsset wordLibraryForGenerationFile; //all words that can be used to generate the puzzle
@@ -52,6 +54,7 @@ public class BattleManager : MonoBehaviour {
     void Start(){
         wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
         countdownToRefresh = maxPuzzleCountdown;
+        uiManager.AddEnemyToScene(enemyPrefab);
         enemyHealth = enemyData.startingHealth;
         playerHealth = startingPlayerHealth;
 
