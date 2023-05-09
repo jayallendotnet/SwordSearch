@@ -43,6 +43,7 @@ public class BattleManager : MonoBehaviour {
     public int selfDamageFromDarkAttack = 5;
     public int burnDurationFromFireAttack = 5;
     public float timeBetweenBurnHits = 3f;
+    public float lightningStunDuration = 15f;
     public GameObject enemyPrefab;
 
     [Header("Scripts")]
@@ -181,8 +182,8 @@ public class BattleManager : MonoBehaviour {
                     DamageEnemyHealth(strength);
                     break;
                 case PowerupTypes.Lightning:
-                    DamageEnemyHealth(strength);
                     ApplyEnemyAttackTimeDebuffFromLightning(powerupLevel);
+                    DamageEnemyHealth(strength);
                     break;
                 case PowerupTypes.Dark:
                     DoDarkAttack(strength, powerupLevel);
@@ -195,7 +196,8 @@ public class BattleManager : MonoBehaviour {
     }
 
     private void ApplyEnemyAttackTimeDebuffFromLightning(int powerupLevel){
-
+        uiManager.StopEnemyAttackTimer();
+        uiManager.ActivateEnemyStunBar(lightningStunDuration * powerupLevel);
     }
 
     private void ApplyBurnForFireAttack(int powerupLevel){
@@ -226,16 +228,16 @@ public class BattleManager : MonoBehaviour {
 
     private void HealPlayerHealth(int amount){
         playerHealth += amount;
-        if (playerHealth > 99)
-            playerHealth = 99;
+        if (playerHealth > maxHealth)
+            playerHealth = maxHealth;
         uiManager.ShowPlayerGettingHealed(amount);
         uiManager.DisplayHealths(playerHealth, enemyHealth);
     }
 
     private void HealEnemyHealth(int amount){
         enemyHealth += amount;
-        if (enemyHealth > 99)
-            enemyHealth = 99;
+        if (enemyHealth > maxHealth)
+            enemyHealth = maxHealth;
         uiManager.ShowEnemyGettingHealed(amount);
         uiManager.DisplayHealths(playerHealth, enemyHealth);
     }
@@ -452,6 +454,13 @@ public class BattleManager : MonoBehaviour {
             DecrementRefreshPuzzleCountdown();
             UpdateSubmitVisuals();
             uiManager.StartEnemyAttackAnimation();
+        }
+    }
+
+    public void EnemyStunWearsOff(){
+        uiManager.DeactivateEnemyStunBar();
+        if (!stopNextAttack){
+            QueueEnemyAttack();
         }
     }
 

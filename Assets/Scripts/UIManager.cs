@@ -47,8 +47,6 @@ public class UIManager : MonoBehaviour {
     public GameObject enemyHealSingleDigitPrefab;
     public GameObject enemyDamageDoubleDigitPrefab;
     public GameObject enemyDamageSingleDigitPrefab;
-    public Transform enemyTimerBar;
-    public Transform enemyTimerBarImageParent;
 
     [Header("Health Display")]
     public Image playerHP3DigitHundreds;
@@ -64,7 +62,11 @@ public class UIManager : MonoBehaviour {
     public Image enemyHP2DigitOnes;
     public Image enemyHP1DigitOnes;
 
-    [Header("Burn Display")]
+    [Header("Status Bar")]
+    public Transform enemyTimerBarImageParent;
+    public Transform enemyTimerBar;
+    public Transform enemyStunBar;
+    public Animator enemyStunBarAnimation;
     public GameObject burnDisplay1;
     public GameObject burnDisplay2;
     public GameObject burnDisplay3;
@@ -299,6 +301,27 @@ public class UIManager : MonoBehaviour {
         return null;
     }
 
+    public void StopEnemyAttackTimer(){
+        enemyTimerBar.localScale = Vector3.one;
+        DOTween.Kill(enemyTimerBar);
+    }
+
+    public void ActivateEnemyStunBar(float duration){
+        enemyStunBar.gameObject.SetActive(true);
+        enemyStunBarAnimation.gameObject.SetActive(true);
+        enemyStunBar.localScale = Vector3.one;
+        DOTween.Kill(enemyStunBar);
+        //print(duration);
+        enemyStunBar.DOScale(new Vector3(0,1,1), duration).SetEase(Ease.Linear).OnComplete(battleManager.EnemyStunWearsOff);
+        //print(duration);
+    }
+
+    public void DeactivateEnemyStunBar(){
+        enemyStunBar.gameObject.SetActive(false);
+        //enemyStunBarAnimation.gameObject.SetActive(false);
+        enemyStunBarAnimation.SetTrigger("End");
+    }
+
     public void StartEnemyAttackTimer(float duration){
         enemyTimerBar.localScale = Vector3.one;
         enemyTimerBar.DOScale(new Vector3(0,1,1), duration).SetEase(Ease.Linear).OnComplete(battleManager.TriggerEnemyAttack);
@@ -316,10 +339,12 @@ public class UIManager : MonoBehaviour {
 
     public void PauseEnemyAttackTimer(){
         DOTween.Pause(enemyTimerBar);
+        DOTween.Pause(enemyStunBar);
     }
 
     public void ResumeEnemyAttackTimer(){
         DOTween.Play(enemyTimerBar);
+        DOTween.Play(enemyStunBar);
     }
 
     public void StartEnemyAttackAnimation(){
