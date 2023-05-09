@@ -332,20 +332,14 @@ public class UIManager : MonoBehaviour {
         newEnemy.name = enemyPrefab.name;
         enemyObject = newEnemy.transform;
         enemyAnimator = newEnemy.GetComponent<Animator>();
-        enemyObject.GetComponent<EnemyAttackAnimatorFunctions>().battleManager = battleManager;
+        battleManager.enemyAttackAnimatorFunctions = enemyObject.GetComponent<EnemyAttackAnimatorFunctions>();
+        battleManager.enemyAttackAnimatorFunctions.battleManager = battleManager;
         battleManager.enemyData = enemyObject.GetComponent<EnemyData>();
     }
 
     public void ShowBurnCount(){
-        //gets highest burn amount from the burndata attached to the enemy
-        int burns = 0;
-        foreach (Transform t in enemyParent){
-            if (t.name.Contains("BurnData")){
-                int temp = t.GetComponent<BurnData>().burnsLeft;
-                if (temp > burns)
-                    burns = temp;
-            }
-        }
+        int burns = battleManager.enemyAttackAnimatorFunctions.burnDamageQueue.Count;
+
         burnDisplay1.SetActive(false);
         burnDisplay2.SetActive(false);
         burnDisplay3.SetActive(false);

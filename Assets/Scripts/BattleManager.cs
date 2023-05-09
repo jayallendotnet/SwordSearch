@@ -31,6 +31,8 @@ public class BattleManager : MonoBehaviour {
     private bool stopNextAttack = false;
     [HideInInspector]
     public EnemyData enemyData;
+    [HideInInspector]
+    public EnemyAttackAnimatorFunctions enemyAttackAnimatorFunctions;
 
 
     [Header("Game Variables")]
@@ -53,8 +55,7 @@ public class BattleManager : MonoBehaviour {
     public TextAsset wordLibraryForCheckingFile; //all words that can be considered valid, even if they are not in the generating list
     public TextAsset randomLetterPoolFile;
 
-    [Header("Misc")]
-    public GameObject burnDamagePrefab;
+    //[Header("Misc")]
 
     void Start(){
         wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
@@ -98,7 +99,6 @@ public class BattleManager : MonoBehaviour {
         if (enemyHealth == 0){
             stopNextAttack = true;
             uiManager.PauseEnemyAttackTimer();
-            PauseAllBurnsOnEnemy();
             ClearWord(false);
         }
     }
@@ -138,7 +138,6 @@ public class BattleManager : MonoBehaviour {
 
     private void StartPlayingPlayerAttackAnimation(){
         uiManager.PauseEnemyAttackTimer();
-        PauseAllBurnsOnEnemy();
         if (powerupTypeForWord == PowerupTypes.Heal)
             uiManager.StartPlayerHealAnimation();
         else
@@ -178,12 +177,12 @@ public class BattleManager : MonoBehaviour {
                     DamageEnemyHealth(strength);
                     break;
                 case PowerupTypes.Fire:
-                    //print("ye");
                     ApplyBurnForFireAttack(powerupLevel);
                     DamageEnemyHealth(strength);
                     break;
                 case PowerupTypes.Lightning:
                     DamageEnemyHealth(strength);
+                    ApplyEnemyAttackTimeDebuffFromLightning(powerupLevel);
                     break;
                 case PowerupTypes.Dark:
                     DoDarkAttack(strength, powerupLevel);
@@ -195,29 +194,13 @@ public class BattleManager : MonoBehaviour {
         }
     }
 
+    private void ApplyEnemyAttackTimeDebuffFromLightning(int powerupLevel){
+
+    }
+
     private void ApplyBurnForFireAttack(int powerupLevel){
-        BurnData bd = GameObject.Instantiate(burnDamagePrefab, uiManager.enemyParent).GetComponent<BurnData>();
-        bd.burnDamage = powerupLevel;
-        bd.burnsLeft = burnDurationFromFireAttack;
-        bd.timeBetweenBurns = timeBetweenBurnHits;
-        bd.battleManager = this;
-        bd.StartBurnTimer();
+        enemyAttackAnimatorFunctions.AddBurnDamageToQueue(powerupLevel, burnDurationFromFireAttack);
         uiManager.ShowBurnCount();
-        PauseAllBurnsOnEnemy();
-    }
-
-    public void PauseAllBurnsOnEnemy(){
-        foreach (Transform t in uiManager.enemyParent){
-            if (t.name.Contains("BurnData"))
-                t.GetComponent<BurnData>().PauseBurnTimer();
-        }
-    }
-
-    public void ResumeAllBurnsOnEnemy(){
-        foreach (Transform t in uiManager.enemyParent){
-            if (t.name.Contains("BurnData"))
-                t.GetComponent<BurnData>().ResumeBurnTimer();
-        }
     }
 
     public void DamagePlayerForDarkAttack(){
@@ -439,9 +422,6 @@ public class BattleManager : MonoBehaviour {
                 PlayNextAttackAfterBriefPause();
             }
         }
-        else{
-            ResumeAllBurnsOnEnemy();
-        }
     }
 
     private void PlayNextAttackAfterBriefPause(){
@@ -464,7 +444,6 @@ public class BattleManager : MonoBehaviour {
         Destroy(attackObject);
         if ((uiManager.playerAttackAnimationParent.childCount == 1) && (enemyHealth > 0)){
             uiManager.ResumeEnemyAttackTimer();
-            ResumeAllBurnsOnEnemy();
         }
     }
 
@@ -473,7 +452,6 @@ public class BattleManager : MonoBehaviour {
             DecrementRefreshPuzzleCountdown();
             UpdateSubmitVisuals();
             uiManager.StartEnemyAttackAnimation();
-            PauseAllBurnsOnEnemy();
         }
     }
 

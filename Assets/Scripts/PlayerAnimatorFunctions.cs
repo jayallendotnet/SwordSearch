@@ -62,10 +62,10 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
                 break;
         }
 
-        //o = powerFirePrefab;
-        //strength = 6;
-        //powerupLevel = 2;
-        //type = BattleManager.PowerupTypes.Fire;
+        o = powerFirePrefab;
+        strength = 6;
+        powerupLevel = StaticVariables.rand.Next(1,3);
+        type = BattleManager.PowerupTypes.Fire;
 
         GameObject newAttack = Instantiate(o, battleManager.uiManager.playerAttackAnimationParent);
         newAttack.SetActive(false);
