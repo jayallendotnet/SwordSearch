@@ -35,9 +35,12 @@ public class BattleManager : MonoBehaviour {
 
     [Header("Game Variables")]
     public int startingPlayerHealth = 30;
-    public int maxHealth = 99; //for display purposes
+    public int maxHealth = 999; //for display purposes
     public int minCheckingWordLength = 3;
     public int maxPuzzleCountdown = 3;
+    public int selfDamageFromDarkAttack = 5;
+    public int burnDurationFromFireAttack = 5;
+    public float timeBetweenBurnHits = 3f;
     public GameObject enemyPrefab;
 
     [Header("Scripts")]
@@ -50,6 +53,8 @@ public class BattleManager : MonoBehaviour {
     public TextAsset wordLibraryForCheckingFile; //all words that can be considered valid, even if they are not in the generating list
     public TextAsset randomLetterPoolFile;
 
+    [Header("Misc")]
+    public GameObject burnDamagePrefab;
 
     void Start(){
         wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
@@ -84,7 +89,7 @@ public class BattleManager : MonoBehaviour {
             wordStrength =  Mathf.FloorToInt(Mathf.Pow((word.Length - 2), 2));
     }
 
-    private void DamageEnemyHealth(int amount){
+    public void DamageEnemyHealth(int amount){
         enemyHealth -= amount;
         if (enemyHealth < 0)
             enemyHealth = 0;
@@ -93,6 +98,7 @@ public class BattleManager : MonoBehaviour {
         if (enemyHealth == 0){
             stopNextAttack = true;
             uiManager.PauseEnemyAttackTimer();
+            PauseAllBurnsOnEnemy();
             ClearWord(false);
         }
     }
@@ -114,7 +120,7 @@ public class BattleManager : MonoBehaviour {
         if ((playerHealth == 0) || (enemyHealth == 0))
             return;
         if (isValidWord){
-            if (uiManager.enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            if (StaticVariables.IsAnimatorInIdle(uiManager.enemyAnimator))
                 StartPlayingPlayerAttackAnimation();
             else{
                 PlayPlayerAttackAnimationAfterEnemyFinishes();
@@ -132,6 +138,7 @@ public class BattleManager : MonoBehaviour {
 
     private void StartPlayingPlayerAttackAnimation(){
         uiManager.PauseEnemyAttackTimer();
+        PauseAllBurnsOnEnemy();
         if (powerupTypeForWord == PowerupTypes.Heal)
             uiManager.StartPlayerHealAnimation();
         else
@@ -163,7 +170,70 @@ public class BattleManager : MonoBehaviour {
 
 
     public void ApplyAttackToEnemy(PowerupTypes type, int strength, int powerupLevel){
-        DamageEnemyHealth(strength);
+        if (powerupLevel < 1)
+            DamageEnemyHealth(strength);
+        else{
+            switch (type){
+                case PowerupTypes.Water:
+                    DamageEnemyHealth(strength);
+                    break;
+                case PowerupTypes.Fire:
+                    //print("ye");
+                    ApplyBurnForFireAttack(powerupLevel);
+                    DamageEnemyHealth(strength);
+                    break;
+                case PowerupTypes.Lightning:
+                    DamageEnemyHealth(strength);
+                    break;
+                case PowerupTypes.Dark:
+                    DoDarkAttack(strength, powerupLevel);
+                    break;
+                case PowerupTypes.Earth:
+                    DamageEnemyHealth(strength);
+                    break;
+            }
+        }
+    }
+
+    private void ApplyBurnForFireAttack(int powerupLevel){
+        BurnData bd = GameObject.Instantiate(burnDamagePrefab, uiManager.enemyParent).GetComponent<BurnData>();
+        bd.burnDamage = powerupLevel;
+        bd.burnsLeft = burnDurationFromFireAttack;
+        bd.timeBetweenBurns = timeBetweenBurnHits;
+        bd.battleManager = this;
+        bd.StartBurnTimer();
+        uiManager.ShowBurnCount();
+        PauseAllBurnsOnEnemy();
+    }
+
+    public void PauseAllBurnsOnEnemy(){
+        foreach (Transform t in uiManager.enemyParent){
+            if (t.name.Contains("BurnData"))
+                t.GetComponent<BurnData>().PauseBurnTimer();
+        }
+    }
+
+    public void ResumeAllBurnsOnEnemy(){
+        foreach (Transform t in uiManager.enemyParent){
+            if (t.name.Contains("BurnData"))
+                t.GetComponent<BurnData>().ResumeBurnTimer();
+        }
+    }
+
+    public void DamagePlayerForDarkAttack(){
+        //doesn't play animation for self damage
+        //self damage can't kill you
+        int prevHP = playerHealth;
+        playerHealth -= selfDamageFromDarkAttack;
+        if (playerHealth < 1)
+            playerHealth = 1;
+        uiManager.ShowPlayerTakingDamage((prevHP - playerHealth), playerHealth > 0, false);
+        uiManager.DisplayHealths(playerHealth, enemyHealth);
+    }
+
+    private void DoDarkAttack(int strength, int powerupLevel){
+        int enemyDamage = strength * (powerupLevel * 2);
+        DamageEnemyHealth(enemyDamage);
     }
 
     public void ApplyHealToSelf(int strength, int powerupLevel){
@@ -360,12 +430,17 @@ public class BattleManager : MonoBehaviour {
     public void EnemyReturnedToIdle(){
         if (waitingForEnemyAttackToFinish){
             waitingForEnemyAttackToFinish = false;
-            if (playerAnimatorFunctions.attacksInProgress.Count == 1)
+            if (playerAnimatorFunctions.attacksInProgress.Count == 1){
                 StartPlayingPlayerAttackAnimation();
+            }
+                
             else if (playerAnimatorFunctions.attacksInProgress.Count > 1){
                 StartPlayingPlayerAttackAnimation();
                 PlayNextAttackAfterBriefPause();
             }
+        }
+        else{
+            ResumeAllBurnsOnEnemy();
         }
     }
 
@@ -376,8 +451,9 @@ public class BattleManager : MonoBehaviour {
     private void PlayNextAttack(){
         if (enemyHealth == 0)
             return;
-        if (playerAnimatorFunctions.attacksInProgress.Count == 1)
+        if (playerAnimatorFunctions.attacksInProgress.Count == 1){
                 StartPlayingPlayerAttackAnimation();
+        }
         else if (playerAnimatorFunctions.attacksInProgress.Count > 1){
             StartPlayingPlayerAttackAnimation();
             PlayNextAttackAfterBriefPause();
@@ -386,8 +462,10 @@ public class BattleManager : MonoBehaviour {
     
     public void PlayerAttackAnimationFinished(GameObject attackObject){
         Destroy(attackObject);
-        if ((uiManager.playerAttackAnimationParent.childCount == 1) && (enemyHealth > 0))
+        if ((uiManager.playerAttackAnimationParent.childCount == 1) && (enemyHealth > 0)){
             uiManager.ResumeEnemyAttackTimer();
+            ResumeAllBurnsOnEnemy();
+        }
     }
 
     public void TriggerEnemyAttack(){
@@ -395,6 +473,7 @@ public class BattleManager : MonoBehaviour {
             DecrementRefreshPuzzleCountdown();
             UpdateSubmitVisuals();
             uiManager.StartEnemyAttackAnimation();
+            PauseAllBurnsOnEnemy();
         }
     }
 

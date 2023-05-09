@@ -64,6 +64,13 @@ public class UIManager : MonoBehaviour {
     public Image enemyHP2DigitOnes;
     public Image enemyHP1DigitOnes;
 
+    [Header("Burn Display")]
+    public GameObject burnDisplay1;
+    public GameObject burnDisplay2;
+    public GameObject burnDisplay3;
+    public GameObject burnDisplay4;
+    public GameObject burnDisplay5;
+
     [Header("Misc")]
     public BattleManager battleManager;
     public Transform playerAttackAnimationParent;
@@ -94,7 +101,6 @@ public class UIManager : MonoBehaviour {
         }
         else{
             Vector3 hp = GetHundredsTensAndOnes(playerHealth);
-            print(hp);
             playerHP3DigitOnes.sprite = numberSprites[(int)hp[2]];
             playerHP3DigitTens.sprite = numberSprites[(int)hp[1]];
             playerHP3DigitHundreds.sprite = numberSprites[(int)hp[0]];
@@ -128,8 +134,12 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public void ShowPlayerTakingDamage(int amount, bool stillAlive){
+    public void ShowPlayerTakingDamage(int amount, bool stillAlive, bool showDamageAnimation = true){
+        if (amount < 1)
+            return;
         ShowNumbersAsChild(playerDamageSingleDigitPrefab, playerDamageDoubleDigitPrefab, playerObject, amount);
+        if (!showDamageAnimation)
+            return;
         if (stillAlive)
             playerAnimator.SetTrigger("TakeDamage");
         else
@@ -319,10 +329,38 @@ public class UIManager : MonoBehaviour {
 
     public void AddEnemyToScene(GameObject enemyPrefab){
         GameObject newEnemy = Instantiate(enemyPrefab, enemyParent);
+        newEnemy.name = enemyPrefab.name;
         enemyObject = newEnemy.transform;
         enemyAnimator = newEnemy.GetComponent<Animator>();
         enemyObject.GetComponent<EnemyAttackAnimatorFunctions>().battleManager = battleManager;
         battleManager.enemyData = enemyObject.GetComponent<EnemyData>();
+    }
+
+    public void ShowBurnCount(){
+        //gets highest burn amount from the burndata attached to the enemy
+        int burns = 0;
+        foreach (Transform t in enemyParent){
+            if (t.name.Contains("BurnData")){
+                int temp = t.GetComponent<BurnData>().burnsLeft;
+                if (temp > burns)
+                    burns = temp;
+            }
+        }
+        burnDisplay1.SetActive(false);
+        burnDisplay2.SetActive(false);
+        burnDisplay3.SetActive(false);
+        burnDisplay4.SetActive(false);
+        burnDisplay5.SetActive(false);
+        if (burns > 0)
+            burnDisplay1.SetActive(true);
+        if (burns > 1)
+            burnDisplay2.SetActive(true);
+        if (burns > 2)
+            burnDisplay3.SetActive(true);
+        if (burns > 3)
+            burnDisplay4.SetActive(true);
+        if (burns > 4)
+            burnDisplay5.SetActive(true);
     }
 }
 

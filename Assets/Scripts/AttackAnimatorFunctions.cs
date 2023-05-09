@@ -25,4 +25,8 @@ public class AttackAnimatorFunctions : MonoBehaviour{
         battleManager.DoAttackEffect(type, strength, powerupLevel);
     }
 
+    public void DamagePlayerForDarkAttack(){
+        battleManager.DamagePlayerForDarkAttack();
+    }
+
 }

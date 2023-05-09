@@ -15,4 +15,11 @@ public class StaticVariables
         tweenDummy.DOLocalMove(tweenDummy.transform.localPosition, delay, false).OnComplete(function);
     }
 
+    static public bool IsAnimatorInIdle(Animator animator){
+        //requires idle animation is named "GoblinIdle" or "OgreIdle", etc
+        //also requires parent is named "Goblin" or "Ogre", etc
+        string stateName = animator.gameObject.name + "Idle";
+        return animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+    }
+
 }
