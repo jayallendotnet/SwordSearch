@@ -87,6 +87,8 @@ public class UIManager : MonoBehaviour {
     public RectTransform waterBuffTop;
     public float waterFillDuration = 2f;
     public float waterFloatDuration = 3f;
+    public Transform backgroundParent;
+    public Transform foregroundParent;
 
 
     public void InitializeColors(){
@@ -384,6 +386,20 @@ public class UIManager : MonoBehaviour {
         battleManager.enemyAttackAnimatorFunctions = enemyObject.GetComponent<EnemyAttackAnimatorFunctions>();
         battleManager.enemyAttackAnimatorFunctions.battleManager = battleManager;
         battleManager.enemyData = enemyObject.GetComponent<EnemyData>();
+    }
+
+    public void ApplyBackground(GameObject backgroundPrefab){
+        Transform background = backgroundPrefab.transform.GetChild(0).transform;
+        Transform foreground = backgroundPrefab.transform.GetChild(1).transform;
+        foreach (Transform t in backgroundParent)
+            GameObject.Destroy(t.gameObject);
+        foreach (Transform t in foregroundParent)
+            GameObject.Destroy(t.gameObject);
+        foreach(Transform t in background)
+            Instantiate(t.gameObject, backgroundParent);
+        foreach(Transform t in foreground)
+            Instantiate(t.gameObject, foregroundParent);
+
     }
 
     public void ShowBurnCount(){

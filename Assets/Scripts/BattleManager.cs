@@ -52,6 +52,7 @@ public class BattleManager : MonoBehaviour {
     public float waterFloodDuration = 10f;
     public int waterFloodDamageBonus = 1;
     public GameObject enemyPrefab;
+    public GameObject backgroundPrefab;
 
     [Header("Scripts")]
     public UIManager uiManager;
@@ -71,6 +72,7 @@ public class BattleManager : MonoBehaviour {
         uiManager.AddEnemyToScene(enemyPrefab);
         enemyHealth = enemyData.startingHealth;
         playerHealth = startingPlayerHealth;
+        uiManager.ApplyBackground(backgroundPrefab);
 
         uiManager.InitializeColors();
         uiManager.DisplayHealths(playerHealth, enemyHealth);
