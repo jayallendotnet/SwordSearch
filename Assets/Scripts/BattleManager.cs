@@ -33,6 +33,8 @@ public class BattleManager : MonoBehaviour {
     public EnemyData enemyData;
     [HideInInspector]
     public EnemyAttackAnimatorFunctions enemyAttackAnimatorFunctions;
+    [HideInInspector]
+    public bool isWaterInPuzzleArea = false;
 
 
     [Header("Game Variables")]
@@ -47,6 +49,8 @@ public class BattleManager : MonoBehaviour {
     public float pebbleDamageMultiplier = 0.33f;
     public float lightningStunDuration = 15f;
     public float darkPowerupDamageMultiplier = 2.5f;
+    public float waterFloodDuration = 10f;
+    public int waterFloodDamageBonus = 1;
     public GameObject enemyPrefab;
 
     [Header("Scripts")]
@@ -88,10 +92,13 @@ public class BattleManager : MonoBehaviour {
     }
 
     public void CalcWordStrength(){
-        if (word.Length < 2)
+        if (word.Length < minCheckingWordLength)
             wordStrength = 0;
-        else
+        else{
             wordStrength =  Mathf.FloorToInt(Mathf.Pow((word.Length - 2), 2));
+            if (isWaterInPuzzleArea)
+                wordStrength += waterFloodDamageBonus;
+        }
     }
 
     public void DamageEnemyHealth(int amount){
@@ -179,6 +186,7 @@ public class BattleManager : MonoBehaviour {
             switch (type){
                 case PowerupTypes.Water:
                     DamageEnemyHealth(strength);
+                    ApplyBuffForWaterAttack(powerupLevel);
                     break;
                 case PowerupTypes.Fire:
                     ApplyBurnForFireAttack(powerupLevel);
@@ -200,6 +208,20 @@ public class BattleManager : MonoBehaviour {
                     break;
             }
         }
+    }
+
+    public void WaterDrainComplete(){
+        isWaterInPuzzleArea = false;
+        CalcWordStrength();
+        UpdateSubmitVisuals();
+    }
+
+    private void ApplyBuffForWaterAttack(int powerupLevel){
+        isWaterInPuzzleArea = true;
+        float duration = powerupLevel * waterFloodDuration;
+        uiManager.FillPuzzleAreaWithWater(duration);
+        CalcWordStrength();
+        UpdateSubmitVisuals();
     }
 
     public void ThrowPebbleIfPossible(int attackStrength){

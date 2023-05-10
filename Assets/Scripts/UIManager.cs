@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour {
     private Transform enemyObject;
     [HideInInspector]
     public Animator enemyAnimator;
+    private float waterDrainDuration;
+    private Color waterPowerupStrengthColor;
 
     [Header("Submit Word Button")]
     public Text wordDisplay;
@@ -81,13 +83,18 @@ public class UIManager : MonoBehaviour {
     [Header("Misc")]
     public BattleManager battleManager;
     public Transform playerAttackAnimationParent;
+    public RectTransform waterBuffBottom;
+    public RectTransform waterBuffTop;
+    public float waterFillDuration = 2f;
+    public float waterFloatDuration = 3f;
 
 
     public void InitializeColors(){
         ColorUtility.TryParseHtmlString("#4B4B4B", out validWordColor);
         ColorUtility.TryParseHtmlString("#C8C8C8", out invalidWordColor);
         ColorUtility.TryParseHtmlString("#8DE1FF", out validButtonColor);
-        ColorUtility.TryParseHtmlString("#B34A50", out invalidButtonColor);   
+        ColorUtility.TryParseHtmlString("#B34A50", out invalidButtonColor);  
+        waterPowerupStrengthColor = GetPowerupDisplayDataWithType(BattleManager.PowerupTypes.Water).backgroundColor;
     }
 
 
@@ -276,6 +283,12 @@ public class UIManager : MonoBehaviour {
             wordStrengthImageOnes.gameObject.SetActive(true);
             wordStrengthImageTens.gameObject.SetActive(true);
         }
+        Color numberColor = Color.white;
+        if ((battleManager.isWaterInPuzzleArea) && (strength > 0))
+            numberColor = waterPowerupStrengthColor;
+        wordStrengthImageSingle.color = numberColor;
+        wordStrengthImageOnes.color = numberColor;
+        wordStrengthImageTens.color = numberColor;
     }
 
     private Vector2 GetTensAndOnes(int val){
@@ -418,6 +431,37 @@ public class UIManager : MonoBehaviour {
         ShowPebbleCount();
         battleManager.playerAnimatorFunctions.CreateAttackAnimation(BattleManager.PowerupTypes.Pebble, damage, 0);
     }
+
+    public void FillPuzzleAreaWithWater(float totalDuration){
+        CancelWaterDrain();
+        waterDrainDuration = totalDuration - waterFillDuration - waterFloatDuration;
+        float fillHeight = 1380;
+        waterBuffBottom.DOSizeDelta(new Vector2(waterBuffBottom.sizeDelta.x, (fillHeight - waterBuffBottom.anchoredPosition.y)), waterFillDuration);
+        waterBuffTop.DOAnchorPos(new Vector2(0, fillHeight), waterFillDuration).OnComplete(FloatWater);
+        waterBuffBottom.gameObject.SetActive(true);
+        waterBuffTop.gameObject.SetActive(true);
+    }
+    
+    private void FloatWater(){
+        StaticVariables.WaitTimeThenCallFunction(waterFloatDuration, StartDrainingWater);
+    }
+
+    public void StartDrainingWater(){
+        waterBuffBottom.DOSizeDelta(new Vector2(waterBuffBottom.sizeDelta.x, 0), waterDrainDuration).SetEase(Ease.Linear);
+        waterBuffTop.DOAnchorPos(new Vector2(0, (-waterBuffBottom.sizeDelta.y + waterBuffTop.anchoredPosition.y)), waterDrainDuration).SetEase(Ease.Linear).OnComplete(DrainingComplete);
+    }
+
+    private void DrainingComplete(){
+        waterBuffBottom.gameObject.SetActive(false);
+        waterBuffTop.gameObject.SetActive(false);
+        battleManager.WaterDrainComplete();
+    }
+
+    private void CancelWaterDrain(){
+        DOTween.Kill(waterBuffBottom);
+        DOTween.Kill(waterBuffTop);
+    }
+
 }
 
 [System.Serializable]

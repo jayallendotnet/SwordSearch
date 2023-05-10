@@ -41,6 +41,11 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
     }
 
     public void CreateAttackAnimation(BattleManager.PowerupTypes type, int strength, int powerupLevel){
+        //strength = 6;
+        //powerupLevel = StaticVariables.rand.Next(1,3);
+        //powerupLevel = 1;
+        //type = BattleManager.PowerupTypes.Water;
+
         GameObject o = basicFirePrefab;
         switch (type){
             case BattleManager.PowerupTypes.Fire:
@@ -68,12 +73,6 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
                 o = ChooseAnimationForPowerupTypeNone();
                 break;
         }
-
-        //o = powerEarthPebblePrefab;
-        //strength = 6;
-        //powerupLevel = StaticVariables.rand.Next(1,3);
-        //powerupLevel = 1;
-        //type = BattleManager.PowerupTypes.Pebble;
 
         GameObject newAttack = Instantiate(o, battleManager.uiManager.playerAttackAnimationParent);
         newAttack.GetComponent<AttackAnimatorFunctions>().SetStats(type, strength, powerupLevel, battleManager);
