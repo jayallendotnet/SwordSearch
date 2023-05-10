@@ -72,6 +72,11 @@ public class UIManager : MonoBehaviour {
     public GameObject burnDisplay3;
     public GameObject burnDisplay4;
     public GameObject burnDisplay5;
+    public GameObject pebbleDisplay1;
+    public GameObject pebbleDisplay2;
+    public GameObject pebbleDisplay3;
+    public GameObject pebbleDisplay4;
+    public GameObject pebbleDisplay5;
 
     [Header("Misc")]
     public BattleManager battleManager;
@@ -152,14 +157,23 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowEnemyTakingDamage(int amount, bool stillAlive){
-        ShowNumbersAsChild(enemyDamageSingleDigitPrefab, enemyDamageDoubleDigitPrefab, enemyObject, amount);        
-        if (stillAlive)
+        ShowNumbersAsChild(enemyDamageSingleDigitPrefab, enemyDamageDoubleDigitPrefab, enemyObject, amount);
+  
+        if (!stillAlive)
+            enemyAnimator.Play(StaticVariables.GetAnimatorDieStateName(enemyAnimator));
+        else if (!StaticVariables.IsAnimatorInDamageState(enemyAnimator))
             enemyAnimator.SetTrigger("TakeDamage");
-        else{
-            enemyAnimator.SetTrigger("Die");   
-            //PauseEnemyAttackTimer();
-            //AnimateEnemyAttackBarDisappearing(); 
-        }
+
+        //don't set damage trigger if they are already in damage animation
+        //if (StaticVariables.IsAnimatorInDamageState(enemyAnimator)){
+        //}
+        //otherwise, set the damage triggers
+        //else{
+         //   if (stillAlive)
+         //       
+         //   else
+         //       enemyAnimator.SetTrigger("Die");  
+        //} 
     }
 
     public void ShowEnemyGettingHealed(int amount){
@@ -311,14 +325,11 @@ public class UIManager : MonoBehaviour {
         enemyStunBarAnimation.gameObject.SetActive(true);
         enemyStunBar.localScale = Vector3.one;
         DOTween.Kill(enemyStunBar);
-        //print(duration);
         enemyStunBar.DOScale(new Vector3(0,1,1), duration).SetEase(Ease.Linear).OnComplete(battleManager.EnemyStunWearsOff);
-        //print(duration);
     }
 
     public void DeactivateEnemyStunBar(){
         enemyStunBar.gameObject.SetActive(false);
-        //enemyStunBarAnimation.gameObject.SetActive(false);
         enemyStunBarAnimation.SetTrigger("End");
     }
 
@@ -380,6 +391,32 @@ public class UIManager : MonoBehaviour {
             burnDisplay4.SetActive(true);
         if (burns > 4)
             burnDisplay5.SetActive(true);
+    }
+
+    public void ShowPebbleCount(){
+        int pebbles = battleManager.playerAnimatorFunctions.pebblesInQueue.Count;
+
+        pebbleDisplay1.SetActive(false);
+        pebbleDisplay2.SetActive(false);
+        pebbleDisplay3.SetActive(false);
+        pebbleDisplay4.SetActive(false);
+        pebbleDisplay5.SetActive(false);
+        if (pebbles > 0)
+            pebbleDisplay1.SetActive(true);
+        if (pebbles > 1)
+            pebbleDisplay2.SetActive(true);
+        if (pebbles > 2)
+            pebbleDisplay3.SetActive(true);
+        if (pebbles > 3)
+            pebbleDisplay4.SetActive(true);
+        if (pebbles > 4)
+            pebbleDisplay5.SetActive(true);
+    }
+
+    public void ThrowPebble(int damage){
+        battleManager.playerAnimatorFunctions.pebblesInQueue.RemoveAt(0);
+        ShowPebbleCount();
+        battleManager.playerAnimatorFunctions.CreateAttackAnimation(BattleManager.PowerupTypes.Pebble, damage, 0);
     }
 }
 

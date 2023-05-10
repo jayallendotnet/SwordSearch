@@ -21,7 +21,7 @@ public class BattleManager : MonoBehaviour {
     private int playerHealth = 0;
     private string[] wordLibraryForChecking;
     private int countdownToRefresh;
-    public enum PowerupTypes{None, Water, Fire, Heal, Dark, Earth, Lightning};
+    public enum PowerupTypes{None, Water, Fire, Heal, Dark, Earth, Lightning, Pebble};
     [HideInInspector]
     public System.Array powerupArray = PowerupTypes.GetValues(typeof(BattleManager.PowerupTypes));
     private bool isValidWord = false;
@@ -43,7 +43,10 @@ public class BattleManager : MonoBehaviour {
     public int selfDamageFromDarkAttack = 5;
     public int burnDurationFromFireAttack = 5;
     public float timeBetweenBurnHits = 3f;
+    public int pebbleCountFromEarthAttack = 3;
+    public float pebbleDamageMultiplier = 0.33f;
     public float lightningStunDuration = 15f;
+    public float darkPowerupDamageMultiplier = 2.5f;
     public GameObject enemyPrefab;
 
     [Header("Scripts")]
@@ -121,7 +124,7 @@ public class BattleManager : MonoBehaviour {
         if ((playerHealth == 0) || (enemyHealth == 0))
             return;
         if (isValidWord){
-            if (StaticVariables.IsAnimatorInIdle(uiManager.enemyAnimator))
+            if (StaticVariables.IsAnimatorInIdleState(uiManager.enemyAnimator))
                 StartPlayingPlayerAttackAnimation();
             else{
                 PlayPlayerAttackAnimationAfterEnemyFinishes();
@@ -190,9 +193,28 @@ public class BattleManager : MonoBehaviour {
                     break;
                 case PowerupTypes.Earth:
                     DamageEnemyHealth(strength);
+                    ApplyPebblesForEarthAttack(powerupLevel);
+                    break;
+                case PowerupTypes.Pebble:
+                    DamageEnemyHealth(strength);
                     break;
             }
         }
+    }
+
+    public void ThrowPebbleIfPossible(int attackStrength){
+        if (playerAnimatorFunctions.pebblesInQueue.Count > 0){
+            float multiplier = playerAnimatorFunctions.pebblesInQueue[0];
+            int pebbleDamage = ((int)(attackStrength * multiplier));
+            if (pebbleDamage < 1)
+                pebbleDamage = 1;
+            uiManager.ThrowPebble(pebbleDamage);
+        }
+    }
+
+    private void ApplyPebblesForEarthAttack(int powerupLevel){
+        playerAnimatorFunctions.AddPebblesToQueue((pebbleDamageMultiplier * powerupLevel), pebbleCountFromEarthAttack);
+        uiManager.ShowPebbleCount();
     }
 
     private void ApplyEnemyAttackTimeDebuffFromLightning(int powerupLevel){
@@ -217,7 +239,7 @@ public class BattleManager : MonoBehaviour {
     }
 
     private void DoDarkAttack(int strength, int powerupLevel){
-        int enemyDamage = strength * (powerupLevel * 2);
+        int enemyDamage = (int)(strength * (powerupLevel * darkPowerupDamageMultiplier));
         DamageEnemyHealth(enemyDamage);
     }
 
@@ -443,10 +465,20 @@ public class BattleManager : MonoBehaviour {
     }
     
     public void PlayerAttackAnimationFinished(GameObject attackObject){
+        //destroys the gameobject
+        //then resumes the enemy attack timer, if there are no non-pebble animations left
         Destroy(attackObject);
-        if ((uiManager.playerAttackAnimationParent.childCount == 1) && (enemyHealth > 0)){
-            uiManager.ResumeEnemyAttackTimer();
+        if (enemyHealth < 1)
+            return;
+        bool anyAnimationsInProgress = false;
+        foreach (Transform t in uiManager.playerAttackAnimationParent){
+            if (t.gameObject != attackObject){
+                if (!t.name.Contains("Pebble"))
+                    anyAnimationsInProgress = true;
+            }
         }
+        if (!anyAnimationsInProgress)
+            uiManager.ResumeEnemyAttackTimer();
     }
 
     public void TriggerEnemyAttack(){

@@ -29,4 +29,8 @@ public class AttackAnimatorFunctions : MonoBehaviour{
         battleManager.DamagePlayerForDarkAttack();
     }
 
+    public void ThrowPebble(){
+        battleManager.ThrowPebbleIfPossible(strength);
+    }
+
 }

@@ -405,10 +405,11 @@ public class PuzzleGenerator : MonoBehaviour {
     }
     
     private BattleManager.PowerupTypes SelectPowerupType(){
-        int range = battleManager.powerupArray.Length - 1; //"None" is not an option we want to select
+        //don't select "None" (first element) or "Pebble (last element)
+        int range = battleManager.powerupArray.Length - 2;
 
         int i = StaticVariables.rand.Next(0,range) + 1;
         return (BattleManager.PowerupTypes)battleManager.powerupArray.GetValue(i);
-        //return (BattleManager.PowerupTypes.Heal);
+        //return (BattleManager.PowerupTypes.Earth);
     }
 }

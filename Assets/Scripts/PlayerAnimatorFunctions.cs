@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class PlayerAnimatorFunctions : MonoBehaviour{
 
+    [HideInInspector]
+    public List<GameObject> attacksInProgress = new List<GameObject>();
+    [HideInInspector]
+    public List<float> pebblesInQueue = new List<float>();
+
     public BattleManager battleManager;
     public Animator animator;
-
-    public List<GameObject> attacksInProgress = new List<GameObject>();
 
     [Header("Attack Animation Objects")]
     public GameObject DeathBubble;
@@ -23,6 +26,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
     public GameObject basicLightningPrefab;
     public GameObject powerLightningPrefab;
     public GameObject powerHealPrefab;
+    public GameObject powerEarthPebblePrefab;
 
     [Header("Health Change Animation Objects")]
     public GameObject playerHealSingleDigitPrefab;
@@ -57,21 +61,29 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
             case BattleManager.PowerupTypes.Lightning:
                 o = powerLightningPrefab;
                 break;
+            case BattleManager.PowerupTypes.Pebble:
+                o = powerEarthPebblePrefab;
+                break;
             default:
                 o = ChooseAnimationForPowerupTypeNone();
                 break;
         }
 
-        //o = powerLightningPrefab;
+        //o = powerEarthPebblePrefab;
         //strength = 6;
         //powerupLevel = StaticVariables.rand.Next(1,3);
         //powerupLevel = 1;
-        //type = BattleManager.PowerupTypes.Lightning;
+        //type = BattleManager.PowerupTypes.Pebble;
 
         GameObject newAttack = Instantiate(o, battleManager.uiManager.playerAttackAnimationParent);
-        newAttack.SetActive(false);
         newAttack.GetComponent<AttackAnimatorFunctions>().SetStats(type, strength, powerupLevel, battleManager);
-        attacksInProgress.Add(newAttack);   
+        if (type == BattleManager.PowerupTypes.Pebble){
+            newAttack.SetActive(true);
+        }
+        else{
+            newAttack.SetActive(false);
+            attacksInProgress.Add(newAttack);
+        }
     }
 
 
@@ -101,4 +113,13 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
     public void ShowDeathBubble(){
         DeathBubble.SetActive(true);
     }
+
+    public void AddPebblesToQueue(float multiplier, int count){
+        for (int i =0; i<count; i++){
+            pebblesInQueue.Add(multiplier);
+            pebblesInQueue.Sort();
+            pebblesInQueue.Reverse();
+        }
+    }
+
 }
