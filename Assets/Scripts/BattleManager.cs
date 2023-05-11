@@ -112,7 +112,7 @@ public class BattleManager : MonoBehaviour {
         uiManager.DisplayHealths(playerHealth, enemyHealth);
         if (enemyHealth == 0){
             stopNextAttack = true;
-            uiManager.PauseEnemyAttackTimer();
+            uiManager.PauseEnemyAttackBar();
             ClearWord(false);
         }
     }
@@ -124,14 +124,14 @@ public class BattleManager : MonoBehaviour {
         uiManager.ShowPlayerTakingDamage(amount, playerHealth > 0);
         uiManager.DisplayHealths(playerHealth, enemyHealth);
         if (playerHealth == 0){
-            uiManager.PauseEnemyAttackTimer();
+            uiManager.PauseEnemyAttackBar();
             ClearWord(false);
         }
             
     }
 
     public void PressSubmitWordButton(){
-        if ((playerHealth == 0) || (enemyHealth == 0))
+        if ((playerHealth == 0) || (enemyHealth == 0) || (isGamePaused))
             return;
         if (isValidWord){
             if (StaticVariables.IsAnimatorInIdleState(uiManager.enemyAnimator))
@@ -166,7 +166,7 @@ public class BattleManager : MonoBehaviour {
     }
 
     private void StartPlayingPlayerAttackAnimation(){
-        uiManager.PauseEnemyAttackTimer();
+        uiManager.PauseEnemyAttackBar();
         if (powerupTypeForWord == PowerupTypes.Heal)
             uiManager.StartPlayerHealAnimation();
         else
@@ -379,7 +379,7 @@ public class BattleManager : MonoBehaviour {
 
 
     public bool CanAddLetter(LetterSpace letterSpace){
-        if ((playerHealth == 0) || (enemyHealth == 0))
+        if ((playerHealth == 0) || (enemyHealth == 0) || (isGamePaused))
             return false;
         if (letterSpace.hasBeenUsedInAWordAlready)
             return false;
@@ -518,7 +518,7 @@ public class BattleManager : MonoBehaviour {
             }
         }
         if (!anyAnimationsInProgress)
-            uiManager.ResumeEnemyAttackTimer();
+            uiManager.ResumeEnemyAttackBar();
     }
 
     public void TriggerEnemyAttack(){

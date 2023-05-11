@@ -369,16 +369,6 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public void PauseEnemyAttackTimer(){
-        DOTween.Pause(enemyTimerBar);
-        DOTween.Pause(enemyStunBar);
-    }
-
-    public void ResumeEnemyAttackTimer(){
-        DOTween.Play(enemyTimerBar);
-        DOTween.Play(enemyStunBar);
-    }
-
     public void StartEnemyAttackAnimation(){
         enemyAnimator.SetTrigger("Attack");
         enemyTimerBar.DOScale(Vector3.one, 1f).SetEase(Ease.Linear);
@@ -412,7 +402,6 @@ public class UIManager : MonoBehaviour {
             if (go.GetComponent<Animator>() != null)
                 animatedObjectsInWindow.Add(go);
         }
-
     }
 
     public void ShowBurnCount(){
@@ -464,7 +453,6 @@ public class UIManager : MonoBehaviour {
     public void FillPuzzleAreaWithWater(float totalDuration){
         CancelWaterDrain();
         waterDrainDuration = totalDuration - waterFillDuration - waterFloatDuration;
-        //float fillHeight = 1380;
         waterBuffBottom.DOSizeDelta(new Vector2(waterBuffBottom.sizeDelta.x, (floodHeight - waterBuffBottom.anchoredPosition.y)), waterFillDuration);
         waterBuffTop.DOAnchorPos(new Vector2(0, floodHeight), waterFillDuration).OnComplete(FloatWater);
         waterBuffBottom.gameObject.SetActive(true);
@@ -509,7 +497,6 @@ public class UIManager : MonoBehaviour {
     private bool IsPuzzlePageShowing(){
         return (book.anchoredPosition.x < 0);
     }
-
 
     public void SetAllAnimationStates(bool state){
         ChangeAnimationStateIfObjectIsActive(burnDisplay1, state);
@@ -567,7 +554,6 @@ public class UIManager : MonoBehaviour {
         if(go.activeSelf)
             go.GetComponent<Animator>().enabled = state;
     }
-
 }
 
 [System.Serializable]
