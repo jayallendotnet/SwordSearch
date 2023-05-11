@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour {
     public Animator enemyAnimator;
     private float waterDrainDuration;
     private Color waterPowerupStrengthColor;
+    private float floodHeight;
 
     [Header("Submit Word Button")]
     public Text wordDisplay;
@@ -91,12 +92,14 @@ public class UIManager : MonoBehaviour {
     public Transform foregroundParent;
 
 
-    public void InitializeColors(){
+    public void SetStartingValues(){
         ColorUtility.TryParseHtmlString("#4B4B4B", out validWordColor);
         ColorUtility.TryParseHtmlString("#C8C8C8", out invalidWordColor);
         ColorUtility.TryParseHtmlString("#8DE1FF", out validButtonColor);
         ColorUtility.TryParseHtmlString("#B34A50", out invalidButtonColor);  
         waterPowerupStrengthColor = GetPowerupDisplayDataWithType(BattleManager.PowerupTypes.Water).backgroundColor;
+        floodHeight = waterBuffTop.anchoredPosition.y;
+        waterBuffTop.anchoredPosition = new Vector2(waterBuffTop.anchoredPosition.x, waterBuffBottom.anchoredPosition.y);
     }
 
 
@@ -451,9 +454,9 @@ public class UIManager : MonoBehaviour {
     public void FillPuzzleAreaWithWater(float totalDuration){
         CancelWaterDrain();
         waterDrainDuration = totalDuration - waterFillDuration - waterFloatDuration;
-        float fillHeight = 1380;
-        waterBuffBottom.DOSizeDelta(new Vector2(waterBuffBottom.sizeDelta.x, (fillHeight - waterBuffBottom.anchoredPosition.y)), waterFillDuration);
-        waterBuffTop.DOAnchorPos(new Vector2(0, fillHeight), waterFillDuration).OnComplete(FloatWater);
+        //float fillHeight = 1380;
+        waterBuffBottom.DOSizeDelta(new Vector2(waterBuffBottom.sizeDelta.x, (floodHeight - waterBuffBottom.anchoredPosition.y)), waterFillDuration);
+        waterBuffTop.DOAnchorPos(new Vector2(0, floodHeight), waterFillDuration).OnComplete(FloatWater);
         waterBuffBottom.gameObject.SetActive(true);
         waterBuffTop.gameObject.SetActive(true);
     }

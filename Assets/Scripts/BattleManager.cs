@@ -74,7 +74,7 @@ public class BattleManager : MonoBehaviour {
         playerHealth = startingPlayerHealth;
         uiManager.ApplyBackground(backgroundPrefab);
 
-        uiManager.InitializeColors();
+        uiManager.SetStartingValues();
         uiManager.DisplayHealths(playerHealth, enemyHealth);
         uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
         QueueEnemyAttack();
