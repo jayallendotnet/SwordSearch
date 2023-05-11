@@ -390,7 +390,7 @@ public class UIManager : MonoBehaviour {
 
     public void ApplyBackground(GameObject backgroundPrefab){
         Transform background = backgroundPrefab.transform.GetChild(0).transform;
-        Transform foreground = backgroundPrefab.transform.GetChild(1).transform;
+        Transform foreground = backgroundPrefab.transform.GetChild(2).transform;
         foreach (Transform t in backgroundParent)
             GameObject.Destroy(t.gameObject);
         foreach (Transform t in foregroundParent)
