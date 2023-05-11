@@ -14,7 +14,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
     public Animator animator;
 
     [Header("Attack Animation Objects")]
-    public GameObject DeathBubble;
+    public GameObject deathBubble;
     public GameObject basicFirePrefab;
     public GameObject powerFirePrefab;
     public GameObject basicWaterPrefab;
@@ -27,13 +27,6 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
     public GameObject powerLightningPrefab;
     public GameObject powerHealPrefab;
     public GameObject powerEarthPebblePrefab;
-
-    [Header("Health Change Animation Objects")]
-    public GameObject playerHealSingleDigitPrefab;
-    public GameObject playerHealDoubleDigitPrefab;
-
-
-    
 
     void Start(){
         foreach (Transform t in transform)
@@ -110,7 +103,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
     }
 
     public void ShowDeathBubble(){
-        DeathBubble.SetActive(true);
+        deathBubble.SetActive(true);
     }
 
     public void AddPebblesToQueue(float multiplier, int count){

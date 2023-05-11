@@ -546,7 +546,7 @@ GameObject:
   - component: {fileID: 78483405}
   - component: {fileID: 78483404}
   m_Layer: 5
-  m_Name: Book
+  m_Name: Puzzle Page
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -566,12 +566,12 @@ RectTransform:
   m_Children:
   - {fileID: 1532178462}
   - {fileID: 742626208}
-  m_Father: {fileID: 811241014}
-  m_RootOrder: 6
+  m_Father: {fileID: 1342520696}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 83.94806, y: -636.84094}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1335.9617, y: 1646.7551}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &78483404
@@ -2306,6 +2306,7 @@ MonoBehaviour:
   waterFloatDuration: 3
   backgroundParent: {fileID: 113087300}
   foregroundParent: {fileID: 2143200599}
+  book: {fileID: 1342520696}
 --- !u!1 &383142622
 GameObject:
   m_ObjectHideFlags: 0
@@ -2824,7 +2825,7 @@ MonoBehaviour:
   pebblesInQueue: []
   battleManager: {fileID: 1561713303}
   animator: {fileID: 485298771}
-  DeathBubble: {fileID: 376672707}
+  deathBubble: {fileID: 376672707}
   basicFirePrefab: {fileID: 8016920711940231129, guid: f1348bf525b5f844fb891c68b35f19ad, type: 3}
   powerFirePrefab: {fileID: 6766603389161664344, guid: 4c523ad6143fb594e98511d39e8cd677, type: 3}
   basicWaterPrefab: {fileID: 8161260380111768590, guid: d410fe7418d46944087140a790129af9, type: 3}
@@ -2837,8 +2838,6 @@ MonoBehaviour:
   powerLightningPrefab: {fileID: 6997713028636950792, guid: 8ee7c7311df3141478b476a601fc1ab1, type: 3}
   powerHealPrefab: {fileID: 198085742057333750, guid: c121a4998831676498aa2bf592715678, type: 3}
   powerEarthPebblePrefab: {fileID: 4171328189946878050, guid: 0bab99eb6bff0bb4dbc54524eafc0f2c, type: 3}
-  playerHealSingleDigitPrefab: {fileID: 0}
-  playerHealDoubleDigitPrefab: {fileID: 0}
 --- !u!114 &485298769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4567,7 +4566,7 @@ GameObject:
   - component: {fileID: 754170748}
   - component: {fileID: 754170747}
   m_Layer: 5
-  m_Name: Pause Area
+  m_Name: Pause Page
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4585,12 +4584,12 @@ RectTransform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 811241014}
-  m_RootOrder: 7
+  m_Father: {fileID: 1342520696}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 83.94806, y: -636.84094}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1335.9617, y: 1646.7551}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &754170747
@@ -4946,9 +4945,8 @@ RectTransform:
   - {fileID: 735131000}
   - {fileID: 1102474288}
   - {fileID: 1186323522}
-  - {fileID: 78483403}
-  - {fileID: 754170746}
   - {fileID: 1120509849}
+  - {fileID: 1342520696}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6426,6 +6424,7 @@ GameObject:
   - component: {fileID: 1120509849}
   - component: {fileID: 1120509851}
   - component: {fileID: 1120509850}
+  - component: {fileID: 1120509852}
   m_Layer: 5
   m_Name: Pause Button
   m_TagString: Untagged
@@ -6446,11 +6445,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 811241014}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 493, y: 1448}
+  m_AnchoredPosition: {x: -493, y: 1448}
   m_SizeDelta: {x: 213.192, y: 441.7665}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1120509850
@@ -6491,6 +6490,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1120509848}
   m_CullTransparentMesh: 1
+--- !u!114 &1120509852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120509848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1120509850}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 380147764}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: PushedPauseButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &1167479957 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6747228974919254350, guid: 9d1c054e288b39e4abfe704fe137b1dc, type: 3}
@@ -7429,6 +7484,84 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6747228974919254350, guid: 9d1c054e288b39e4abfe704fe137b1dc, type: 3}
   m_PrefabInstance: {fileID: 1903678691}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1342520695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1342520696}
+  - component: {fileID: 1342520698}
+  - component: {fileID: 1342520697}
+  m_Layer: 5
+  m_Name: Book
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1342520696
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342520695}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 78483403}
+  - {fileID: 754170746}
+  m_Father: {fileID: 811241014}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -636.0519, y: -636.84094}
+  m_SizeDelta: {x: 1335.9617, y: 1646.7551}
+  m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &1342520697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342520695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 333101099, guid: 34cecdc81e5784647acfb85332ec4675, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 0.1
+--- !u!222 &1342520698
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342520695}
+  m_CullTransparentMesh: 1
 --- !u!1 &1347722387
 GameObject:
   m_ObjectHideFlags: 0
@@ -8583,7 +8716,7 @@ MonoBehaviour:
   waterFloodDuration: 20
   waterFloodDamageBonus: 1
   enemyPrefab: {fileID: 815226952419649516, guid: 64502270ffd5ebd4c9b81880e29ae333, type: 3}
-  backgroundPrefab: {fileID: 7543067620809557234, guid: 18fd931978dc05d4fa0cee1c86561fe8, type: 3}
+  backgroundPrefab: {fileID: 7543067620809557234, guid: 3909d788f875725429dd8ef86a1ac0cb, type: 3}
   uiManager: {fileID: 380147764}
   puzzleGenerator: {fileID: 742626212}
   playerAnimatorFunctions: {fileID: 485298768}

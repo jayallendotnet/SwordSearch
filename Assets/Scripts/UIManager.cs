@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour {
     private float waterDrainDuration;
     private Color waterPowerupStrengthColor;
     private float floodHeight;
+    private bool movingBook = false;
+    private List<GameObject> animatedObjectsInWindow = new List<GameObject>();
 
     [Header("Submit Word Button")]
     public Text wordDisplay;
@@ -90,6 +92,7 @@ public class UIManager : MonoBehaviour {
     public float waterFloatDuration = 3f;
     public Transform backgroundParent;
     public Transform foregroundParent;
+    public RectTransform book;
 
 
     public void SetStartingValues(){
@@ -392,16 +395,23 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ApplyBackground(GameObject backgroundPrefab){
+        animatedObjectsInWindow = new List<GameObject>();
         Transform background = backgroundPrefab.transform.GetChild(0).transform;
         Transform foreground = backgroundPrefab.transform.GetChild(2).transform;
         foreach (Transform t in backgroundParent)
             GameObject.Destroy(t.gameObject);
         foreach (Transform t in foregroundParent)
             GameObject.Destroy(t.gameObject);
-        foreach(Transform t in background)
-            Instantiate(t.gameObject, backgroundParent);
-        foreach(Transform t in foreground)
-            Instantiate(t.gameObject, foregroundParent);
+        foreach(Transform t in background){
+            GameObject go = Instantiate(t.gameObject, backgroundParent);
+            if (go.GetComponent<Animator>() != null)
+                animatedObjectsInWindow.Add(go);
+        }
+        foreach(Transform t in foreground){
+            GameObject go = Instantiate(t.gameObject, foregroundParent);
+            if (go.GetComponent<Animator>() != null)
+                animatedObjectsInWindow.Add(go);
+        }
 
     }
 
@@ -479,6 +489,83 @@ public class UIManager : MonoBehaviour {
     private void CancelWaterDrain(){
         DOTween.Kill(waterBuffBottom);
         DOTween.Kill(waterBuffTop);
+    }
+
+    public void PushedPauseButton(){
+        if (movingBook)
+            return;
+        movingBook = true;
+        book.DOAnchorPos(new Vector2(-book.anchoredPosition.x, book.anchoredPosition.y), 0.5f).OnComplete(MovingBookEnded);
+        if (IsPuzzlePageShowing())
+            battleManager.PauseEverything();
+    }
+
+    private void MovingBookEnded(){
+        movingBook = false;
+        if (IsPuzzlePageShowing())
+            battleManager.ResumeEverything();
+    }
+
+    private bool IsPuzzlePageShowing(){
+        return (book.anchoredPosition.x < 0);
+    }
+
+
+    public void SetAllAnimationStates(bool state){
+        ChangeAnimationStateIfObjectIsActive(burnDisplay1, state);
+        ChangeAnimationStateIfObjectIsActive(burnDisplay2, state);
+        ChangeAnimationStateIfObjectIsActive(burnDisplay3, state);
+        ChangeAnimationStateIfObjectIsActive(burnDisplay4, state);
+        ChangeAnimationStateIfObjectIsActive(burnDisplay5, state);
+        ChangeAnimationStateIfObjectIsActive(pebbleDisplay1, state);
+        ChangeAnimationStateIfObjectIsActive(pebbleDisplay2, state);
+        ChangeAnimationStateIfObjectIsActive(pebbleDisplay3, state);
+        ChangeAnimationStateIfObjectIsActive(pebbleDisplay4, state);
+        ChangeAnimationStateIfObjectIsActive(pebbleDisplay5, state);
+        ChangeAnimationStateIfObjectIsActive(waterBuffTop.gameObject, state);
+        ChangeAnimationStateIfObjectIsActive(enemyStunBarAnimation.gameObject, state);
+        ChangeAnimationStateIfObjectIsActive(battleManager.playerAnimatorFunctions.deathBubble, state);
+        foreach(Transform t in playerAttackAnimationParent)
+            ChangeAnimationStateIfObjectIsActive(t.gameObject, state);
+        foreach(Transform t in playerAnimator.transform.parent)
+            ChangeAnimationStateIfObjectIsActive(t.gameObject, state);
+        foreach(Transform t in enemyAnimator.transform.parent)
+            ChangeAnimationStateIfObjectIsActive(t.gameObject, state);
+        foreach (GameObject go in animatedObjectsInWindow)
+            ChangeAnimationStateIfObjectIsActive(go, state);
+    }
+
+    public void PauseEnemyAttackBar(){
+        if (enemyStunBar.gameObject.activeSelf)
+            DOTween.Pause(enemyStunBar);
+        else
+            DOTween.Pause(enemyTimerBar);
+    }
+
+    public void ResumeEnemyAttackBar(){
+        if (enemyStunBar.gameObject.activeSelf)
+            DOTween.Play(enemyStunBar);
+        else
+            DOTween.Play(enemyTimerBar);
+    }
+
+    public void PauseWaterDrain(){
+        if (waterBuffTop.gameObject.activeSelf){
+            DOTween.Pause(waterBuffBottom);
+            DOTween.Pause(waterBuffTop);
+        }
+    }
+
+    public void ResumeWaterDrain(){
+        if (waterBuffTop.gameObject.activeSelf){
+            DOTween.Play(waterBuffBottom);
+            DOTween.Play(waterBuffTop);
+        }
+    }
+
+    private void ChangeAnimationStateIfObjectIsActive(GameObject go, bool state){
+        if(go.activeSelf)
+            go.GetComponent<Animator>().enabled = state;
     }
 
 }

@@ -35,6 +35,7 @@ public class BattleManager : MonoBehaviour {
     public EnemyAttackAnimatorFunctions enemyAttackAnimatorFunctions;
     [HideInInspector]
     public bool isWaterInPuzzleArea = false;
+    private bool isGamePaused = false;
 
 
     [Header("Game Variables")]
@@ -147,6 +148,21 @@ public class BattleManager : MonoBehaviour {
             countdownToRefresh = maxPuzzleCountdown;
             ClearWord(true);           
         }
+    }
+
+    public void PauseEverything(){
+        isGamePaused = true;
+        uiManager.PauseEnemyAttackBar();
+        uiManager.PauseWaterDrain();
+        uiManager.SetAllAnimationStates(false);
+    }
+
+
+    public void ResumeEverything(){
+        isGamePaused = false;
+        uiManager.ResumeEnemyAttackBar();
+        uiManager.ResumeWaterDrain();
+        uiManager.SetAllAnimationStates(true);
     }
 
     private void StartPlayingPlayerAttackAnimation(){
