@@ -55,8 +55,6 @@ public class BattleManager : MonoBehaviour {
     public float waterFloodDuration = 10f;
     public int waterFloodDamageBonus = 1;
     public BattleData defaultBattleData;
-    //public GameObject enemyPrefab;
-    //public GameObject backgroundPrefab;
 
     [Header("Scripts")]
     public UIManager uiManager;
@@ -73,13 +71,11 @@ public class BattleManager : MonoBehaviour {
         setup.Setup();
         wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
         countdownToRefresh = maxPuzzleCountdown;
-        //uiManager.AddEnemyToScene(enemyPrefab);
         if (StaticVariables.battleData == null)
             StaticVariables.battleData = defaultBattleData;
         uiManager.AddEnemyToScene(StaticVariables.battleData.enemyPrefab);
         enemyHealth = enemyData.startingHealth;
         playerHealth = startingPlayerHealth;
-        //uiManager.ApplyBackground(backgroundPrefab);
         uiManager.ApplyBackground(StaticVariables.battleData.backgroundPrefab);
 
         uiManager.SetStartingValues();
@@ -87,7 +83,6 @@ public class BattleManager : MonoBehaviour {
         uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
         StaticVariables.FadeIntoScene();
         StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration, QueueEnemyAttack);
-        //QueueEnemyAttack();
     }
     
     public void SetIsValidWord(){
