@@ -15,7 +15,7 @@ public class PuzzleGenerator : MonoBehaviour {
     private bool useStartingLayout = false;
     private char[,] startingLayout = {{'-', '-', '-', '-', 'A'}, {'O', 'R', '-', 'L', 'V'}, {'W', 'S', 'D', 'S', 'I'}, {'-', 'A', 'R', 'R', 'U'}, {'-', '-', '-', 'P', 'Y'}, {'-', 'L', 'A', 'T', '-'}, {'P', '-', '-', '-', '-'}};
     private string[] wordLibraryForGeneration;
-    private List<LetterSpace> powerupSpaces = new List<LetterSpace>();
+    //private List<LetterSpace> powerupSpaces = new List<LetterSpace>();
 
     [Header("Puzle Generation Rules")]
     public int wordCount = 3;
@@ -42,6 +42,7 @@ public class PuzzleGenerator : MonoBehaviour {
             succeeded = PickWordsAndAttemptToGenerateSolution();
         FillRestOfPuzzle();
         ClearAllPowerups();
+        //battleManager.uiManager.ClearSynchronizedLetterAnimatorList();
         RenderLetters();   
         PickRandomSpaceForPowerup();    
         PickRandomSpaceForPowerup();  
@@ -403,7 +404,7 @@ public class PuzzleGenerator : MonoBehaviour {
             PickRandomSpaceForPowerup();
         else{
             letterSpaces[t1,t2].SetPowerup(SelectPowerupType());
-            powerupSpaces.Add(letterSpaces[t1, t2]);
+            //battleManager.uiManager.AddSynchronizedLetterAnimator(letterSpaces[t1, t2].powerupIconAnimator);
         }
             
     }
@@ -417,6 +418,7 @@ public class PuzzleGenerator : MonoBehaviour {
         //return (BattleManager.PowerupTypes.Earth);
     }
 
+    /*
     public float GetAnimationFrameForRemainingPowerups(){
         foreach (LetterSpace ls in powerupSpaces){
             if (ls.powerupIcon.activeSelf)
@@ -424,4 +426,5 @@ public class PuzzleGenerator : MonoBehaviour {
         }
         return 0f;
     }
+    */
 }

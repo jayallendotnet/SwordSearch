@@ -26,12 +26,13 @@ public class UIManager : MonoBehaviour {
     public Image wordStrengthImageTens;
     public GameObject wordStrengthDivider;
     public Image wordStrengthIcon;
+    //[HideInInspector]
+    //public List<Animator> synchronizedLetterAnimators = new List<Animator>();
 
 
     [Header("Colors")]
-    //public Color validWordColor;
+    public Color usedLetterColor;
     public Color invalidWordColor;
-    //public Color validButtonColor;
     public Color invalidButtonColor;
     public Color canRefreshPuzzleColor;
     public List<PowerupDisplayData> powerupDisplayDataList;
@@ -565,6 +566,28 @@ public class UIManager : MonoBehaviour {
         puzzlePage.SetActive(false);
         victoryPage.SetActive(true);
     }
+
+    /*
+    public void ClearSynchronizedLetterAnimatorList(){
+        synchronizedLetterAnimators = new List<Animator>();
+    }
+
+    public void AddSynchronizedLetterAnimator(Animator animator){
+        synchronizedLetterAnimators.Add(animator);
+    }
+
+    public void RemoveSynchronizedLetterAnimator(Animator animator){
+        synchronizedLetterAnimators.Remove(animator);
+    }
+
+    public float GetSynchronizedLetterAnimationFrame(){
+        foreach (Animator anim in synchronizedLetterAnimators){
+            if (anim.transform.parent.gameObject.activeSelf)
+                return anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        }
+        return 0f;
+    }
+    */
 }
 
 [System.Serializable]

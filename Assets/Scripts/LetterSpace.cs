@@ -28,6 +28,7 @@ public class LetterSpace : MonoBehaviour{
     [Header("GameObjects")]
     public Text text;
     public GameObject selectedSignifier;
+    public Animator selectedSignifierAnimator;
     public GameObject powerupIcon;
     public Animator powerupIconAnimator;
 
@@ -53,21 +54,20 @@ public class LetterSpace : MonoBehaviour{
         HidePowerupIcon();
         text.color = textColor;
         UpdateBackgroundColors(backgroundColor);
+        //selectedSignifierAnimator.Play("SelectedSignifier",0, battleManager.uiManager.GetSynchronizedLetterAnimationFrame());
     }
 
     public void ShowAsNotPartOfWord(){
         selectedSignifier.SetActive(false);
         HideAllDirectionLines();
         if (hasBeenUsedInAWordAlready){
-            text.color = Color.gray;
+            text.color = battleManager.uiManager.usedLetterColor;
             HidePowerupIcon();
         }
         else{
             text.color = Color.black;
             ShowPowerup();
         }
-            
-        
     }
 
     private void HidePowerupIcon(){
@@ -147,7 +147,7 @@ public class LetterSpace : MonoBehaviour{
             Color b = d.backgroundColor;
             text.color = t;
             powerupIcon.GetComponent<Image>().color = b;
-            powerupIconAnimator.Play("PowerupIcon",0, battleManager.puzzleGenerator.GetAnimationFrameForRemainingPowerups());
+            //powerupIconAnimator.Play("PowerupIcon",0, battleManager.uiManager.GetSynchronizedLetterAnimationFrame());
         }
 
     }

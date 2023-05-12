@@ -477,6 +477,7 @@ MonoBehaviour:
   wasActiveBeforeFingerDown: 0
   text: {fileID: 481033620212373773}
   selectedSignifier: {fileID: 7262505682851406401}
+  selectedSignifierAnimator: {fileID: 401861117923300212}
   powerupIcon: {fileID: 1574932729297762326}
   powerupIconAnimator: {fileID: 622122309336047104}
   topConnector: {fileID: 7580352485730006192}
@@ -936,13 +937,14 @@ GameObject:
   - component: {fileID: 8355236688644029496}
   - component: {fileID: 3477411462036163631}
   - component: {fileID: 1804746069536620568}
+  - component: {fileID: 401861117923300212}
   m_Layer: 0
   m_Name: SelectedSignifier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8355236688644029496
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1001,6 +1003,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &401861117923300212
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7262505682851406401}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 06099b8cef48c9a46a44c2c36d7233c3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7563960080879405940
 GameObject:
   m_ObjectHideFlags: 0
