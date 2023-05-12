@@ -17,8 +17,10 @@ public class BattleManager : MonoBehaviour {
     public BattleManager.PowerupTypes powerupTypeForWord;
     [HideInInspector]
     public int powerupLevel;
-    private int enemyHealth = 0;
-    private int playerHealth = 0;
+    [HideInInspector]
+    public int enemyHealth = 0;
+    [HideInInspector]
+    public int playerHealth = 0;
     private string[] wordLibraryForChecking;
     private int countdownToRefresh;
     public enum PowerupTypes{None, Water, Fire, Heal, Dark, Earth, Lightning, Pebble};
@@ -113,6 +115,8 @@ public class BattleManager : MonoBehaviour {
         if (enemyHealth == 0){
             stopNextAttack = true;
             uiManager.PauseEnemyAttackBar();
+            uiManager.PauseWaterDrain();
+            //uiManager.SetAllAnimationStates(false);
             ClearWord(false);
         }
     }

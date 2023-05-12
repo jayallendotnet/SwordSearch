@@ -5,11 +5,6 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 public class UIManager : MonoBehaviour {
-
-    private Color validWordColor;
-    private Color invalidWordColor;
-    private Color validButtonColor;
-    private Color invalidButtonColor;
     private Color textColorForWord = Color.black;
     private Color backgroundColorForWord = Color.grey;
     private Transform enemyObject;
@@ -24,7 +19,6 @@ public class UIManager : MonoBehaviour {
     [Header("Submit Word Button")]
     public Text wordDisplay;
     public Image submitWordButtonImage;
-    public GameObject submitWordBorder;
     public Image countdownNumber;
     public GameObject countdownDivider;
     public Image wordStrengthImageSingle;
@@ -35,6 +29,10 @@ public class UIManager : MonoBehaviour {
 
 
     [Header("Colors")]
+    //public Color validWordColor;
+    public Color invalidWordColor;
+    //public Color validButtonColor;
+    public Color invalidButtonColor;
     public Color canRefreshPuzzleColor;
     public List<PowerupDisplayData> powerupDisplayDataList;
     [Header("Numbers")]
@@ -93,13 +91,10 @@ public class UIManager : MonoBehaviour {
     public Transform backgroundParent;
     public Transform foregroundParent;
     public RectTransform book;
+    public RectTransform pauseArrow;
 
 
     public void SetStartingValues(){
-        ColorUtility.TryParseHtmlString("#4B4B4B", out validWordColor);
-        ColorUtility.TryParseHtmlString("#C8C8C8", out invalidWordColor);
-        ColorUtility.TryParseHtmlString("#8DE1FF", out validButtonColor);
-        ColorUtility.TryParseHtmlString("#B34A50", out invalidButtonColor);  
         waterPowerupStrengthColor = GetPowerupDisplayDataWithType(BattleManager.PowerupTypes.Water).backgroundColor;
         floodHeight = waterBuffTop.anchoredPosition.y;
         waterBuffTop.anchoredPosition = new Vector2(waterBuffTop.anchoredPosition.x, waterBuffBottom.anchoredPosition.y);
@@ -178,17 +173,6 @@ public class UIManager : MonoBehaviour {
             enemyAnimator.Play(StaticVariables.GetAnimatorDieStateName(enemyAnimator));
         else if (!StaticVariables.IsAnimatorInDamageState(enemyAnimator))
             enemyAnimator.SetTrigger("TakeDamage");
-
-        //don't set damage trigger if they are already in damage animation
-        //if (StaticVariables.IsAnimatorInDamageState(enemyAnimator)){
-        //}
-        //otherwise, set the damage triggers
-        //else{
-         //   if (stillAlive)
-         //       
-         //   else
-         //       enemyAnimator.SetTrigger("Die");  
-        //} 
     }
 
     public void ShowEnemyGettingHealed(int amount){
@@ -246,7 +230,6 @@ public class UIManager : MonoBehaviour {
             wordDisplay.fontSize = 150;
             wordDisplay.color = textColorForWord;
             submitWordButtonImage.color = backgroundColorForWord;
-            submitWordBorder.SetActive(true);
             wordStrengthDivider.SetActive(true);
             countdownDivider.SetActive(true);
             UpdateWordStrengthDisplay(strength);
@@ -255,9 +238,8 @@ public class UIManager : MonoBehaviour {
         else if ((countdown == 0) && (word.Length == 0)){
             wordDisplay.text = "NEW\nPUZZLE";
             wordDisplay.fontSize = 85;
-            wordDisplay.color = validWordColor;
+            wordDisplay.color = Color.white;
             submitWordButtonImage.color = canRefreshPuzzleColor;
-            submitWordBorder.SetActive(true);
             wordStrengthDivider.SetActive(true);
             countdownDivider.SetActive(true);
             UpdateWordStrengthDisplay(strength);
@@ -268,7 +250,6 @@ public class UIManager : MonoBehaviour {
             wordDisplay.fontSize = 150;
             wordDisplay.color = invalidWordColor;
             submitWordButtonImage.color = invalidButtonColor;
-            submitWordBorder.SetActive(false);
             wordStrengthDivider.SetActive(false);
             countdownDivider.SetActive(false);
             UpdateWordStrengthDisplay(strength);
@@ -480,12 +461,16 @@ public class UIManager : MonoBehaviour {
     }
 
     public void PushedPauseButton(){
-        if (movingBook)
+        if ((movingBook) || (battleManager.playerHealth == 0) || (battleManager.enemyHealth == 0))
             return;
         movingBook = true;
         book.DOAnchorPos(new Vector2(-book.anchoredPosition.x, book.anchoredPosition.y), 0.5f).OnComplete(MovingBookEnded);
-        if (IsPuzzlePageShowing())
+        if (IsPuzzlePageShowing()){
+            pauseArrow.DORotate(new Vector3(0,0,270), 0.5f);
             battleManager.PauseEverything();
+        }
+        else
+            pauseArrow.DORotate(new Vector3(0,0,90), 0.5f);
     }
 
     private void MovingBookEnded(){
@@ -504,11 +489,11 @@ public class UIManager : MonoBehaviour {
         ChangeAnimationStateIfObjectIsActive(burnDisplay3, state);
         ChangeAnimationStateIfObjectIsActive(burnDisplay4, state);
         ChangeAnimationStateIfObjectIsActive(burnDisplay5, state);
-        ChangeAnimationStateIfObjectIsActive(pebbleDisplay1, state);
-        ChangeAnimationStateIfObjectIsActive(pebbleDisplay2, state);
-        ChangeAnimationStateIfObjectIsActive(pebbleDisplay3, state);
-        ChangeAnimationStateIfObjectIsActive(pebbleDisplay4, state);
-        ChangeAnimationStateIfObjectIsActive(pebbleDisplay5, state);
+        ChangeChildAnimationStateIfObjectIsActive(pebbleDisplay1, state);
+        ChangeChildAnimationStateIfObjectIsActive(pebbleDisplay2, state);
+        ChangeChildAnimationStateIfObjectIsActive(pebbleDisplay3, state);
+        ChangeChildAnimationStateIfObjectIsActive(pebbleDisplay4, state);
+        ChangeChildAnimationStateIfObjectIsActive(pebbleDisplay5, state);
         ChangeAnimationStateIfObjectIsActive(waterBuffTop.gameObject, state);
         ChangeAnimationStateIfObjectIsActive(enemyStunBarAnimation.gameObject, state);
         ChangeAnimationStateIfObjectIsActive(battleManager.playerAnimatorFunctions.deathBubble, state);
@@ -553,6 +538,11 @@ public class UIManager : MonoBehaviour {
     private void ChangeAnimationStateIfObjectIsActive(GameObject go, bool state){
         if(go.activeSelf)
             go.GetComponent<Animator>().enabled = state;
+    }
+
+    private void ChangeChildAnimationStateIfObjectIsActive(GameObject go, bool state){
+        if(go.activeSelf)
+            go.transform.GetChild(0).GetComponent<Animator>().enabled = state;
     }
 }
 
