@@ -54,33 +54,40 @@ public class BattleManager : MonoBehaviour {
     public float darkPowerupDamageMultiplier = 2.5f;
     public float waterFloodDuration = 10f;
     public int waterFloodDamageBonus = 1;
-    public GameObject enemyPrefab;
-    public GameObject backgroundPrefab;
+    public BattleData defaultBattleData;
+    //public GameObject enemyPrefab;
+    //public GameObject backgroundPrefab;
 
     [Header("Scripts")]
     public UIManager uiManager;
     public PuzzleGenerator puzzleGenerator;
     public PlayerAnimatorFunctions playerAnimatorFunctions;
+    public GeneralSceneManager setup;
 
     [Header("Libraries")]
     public TextAsset wordLibraryForGenerationFile; //all words that can be used to generate the puzzle
     public TextAsset wordLibraryForCheckingFile; //all words that can be considered valid, even if they are not in the generating list
     public TextAsset randomLetterPoolFile;
 
-    //[Header("Misc")]
-
     void Start(){
+        setup.Setup();
         wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
         countdownToRefresh = maxPuzzleCountdown;
-        uiManager.AddEnemyToScene(enemyPrefab);
+        //uiManager.AddEnemyToScene(enemyPrefab);
+        if (StaticVariables.battleData == null)
+            StaticVariables.battleData = defaultBattleData;
+        uiManager.AddEnemyToScene(StaticVariables.battleData.enemyPrefab);
         enemyHealth = enemyData.startingHealth;
         playerHealth = startingPlayerHealth;
-        uiManager.ApplyBackground(backgroundPrefab);
+        //uiManager.ApplyBackground(backgroundPrefab);
+        uiManager.ApplyBackground(StaticVariables.battleData.backgroundPrefab);
 
         uiManager.SetStartingValues();
         uiManager.DisplayHealths(playerHealth, enemyHealth);
         uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
-        QueueEnemyAttack();
+        StaticVariables.FadeIntoScene();
+        StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration, QueueEnemyAttack);
+        //QueueEnemyAttack();
     }
     
     public void SetIsValidWord(){

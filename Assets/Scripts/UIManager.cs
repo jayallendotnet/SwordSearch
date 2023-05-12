@@ -92,9 +92,13 @@ public class UIManager : MonoBehaviour {
     public Transform foregroundParent;
     public RectTransform book;
     public RectTransform pauseArrow;
+    public GameObject puzzlePage;
+    public GameObject victoryPage;
 
 
     public void SetStartingValues(){
+        puzzlePage.SetActive(true);
+        victoryPage.SetActive(false);
         waterPowerupStrengthColor = GetPowerupDisplayDataWithType(BattleManager.PowerupTypes.Water).backgroundColor;
         floodHeight = waterBuffTop.anchoredPosition.y;
         waterBuffTop.anchoredPosition = new Vector2(waterBuffTop.anchoredPosition.x, waterBuffBottom.anchoredPosition.y);
@@ -543,6 +547,26 @@ public class UIManager : MonoBehaviour {
     private void ChangeChildAnimationStateIfObjectIsActive(GameObject go, bool state){
         if(go.activeSelf)
             go.transform.GetChild(0).GetComponent<Animator>().enabled = state;
+    }
+
+    public void PushedResumeButton(){
+        //shows up while paused
+        PushedPauseButton();
+    }
+
+    public void PushedQuitButton(){
+        //shows up while paused
+        StaticVariables.FadeOutThenLoadScene("Selection Scene");
+    }
+
+    public void PushedContinueButton(){
+        //shows up after winning
+        StaticVariables.FadeOutThenLoadScene("Selection Scene");
+    }
+
+    public void ShowVictoryPage(){
+        puzzlePage.SetActive(false);
+        victoryPage.SetActive(true);
     }
 }
 

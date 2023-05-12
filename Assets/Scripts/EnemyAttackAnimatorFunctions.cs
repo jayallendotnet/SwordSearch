@@ -19,8 +19,10 @@ public class EnemyAttackAnimatorFunctions : MonoBehaviour{
     }
 
     public void ReturnedToIdle(){
-        battleManager.EnemyReturnedToIdle();
-        DecrementBurnCounter();
+        if (battleManager != null){ //allows the enemy to be used in non-battle scenes
+            battleManager.EnemyReturnedToIdle();
+            DecrementBurnCounter();
+        }
     }
 
     public void AddBurnDamageToQueue(int damage, int count){
@@ -46,6 +48,10 @@ public class EnemyAttackAnimatorFunctions : MonoBehaviour{
             battleManager.uiManager.ShowBurnCount();
             cyclesLeftUntilBurn = cyclesBetweenBurns;
         }
+    }
+
+    public void DeathAnimationFinished(){
+        battleManager.uiManager.ShowVictoryPage();
     }
 
 }
