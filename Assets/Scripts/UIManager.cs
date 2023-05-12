@@ -172,7 +172,7 @@ public class UIManager : MonoBehaviour {
 
     public void ShowEnemyTakingDamage(int amount, bool stillAlive){
         ShowNumbersAsChild(enemyDamageSingleDigitPrefab, enemyDamageDoubleDigitPrefab, enemyObject, amount);
-        
+
         if (!stillAlive)
             enemyAnimator.Play(StaticVariables.GetAnimatorDieStateName(enemyAnimator));
         else if (!StaticVariables.IsAnimatorInDamageState(enemyAnimator))
@@ -231,7 +231,6 @@ public class UIManager : MonoBehaviour {
     public void DisplayWord(string word, bool isValidWord, int countdown, int strength){
         if (isValidWord){
             wordDisplay.text = word;
-            wordDisplay.fontSize = 150;
             wordDisplay.color = textColorForWord;
             submitWordButtonImage.color = backgroundColorForWord;
             wordStrengthDivider.SetActive(true);
@@ -240,8 +239,6 @@ public class UIManager : MonoBehaviour {
             UpdateCountdownDisplay(countdown);
         }
         else if ((countdown == 0) && (word.Length == 0)){
-            //wordDisplay.text = "NEW\nPUZZLE";
-            //wordDisplay.fontSize = 85;
             wordDisplay.text = "TURN PAGE";
             wordDisplay.color = Color.white;
             submitWordButtonImage.color = canRefreshPuzzleColor;
@@ -252,7 +249,6 @@ public class UIManager : MonoBehaviour {
         }
         else {
             wordDisplay.text = word;
-            wordDisplay.fontSize = 150;
             wordDisplay.color = invalidWordColor;
             submitWordButtonImage.color = invalidButtonColor;
             wordStrengthDivider.SetActive(false);
