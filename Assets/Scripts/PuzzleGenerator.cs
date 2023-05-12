@@ -15,6 +15,7 @@ public class PuzzleGenerator : MonoBehaviour {
     private bool useStartingLayout = false;
     private char[,] startingLayout = {{'-', '-', '-', '-', 'A'}, {'O', 'R', '-', 'L', 'V'}, {'W', 'S', 'D', 'S', 'I'}, {'-', 'A', 'R', 'R', 'U'}, {'-', '-', '-', 'P', 'Y'}, {'-', 'L', 'A', 'T', '-'}, {'P', '-', '-', '-', '-'}};
     private string[] wordLibraryForGeneration;
+    private List<LetterSpace> powerupSpaces = new List<LetterSpace>();
 
     [Header("Puzle Generation Rules")]
     public int wordCount = 3;
@@ -400,8 +401,11 @@ public class PuzzleGenerator : MonoBehaviour {
         LetterSpace ls = letterSpaces[t1,t2];
         if (ls.powerupType != BattleManager.PowerupTypes.None)
             PickRandomSpaceForPowerup();
-        else
+        else{
             letterSpaces[t1,t2].SetPowerup(SelectPowerupType());
+            powerupSpaces.Add(letterSpaces[t1, t2]);
+        }
+            
     }
     
     private BattleManager.PowerupTypes SelectPowerupType(){
@@ -411,5 +415,13 @@ public class PuzzleGenerator : MonoBehaviour {
         int i = StaticVariables.rand.Next(0,range) + 1;
         return (BattleManager.PowerupTypes)battleManager.powerupArray.GetValue(i);
         //return (BattleManager.PowerupTypes.Earth);
+    }
+
+    public float GetAnimationFrameForRemainingPowerups(){
+        foreach (LetterSpace ls in powerupSpaces){
+            if (ls.powerupIcon.activeSelf)
+                return ls.powerupIconAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        }
+        return 0f;
     }
 }

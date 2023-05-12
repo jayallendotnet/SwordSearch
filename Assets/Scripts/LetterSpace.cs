@@ -29,6 +29,7 @@ public class LetterSpace : MonoBehaviour{
     public Text text;
     public GameObject selectedSignifier;
     public GameObject powerupIcon;
+    public Animator powerupIconAnimator;
 
     //directional connectors
     public GameObject topConnector;
@@ -146,6 +147,7 @@ public class LetterSpace : MonoBehaviour{
             Color b = d.backgroundColor;
             text.color = t;
             powerupIcon.GetComponent<Image>().color = b;
+            powerupIconAnimator.Play("PowerupIcon",0, battleManager.puzzleGenerator.GetAnimationFrameForRemainingPowerups());
         }
 
     }
