@@ -177,4 +177,11 @@ public class LetterSpace : MonoBehaviour{
         SetPowerup(nextPowerupType);
         UpdateLetter(nextLetter);
     }
+
+    public void HideVisuals(){
+        HidePowerupIcon();
+        text.gameObject.SetActive(false);
+        selectedSignifier.SetActive(false);
+        HideAllDirectionLines();
+    }
 }

@@ -365,6 +365,28 @@ public class PuzzleGenerator : MonoBehaviour {
         }
     }
 
+    /*
+    public void HideLetterVisualsForSection(int sectionNum){
+        LetterSpace[] spaces;
+        switch (sectionNum){
+            case 1:
+                spaces = letterSection1;
+                break;
+            case 2:
+                spaces = letterSection2;
+                break;
+            case 3:
+                spaces = letterSection3;
+                break;
+            default:
+                spaces = letterSection4;
+                break;
+        }
+        foreach (LetterSpace ls in spaces)
+            ls.HideVisuals();
+    }
+    */
+
     private void GetPuzzleDimensions(){
         int totalCount = transform.childCount;
         int width = Mathf.FloorToInt(GetComponent<GridLayoutGroup>().constraintCount);

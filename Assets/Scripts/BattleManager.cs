@@ -119,6 +119,7 @@ public class BattleManager : MonoBehaviour {
             stopNextAttack = true;
             uiManager.PauseEnemyAttackBar();
             uiManager.PauseWaterDrain();
+            uiManager.PausePageTurn();
             //uiManager.SetAllAnimationStates(false);
             ClearWord(false);
         }

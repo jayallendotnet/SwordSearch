@@ -104,6 +104,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
 
     public void ShowDeathBubble(){
         deathBubble.SetActive(true);
+        battleManager.uiManager.ShowDefeatPage();
     }
 
     public void AddPebblesToQueue(float multiplier, int count){

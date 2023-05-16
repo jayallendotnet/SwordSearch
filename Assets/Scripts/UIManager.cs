@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour {
     private float floodHeight;
     private bool movingBook = false;
     private List<GameObject> animatedObjectsInWindow = new List<GameObject>();
+    private bool turningPage = false;
 
     [Header("Submit Word Button")]
     public Text wordDisplay;
@@ -93,16 +94,33 @@ public class UIManager : MonoBehaviour {
     public RectTransform pauseArrow;
     public GameObject puzzlePage;
     public GameObject victoryPage;
+    public GameObject defeatPage;
     public Animator pulseAnimatorClock;
     public GameObject pageTurnGameObject;
+    public Animator pageTurnAnimator;
+    public Image letterMask1Im;
+    public Mask letterMask1Mask;
+    public Image letterMask2Im;
+    public Mask letterMask2Mask;
+    public Image letterMask3Im;
+    public Mask letterMask3Mask;
+    
 
 
     public void SetStartingValues(){
         puzzlePage.SetActive(true);
         victoryPage.SetActive(false);
+        defeatPage.SetActive(false);
+        pageTurnGameObject.SetActive(false);
         waterPowerupStrengthColor = GetPowerupDisplayDataWithType(BattleManager.PowerupTypes.Water).backgroundColor;
         floodHeight = waterBuffTop.anchoredPosition.y;
-        waterBuffTop.anchoredPosition = new Vector2(waterBuffTop.anchoredPosition.x, waterBuffBottom.anchoredPosition.y);
+        waterBuffTop.anchoredPosition = new Vector2(waterBuffTop.anchoredPosition.x, waterBuffBottom.anchoredPosition.y); 
+        letterMask1Im.enabled = false;
+        letterMask1Mask.enabled = false;
+        letterMask2Im.enabled = false;
+        letterMask2Mask.enabled = false;
+        letterMask3Im.enabled = false;
+        letterMask3Mask.enabled = false;
     }
 
 
@@ -216,7 +234,6 @@ public class UIManager : MonoBehaviour {
                 backgroundColorForWord = d.backgroundColor;
             }
         }
-
     }
 
     public void UpdatePowerupIcon(BattleManager.PowerupTypes type){
@@ -464,7 +481,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void PushedPauseButton(){
-        if ((movingBook) || (battleManager.playerHealth == 0) || (battleManager.enemyHealth == 0))
+        if ((movingBook) || (turningPage) || (battleManager.playerHealth == 0) || (battleManager.enemyHealth == 0))
             return;
         movingBook = true;
         book.DOAnchorPos(new Vector2(-book.anchoredPosition.x, book.anchoredPosition.y), 0.5f).OnComplete(MovingBookEnded);
@@ -501,6 +518,7 @@ public class UIManager : MonoBehaviour {
         ChangeAnimationStateIfObjectIsActive(enemyStunBarAnimation, state);
         ChangeAnimationStateIfObjectIsActive(battleManager.playerAnimatorFunctions.deathBubble, state);
         ChangeAnimationStateIfObjectIsActive(pulseAnimatorClock, state);
+        ChangeAnimationStateIfObjectIsActive(pageTurnAnimator, state);
         foreach(Transform t in playerAttackAnimationParent)
             ChangeAnimationStateIfObjectIsActive(t.gameObject, state);
         foreach(Transform t in playerAnimator.transform.parent)
@@ -576,8 +594,14 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowVictoryPage(){
-        puzzlePage.SetActive(false);
+        ShowPageTurn(true);
+        //puzzlePage.SetActive(false);
         victoryPage.SetActive(true);
+    }
+
+    public void ShowDefeatPage(){
+        ShowPageTurn(true);
+        defeatPage.SetActive(true);
     }
 
     
@@ -589,8 +613,52 @@ public class UIManager : MonoBehaviour {
         animator.Play(animator.name, 0, GetSynchronizedLetterAnimationFrame());
     }
 
-    public void ShowPageTurn(){
+    public void ShowPageTurn(bool hideLetters = false){
+        if (pageTurnGameObject.activeSelf)
+            pageTurnAnimator.Play("Book Turn", 0, 0);
         pageTurnGameObject.SetActive(true);
+        pageTurnGameObject.GetComponent<PageTurnAnimatorFunctions>().hidingLetters = hideLetters;
+        turningPage = true;
+    }
+
+    public void PausePageTurn(){
+        DOTween.Pause(pageTurnAnimator);
+    }
+
+    public void PageTurnEnded(){
+        turningPage = false;
+    }
+
+    public void HideLetterVisualsForSection(int sectionNum){
+        letterMask1Im.enabled = false;
+        letterMask1Mask.enabled = false;
+        letterMask2Im.enabled = false;
+        letterMask2Mask.enabled = false;
+        letterMask3Im.enabled = false;
+        letterMask3Mask.enabled = false;
+        switch (sectionNum){
+            case 1:
+                letterMask1Im.enabled = true;
+                letterMask1Mask.enabled = true;
+                break;
+            case 2:
+                letterMask1Im.enabled = true;
+                letterMask1Mask.enabled = true;
+                letterMask2Im.enabled = true;
+                letterMask2Mask.enabled = true;
+                break;
+            case 3:
+                letterMask1Im.enabled = true;
+                letterMask1Mask.enabled = true;
+                letterMask2Im.enabled = true;
+                letterMask2Mask.enabled = true;
+                letterMask3Im.enabled = true;
+                letterMask3Mask.enabled = true;
+                break;
+            default:
+                puzzlePage.SetActive(false);
+                break;
+        }
     }
     
 }
