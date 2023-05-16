@@ -11,6 +11,7 @@ public class PuzzleGenerator : MonoBehaviour {
     [HideInInspector]
     public LetterSpace[,] letterSpaces;
     private char[,] letters;
+    private BattleManager.PowerupTypes[,] powerupTypes;
     private char[] randomLetterPool;
     private bool useStartingLayout = false;
     private char[,] startingLayout = {{'-', '-', '-', '-', 'A'}, {'O', 'R', '-', 'L', 'V'}, {'W', 'S', 'D', 'S', 'I'}, {'-', 'A', 'R', 'R', 'U'}, {'-', '-', '-', 'P', 'Y'}, {'-', 'L', 'A', 'T', '-'}, {'P', '-', '-', '-', '-'}};
@@ -23,7 +24,13 @@ public class PuzzleGenerator : MonoBehaviour {
     public int minGenerationWordLength = 3;
     public int maxGenerationWordLength = 6;
 
-    [Header("Scripts")]
+    [Header("Letters To Update As The Page Turns")]
+    public LetterSpace[] letterSection1;
+    public LetterSpace[] letterSection2;
+    public LetterSpace[] letterSection3;
+    public LetterSpace[] letterSection4;
+
+    [Header("Misc")]
     public BattleManager battleManager;
 
     void Start() {
@@ -31,6 +38,7 @@ public class PuzzleGenerator : MonoBehaviour {
         randomLetterPool = battleManager.randomLetterPoolFile.text.ToCharArray();
         GetPuzzleDimensions();
         GenerateNewPuzzle();
+        UpdateAllLetterVisuals();
     }
 
     public void GenerateNewPuzzle(){
@@ -42,10 +50,8 @@ public class PuzzleGenerator : MonoBehaviour {
             succeeded = PickWordsAndAttemptToGenerateSolution();
         FillRestOfPuzzle();
         ClearAllPowerups();
-        RenderLetters();   
-        PickRandomSpaceForPowerup();    
-        PickRandomSpaceForPowerup();  
-        PickRandomSpaceForPowerup();   
+        PickAllSpacesForPowerups(); 
+        SetNextPuzzleData();
     }
 
     private bool PickWordsAndAttemptToGenerateSolution(){
@@ -83,9 +89,8 @@ public class PuzzleGenerator : MonoBehaviour {
         while (attemptCount < maxAttemptsPerPuzzle){
             foreach (string word in words){
                 bool couldGenerateWord = GenerateLetters(word);
-                if (!couldGenerateWord){
+                if (!couldGenerateWord)
                     succeeded = false;
-                }
             }
             if (succeeded)
                 attemptCount += maxAttemptsPerPuzzle;
@@ -93,27 +98,10 @@ public class PuzzleGenerator : MonoBehaviour {
                 ClearPuzzle();
             attemptCount++;
         }
-        //if (succeeded)
-        //    print("puzzle generation completed on attempt " + (attemptCount - maxAttemptsPerPuzzle));
-        //else
-        //    print("puzzle generation failed. attempts made: " + attemptCount);
-
         return succeeded;
-
-    }
-
-
-    private void GenerateLetters(){
-        for (int i = 0; i < letterSpaces.GetLength(0); i++){
-            for (int j = 0; j < letterSpaces.GetLength(1); j++){
-                int temp = StaticVariables.rand.Next(randomLetterPool.Length);
-                letters[i,j] = randomLetterPool[temp];
-            }
-        }
     }
 
     private bool GenerateLetters(string requiredWord){
-
         string remainingWord = requiredWord.ToUpper();;
         Vector2 previousSpace = new Vector2(-1,-1);
         int remainingLength = requiredWord.Length;
@@ -208,11 +196,12 @@ public class PuzzleGenerator : MonoBehaviour {
         List<List<Vector2>> regions = GetSeparateRegions(GetListOfAllSpaces());
         foreach (List<Vector2> region in regions){
             if (region.Count >= requiredSizeOfRegion){
-                foreach(Vector2 space in region)
+                foreach(Vector2 space in region){
                     foreach (Vector2 candidate in candidates2){
                         if (candidate == space)
                             candidates3.Add(space);
                     }
+                }
             }
         }
 
@@ -238,8 +227,6 @@ public class PuzzleGenerator : MonoBehaviour {
                 candidates4.Add(candidate);
             letters[(int)candidate[0], (int)candidate[1]] = '-';
         }
-
-
         return candidates4;
     }
 
@@ -316,9 +303,7 @@ public class PuzzleGenerator : MonoBehaviour {
                 regions.Add(newRegion);
             }
         }
-
         return regions;
-
     }
 
     private void FillRestOfPuzzle(){
@@ -335,20 +320,49 @@ public class PuzzleGenerator : MonoBehaviour {
                         }
                     }
                 }
-                
             }
         }
     }
 
-    private void RenderLetters(){    
+    private void SetNextPuzzleData(){
         for (int i = 0; i < letterSpaces.GetLength(0); i++){
             for (int j = 0; j < letterSpaces.GetLength(1); j++){
                 LetterSpace ls = letterSpaces[i,j];
-                ls.UpdateLetter(letters[i,j]);
+                ls.SetNextPuzzleData(letters[i,j], powerupTypes[i,j]);
+            }
+        }
+    }
+
+    private void UpdateAllLetterVisuals(){
+        for (int i = 0; i < letterSpaces.GetLength(0); i++){
+            for (int j = 0; j < letterSpaces.GetLength(1); j++){
+                LetterSpace ls = letterSpaces[i,j];
+                ls.ApplyNextPuzzleData();
                 ls.ShowAsNotPartOfWord();
             }
         }
+    }
 
+    public void UpdateLetterVisualsForSection(int sectionNum){
+        LetterSpace[] spaces;
+        switch (sectionNum){
+            case 1:
+                spaces = letterSection1;
+                break;
+            case 2:
+                spaces = letterSection2;
+                break;
+            case 3:
+                spaces = letterSection3;
+                break;
+            default:
+                spaces = letterSection4;
+                break;
+        }
+        foreach (LetterSpace ls in spaces){
+            ls.ApplyNextPuzzleData();
+            ls.ShowAsNotPartOfWord();
+        }
     }
 
     private void GetPuzzleDimensions(){
@@ -357,6 +371,7 @@ public class PuzzleGenerator : MonoBehaviour {
         int height = Mathf.FloorToInt(totalCount / width);
         letterSpaces = new LetterSpace[height, width];
         letters = new char[height, width];
+        powerupTypes = new BattleManager.PowerupTypes[height, width];
         for (int i = 0; i < height; i++){
             for (int j = 0; j < width; j++){
                 letterSpaces[i, j] = transform.GetChild((i * width) + j).GetComponent<LetterSpace>();
@@ -390,9 +405,14 @@ public class PuzzleGenerator : MonoBehaviour {
     private void ClearAllPowerups(){
         for (int i = 0; i < letters.GetLength(0); i++){
             for (int j = 0; j < letters.GetLength(1); j++){
-                letterSpaces[i,j].SetPowerup(BattleManager.PowerupTypes.None);
+                powerupTypes[i,j] = BattleManager.PowerupTypes.None;
             }
         }
+    }
+
+    private void PickAllSpacesForPowerups(){
+        for (int i = 0; i < battleManager.powerupsPerPuzzle; i++)
+        PickRandomSpaceForPowerup();
     }
 
     private void PickRandomSpaceForPowerup(){
@@ -402,8 +422,7 @@ public class PuzzleGenerator : MonoBehaviour {
         if (ls.powerupType != BattleManager.PowerupTypes.None)
             PickRandomSpaceForPowerup();
         else{
-            letterSpaces[t1,t2].SetPowerup(PickRandomPowerupType());
-            battleManager.uiManager.SynchronizePulse(letterSpaces[t1,t2].powerupIconAnimator);
+            powerupTypes[t1, t2] = PickRandomPowerupType();
         }
             
     }
@@ -416,14 +435,4 @@ public class PuzzleGenerator : MonoBehaviour {
         return (BattleManager.PowerupTypes)battleManager.powerupArray.GetValue(i);
         //return (BattleManager.PowerupTypes.Earth);
     }
-
-    /*
-    public float GetAnimationFrameForRemainingPowerups(){
-        foreach (LetterSpace ls in powerupSpaces){
-            if (ls.powerupIcon.activeSelf)
-                return ls.powerupIconAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-        }
-        return 0f;
-    }
-    */
 }

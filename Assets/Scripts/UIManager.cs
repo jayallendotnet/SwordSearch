@@ -94,6 +94,7 @@ public class UIManager : MonoBehaviour {
     public GameObject puzzlePage;
     public GameObject victoryPage;
     public Animator pulseAnimatorClock;
+    public GameObject pageTurnGameObject;
 
 
     public void SetStartingValues(){
@@ -586,6 +587,10 @@ public class UIManager : MonoBehaviour {
 
     public void SynchronizePulse(Animator animator){
         animator.Play(animator.name, 0, GetSynchronizedLetterAnimationFrame());
+    }
+
+    public void ShowPageTurn(){
+        pageTurnGameObject.SetActive(true);
     }
     
 }

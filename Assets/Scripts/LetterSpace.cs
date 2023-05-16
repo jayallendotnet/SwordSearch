@@ -23,6 +23,10 @@ public class LetterSpace : MonoBehaviour{
     public BattleManager battleManager;
     [HideInInspector]
     public bool wasActiveBeforeFingerDown = false;
+    [HideInInspector]
+    public char nextLetter;
+    [HideInInspector]
+    public BattleManager.PowerupTypes nextPowerupType = BattleManager.PowerupTypes.None;
 
 
     [Header("GameObjects")]
@@ -31,8 +35,9 @@ public class LetterSpace : MonoBehaviour{
     public Animator selectedSignifierAnimator;
     public GameObject powerupIcon;
     public Animator powerupIconAnimator;
+    public Image[] colorableBackgroundImages = new Image[9];
 
-    //directional connectors
+    [Header("Connectors")]
     public GameObject topConnector;
     public GameObject topRightConnector;
     public GameObject rightConnector;
@@ -41,7 +46,6 @@ public class LetterSpace : MonoBehaviour{
     public GameObject bottomLeftConnector;
     public GameObject leftConnector;
     public GameObject topLeftConnector;
-    public Image[] colorableBackgroundImages = new Image[9];
 
     public void UpdateLetter(char letter){
         this.letter = letter;
@@ -162,5 +166,15 @@ public class LetterSpace : MonoBehaviour{
     public void SetPowerup(BattleManager.PowerupTypes type){
         powerupType = type;
         ShowPowerup();
+    }
+
+    public void SetNextPuzzleData(char nextLetter, BattleManager.PowerupTypes nextPowerupType){
+        this.nextLetter = nextLetter;
+        this.nextPowerupType = nextPowerupType;
+    }
+
+    public void ApplyNextPuzzleData(){
+        SetPowerup(nextPowerupType);
+        UpdateLetter(nextLetter);
     }
 }
