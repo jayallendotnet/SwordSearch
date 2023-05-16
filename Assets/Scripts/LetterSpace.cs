@@ -54,7 +54,14 @@ public class LetterSpace : MonoBehaviour{
         HidePowerupIcon();
         text.color = textColor;
         UpdateBackgroundColors(backgroundColor);
-        //selectedSignifierAnimator.Play("SelectedSignifier",0, battleManager.uiManager.GetSynchronizedLetterAnimationFrame());
+        if (battleManager.powerupTypeForWord == BattleManager.PowerupTypes.None){
+            selectedSignifierAnimator.enabled = false;
+            selectedSignifier.transform.localScale = Vector3.one;
+        }
+        else{
+            selectedSignifierAnimator.enabled = true;
+            battleManager.uiManager.SynchronizePulse(selectedSignifierAnimator);
+        }
     }
 
     public void ShowAsNotPartOfWord(){
@@ -147,7 +154,7 @@ public class LetterSpace : MonoBehaviour{
             Color b = d.backgroundColor;
             text.color = t;
             powerupIcon.GetComponent<Image>().color = b;
-            //powerupIconAnimator.Play("PowerupIcon",0, battleManager.uiManager.GetSynchronizedLetterAnimationFrame());
+            battleManager.uiManager.SynchronizePulse(powerupIconAnimator);
         }
 
     }

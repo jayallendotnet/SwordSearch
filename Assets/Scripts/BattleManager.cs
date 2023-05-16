@@ -321,7 +321,6 @@ public class BattleManager : MonoBehaviour {
         SetIsValidWord();
         CalcWordStrength();
         letterSpacesForWord.Add(ls);
-        //uiManager.synchronizedLetterAnimators.Add(ls.selectedSignifierAnimator);
         if (lastLetterSpace != null){
             lastLetterSpace.nextLetterSpace = ls;
             ls.previousLetterSpace = lastLetterSpace;
@@ -339,7 +338,6 @@ public class BattleManager : MonoBehaviour {
         SetIsValidWord();
         CalcWordStrength();
         letterSpacesForWord.Remove(ls);
-        //uiManager.synchronizedLetterAnimators.Remove(ls.selectedSignifierAnimator);
         ls.ShowAsNotPartOfWord();
         if (secondToLastLetterSpace != null){
             secondToLastLetterSpace.nextLetterSpace = null;
@@ -414,7 +412,6 @@ public class BattleManager : MonoBehaviour {
             ls.nextLetterSpace = null;
             if (markLettersAsUsed)
                 ls.hasBeenUsedInAWordAlready = true;
-            //uiManager.synchronizedLetterAnimators.Remove(ls.selectedSignifierAnimator);
             ls.ShowAsNotPartOfWord();
         }
         letterSpacesForWord = new List<LetterSpace>();

@@ -26,8 +26,6 @@ public class UIManager : MonoBehaviour {
     public Image wordStrengthImageTens;
     public GameObject wordStrengthDivider;
     public Image wordStrengthIcon;
-    //[HideInInspector]
-    //public List<Animator> synchronizedLetterAnimators = new List<Animator>();
 
 
     [Header("Colors")]
@@ -95,6 +93,7 @@ public class UIManager : MonoBehaviour {
     public RectTransform pauseArrow;
     public GameObject puzzlePage;
     public GameObject victoryPage;
+    public Animator pulseAnimatorClock;
 
 
     public void SetStartingValues(){
@@ -225,8 +224,9 @@ public class UIManager : MonoBehaviour {
     }
 
     public void UpdateVisualsForLettersInWord(List<LetterSpace> letterSpacesForWord){
-        foreach (LetterSpace ls2 in letterSpacesForWord)
-            ls2.ShowAsPartOfWord(textColorForWord, backgroundColorForWord);
+        foreach (LetterSpace ls in letterSpacesForWord){
+            ls.ShowAsPartOfWord(textColorForWord, backgroundColorForWord);
+        }
     }
 
     public void DisplayWord(string word, bool isValidWord, int countdown, int strength){
@@ -497,8 +497,9 @@ public class UIManager : MonoBehaviour {
         ChangeChildAnimationStateIfObjectIsActive(pebbleDisplay4, state);
         ChangeChildAnimationStateIfObjectIsActive(pebbleDisplay5, state);
         ChangeAnimationStateIfObjectIsActive(waterBuffTop.gameObject, state);
-        ChangeAnimationStateIfObjectIsActive(enemyStunBarAnimation.gameObject, state);
+        ChangeAnimationStateIfObjectIsActive(enemyStunBarAnimation, state);
         ChangeAnimationStateIfObjectIsActive(battleManager.playerAnimatorFunctions.deathBubble, state);
+        ChangeAnimationStateIfObjectIsActive(pulseAnimatorClock, state);
         foreach(Transform t in playerAttackAnimationParent)
             ChangeAnimationStateIfObjectIsActive(t.gameObject, state);
         foreach(Transform t in playerAnimator.transform.parent)
@@ -507,6 +508,12 @@ public class UIManager : MonoBehaviour {
             ChangeAnimationStateIfObjectIsActive(t.gameObject, state);
         foreach (GameObject go in animatedObjectsInWindow)
             ChangeAnimationStateIfObjectIsActive(go, state);
+        foreach(LetterSpace ls in battleManager.puzzleGenerator.letterSpaces){
+            ChangeAnimationStateIfObjectIsActive(ls.powerupIconAnimator, state);
+            ChangeAnimationStateIfObjectIsActive(ls.selectedSignifierAnimator, state);
+        }
+        if (state)
+            UpdateVisualsForLettersInWord(battleManager.letterSpacesForWord);
     }
 
     public void PauseEnemyAttackBar(){
@@ -535,6 +542,11 @@ public class UIManager : MonoBehaviour {
             DOTween.Play(waterBuffBottom);
             DOTween.Play(waterBuffTop);
         }
+    }
+
+    private void ChangeAnimationStateIfObjectIsActive(Animator anim, bool state){
+        if (anim.gameObject.activeSelf)
+            anim.enabled = state;
     }
 
     private void ChangeAnimationStateIfObjectIsActive(GameObject go, bool state){
@@ -567,27 +579,15 @@ public class UIManager : MonoBehaviour {
         victoryPage.SetActive(true);
     }
 
-    /*
-    public void ClearSynchronizedLetterAnimatorList(){
-        synchronizedLetterAnimators = new List<Animator>();
-    }
-
-    public void AddSynchronizedLetterAnimator(Animator animator){
-        synchronizedLetterAnimators.Add(animator);
-    }
-
-    public void RemoveSynchronizedLetterAnimator(Animator animator){
-        synchronizedLetterAnimators.Remove(animator);
-    }
-
+    
     public float GetSynchronizedLetterAnimationFrame(){
-        foreach (Animator anim in synchronizedLetterAnimators){
-            if (anim.transform.parent.gameObject.activeSelf)
-                return anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
-        }
-        return 0f;
+        return pulseAnimatorClock.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
-    */
+
+    public void SynchronizePulse(Animator animator){
+        animator.Play(animator.name, 0, GetSynchronizedLetterAnimationFrame());
+    }
+    
 }
 
 [System.Serializable]

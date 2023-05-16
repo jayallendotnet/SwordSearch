@@ -42,7 +42,6 @@ public class PuzzleGenerator : MonoBehaviour {
             succeeded = PickWordsAndAttemptToGenerateSolution();
         FillRestOfPuzzle();
         ClearAllPowerups();
-        //battleManager.uiManager.ClearSynchronizedLetterAnimatorList();
         RenderLetters();   
         PickRandomSpaceForPowerup();    
         PickRandomSpaceForPowerup();  
@@ -403,13 +402,13 @@ public class PuzzleGenerator : MonoBehaviour {
         if (ls.powerupType != BattleManager.PowerupTypes.None)
             PickRandomSpaceForPowerup();
         else{
-            letterSpaces[t1,t2].SetPowerup(SelectPowerupType());
-            //battleManager.uiManager.AddSynchronizedLetterAnimator(letterSpaces[t1, t2].powerupIconAnimator);
+            letterSpaces[t1,t2].SetPowerup(PickRandomPowerupType());
+            battleManager.uiManager.SynchronizePulse(letterSpaces[t1,t2].powerupIconAnimator);
         }
             
     }
     
-    private BattleManager.PowerupTypes SelectPowerupType(){
+    private BattleManager.PowerupTypes PickRandomPowerupType(){
         //don't select "None" (first element) or "Pebble (last element)
         int range = battleManager.powerupArray.Length - 2;
 
