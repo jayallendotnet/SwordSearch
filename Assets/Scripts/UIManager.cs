@@ -190,7 +190,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowEnemyTakingDamage(int amount, bool stillAlive){
-        ShowNumbersAsChild(enemyDamageSingleDigitPrefab, enemyDamageDoubleDigitPrefab, enemyObject, amount);
+        ShowNumbersAsChild(enemyDamageSingleDigitPrefab, enemyDamageDoubleDigitPrefab, enemyParent, amount);
 
         if (!stillAlive)
             enemyAnimator.Play("Die");
