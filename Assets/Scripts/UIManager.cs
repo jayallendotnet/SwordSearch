@@ -193,7 +193,7 @@ public class UIManager : MonoBehaviour {
         ShowNumbersAsChild(enemyDamageSingleDigitPrefab, enemyDamageDoubleDigitPrefab, enemyObject, amount);
 
         if (!stillAlive)
-            enemyAnimator.Play(StaticVariables.GetAnimatorDieStateName(enemyAnimator));
+            enemyAnimator.Play("Die");
         else if (!StaticVariables.IsAnimatorInDamageState(enemyAnimator))
             enemyAnimator.SetTrigger("TakeDamage");
     }

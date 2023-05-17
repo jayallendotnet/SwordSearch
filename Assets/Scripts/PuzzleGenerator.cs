@@ -440,8 +440,7 @@ public class PuzzleGenerator : MonoBehaviour {
     private void PickRandomSpaceForPowerup(){
         int t1 = StaticVariables.rand.Next(letters.GetLength(0));
         int t2 = StaticVariables.rand.Next(letters.GetLength(1));
-        LetterSpace ls = letterSpaces[t1,t2];
-        if (ls.powerupType != BattleManager.PowerupTypes.None)
+        if (powerupTypes[t1, t2] != BattleManager.PowerupTypes.None)
             PickRandomSpaceForPowerup();
         else{
             powerupTypes[t1, t2] = PickRandomPowerupType();
