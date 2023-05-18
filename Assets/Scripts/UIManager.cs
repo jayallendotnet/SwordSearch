@@ -225,6 +225,10 @@ public class UIManager : MonoBehaviour {
         playerAnimator.SetTrigger("StartHeal");
     }
 
+    public void StartPlayerSwordAnimation(){
+        playerAnimator.SetTrigger("StartSword");
+    }
+
     public void UpdateColorsForWord(string word, BattleManager.PowerupTypes type){
         if (word.Length == 0)
             return;

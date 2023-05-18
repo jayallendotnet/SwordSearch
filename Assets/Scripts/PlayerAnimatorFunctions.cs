@@ -27,6 +27,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
     public GameObject powerLightningPrefab;
     public GameObject powerHealPrefab;
     public GameObject powerEarthPebblePrefab;
+    public GameObject powerSwordPrefab;
 
     void Start(){
         foreach (Transform t in transform)
@@ -61,6 +62,9 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
                 break;
             case BattleManager.PowerupTypes.Pebble:
                 o = powerEarthPebblePrefab;
+                break;
+            case BattleManager.PowerupTypes.Sword:
+                o = powerSwordPrefab;
                 break;
             default:
                 o = ChooseAnimationForPowerupTypeNone();

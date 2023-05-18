@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class AttackAnimatorFunctions : MonoBehaviour{
 
-    private BattleManager.PowerupTypes type;
+    [HideInInspector]
+    public BattleManager.PowerupTypes type;
     private int strength;
     private int powerupLevel;
     private BattleManager battleManager;

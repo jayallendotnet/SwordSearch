@@ -483,8 +483,15 @@ public class PuzzleGenerator : MonoBehaviour {
                     powerupTypeSelection.Add(StaticVariables.buffedType);
             }
         }
-        if (powerupTypeSelection.Count < 1)
+        if (powerupTypeSelection.Count == 0){
             powerupTypeSelection.Add(BattleManager.PowerupTypes.Water);
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Heal);
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Fire);
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Earth);
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Lightning);
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Dark);
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Sword);
+        }
     }
 
 }

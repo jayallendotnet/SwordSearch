@@ -143,7 +143,7 @@ public class BattleManager : MonoBehaviour {
             return;
         if (isValidWord){
             if (StaticVariables.IsAnimatorInIdleState(uiManager.enemyAnimator))
-                StartPlayingPlayerAttackAnimation();
+                StartPlayingPlayerAttackAnimation(powerupTypeForWord);
             else{
                 PlayPlayerAttackAnimationAfterEnemyFinishes();
             }
@@ -174,10 +174,12 @@ public class BattleManager : MonoBehaviour {
         uiManager.SetAllAnimationStates(true);
     }
 
-    private void StartPlayingPlayerAttackAnimation(){
+    private void StartPlayingPlayerAttackAnimation(PowerupTypes type){
         uiManager.PauseEnemyAttackBar();
-        if (powerupTypeForWord == PowerupTypes.Heal)
+        if (type == PowerupTypes.Heal)
             uiManager.StartPlayerHealAnimation();
+        else if (type == PowerupTypes.Sword)
+            uiManager.StartPlayerSwordAnimation();
         else
             uiManager.StartPlayerCastAnimation();
     }
@@ -498,11 +500,11 @@ public class BattleManager : MonoBehaviour {
         if (waitingForEnemyAttackToFinish){
             waitingForEnemyAttackToFinish = false;
             if (playerAnimatorFunctions.attacksInProgress.Count == 1){
-                StartPlayingPlayerAttackAnimation();
+                StartPlayingPlayerAttackAnimation(playerAnimatorFunctions.attacksInProgress[0].GetComponent<AttackAnimatorFunctions>().type);
             }
                 
             else if (playerAnimatorFunctions.attacksInProgress.Count > 1){
-                StartPlayingPlayerAttackAnimation();
+                StartPlayingPlayerAttackAnimation(playerAnimatorFunctions.attacksInProgress[0].GetComponent<AttackAnimatorFunctions>().type);
                 PlayNextAttackAfterBriefPause();
             }
         }
@@ -516,10 +518,10 @@ public class BattleManager : MonoBehaviour {
         if (enemyHealth == 0)
             return;
         if (playerAnimatorFunctions.attacksInProgress.Count == 1){
-                StartPlayingPlayerAttackAnimation();
+                StartPlayingPlayerAttackAnimation(playerAnimatorFunctions.attacksInProgress[0].GetComponent<AttackAnimatorFunctions>().type);
         }
         else if (playerAnimatorFunctions.attacksInProgress.Count > 1){
-            StartPlayingPlayerAttackAnimation();
+            StartPlayingPlayerAttackAnimation(playerAnimatorFunctions.attacksInProgress[0].GetComponent<AttackAnimatorFunctions>().type);
             PlayNextAttackAfterBriefPause();
         }
     }
