@@ -23,9 +23,7 @@ public class BattleManager : MonoBehaviour {
     public int playerHealth = 0;
     private string[] wordLibraryForChecking;
     private int countdownToRefresh;
-    public enum PowerupTypes{None, Water, Fire, Heal, Dark, Earth, Lightning, Pebble};
-    [HideInInspector]
-    public System.Array powerupArray = PowerupTypes.GetValues(typeof(BattleManager.PowerupTypes));
+    public enum PowerupTypes{None, Water, Fire, Heal, Dark, Earth, Lightning, Pebble, Sword};
     private bool isValidWord = false;
     private int wordStrength = 0;
     private bool hasSwipedOffALetter = false;
@@ -55,6 +53,8 @@ public class BattleManager : MonoBehaviour {
     public float darkPowerupDamageMultiplier = 2.5f;
     public float waterFloodDuration = 10f;
     public int waterFloodDamageBonus = 1;
+    public float swordPowerupDamageMultiplier = 2f;
+    public float swordPowerupDamageMultiplierVsDragons = 5f;
     public BattleData defaultBattleData;
 
     [Header("Scripts")]
@@ -233,8 +233,19 @@ public class BattleManager : MonoBehaviour {
                 case PowerupTypes.Pebble:
                     DamageEnemyHealth(strength);
                     break;
+                case PowerupTypes.Sword:
+                    DoSwordAttack(strength, powerupLevel);
+                    break;
             }
         }
+    }
+
+    private void DoSwordAttack(int strength, int powerupLevel){
+        float mult = swordPowerupDamageMultiplier;
+        if (enemyData.isDraconic)
+            mult = swordPowerupDamageMultiplierVsDragons;
+        int enemyDamage = (int)(strength * (powerupLevel * mult));
+        DamageEnemyHealth(enemyDamage);
     }
 
     public void WaterDrainComplete(){

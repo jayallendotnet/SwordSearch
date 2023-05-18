@@ -2337,7 +2337,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &376672708
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2509,6 +2509,10 @@ MonoBehaviour:
     textColor: {r: 0, g: 0, b: 0, a: 1}
     backgroundColor: {r: 1, g: 0.8117648, b: 0, a: 1}
     icon: {fileID: 21300000, guid: 1889d0b747268f048a448a787654564a, type: 3}
+  - type: 8
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+    backgroundColor: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
+    icon: {fileID: 21300000, guid: d5a393b680d8d154e921b1f1f42b4d6a, type: 3}
   numberSprites:
   - {fileID: 21300000, guid: 0411fe30d35eace4cb2632d43e3d997e, type: 3}
   - {fileID: 21300000, guid: 9d591331ead3cc4488b48870f4837bf4, type: 3}
@@ -11149,6 +11153,8 @@ MonoBehaviour:
   darkPowerupDamageMultiplier: 2.5
   waterFloodDuration: 20
   waterFloodDamageBonus: 1
+  swordPowerupDamageMultiplier: 2
+  swordPowerupDamageMultiplierVsDragons: 5
   defaultBattleData:
     enemyPrefab: {fileID: 815226952419649516, guid: ae96e217057dc2745a3714ff11471263, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: 18fd931978dc05d4fa0cee1c86561fe8, type: 3}

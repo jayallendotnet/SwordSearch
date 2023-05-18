@@ -16,7 +16,7 @@ public class PuzzleGenerator : MonoBehaviour {
     private bool useStartingLayout = false;
     private char[,] startingLayout = {{'-', '-', '-', '-', 'A'}, {'O', 'R', '-', 'L', 'V'}, {'W', 'S', 'D', 'S', 'I'}, {'-', 'A', 'R', 'R', 'U'}, {'-', '-', '-', 'P', 'Y'}, {'-', 'L', 'A', 'T', '-'}, {'P', '-', '-', '-', '-'}};
     private string[] wordLibraryForGeneration;
-    //private List<LetterSpace> powerupSpaces = new List<LetterSpace>();
+    List<BattleManager.PowerupTypes> powerupTypeSelection;
 
     [Header("Puzle Generation Rules")]
     public int wordCount = 3;
@@ -36,6 +36,7 @@ public class PuzzleGenerator : MonoBehaviour {
     void Start() {
         wordLibraryForGeneration = battleManager.wordLibraryForGenerationFile.text.Split("\r\n");
         randomLetterPool = battleManager.randomLetterPoolFile.text.ToCharArray();
+        SetPowerupTypeList();
         GetPuzzleDimensions();
         GenerateNewPuzzle();
         UpdateAllLetterVisuals();
@@ -450,10 +451,40 @@ public class PuzzleGenerator : MonoBehaviour {
     
     private BattleManager.PowerupTypes PickRandomPowerupType(){
         //don't select "None" (first element) or "Pebble (last element)
-        int range = battleManager.powerupArray.Length - 2;
+        int range = powerupTypeSelection.Count;
 
-        int i = StaticVariables.rand.Next(0,range) + 1;
-        return (BattleManager.PowerupTypes)battleManager.powerupArray.GetValue(i);
+        int i = StaticVariables.rand.Next(0,range);
+        return powerupTypeSelection[i];
         //return (BattleManager.PowerupTypes.Earth);
     }
+
+    private void SetPowerupTypeList(){
+        powerupTypeSelection = new List<BattleManager.PowerupTypes>();
+        if (StaticVariables.waterActive)
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Water);
+        if (StaticVariables.healActive)
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Heal);
+        if (StaticVariables.fireActive)
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Fire);
+        if (StaticVariables.earthActive)
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Earth);
+        if (StaticVariables.lightningActive)
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Lightning);
+        if (StaticVariables.darkActive)
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Dark);
+        if (StaticVariables.swordActive)
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Sword);
+        
+        if (powerupTypeSelection.Count > 2){
+            if (StaticVariables.buffedType != BattleManager.PowerupTypes.None){
+                powerupTypeSelection.Remove(StaticVariables.buffedType);
+                int c = powerupTypeSelection.Count;
+                for (int i = 0; i < c; i++)
+                    powerupTypeSelection.Add(StaticVariables.buffedType);
+            }
+        }
+        if (powerupTypeSelection.Count < 1)
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Water);
+    }
+
 }

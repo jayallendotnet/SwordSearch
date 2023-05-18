@@ -14,6 +14,14 @@ public class StaticVariables
     static private string sceneName = "";
     static public Image fadeImage;
     static public float sceneFadeDuration = 0.5f;
+    static public bool healActive = true;
+    static public bool waterActive = true;
+    static public bool fireActive = true;
+    static public bool earthActive = false;
+    static public bool lightningActive = false;
+    static public bool darkActive = false;
+    static public bool swordActive = false;
+    static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
 
 
     static public void WaitTimeThenCallFunction(float delay, TweenCallback function) {
