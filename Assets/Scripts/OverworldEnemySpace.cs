@@ -24,14 +24,10 @@ public class OverworldEnemySpace : MonoBehaviour{
     }
 
     public void ClickedSpace(){
-        //print(overworldSceneManager.currentPlayerSpace.name);
         if (overworldSceneManager.currentPlayerSpace != this)
             MovePlayerToThisSpace();
-        else if (!overworldSceneManager.isPlayerMoving){
-            //print("enter battle");
+        else if (!overworldSceneManager.isPlayerMoving)
             overworldSceneManager.generalSceneManager.LoadBattleWithData(battleSetupData);
-            //print(battleSetupData.battleData.enemyPrefab.name);
-        }
     }
 
 }
