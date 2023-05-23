@@ -12,11 +12,34 @@ public class OverworldSceneManager : MonoBehaviour{
     public float playerWalkSpeed = 500f;
     public float minTimeToMove = 1f;
     public GeneralSceneManager generalSceneManager;
+    public int thisWorldNum;
 
     [HideInInspector]
     public bool isPlayerMoving = false;
     [HideInInspector]
     public OverworldEnemySpace currentPlayerSpace = null;
+    public OverworldEnemySpace[] overworldEnemySpaces;
+
+
+    void Start(){
+        for (int i = 0; i < overworldEnemySpaces.Length; i++){
+            OverworldEnemySpace space = overworldEnemySpaces[i];
+            space.overworldSceneManager = this;
+            space.playerDestination.transform.GetChild(0).gameObject.SetActive(false);
+        }
+
+        ShowProgress();
+        PlacePlayerAtPosition(StaticVariables.currentBattleLevel);
+        if ((thisWorldNum == StaticVariables.currentBattleWorld) && (thisWorldNum == StaticVariables.highestUnlockedWorld)){
+            if (StaticVariables.highestUnlockedLevel == StaticVariables.currentBattleLevel){
+                if (StaticVariables.beatCurrentBattle){
+                    UnlockNextEnemy();
+                    AdvanceGameProgress();
+                }
+            }
+        }
+        ClearCurrentBattleStats();
+    }
 
     public void MovePlayerToPosition(GameObject destination){
         Vector2 vectorToMove = destination.transform.position - playerParent.position;
@@ -24,7 +47,6 @@ public class OverworldSceneManager : MonoBehaviour{
         float timeToMove = distanceToMove / playerWalkSpeed;
         if (timeToMove < minTimeToMove)
             timeToMove = minTimeToMove;
-        //print(timeToMove);
 
         playerParent.DOMove(destination.transform.position, timeToMove).OnComplete(EndPlayerWalk);
         playerAnimator.SetTrigger("WalkStart");
@@ -36,6 +58,16 @@ public class OverworldSceneManager : MonoBehaviour{
         }
     }
 
+    private void PlacePlayerAtPosition(int battleNum){
+        if (battleNum == 0)
+            return;
+        int index = battleNum -1;
+        OverworldEnemySpace space = overworldEnemySpaces[index];
+        GameObject newSpot = space.playerDestination;
+        playerParent.transform.position = newSpot.transform.position;
+        currentPlayerSpace = space;
+    }
+
     private void EndPlayerWalk(){
         playerAnimator.SetTrigger("WalkEnd");
         isPlayerMoving = false;
@@ -45,5 +77,65 @@ public class OverworldSceneManager : MonoBehaviour{
     }
 
     
+    public void LoadBattleWithData(OverworldEnemySpace space){
+        StaticVariables.battleData = space.battleData;
+        SetCurrentBattleData(space);
+        StaticVariables.FadeOutThenLoadScene(StaticVariables.battleSceneName);
+    }
+
+    private void ShowProgress(){
+        if (thisWorldNum < StaticVariables.highestUnlockedWorld)
+            return; 
+        for (int i = StaticVariables.highestUnlockedLevel; i < overworldEnemySpaces.Length; i++){
+            overworldEnemySpaces[i].gameObject.SetActive(false);
+        }
+    }
+
+    private void UnlockNextEnemy(){
+        OverworldEnemySpace nextSpace = GetFirstLockedEnemySpace();
+        if (nextSpace != null){
+            nextSpace.gameObject.SetActive(true);
+            nextSpace.FadeInVisuals();
+        }
+    }
+
+    private OverworldEnemySpace GetFirstLockedEnemySpace(){
+        for (int i = 0; i < overworldEnemySpaces.Length; i++){
+            OverworldEnemySpace space = overworldEnemySpaces[i];
+            if (!space.gameObject.activeSelf)
+                return space;
+        }
+        return null;
+    }
+
+    private void SetCurrentBattleData(OverworldEnemySpace space){
+        int worldNum = thisWorldNum;
+        int levelNum = 0;
+        int i  = 0;
+        while ((levelNum == 0) && (i < overworldEnemySpaces.Length)){
+            if (space == overworldEnemySpaces[i])
+                levelNum = i + 1;
+            i++;
+        }
+        StaticVariables.currentBattleWorld = worldNum;
+        StaticVariables.currentBattleLevel = levelNum;
+        StaticVariables.beatCurrentBattle = false;
+    }
+
+    private void AdvanceGameProgress(){
+        StaticVariables.highestUnlockedLevel ++;
+        if (StaticVariables.highestUnlockedLevel > overworldEnemySpaces.Length){
+            StaticVariables.highestUnlockedWorld ++;
+            StaticVariables.highestUnlockedLevel = 1;
+            if (StaticVariables.highestUnlockedWorld > 6)
+                StaticVariables.highestUnlockedWorld = 6;
+        }
+    }
+
+    private void ClearCurrentBattleStats(){
+        StaticVariables.currentBattleLevel = 0;
+        StaticVariables.currentBattleWorld = 0;
+        StaticVariables.beatCurrentBattle = false;
+    }
 
 }

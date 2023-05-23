@@ -9,6 +9,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
     public List<GameObject> attacksInProgress = new List<GameObject>();
     [HideInInspector]
     public List<float> pebblesInQueue = new List<float>();
+    private List<GameObject> powerupTypeNoneOptions = new List<GameObject>();
 
     public BattleManager battleManager;
     public Animator animator;
@@ -32,6 +33,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
     void Start(){
         foreach (Transform t in transform)
             t.gameObject.SetActive(false);
+        SetPowerupTypeNoneOptions();
     }
 
     public void CreateAttackAnimation(BattleManager.PowerupTypes type, int strength, int powerupLevel){
@@ -89,21 +91,23 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
         attacksInProgress.RemoveAt(0);
     }
 
-    public GameObject ChooseAnimationForPowerupTypeNone(){
-        int range = 5;
-        int i = StaticVariables.rand.Next(0, range);
-        switch (i){
-            case 0:
-                return basicFirePrefab;
-            case 1:
-                return basicWaterPrefab;
-            case 2:
-                return basicDarkPrefab;
-            case 3:
-                return basicEarthPrefab;
-            default:
-                return basicLightningPrefab;
-        }
+    private GameObject ChooseAnimationForPowerupTypeNone(){    
+        int i = StaticVariables.rand.Next(0, powerupTypeNoneOptions.Count);
+        return powerupTypeNoneOptions[i];
+    }
+
+    private void SetPowerupTypeNoneOptions(){
+        powerupTypeNoneOptions = new List<GameObject>();
+        if (StaticVariables.waterActive)
+            powerupTypeNoneOptions.Add(basicWaterPrefab);
+        if (StaticVariables.fireActive)
+            powerupTypeNoneOptions.Add(basicFirePrefab);
+        if (StaticVariables.earthActive)
+            powerupTypeNoneOptions.Add(basicEarthPrefab);
+        if (StaticVariables.lightningActive)
+            powerupTypeNoneOptions.Add(basicLightningPrefab);
+        if (StaticVariables.darkActive)
+            powerupTypeNoneOptions.Add(basicDarkPrefab);
     }
 
     public void ShowDeathBubble(){

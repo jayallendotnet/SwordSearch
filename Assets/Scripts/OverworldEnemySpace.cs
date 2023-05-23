@@ -7,16 +7,15 @@ using DG.Tweening;
 
 public class OverworldEnemySpace : MonoBehaviour{
 
-    private OverworldSceneManager overworldSceneManager;
-    GameObject playerDestination;
-    BattleSetupData battleSetupData;
-
-    void Start(){
-        overworldSceneManager = FindObjectOfType<OverworldSceneManager>();
-        playerDestination = transform.Find("Player Destination").gameObject;
-        playerDestination.transform.GetChild(0).gameObject.SetActive(false);
-        battleSetupData = GetComponent<BattleSetupData>();
-    }
+    [HideInInspector]
+    public OverworldSceneManager overworldSceneManager;
+    public GameObject playerDestination;
+    public BattleData battleData;
+    private Image enemyImage;
+    public Transform pathFromLastSpace;
+    private int pathFadeIndex = 0;
+    private float timeBetweenPathFadeSteps = 0.5f;
+    public GameObject button;
 
     public void MovePlayerToThisSpace(){
         overworldSceneManager.currentPlayerSpace = this;
@@ -27,7 +26,53 @@ public class OverworldEnemySpace : MonoBehaviour{
         if (overworldSceneManager.currentPlayerSpace != this)
             MovePlayerToThisSpace();
         else if (!overworldSceneManager.isPlayerMoving)
-            overworldSceneManager.generalSceneManager.LoadBattleWithData(battleSetupData);
+            overworldSceneManager.LoadBattleWithData(this);
     }
+
+    public void FadeInVisuals(){
+        enemyImage = transform.GetChild(0).GetComponent<Image>();
+        Color enemyImageColor = Color.white;
+        enemyImageColor.a = 0;
+        enemyImage.color = enemyImageColor;
+        enemyImage.GetComponent<Animator>().enabled = false;
+
+        button.SetActive(false);
+
+        foreach (Transform t in pathFromLastSpace){
+            Image im = t.GetComponent<Image>();
+            Color pathColor = im.color;
+            pathColor.a = 0;
+            im.color = pathColor;
+        }
+        StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration, FadeNextStepOfPath);
+    }
+
+    private void FadeNextStepOfPath(){
+        pathFadeIndex ++;
+        if (pathFadeIndex >= pathFromLastSpace.childCount){
+            FadeInEnemy();
+            return;
+        }
+        Image im = pathFromLastSpace.GetChild(pathFadeIndex).GetComponent<Image>();
+        Color c = im.color;
+        c.a = 1;
+        im.DOColor(c, timeBetweenPathFadeSteps).OnComplete(FadeNextStepOfPath);
+    }
+
+    private void FadeInEnemy(){
+        enemyImage.DOColor(Color.white, timeBetweenPathFadeSteps).OnComplete(TurnEnemyAniamtionsOn);
+    }
+
+    private void TurnEnemyAniamtionsOn(){
+        enemyImage.GetComponent<Animator>().enabled = true;
+        button.SetActive(true);
+    }
+}
+
+
+    [System.Serializable]
+    public class BattleData{
+    public GameObject enemyPrefab;
+    public GameObject backgroundPrefab;
 
 }

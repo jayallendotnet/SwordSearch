@@ -589,12 +589,16 @@ public class UIManager : MonoBehaviour {
 
     public void PushedQuitButton(){
         //shows up while paused
-        StaticVariables.FadeOutThenLoadScene("Selection Scene");
+        StaticVariables.beatCurrentBattle = false;
+        StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
+        //StaticVariables.FadeOutThenLoadScene("Selection Scene");
     }
 
     public void PushedContinueButton(){
         //shows up after winning
-        StaticVariables.FadeOutThenLoadScene("Selection Scene");
+        StaticVariables.beatCurrentBattle = true;
+        StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
+        //StaticVariables.FadeOutThenLoadScene("Selection Scene");
     }
 
     public void ShowVictoryPage(){

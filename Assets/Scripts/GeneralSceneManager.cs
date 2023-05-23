@@ -21,11 +21,4 @@ public class GeneralSceneManager : MonoBehaviour{
             hasStarted = true;
         }
     }
-
-
-    public void LoadBattleWithData(BattleSetupData battleSetupData){
-        StaticVariables.battleData = battleSetupData.battleData;
-        StaticVariables.FadeOutThenLoadScene("Battle Scene");
-    }
-
 }
