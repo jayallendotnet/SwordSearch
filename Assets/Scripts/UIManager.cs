@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour {
     public GameObject playerHealSingleDigitPrefab;
     public GameObject playerDamageDoubleDigitPrefab;
     public GameObject playerDamageSingleDigitPrefab;
-    public Transform enemyParent;
+    public Transform enemyParentParent;
     public GameObject enemyHealDoubleDigitPrefab;
     public GameObject enemyHealSingleDigitPrefab;
     public GameObject enemyDamageDoubleDigitPrefab;
@@ -104,6 +104,7 @@ public class UIManager : MonoBehaviour {
     public Mask letterMask2Mask;
     public Image letterMask3Im;
     public Mask letterMask3Mask;
+    public GameObject enemyParentPrefab;
     
 
 
@@ -190,7 +191,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowEnemyTakingDamage(int amount, bool stillAlive){
-        ShowNumbersAsChild(enemyDamageSingleDigitPrefab, enemyDamageDoubleDigitPrefab, enemyParent, amount);
+        ShowNumbersAsChild(enemyDamageSingleDigitPrefab, enemyDamageDoubleDigitPrefab, enemyParentParent, amount);
 
         if (!stillAlive)
             enemyAnimator.Play("Die");
@@ -380,7 +381,9 @@ public class UIManager : MonoBehaviour {
     }
 
     public void AddEnemyToScene(GameObject enemyPrefab){
-        GameObject newEnemy = Instantiate(enemyPrefab, enemyParent);
+        GameObject enemyParent = Instantiate(enemyParentPrefab, enemyParentParent);
+        enemyParent.name = enemyPrefab.name;
+        GameObject newEnemy = Instantiate(enemyPrefab, enemyParent.transform);
         newEnemy.name = enemyPrefab.name;
         enemyObject = newEnemy.transform;
         enemyAnimator = newEnemy.GetComponent<Animator>();

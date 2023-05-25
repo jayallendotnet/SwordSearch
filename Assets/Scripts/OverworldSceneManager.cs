@@ -22,14 +22,22 @@ public class OverworldSceneManager : MonoBehaviour{
 
 
     void Start(){
+        SetupOverworldEnemySpaces();
+        ShowProgress();
+        PlacePlayerAtPosition(StaticVariables.currentBattleLevel);
+        AdvanceGameIfAppropriate();
+        ClearCurrentBattleStats();
+    }
+
+    private void SetupOverworldEnemySpaces(){
         for (int i = 0; i < overworldEnemySpaces.Length; i++){
             OverworldEnemySpace space = overworldEnemySpaces[i];
             space.overworldSceneManager = this;
             space.playerDestination.transform.GetChild(0).gameObject.SetActive(false);
         }
+    }
 
-        ShowProgress();
-        PlacePlayerAtPosition(StaticVariables.currentBattleLevel);
+    private void AdvanceGameIfAppropriate(){
         if ((thisWorldNum == StaticVariables.currentBattleWorld) && (thisWorldNum == StaticVariables.highestUnlockedWorld)){
             if (StaticVariables.highestUnlockedLevel == StaticVariables.currentBattleLevel){
                 if (StaticVariables.beatCurrentBattle){
@@ -38,7 +46,6 @@ public class OverworldSceneManager : MonoBehaviour{
                 }
             }
         }
-        ClearCurrentBattleStats();
     }
 
     public void MovePlayerToPosition(GameObject destination){
