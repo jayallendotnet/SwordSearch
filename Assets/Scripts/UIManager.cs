@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour {
     private Transform enemyObject;
     [HideInInspector]
     public Animator enemyAnimator;
+    [HideInInspector]
+    public List<Animator> enemyHordeAnimators;
     private float waterDrainDuration;
     private Color waterPowerupStrengthColor;
     private float floodHeight;
@@ -192,12 +194,31 @@ public class UIManager : MonoBehaviour {
 
     public void ShowEnemyTakingDamage(int amount, bool stillAlive){
         ShowNumbersAsChild(enemyDamageSingleDigitPrefab, enemyDamageDoubleDigitPrefab, enemyParentParent, amount);
+        if (battleManager.enemyData.isHorde){
+            int i = 0;
+            foreach (Animator anim in enemyHordeAnimators){
+                if (anim.gameObject.activeSelf){
+                    if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Die")){
+                        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage")){
+                            if (i < battleManager.currentHordeEnemyCount)
+                                anim.SetTrigger("TakeDamage");
+                            else
+                                anim.SetTrigger("Die");
+                        }
+                    }
 
-        if (!stillAlive)
-            enemyAnimator.Play("Die");
-        else if (!StaticVariables.IsAnimatorInDamageState(enemyAnimator))
-            enemyAnimator.SetTrigger("TakeDamage");
+                }
+                i++;
+            }
+        }
+        else{
+            if (!stillAlive)
+                enemyAnimator.Play("Die");
+            else if (!enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage"))
+                enemyAnimator.SetTrigger("TakeDamage");
+        }
     }
+
 
     public void ShowEnemyGettingHealed(int amount){
         ShowNumbersAsChild(enemyHealSingleDigitPrefab, enemyHealDoubleDigitPrefab, enemyObject, amount);
@@ -376,7 +397,14 @@ public class UIManager : MonoBehaviour {
     }
 
     public void StartEnemyAttackAnimation(){
-        enemyAnimator.SetTrigger("Attack");
+        if (battleManager.enemyData.isHorde){
+            foreach (Animator anim in enemyHordeAnimators)
+                anim.SetTrigger("Attack");
+            //start attack animations of all enemies
+        }
+        else{
+            enemyAnimator.SetTrigger("Attack");
+        }
         enemyTimerBar.DOScale(Vector3.one, 1f).SetEase(Ease.Linear);
     }
 
@@ -386,10 +414,22 @@ public class UIManager : MonoBehaviour {
         GameObject newEnemy = Instantiate(enemyPrefab, enemyParent.transform);
         newEnemy.name = enemyPrefab.name;
         enemyObject = newEnemy.transform;
-        enemyAnimator = newEnemy.GetComponent<Animator>();
-        battleManager.enemyAttackAnimatorFunctions = enemyObject.GetComponent<EnemyAttackAnimatorFunctions>();
-        battleManager.enemyAttackAnimatorFunctions.battleManager = battleManager;
-        battleManager.enemyData = enemyObject.GetComponent<EnemyData>();
+        battleManager.enemyData = newEnemy.GetComponent<EnemyData>();
+        if (battleManager.enemyData.isHorde){
+            foreach (Transform t in battleManager.enemyData.GetComponent<HordeOrder>().order){
+                enemyHordeAnimators.Add(t.GetChild(0).GetComponent<Animator>());
+                EnemyAttackAnimatorFunctions temp = t.GetChild(0).GetComponent<EnemyAttackAnimatorFunctions>();
+                battleManager.enemyHordeAttackAnimatorFunctions.Add(temp);
+                temp.battleManager = battleManager;
+                temp.data = temp.GetComponent<EnemyData>();
+            }
+        }
+        else{
+            enemyAnimator = newEnemy.GetComponent<Animator>();
+            battleManager.enemyAttackAnimatorFunctions = enemyObject.GetComponent<EnemyAttackAnimatorFunctions>();
+            battleManager.enemyAttackAnimatorFunctions.battleManager = battleManager;
+        }
+
     }
 
     public void ApplyBackground(GameObject backgroundPrefab){
@@ -413,7 +453,14 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowBurnCount(){
-        int burns = battleManager.enemyAttackAnimatorFunctions.burnDamageQueue.Count;
+        int burns = 0;
+        if (battleManager.enemyData.isHorde){
+            burns = battleManager.enemyHordeAttackAnimatorFunctions[0].burnDamageQueue.Count;
+            //burns comes from enemy horde functions, first enemy?
+        }
+        else{
+            burns = battleManager.enemyAttackAnimatorFunctions.burnDamageQueue.Count;
+        }
 
         burnDisplay1.SetActive(false);
         burnDisplay2.SetActive(false);
@@ -530,13 +577,22 @@ public class UIManager : MonoBehaviour {
             ChangeAnimationStateIfObjectIsActive(t.gameObject, state);
         foreach(Transform t in playerAnimator.transform.parent)
             ChangeAnimationStateIfObjectIsActive(t.gameObject, state);
-        foreach(Transform t in enemyAnimator.transform.parent)
-            ChangeAnimationStateIfObjectIsActive(t.gameObject, state);
         foreach (GameObject go in animatedObjectsInWindow)
             ChangeAnimationStateIfObjectIsActive(go, state);
         foreach(LetterSpace ls in battleManager.puzzleGenerator.letterSpaces){
             ChangeAnimationStateIfObjectIsActive(ls.powerupIconAnimator, state);
             ChangeAnimationStateIfObjectIsActive(ls.selectedSignifierAnimator, state);
+        }
+        foreach(Transform t in enemyParentParent){
+            if (t.GetComponent<Animator>() != null)
+                ChangeAnimationStateIfObjectIsActive(t.gameObject, state);
+        }   
+        if (battleManager.enemyData.isHorde){
+            foreach (Animator anim in enemyHordeAnimators)
+                ChangeAnimationStateIfObjectIsActive(anim, state);
+        }
+        else{
+            ChangeAnimationStateIfObjectIsActive(enemyAnimator, state);
         }
         if (state)
             UpdateVisualsForLettersInWord(battleManager.letterSpacesForWord);
@@ -606,7 +662,6 @@ public class UIManager : MonoBehaviour {
 
     public void ShowVictoryPage(){
         ShowPageTurn(true);
-        //puzzlePage.SetActive(false);
         victoryPage.SetActive(true);
     }
 

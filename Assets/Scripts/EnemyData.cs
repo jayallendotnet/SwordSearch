@@ -10,5 +10,6 @@ public class EnemyData : MonoBehaviour{
     public float attackSpeed = 6f;
     public int attackDamage = 2;
     public bool isDraconic = false;
+    public bool isHorde = false;
 
 }

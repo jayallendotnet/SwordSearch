@@ -23,7 +23,7 @@ public class StaticVariables
     static public bool swordActive = false;
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
     static public int highestUnlockedWorld = 1;
-    static public int highestUnlockedLevel = 6;
+    static public int highestUnlockedLevel = 9;
     static public int currentBattleWorld = 0;
     static public int currentBattleLevel = 0;
     static public string battleSceneName = "Battle Scene";
@@ -38,16 +38,6 @@ public class StaticVariables
 
     static public void WaitTimeThenCallFunction(float delay, TweenCallback function) {
         tweenDummy.DOLocalMove(tweenDummy.transform.localPosition, delay, false).OnComplete(function);
-    }
-
-    static public bool IsAnimatorInIdleState(Animator animator){
-        string stateName = "Idle";
-        return animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
-    }
-
-    static public bool IsAnimatorInDamageState(Animator animator){
-        string stateName = "Damage";
-        return animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
     }
 
     static public void FadeOutThenLoadScene(string name){

@@ -20,6 +20,14 @@ public class BattleManager : MonoBehaviour {
     [HideInInspector]
     public int enemyHealth = 0;
     [HideInInspector]
+    public int hordeStartingHealth = 0;
+    [HideInInspector]
+    public int startingHordeEnemyCount = 0;
+    [HideInInspector]
+    public int currentHordeEnemyCount = 0;
+    [HideInInspector]
+    public EnemyData firstEnemyInHorde;
+    [HideInInspector]
     public int playerHealth = 0;
     private string[] wordLibraryForChecking;
     private int countdownToRefresh;
@@ -33,6 +41,8 @@ public class BattleManager : MonoBehaviour {
     public EnemyData enemyData;
     [HideInInspector]
     public EnemyAttackAnimatorFunctions enemyAttackAnimatorFunctions;
+    [HideInInspector]
+    public List<EnemyAttackAnimatorFunctions> enemyHordeAttackAnimatorFunctions;
     [HideInInspector]
     public bool isWaterInPuzzleArea = false;
     private bool isGamePaused = false;
@@ -75,7 +85,16 @@ public class BattleManager : MonoBehaviour {
         if (StaticVariables.battleData == null)
             StaticVariables.battleData = defaultBattleData;
         uiManager.AddEnemyToScene(StaticVariables.battleData.enemyPrefab);
-        enemyHealth = enemyData.startingHealth;
+        if (enemyData.isHorde){
+            startingHordeEnemyCount = enemyHordeAttackAnimatorFunctions.Count;
+            currentHordeEnemyCount = startingHordeEnemyCount;
+            firstEnemyInHorde = enemyHordeAttackAnimatorFunctions[0].GetComponent<EnemyData>();
+            hordeStartingHealth = firstEnemyInHorde.startingHealth * startingHordeEnemyCount;
+            enemyHealth = hordeStartingHealth;
+        }
+        else{
+            enemyHealth = enemyData.startingHealth;
+        }
         playerHealth = startingPlayerHealth;
         uiManager.ApplyBackground(StaticVariables.battleData.backgroundPrefab);
 
@@ -113,6 +132,7 @@ public class BattleManager : MonoBehaviour {
         enemyHealth -= amount;
         if (enemyHealth < 0)
             enemyHealth = 0;
+        CalculateHordeEnemiesLeft();
         uiManager.ShowEnemyTakingDamage(amount, enemyHealth > 0);
         uiManager.DisplayHealths(playerHealth, enemyHealth);
         if (enemyHealth == 0){
@@ -122,6 +142,18 @@ public class BattleManager : MonoBehaviour {
             uiManager.PausePageTurn();
             //uiManager.SetAllAnimationStates(false);
             ClearWord(false);
+        }
+    }
+
+    private void CalculateHordeEnemiesLeft(){
+        if (enemyHealth == 0){
+            currentHordeEnemyCount = 0;
+            return;
+        }
+        currentHordeEnemyCount = 1;
+        for (int i = 1; i < startingHordeEnemyCount; i++){
+            if (enemyHealth > i * firstEnemyInHorde.startingHealth)
+                currentHordeEnemyCount ++;
         }
     }
 
@@ -142,14 +174,19 @@ public class BattleManager : MonoBehaviour {
         if ((playerHealth == 0) || (enemyHealth == 0) || (isGamePaused))
             return;
         if (isValidWord){
-            if (StaticVariables.IsAnimatorInIdleState(uiManager.enemyAnimator))
+            bool startNow = false;
+            if (enemyData.isHorde)
+                startNow = uiManager.enemyHordeAnimators[0].GetCurrentAnimatorStateInfo(0).IsName("Idle");
+            else
+                startNow = uiManager.enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
+            if (startNow)
                 StartPlayingPlayerAttackAnimation(powerupTypeForWord);
-            else{
+            else
                 PlayPlayerAttackAnimationAfterEnemyFinishes();
-            }
             SetCurrentAttackData();
             DecrementRefreshPuzzleCountdown();
             ClearWord(true);
+
         }
         else if ((word.Length == 0) && (countdownToRefresh == 0)){
             puzzleGenerator.GenerateNewPuzzle();
@@ -203,8 +240,13 @@ public class BattleManager : MonoBehaviour {
         }
     }
 
-    public void DoEnemyAttackEffect(){
-        DamagePlayerHealth(enemyData.attackDamage);
+    public void DoEnemyAttackEffect(EnemyAttackAnimatorFunctions enemy){
+        if (enemyData.isHorde){
+            if (enemy.data == firstEnemyInHorde)
+                DamagePlayerHealth(firstEnemyInHorde.attackDamage * currentHordeEnemyCount);
+        }
+        else
+            DamagePlayerHealth(enemyData.attackDamage);
     }
 
 
@@ -285,7 +327,13 @@ public class BattleManager : MonoBehaviour {
     }
 
     private void ApplyBurnForFireAttack(int powerupLevel){
-        enemyAttackAnimatorFunctions.AddBurnDamageToQueue(powerupLevel, burnDurationFromFireAttack);
+        if (enemyData.isHorde){
+            enemyHordeAttackAnimatorFunctions[0].AddBurnDamageToQueue(powerupLevel, burnDurationFromFireAttack);
+            //add burn damage to first enemy?
+        }
+        else{
+            enemyAttackAnimatorFunctions.AddBurnDamageToQueue(powerupLevel, burnDurationFromFireAttack);
+        }
         uiManager.ShowBurnCount();
     }
 
@@ -492,8 +540,12 @@ public class BattleManager : MonoBehaviour {
     }
 
     public void QueueEnemyAttack(){
-        if (playerHealth != 0)
-            uiManager.StartEnemyAttackTimer(enemyData.attackSpeed);
+        if (playerHealth != 0){
+            if (enemyData.isHorde)
+                uiManager.StartEnemyAttackTimer(firstEnemyInHorde.attackSpeed);
+            else
+                uiManager.StartEnemyAttackTimer(enemyData.attackSpeed);
+        }
     }
 
     public void EnemyReturnedToIdle(){
@@ -545,6 +597,8 @@ public class BattleManager : MonoBehaviour {
 
     public void TriggerEnemyAttack(){
         if (!stopNextAttack){
+            //if (enemyData.isHorde && )
+            //    return;
             DecrementRefreshPuzzleCountdown();
             UpdateSubmitVisuals();
             uiManager.StartEnemyAttackAnimation();
@@ -555,6 +609,25 @@ public class BattleManager : MonoBehaviour {
         uiManager.DeactivateEnemyStunBar();
         if (!stopNextAttack){
             QueueEnemyAttack();
+        }
+    }
+
+    public void EnemyDeathAnimationFinished(){
+        if (enemyData.isHorde){
+            if (enemyHealth == 0)
+                uiManager.ShowVictoryPage();
+            else{
+                for (int i = currentHordeEnemyCount; i < startingHordeEnemyCount; i++){
+                    if (enemyHordeAttackAnimatorFunctions[i].gameObject.activeSelf){
+                        enemyHordeAttackAnimatorFunctions[i].gameObject.SetActive(false);
+                    }
+                }
+            }
+            //if it was the last enemy, show victory page
+            //if not, then disable the gameobject for the enemy that died, and do nothing else
+        }
+        else{
+            uiManager.ShowVictoryPage();
         }
     }
 

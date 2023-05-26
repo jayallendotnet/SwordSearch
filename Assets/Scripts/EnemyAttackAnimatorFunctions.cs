@@ -7,16 +7,22 @@ using DG.Tweening;
 public class EnemyAttackAnimatorFunctions : MonoBehaviour{
 
     public BattleManager battleManager;
+    public EnemyData data;
     public List<int> burnDamageQueue = new List<int>();
     private int cyclesBetweenBurns = 4;
     private int cyclesLeftUntilBurn = 0;
 
     public void DoEnemyAttackEffect(){
-        battleManager.DoEnemyAttackEffect();
+        battleManager.DoEnemyAttackEffect(this);
     }
 
     public void QueueNextAttack(){
-        battleManager.QueueEnemyAttack();
+        if (battleManager.enemyData.isHorde){
+            if (data == battleManager.firstEnemyInHorde)
+                battleManager.QueueEnemyAttack();
+        }
+        else
+            battleManager.QueueEnemyAttack();
     }
 
     public void ReturnedToIdle(){
@@ -52,7 +58,7 @@ public class EnemyAttackAnimatorFunctions : MonoBehaviour{
     }
 
     public void DeathAnimationFinished(){
-        battleManager.uiManager.ShowVictoryPage();
+        battleManager.EnemyDeathAnimationFinished();
     }
     
     public void StartDeathMovement(){
