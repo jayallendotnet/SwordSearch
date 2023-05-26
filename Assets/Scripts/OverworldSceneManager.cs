@@ -254,13 +254,23 @@ public class OverworldSceneManager : MonoBehaviour{
                 lineCount ++;
             }
         }
-        if (enemy.isInHolyArea){
+        if (enemy.isHoly){
             if (StaticVariables.healActive){
-                text += "The holy ground increases healing spell effectiveness.\n\n";
+                text += "This creature's holy aura amplifies healing magic.\n\n";
                 lineCount ++;
             }
             if (StaticVariables.darkActive){
-                text += "The holy ground diminishes the power of darkness.\n\n";
+                text += "This creature's holy aura diminishes the power of darkness.\n\n";
+                lineCount ++;
+            }
+        }        
+        if (enemy.isDark){
+            if (StaticVariables.healActive){
+                text += "This creature's dark aura dampens healing magic.\n\n";
+                lineCount ++;
+            }
+            if (StaticVariables.darkActive){
+                text += "This creature's dark aura bolsters the power of darkness.\n\n";
                 lineCount ++;
             }
         }

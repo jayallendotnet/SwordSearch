@@ -73,8 +73,7 @@ public class OverworldEnemySpace : MonoBehaviour{
 
 
     [System.Serializable]
-    public class BattleData{
+public class BattleData{
     public GameObject enemyPrefab;
     public GameObject backgroundPrefab;
-
 }

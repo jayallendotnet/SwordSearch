@@ -11,6 +11,7 @@ public class EnemyData : MonoBehaviour{
     public int attackDamage = 2;
     public bool isDraconic = false;
     public bool isHorde = false;
-    public bool isInHolyArea = false;
+    public bool isHoly = false;
+    public bool isDark = false;
 
 }

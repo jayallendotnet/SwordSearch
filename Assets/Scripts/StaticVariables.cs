@@ -16,10 +16,10 @@ public class StaticVariables
     static public float sceneFadeDuration = 0.5f;
     static public bool healActive = true;
     static public bool waterActive = true;
-    static public bool fireActive = false;
+    static public bool fireActive = true;
     static public bool earthActive = false;
     static public bool lightningActive = false;
-    static public bool darkActive = false;
+    static public bool darkActive = true;
     static public bool swordActive = false;
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
     static public int highestUnlockedWorld = 1;
