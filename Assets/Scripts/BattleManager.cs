@@ -286,6 +286,8 @@ public class BattleManager : MonoBehaviour {
 
     private void DoSwordAttack(int strength, int powerupLevel){
         float mult = swordPowerupDamageMultiplier;
+        if (enemyData.isHorde && firstEnemyInHorde.isDraconic)
+            mult = swordPowerupDamageMultiplierVsDragons;
         if (enemyData.isDraconic)
             mult = swordPowerupDamageMultiplierVsDragons;
         int enemyDamage = (int)(strength * (powerupLevel * mult));
@@ -323,17 +325,17 @@ public class BattleManager : MonoBehaviour {
 
     private void ApplyEnemyAttackTimeDebuffFromLightning(int powerupLevel){
         uiManager.StopEnemyAttackTimer();
-        uiManager.ActivateEnemyStunBar(lightningStunDuration * powerupLevel);
+        float stunTime = lightningStunDuration * powerupLevel;
+        if (enemyData.isHorde)
+            stunTime /= currentHordeEnemyCount;
+        uiManager.ActivateEnemyStunBar(stunTime);
     }
 
     private void ApplyBurnForFireAttack(int powerupLevel){
-        if (enemyData.isHorde){
+        if (enemyData.isHorde)
             enemyHordeAttackAnimatorFunctions[0].AddBurnDamageToQueue(powerupLevel, burnDurationFromFireAttack);
-            //add burn damage to first enemy?
-        }
-        else{
+        else
             enemyAttackAnimatorFunctions.AddBurnDamageToQueue(powerupLevel, burnDurationFromFireAttack);
-        }
         uiManager.ShowBurnCount();
     }
 
@@ -623,8 +625,6 @@ public class BattleManager : MonoBehaviour {
                     }
                 }
             }
-            //if it was the last enemy, show victory page
-            //if not, then disable the gameobject for the enemy that died, and do nothing else
         }
         else{
             uiManager.ShowVictoryPage();

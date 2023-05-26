@@ -400,7 +400,6 @@ public class UIManager : MonoBehaviour {
         if (battleManager.enemyData.isHorde){
             foreach (Animator anim in enemyHordeAnimators)
                 anim.SetTrigger("Attack");
-            //start attack animations of all enemies
         }
         else{
             enemyAnimator.SetTrigger("Attack");
@@ -456,7 +455,6 @@ public class UIManager : MonoBehaviour {
         int burns = 0;
         if (battleManager.enemyData.isHorde){
             burns = battleManager.enemyHordeAttackAnimatorFunctions[0].burnDamageQueue.Count;
-            //burns comes from enemy horde functions, first enemy?
         }
         else{
             burns = battleManager.enemyAttackAnimatorFunctions.burnDamageQueue.Count;

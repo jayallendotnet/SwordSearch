@@ -50,7 +50,10 @@ public class EnemyAttackAnimatorFunctions : MonoBehaviour{
             return;
         cyclesLeftUntilBurn --;
         if (cyclesLeftUntilBurn == 0){
-            battleManager.DamageEnemyHealth(burnDamageQueue[0]);
+            int burnDamage = burnDamageQueue[0];
+            if (battleManager.enemyData.isHorde)
+                burnDamage *= battleManager.currentHordeEnemyCount;
+            battleManager.DamageEnemyHealth(burnDamage);
             burnDamageQueue.RemoveAt(0);
             battleManager.uiManager.ShowBurnCount();
             cyclesLeftUntilBurn = cyclesBetweenBurns;
