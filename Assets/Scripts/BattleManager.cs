@@ -352,11 +352,15 @@ public class BattleManager : MonoBehaviour {
 
     private void DoDarkAttack(int strength, int powerupLevel){
         int enemyDamage = (int)(strength * (powerupLevel * darkPowerupDamageMultiplier));
+        if (enemyData.isInHolyArea)
+            enemyDamage /= 2;
         DamageEnemyHealth(enemyDamage);
     }
 
     public void ApplyHealToSelf(int strength, int powerupLevel){
         int healAmount = strength * 3;
+        if (enemyData.isInHolyArea)
+            healAmount *= 2;
         HealPlayerHealth(healAmount);
     }
 

@@ -2467,6 +2467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyAnimator: {fileID: 0}
+  enemyHordeAnimators: []
   wordDisplay: {fileID: 158118174}
   submitWordButtonImage: {fileID: 22292642}
   countdownNumber: {fileID: 840022957}
@@ -11137,9 +11138,14 @@ MonoBehaviour:
   powerupTypeForWord: 0
   powerupLevel: 0
   enemyHealth: 0
+  hordeStartingHealth: 0
+  startingHordeEnemyCount: 0
+  currentHordeEnemyCount: 0
+  firstEnemyInHorde: {fileID: 0}
   playerHealth: 0
   enemyData: {fileID: 0}
   enemyAttackAnimatorFunctions: {fileID: 0}
+  enemyHordeAttackAnimatorFunctions: []
   isWaterInPuzzleArea: 0
   startingPlayerHealth: 100
   maxHealth: 999
@@ -11158,7 +11164,7 @@ MonoBehaviour:
   swordPowerupDamageMultiplier: 2
   swordPowerupDamageMultiplierVsDragons: 5
   defaultBattleData:
-    enemyPrefab: {fileID: 1107962101534003457, guid: a24102c927a3c4540948d13399661fd5, type: 3}
+    enemyPrefab: {fileID: 1107962101534003457, guid: 13dc66c555317f3479f4d4f5f43619f0, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: 18fd931978dc05d4fa0cee1c86561fe8, type: 3}
   uiManager: {fileID: 380147764}
   puzzleGenerator: {fileID: 514826207}
