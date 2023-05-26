@@ -43,6 +43,9 @@ public class OverworldSceneManager : MonoBehaviour{
     [HideInInspector]
     public bool isTalkShowing = false;
     public float talkTransitionDuration = 0.5f;
+    private Vector2 interactOverlayStartingSize;
+
+    public float minHeightAboveInteractOverlay = 200;
 
     
 
@@ -54,15 +57,16 @@ public class OverworldSceneManager : MonoBehaviour{
         AdvanceGameIfAppropriate();
         ClearCurrentBattleStats();
         StartInteractOverlayHidden();
-        SetButtonStartingPositions();
+        SetOverlayStartingDimensions();
         infoText.gameObject.SetActive(false);
     }
 
-    private void SetButtonStartingPositions(){
+    private void SetOverlayStartingDimensions(){
         talkButtonStartingPos = talkButton.localPosition;
         battleButtonStartingPos = battleButton.localPosition;
         infoButtonStartingPos = infoButton.localPosition;
         backButtonStartingPos = backButton.localPosition;
+        interactOverlayStartingSize = interactOverlay.sizeDelta;
     }
 
     private void SetupOverworldEnemySpaces(){
@@ -136,10 +140,22 @@ public class OverworldSceneManager : MonoBehaviour{
             Color c = Color.white;
             c.a = 0;
             infoText.DOColor(c, infoTransitionDuration);
+            AdjustHeightsForHidingInfo();
             return;
         }
         if (isInteractOverlayShowing)
             HideInteractOverlay();
+    }
+
+    private void AdjustHeightsForHidingInfo(){
+        //no idea how this function works lol
+        interactOverlay.DOSizeDelta(interactOverlayStartingSize, interactOverlayMoveDuration);
+        float diff = interactOverlayStartingSize.y - interactOverlay.sizeDelta.y;
+        float temp = overworldView.anchoredPosition.y + diff;
+        if (temp < 0)
+            temp = 0;
+        if (diff < 0)
+            overworldView.DOAnchorPosY(temp, interactOverlayMoveDuration);
     }
 
     public void PressedTalkButton(){
@@ -193,34 +209,74 @@ public class OverworldSceneManager : MonoBehaviour{
         c.a = 0;
         infoText.color = c;
         infoText.DOColor(Color.white, infoTransitionDuration);
-        infoText.text = GenerateEnemyInfoText(currentPlayerSpace.battleData.enemyPrefab.GetComponent<EnemyData>());
+        InfoTextData infoTextData = GenerateEnemyInfoText(currentPlayerSpace.battleData.enemyPrefab.GetComponent<EnemyData>());
+        infoText.text = infoTextData.text;
+        AdjustHeightsForShowingInfo(infoTextData.lineCount);
         isInfoShowing = true;
     }
 
-    private string GenerateEnemyInfoText(EnemyData enemy){
-        //to do: check for powerup unlocks before adding specific text
+    private void AdjustHeightsForShowingInfo(int lineCount){
+        if (lineCount < 3)
+            return;
+        int extraAmount = lineCount - 2;
+        if (extraAmount > 3){
+            extraAmount = 3;
+            //change font size to fit more spaces?
+        }
+        float heightPerAmount = 450f;
+        float totalHeightAdded = extraAmount * heightPerAmount;
+        Vector2 sd = new Vector2(interactOverlay.sizeDelta.x, interactOverlay.sizeDelta.y + totalHeightAdded);
+        interactOverlay.DOSizeDelta(sd, interactOverlayMoveDuration);
+        
+        float playerHasToBeAbove = interactOverlay.rect.height + totalHeightAdded + minHeightAboveInteractOverlay;
+        float diff = playerParent.position.y - playerHasToBeAbove;
+        if (diff < 0)
+            overworldView.DOAnchorPosY(overworldView.anchoredPosition.y -diff, interactOverlayMoveDuration);
+    }
+
+    private InfoTextData GenerateEnemyInfoText(EnemyData enemy){
+        InfoTextData infoText = new InfoTextData();
+        int lineCount = 0;
         string text = "";
         if (enemy.isHorde){
-            text += "Horde enemies take more burn damage from fire spells.\n";
-            text += "Horde enemies are stunned for less time from lightning spells.\n";
+            if (StaticVariables.fireActive){
+                text += "Horde enemies take more burn damage from fire spells.\n\n";
+                lineCount ++;
+            }
+            if (StaticVariables.lightningActive){
+                text += "Horde enemies are stunned for less time from lightning spells.\n\n";
+                lineCount ++;
+            }
         }
         if (enemy.isDraconic){
-            text += "This dragon takes more damage from the sword of slaying.\n";
+            if (StaticVariables.swordActive){
+                text += "This dragon takes more damage from the sword of slaying.\n\n";
+                lineCount ++;
+            }
         }
         if (enemy.isInHolyArea){
-            text += "The holy ground increases healing spell effectiveness.\n";
-            text += "The holy ground diminishes the power of darkness.\n";
+            if (StaticVariables.healActive){
+                text += "The holy ground increases healing spell effectiveness.\n\n";
+                lineCount ++;
+            }
+            if (StaticVariables.darkActive){
+                text += "The holy ground diminishes the power of darkness.\n\n";
+                lineCount ++;
+            }
         }
         if (text == ""){
             text = "This enemy has no particular weaknesses.";
+            lineCount ++;
         }
-        return text; 
+        infoText.text = text;
+        infoText.lineCount = lineCount;
+        return infoText; 
     }
 
     private void HideInteractOverlay(){
-        Vector2 pos = new Vector2(0, -interactOverlay.rect.height);
-        interactOverlay.DOAnchorPos(pos, interactOverlayMoveDuration);
-        overworldView.DOAnchorPos(Vector2.zero, interactOverlayMoveDuration).OnComplete(FinishedHidingInteractOverlay);
+        //Vector2 pos = new Vector2(0, -interactOverlay.rect.height);
+        interactOverlay.DOAnchorPosY(-interactOverlay.rect.height, interactOverlayMoveDuration);
+        overworldView.DOAnchorPosY(0, interactOverlayMoveDuration).OnComplete(FinishedHidingInteractOverlay);
     }
 
     private void FinishedHidingInteractOverlay(){
@@ -228,15 +284,14 @@ public class OverworldSceneManager : MonoBehaviour{
     }
 
     public void ShowInteractOverlay(){
-        interactOverlay.DOAnchorPos(Vector2.zero, interactOverlayMoveDuration);
+        interactOverlay.DOAnchorPosY(0, interactOverlayMoveDuration);
         isInteractOverlayShowing = true;
 
-        float playerHasToBeAbove = interactOverlay.rect.height + 200;
+        float playerHasToBeAbove = interactOverlay.rect.height + minHeightAboveInteractOverlay;
         float diff = playerParent.position.y - playerHasToBeAbove;
         if (diff < 0)
-            overworldView.DOAnchorPos(new Vector2(0, -diff), interactOverlayMoveDuration);
+            overworldView.DOAnchorPosY(-diff, interactOverlayMoveDuration);
     }
-
     
     public void LoadBattleWithData(OverworldEnemySpace space){
         StaticVariables.battleData = space.battleData;
@@ -299,4 +354,9 @@ public class OverworldSceneManager : MonoBehaviour{
         StaticVariables.beatCurrentBattle = false;
     }
 
+}
+
+public class InfoTextData{
+    public string text;
+    public int lineCount;
 }

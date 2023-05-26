@@ -3724,6 +3724,7 @@ MonoBehaviour:
   infoTransitionDuration: 0.3
   isTalkShowing: 0
   talkTransitionDuration: 0.3
+  minHeightAboveInteractOverlay: 150
 --- !u!1 &1124882462
 GameObject:
   m_ObjectHideFlags: 0
@@ -4769,8 +4770,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 141.56006}
-  m_SizeDelta: {x: -140, y: -475.54}
+  m_AnchoredPosition: {x: 0, y: 111.900024}
+  m_SizeDelta: {x: -140, y: -410}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1630457570
 MonoBehaviour:
@@ -4794,7 +4795,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1689cc2955a3cc74a8f76a3e718bfcd7, type: 3}
-    m_FontSize: 80
+    m_FontSize: 75
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
@@ -7300,7 +7301,7 @@ MonoBehaviour:
   overworldSceneManager: {fileID: 0}
   playerDestination: {fileID: 6558018650983938641}
   battleData:
-    enemyPrefab: {fileID: 815226952419649516, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
+    enemyPrefab: {fileID: 1107962101534003457, guid: 13dc66c555317f3479f4d4f5f43619f0, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
   pathFromLastSpace: {fileID: 986440243}
   button: {fileID: 6558018652352755775}
