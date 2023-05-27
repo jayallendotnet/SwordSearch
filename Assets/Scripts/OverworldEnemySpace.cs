@@ -9,13 +9,17 @@ public class OverworldEnemySpace : MonoBehaviour{
 
     [HideInInspector]
     public OverworldSceneManager overworldSceneManager;
-    public GameObject playerDestination;
-    public BattleData battleData;
     private Image enemyImage;
-    public Transform pathFromLastSpace;
     private int pathFadeIndex = 0;
     private float timeBetweenPathFadeSteps = 0.5f;
+    [Header("GameObject references")]
+    public GameObject playerDestination;
+    public Transform pathFromLastSpace;
     public GameObject button;
+
+    [Header("Gameplay Stuff")]
+    public BattleData battleData;
+    public DialogueStep[] dialogueSteps;
 
     public void MovePlayerToThisSpace(){
         overworldSceneManager.currentPlayerSpace = this;
@@ -72,8 +76,16 @@ public class OverworldEnemySpace : MonoBehaviour{
 }
 
 
-    [System.Serializable]
+[System.Serializable]
 public class BattleData{
     public GameObject enemyPrefab;
     public GameObject backgroundPrefab;
+}
+
+[System.Serializable]
+public class DialogueStep{
+    public enum DialogueType{PlayerTalking, EnemyTalking, Event};
+    public DialogueType type;
+    [TextArea(2,5)]
+    public string description;
 }

@@ -47,7 +47,10 @@ public class OverworldSceneManager : MonoBehaviour{
 
     public float minHeightAboveInteractOverlay = 200;
 
-    
+    public Text talkText;
+    private int currentTalkStep;
+
+    public Text backButtonText;
 
 
     void Start(){
@@ -131,12 +134,16 @@ public class OverworldSceneManager : MonoBehaviour{
     }
 
     public void PressedBackInteractButton(){
-        if (isTalkShowing)
+        if (isTalkShowing){
+            AdvanceTalkStage();
             return;
-        if (isInfoShowing){     
-            talkButton.DOLocalMove(talkButtonStartingPos, infoTransitionDuration);
-            battleButton.DOLocalMove(battleButtonStartingPos, infoTransitionDuration);
-            infoButton.DOLocalMove(infoButtonStartingPos, infoTransitionDuration).OnComplete(FinishedShowingInfo);
+        }
+        if (isInfoShowing){   
+            ReturnButtonsToStartingPositions(infoTransitionDuration);  
+            StaticVariables.WaitTimeThenCallFunction(infoTransitionDuration, FinishedShowingInfo);
+            //talkButton.DOLocalMove(talkButtonStartingPos, infoTransitionDuration);
+            //battleButton.DOLocalMove(battleButtonStartingPos, infoTransitionDuration);
+            //infoButton.DOLocalMove(infoButtonStartingPos, infoTransitionDuration).OnComplete(FinishedShowingInfo);
             Color c = Color.white;
             c.a = 0;
             infoText.DOColor(c, infoTransitionDuration);
@@ -164,19 +171,70 @@ public class OverworldSceneManager : MonoBehaviour{
         if (isInfoShowing)
             return;
         isTalkShowing = true;
-        talkButton.DOLocalMove(-infoButtonStartingPos, talkTransitionDuration);
-        battleButton.DOLocalMove(-infoButtonStartingPos, talkTransitionDuration);
-        infoButton.DOLocalMove(-infoButtonStartingPos, talkTransitionDuration);
-        backButton.DOLocalMove(-infoButtonStartingPos, talkTransitionDuration);
+        //talkButton.DOMove(backButton.position, talkTransitionDuration);
+        //battleButton.DOMove(backButton.position, talkTransitionDuration);
+        //infoButton.DOMove(backButton.position, talkTransitionDuration);
+        //talkButton.DOLocalMove(-infoButtonStartingPos, talkTransitionDuration);
+        //battleButton.DOLocalMove(-infoButtonStartingPos, talkTransitionDuration);
+        //infoButton.DOLocalMove(-infoButtonStartingPos, talkTransitionDuration);
+        //backButton.DOLocalMove(-infoButtonStartingPos, talkTransitionDuration);
+        HideOtherButtonsBehindBack(talkTransitionDuration);
+        backButtonText.text = "NEXT";
 
-        StaticVariables.WaitTimeThenCallFunction(5f, EndTalk);
+        talkText.gameObject.SetActive(true);
+        Color c = Color.white;
+        c.a = 0;
+        talkText.color = c;
+        talkText.DOColor(Color.white, talkTransitionDuration);
+        if (currentPlayerSpace.dialogueSteps.Length > 0)
+            talkText.text = currentPlayerSpace.dialogueSteps[0].description;
+        else
+            talkText.text = "This enemy has no dialogue!! You should probably fix that before the game goes live...";
+
+        currentTalkStep = 0;
+
+        //temporary
+        //StaticVariables.WaitTimeThenCallFunction(3f, AdvanceTalkStage);
+    }
+
+    private void AdvanceTalkStage(){
+        currentTalkStep ++;
+        if (currentPlayerSpace.dialogueSteps.Length <= currentTalkStep){
+            EndTalk();
+            return;
+        }
+        talkText.text = currentPlayerSpace.dialogueSteps[currentTalkStep].description;
+
+        //temporary
+        //StaticVariables.WaitTimeThenCallFunction(3f, AdvanceTalkStage);
     }
 
     private void EndTalk(){
-        talkButton.DOLocalMove(talkButtonStartingPos, talkTransitionDuration);
-        battleButton.DOLocalMove(battleButtonStartingPos, talkTransitionDuration);
-        infoButton.DOLocalMove(infoButtonStartingPos, talkTransitionDuration);
-        backButton.DOLocalMove(backButtonStartingPos, talkTransitionDuration).OnComplete(FinishedEndingTalk);
+        ReturnButtonsToStartingPositions(talkTransitionDuration);
+        StaticVariables.WaitTimeThenCallFunction(talkTransitionDuration, FinishedEndingTalk);
+        //talkButton.DOLocalMove(talkButtonStartingPos, talkTransitionDuration);
+        //battleButton.DOLocalMove(battleButtonStartingPos, talkTransitionDuration);
+        //infoButton.DOLocalMove(infoButtonStartingPos, talkTransitionDuration).OnComplete(FinishedEndingTalk);
+        //backButton.DOLocalMove(backButtonStartingPos, talkTransitionDuration).OnComplete(FinishedEndingTalk);
+
+        backButtonText.text = "BACK";
+
+        Color c = Color.white;
+        c.a = 0;
+        talkText.DOColor(c, talkTransitionDuration);
+    }
+
+    private void HideOtherButtonsBehindBack(float duration){
+        talkButton.DOMove(backButton.position, duration);
+        battleButton.DOMove(backButton.position, duration);
+        infoButton.DOMove(backButton.position, duration);
+
+    }
+    private void ReturnButtonsToStartingPositions(float duration){
+        talkButton.DOLocalMove(talkButtonStartingPos, duration);
+        battleButton.DOLocalMove(battleButtonStartingPos, duration);
+        infoButton.DOLocalMove(infoButtonStartingPos, duration);
+        backButton.DOLocalMove(backButtonStartingPos, duration);
     }
 
     private void FinishedEndingTalk(){
@@ -201,9 +259,10 @@ public class OverworldSceneManager : MonoBehaviour{
             return;
         if (isInfoShowing)
             return;
-        talkButton.DOMove(backButton.position, infoTransitionDuration);
-        battleButton.DOMove(backButton.position, infoTransitionDuration);
-        infoButton.DOMove(backButton.position, infoTransitionDuration);
+        //talkButton.DOMove(backButton.position, infoTransitionDuration);
+        //battleButton.DOMove(backButton.position, infoTransitionDuration);
+        //infoButton.DOMove(backButton.position, infoTransitionDuration);
+        HideOtherButtonsBehindBack(infoTransitionDuration);
         infoText.gameObject.SetActive(true);
         Color c = Color.white;
         c.a = 0;
