@@ -12,7 +12,7 @@ public class OverworldEnemySpace : MonoBehaviour{
     private Image enemyImage;
     private int pathFadeIndex = 0;
     private float timeBetweenPathFadeSteps = 0.5f;
-    [Header("GameObject references")]
+    [Header("Scene references")]
     public GameObject playerDestination;
     public Transform pathFromLastSpace;
     public GameObject button;
