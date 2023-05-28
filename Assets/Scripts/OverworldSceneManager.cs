@@ -17,6 +17,9 @@ public class OverworldSceneManager : MonoBehaviour{
     public RectTransform talkButton;
     public Text talkText;
     public Text talkTextSpeakerName;
+    public Image talkDarkenedBackground;
+    public Image talkPlayerChathead;
+    public Image talkEnemyChathead;
     public RectTransform infoButton;
     public Text infoText;
     public RectTransform backButton;
@@ -55,6 +58,11 @@ public class OverworldSceneManager : MonoBehaviour{
     private int currentTalkStep;
     private Image textSeparator;
     private Color textSeparatorColor;
+    private Color talkDarkenedBackgroundColor;
+    private float chatheadHiddenDepth = 200f;
+    private float cahtheadStartingHeight;
+    private RectTransform talkPlayerChatheadTransform;
+    private RectTransform talkEnemyChatheadTransform;
 
 
     void Start(){
@@ -70,6 +78,13 @@ public class OverworldSceneManager : MonoBehaviour{
         talkTextSpeakerName.gameObject.SetActive(false);
         textSeparator = talkTextSpeakerName.transform.GetChild(0).GetComponent<Image>();
         textSeparatorColor = textSeparator.color;
+        talkDarkenedBackground.gameObject.SetActive(false);
+        talkPlayerChathead.gameObject.SetActive(false);
+        talkEnemyChathead.gameObject.SetActive(false);
+        talkDarkenedBackgroundColor = talkDarkenedBackground.color;
+        talkPlayerChatheadTransform = talkPlayerChathead.GetComponent<RectTransform>();
+        talkEnemyChatheadTransform = talkEnemyChathead.GetComponent<RectTransform>();
+        cahtheadStartingHeight = talkPlayerChatheadTransform.anchoredPosition.y;
     }
 
     private void SetOverlayStartingDimensions(){
@@ -158,19 +173,32 @@ public class OverworldSceneManager : MonoBehaviour{
         HideOtherButtonsBehindBack(talkTransitionDuration);
         backButtonText.text = "NEXT";
 
+        TransitionToTalk();
+
+        currentTalkStep = 0;
+        ShowCurrentTalkStage();
+    }
+
+    private void TransitionToTalk(){
         talkText.gameObject.SetActive(true);
         talkTextSpeakerName.gameObject.SetActive(true);
+        talkDarkenedBackground.gameObject.SetActive(true);
+        talkPlayerChathead.gameObject.SetActive(true);
+        talkEnemyChathead.gameObject.SetActive(true);
+
+        talkPlayerChatheadTransform.anchoredPosition = new Vector2(talkPlayerChatheadTransform.anchoredPosition.x, -chatheadHiddenDepth);
+        talkEnemyChatheadTransform.anchoredPosition = new Vector2(talkEnemyChatheadTransform.anchoredPosition.x, -chatheadHiddenDepth);
+
         Color c = Color.white;
         c.a = 0;
         talkText.color = c;
         talkTextSpeakerName.color = c;
         textSeparator.color = c;
+        talkDarkenedBackground.color = c;
         talkText.DOColor(Color.white, talkTransitionDuration);
         talkTextSpeakerName.DOColor(Color.white, talkTransitionDuration);
         textSeparator.DOColor(textSeparatorColor, talkTransitionDuration);
-
-        currentTalkStep = 0;
-        ShowCurrentTalkStage();
+        talkDarkenedBackground.DOColor(talkDarkenedBackgroundColor, talkTransitionDuration);
     }
 
     public void PressedInfoButton(){
@@ -211,14 +239,10 @@ public class OverworldSceneManager : MonoBehaviour{
     private void ShowCurrentTalkStage(){
         if (currentTalkStep < currentPlayerSpace.dialogueSteps.Length){
             talkText.text = currentPlayerSpace.dialogueSteps[currentTalkStep].description;
-            if (currentPlayerSpace.dialogueSteps[currentTalkStep].type == DialogueStep.DialogueType.PlayerTalking){
-                talkTextSpeakerName.text = "PLAYER";
-                talkTextSpeakerName.alignment = TextAnchor.UpperLeft;
-            }
-            else if (currentPlayerSpace.dialogueSteps[currentTalkStep].type == DialogueStep.DialogueType.EnemyTalking){
-                talkTextSpeakerName.text = currentPlayerSpace.battleData.enemyPrefab.name.ToUpper();
-                talkTextSpeakerName.alignment = TextAnchor.UpperRight;
-            }
+            if (currentPlayerSpace.dialogueSteps[currentTalkStep].type == DialogueStep.DialogueType.PlayerTalking)
+                ShowPlayerTalking();
+            else if (currentPlayerSpace.dialogueSteps[currentTalkStep].type == DialogueStep.DialogueType.EnemyTalking)
+                ShowEnemyTalking();
         }
         else{
             talkText.text = "No dialogue for this enemy, current talk step is " + currentTalkStep;
@@ -228,6 +252,23 @@ public class OverworldSceneManager : MonoBehaviour{
             backButtonText.text = "END";
         else
             backButtonText.text = "NEXT";
+    }
+
+    private void ShowPlayerTalking(){
+        talkTextSpeakerName.text = "PLAYER";
+        talkTextSpeakerName.alignment = TextAnchor.UpperLeft;
+        talkPlayerChatheadTransform.DOAnchorPosY(cahtheadStartingHeight, talkTransitionDuration);
+        talkPlayerChathead.DOColor(Color.white, talkTransitionDuration);
+        talkEnemyChathead.DOColor(Color.grey, talkTransitionDuration);
+
+    }
+
+    private void ShowEnemyTalking(){
+        talkTextSpeakerName.text = currentPlayerSpace.battleData.enemyPrefab.name.ToUpper();
+        talkTextSpeakerName.alignment = TextAnchor.UpperRight;
+        talkEnemyChatheadTransform.DOAnchorPosY(cahtheadStartingHeight, talkTransitionDuration);
+        talkEnemyChathead.DOColor(Color.white, talkTransitionDuration);
+        talkPlayerChathead.DOColor(Color.grey, talkTransitionDuration);
     }
 
     private void AdjustHeightsForHidingInfo(){
@@ -260,6 +301,10 @@ public class OverworldSceneManager : MonoBehaviour{
         talkText.DOColor(c, talkTransitionDuration);
         talkTextSpeakerName.DOColor(c, talkTransitionDuration);
         textSeparator.DOColor(c, talkTransitionDuration);
+        talkDarkenedBackground.DOColor(c, talkTransitionDuration);
+
+        talkPlayerChatheadTransform.DOAnchorPosY(-chatheadHiddenDepth, talkTransitionDuration);
+        talkEnemyChatheadTransform.DOAnchorPosY(-chatheadHiddenDepth, talkTransitionDuration);
     }
 
     private void HideOtherButtonsBehindBack(float duration){
@@ -279,6 +324,9 @@ public class OverworldSceneManager : MonoBehaviour{
         isTalkShowing = false;
         talkText.gameObject.SetActive(false);
         talkTextSpeakerName.gameObject.SetActive(false);
+        talkDarkenedBackground.gameObject.SetActive(false);
+        talkPlayerChathead.gameObject.SetActive(false);
+        talkEnemyChathead.gameObject.SetActive(false);
     }
 
     private void FinishedShowingInfo(){
