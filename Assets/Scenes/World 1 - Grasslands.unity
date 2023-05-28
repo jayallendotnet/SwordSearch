@@ -1638,9 +1638,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1115847364}
-        m_TargetAssemblyTypeName: OverworldSceneManager, Assembly-CSharp
-        m_MethodName: PressedBackInteractButton
+      - m_Target: {fileID: 734309496}
+        m_TargetAssemblyTypeName: InteractOverlayManager, Assembly-CSharp
+        m_MethodName: PressedBackButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2955,6 +2955,7 @@ GameObject:
   m_Component:
   - component: {fileID: 734309494}
   - component: {fileID: 734309495}
+  - component: {fileID: 734309496}
   m_Layer: 5
   m_Name: Interact Overlay
   m_TagString: Untagged
@@ -2992,6 +2993,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 734309493}
   m_CullTransparentMesh: 1
+--- !u!114 &734309496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734309493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e718a13af821b1d41be212b56c0059c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overworldSceneManager: {fileID: 1115847364}
+  interactOverlay: {fileID: 820971025}
+  battleButton: {fileID: 894785737}
+  talkButton: {fileID: 910197756}
+  infoButton: {fileID: 453115439}
+  infoText: {fileID: 1630457570}
+  backButton: {fileID: 1230550920}
+  transitionDuration: 0.5
+  minHeightAboveInteractOverlay: 200
+  isInteractOverlayShowing: 0
+  isInfoShowing: 0
 --- !u!1001 &779262819
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3232,6 +3256,7 @@ RectTransform:
   - {fileID: 305248689}
   - {fileID: 1961688357}
   - {fileID: 734309494}
+  - {fileID: 1670146878}
   - {fileID: 1496131950}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -3723,8 +3748,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1115847364}
-        m_TargetAssemblyTypeName: OverworldSceneManager, Assembly-CSharp
+      - m_Target: {fileID: 734309496}
+        m_TargetAssemblyTypeName: InteractOverlayManager, Assembly-CSharp
         m_MethodName: PressedBattleButton
         m_Mode: 1
         m_Arguments:
@@ -4053,22 +4078,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f428b1993531cd408063eaab834384a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generalSceneManager: {fileID: 370989885}
-  interactOverlay: {fileID: 820971025}
   overworldView: {fileID: 1961688357}
   playerParent: {fileID: 669138117}
   playerAnimator: {fileID: 1761730669}
-  battleButton: {fileID: 894785737}
-  talkButton: {fileID: 910197756}
-  talkText: {fileID: 1797055389}
-  talkTextSpeakerName: {fileID: 602315200}
-  talkDarkenedBackground: {fileID: 224192680}
-  talkPlayerChathead: {fileID: 527867843}
-  talkEnemyChathead: {fileID: 1427338960}
-  infoButton: {fileID: 453115439}
-  infoText: {fileID: 1630457570}
-  backButton: {fileID: 1230550920}
-  backButtonText: {fileID: 1089738115}
   overworldEnemySpaces:
   - {fileID: 8638739162090967075}
   - {fileID: 6962664377051636996}
@@ -4081,16 +4093,12 @@ MonoBehaviour:
   - {fileID: 4605736156506248158}
   playerWalkSpeed: 1000
   minTimeToMove: 1
-  interactOverlayMoveDuration: 0.5
-  infoTransitionDuration: 0.3
-  talkTransitionDuration: 0.3
   thisWorldNum: 1
-  minHeightAboveInteractOverlay: 150
   isPlayerMoving: 0
   currentPlayerSpace: {fileID: 0}
   isInteractOverlayShowing: 0
-  isInfoShowing: 0
-  isTalkShowing: 0
+  interactOverlayManager: {fileID: 734309496}
+  dialogueManager: {fileID: 1670146879}
 --- !u!1 &1124882462
 GameObject:
   m_ObjectHideFlags: 0
@@ -4749,7 +4757,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 811241014}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5333,6 +5341,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1670039806}
   m_CullTransparentMesh: 1
+--- !u!224 &1670146878 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+  m_PrefabInstance: {fileID: 8075790154464997900}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1670146879 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8075790155026782515, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+  m_PrefabInstance: {fileID: 8075790154464997900}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a9775ae757d3b469925a7cf9810294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1690546613
 GameObject:
   m_ObjectHideFlags: 0
@@ -5838,8 +5862,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1115847364}
-        m_TargetAssemblyTypeName: OverworldSceneManager, Assembly-CSharp
+      - m_Target: {fileID: 734309496}
+        m_TargetAssemblyTypeName: InteractOverlayManager, Assembly-CSharp
         m_MethodName: PressedInfoButton
         m_Mode: 1
         m_Arguments:
@@ -6487,8 +6511,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1115847364}
-        m_TargetAssemblyTypeName: OverworldSceneManager, Assembly-CSharp
+      - m_Target: {fileID: 734309496}
+        m_TargetAssemblyTypeName: InteractOverlayManager, Assembly-CSharp
         m_MethodName: PressedTalkButton
         m_Mode: 1
         m_Arguments:
@@ -9213,6 +9237,107 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &8075790154464997900
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 811241014}
+    m_Modifications:
+    - target: {fileID: 8075790155026782513, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_Name
+      value: DialogueManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782514, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075790155026782515, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
+      propertyPath: isInOverworld
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fd3757c0e974e264e9941b0d191b40be, type: 3}
 --- !u!224 &8638739162090967074
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9318,4 +9443,6 @@ MonoBehaviour:
   battleData:
     enemyPrefab: {fileID: 815226952419649516, guid: 84eefe6b209a4ef4ab9b33c516d0fda8, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
-  dialogueSteps: []
+  dialogueSteps:
+  - type: 0
+    description: IMA KILL YA

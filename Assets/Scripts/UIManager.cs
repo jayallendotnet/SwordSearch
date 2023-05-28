@@ -107,6 +107,7 @@ public class UIManager : MonoBehaviour {
     public Image letterMask3Im;
     public Mask letterMask3Mask;
     public GameObject enemyParentPrefab;
+    public DialogueManager dialogueManager;
     
 
 
@@ -662,6 +663,7 @@ public class UIManager : MonoBehaviour {
     public void ShowVictoryPage(){
         ShowPageTurn(true);
         victoryPage.SetActive(true);
+        dialogueManager.Setup(battleManager.enemyData.victoryDialogueSteps, StaticVariables.battleData);
     }
 
     public void ShowDefeatPage(){

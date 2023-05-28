@@ -7,45 +7,25 @@ using DG.Tweening;
 
 public class InteractOverlayManager : MonoBehaviour{
 
+    
+    [Header("Overworld Scene")]
+    public OverworldSceneManager overworldSceneManager;
 
-   /* 
-    //[Header("Scene References")]
-    //public GeneralSceneManager generalSceneManager;
+   
+    [Header("Scene References")]
     public RectTransform interactOverlay;
-    //public RectTransform overworldView;
-    //public RectTransform playerParent;
-    //public Animator playerAnimator;
     public RectTransform battleButton;
     public RectTransform talkButton;
-    public Text talkText;
-    public Text talkTextSpeakerName;
-    public Image talkDarkenedBackground;
-    public Image talkPlayerChathead;
-    public Image talkEnemyChathead;
     public RectTransform infoButton;
     public Text infoText;
     public RectTransform backButton;
-    public Text backButtonText;
-    //public OverworldEnemySpace[] overworldEnemySpaces;
 
 
-    //[Header("Timing Configurations")]
-    //public float playerWalkSpeed = 500f;
-    //public float minTimeToMove = 1f;
-    public float interactOverlayMoveDuration = 3f;
-    public float infoTransitionDuration = 0.5f;
-    public float talkTransitionDuration = 0.5f;
-
-    //[Header("Other")]
-    //public int thisWorldNum;
+    [Header("Configurations")]
+    public float transitionDuration = 0.5f;
     public float minHeightAboveInteractOverlay = 200;
 
 
-
-    //[HideInInspector]
-    //public bool isPlayerMoving = false;
-    //[HideInInspector]
-    //public OverworldEnemySpace currentPlayerSpace = null;
     [HideInInspector]
     public bool isInteractOverlayShowing = false;
     [HideInInspector]
@@ -54,238 +34,72 @@ public class InteractOverlayManager : MonoBehaviour{
     private Vector2 battleButtonStartingPos;
     private Vector2 infoButtonStartingPos;
     private Vector2 backButtonStartingPos;
-    [HideInInspector]
-    public bool isTalkShowing = false;
     private Vector2 interactOverlayStartingSize;
-    private int currentTalkStep;
-    private Image textSeparator;
-    private Color textSeparatorColor;
-    private Color talkDarkenedBackgroundColor;
-    private float chatheadHiddenDepth = 200f;
-    private float cahtheadStartingHeight;
-    private RectTransform talkPlayerChatheadTransform;
-    private RectTransform talkEnemyChatheadTransform;
 
 
-    void Start(){
-        //SetupOverworldEnemySpaces();
-        //ShowProgress();
-        //PlacePlayerAtPosition(StaticVariables.currentBattleLevel);
-        //AdvanceGameIfAppropriate();
-        //ClearCurrentBattleStats();
+    public void Setup(){
         StartInteractOverlayHidden();
-        SetOverlayStartingValues();
+        SetStartingValues();
     }
+    
+    private void StartInteractOverlayHidden(){
+        Vector2 pos = new Vector2(0, -interactOverlay.rect.height);
+        interactOverlay.anchoredPosition = pos;
+    }    
 
-    private void SetOverlayStartingValues(){
+    private void SetStartingValues(){
         talkButtonStartingPos = talkButton.localPosition;
         battleButtonStartingPos = battleButton.localPosition;
         infoButtonStartingPos = infoButton.localPosition;
         backButtonStartingPos = backButton.localPosition;
         interactOverlayStartingSize = interactOverlay.sizeDelta;
-        textSeparator = talkTextSpeakerName.transform.GetChild(0).GetComponent<Image>();
-        textSeparatorColor = textSeparator.color;
-        talkDarkenedBackgroundColor = talkDarkenedBackground.color;
-        talkPlayerChatheadTransform = talkPlayerChathead.GetComponent<RectTransform>();
-        talkEnemyChatheadTransform = talkEnemyChathead.GetComponent<RectTransform>();
-        cahtheadStartingHeight = talkPlayerChatheadTransform.anchoredPosition.y;
-
-        infoText.gameObject.SetActive(false);
-        talkText.gameObject.SetActive(false);
-        talkTextSpeakerName.gameObject.SetActive(false);
-        talkDarkenedBackground.gameObject.SetActive(false);
-        talkPlayerChathead.gameObject.SetActive(false);
-        talkEnemyChathead.gameObject.SetActive(false);
     }
 
-    private void StartInteractOverlayHidden(){
-        Vector2 pos = new Vector2(0, -interactOverlay.rect.height);
-        interactOverlay.anchoredPosition = pos;
-    }    
-    
     public void PressedBattleButton(){
-        if (isTalkShowing)
-            return;
         if (isInfoShowing)
             return;
-        LoadBattleWithData(currentPlayerSpace);
+        overworldSceneManager.StartBattle();
     }
    
     public void PressedTalkButton(){
-        if (isTalkShowing)
-            return;
         if (isInfoShowing)
             return;
-        isTalkShowing = true;
-        HideOtherButtonsBehindBack(talkTransitionDuration);
-        backButtonText.text = "NEXT";
-
-        TransitionToTalk();
-
-        currentTalkStep = 0;
-        ShowCurrentTalkStage();
-    }
-
-    private void TransitionToTalk(){
-        talkText.gameObject.SetActive(true);
-        talkTextSpeakerName.gameObject.SetActive(true);
-        talkDarkenedBackground.gameObject.SetActive(true);
-        talkPlayerChathead.gameObject.SetActive(true);
-        talkEnemyChathead.gameObject.SetActive(true);
-
-        talkPlayerChatheadTransform.anchoredPosition = new Vector2(talkPlayerChatheadTransform.anchoredPosition.x, -chatheadHiddenDepth);
-        talkEnemyChatheadTransform.anchoredPosition = new Vector2(talkEnemyChatheadTransform.anchoredPosition.x, -chatheadHiddenDepth);
-
-        Color c = Color.white;
-        c.a = 0;
-        talkText.color = c;
-        talkTextSpeakerName.color = c;
-        textSeparator.color = c;
-        talkDarkenedBackground.color = c;
-        talkText.DOColor(Color.white, talkTransitionDuration);
-        talkTextSpeakerName.DOColor(Color.white, talkTransitionDuration);
-        textSeparator.DOColor(textSeparatorColor, talkTransitionDuration);
-        talkDarkenedBackground.DOColor(talkDarkenedBackgroundColor, talkTransitionDuration);
+        DialogueStep[] steps = overworldSceneManager.currentPlayerSpace.dialogueSteps;
+        BattleData bd = overworldSceneManager.currentPlayerSpace.battleData;
+        overworldSceneManager.dialogueManager.Setup(steps, bd, true);
     }
 
     public void PressedInfoButton(){
-        if (isTalkShowing)
-            return;
         if (isInfoShowing)
             return;
-        HideOtherButtonsBehindBack(infoTransitionDuration);
+        HideOtherButtonsBehindBack(transitionDuration);
         infoText.gameObject.SetActive(true);
         Color c = Color.white;
         c.a = 0;
         infoText.color = c;
-        infoText.DOColor(Color.white, infoTransitionDuration);
-        InfoTextData infoTextData = GenerateEnemyInfoText(currentPlayerSpace.battleData.enemyPrefab.GetComponent<EnemyData>());
+        infoText.DOColor(Color.white, transitionDuration);
+        InfoTextData infoTextData = GenerateEnemyInfoText(overworldSceneManager.currentPlayerSpace.battleData.enemyPrefab.GetComponent<EnemyData>());
         infoText.text = infoTextData.text;
         AdjustHeightsForShowingInfo(infoTextData.lineCount);
         isInfoShowing = true;
     }
 
-    public void PressedBackInteractButton(){
-        if (isTalkShowing){
-            AdvanceTalkStage();
-            return;
-        }
-        if (isInfoShowing){   
-            ReturnButtonsToStartingPositions(infoTransitionDuration);  
-            StaticVariables.WaitTimeThenCallFunction(infoTransitionDuration, FinishedShowingInfo);
-            Color c = Color.white;
-            c.a = 0;
-            infoText.DOColor(c, infoTransitionDuration);
-            AdjustHeightsForHidingInfo();
-            return;
-        }
-        if (isInteractOverlayShowing)
-            HideInteractOverlay();
-    }
-
-    private void ShowCurrentTalkStage(){
-        if (currentTalkStep < currentPlayerSpace.dialogueSteps.Length){
-            talkText.text = currentPlayerSpace.dialogueSteps[currentTalkStep].description;
-            if (currentPlayerSpace.dialogueSteps[currentTalkStep].type == DialogueStep.DialogueType.PlayerTalking)
-                ShowPlayerTalking();
-            else if (currentPlayerSpace.dialogueSteps[currentTalkStep].type == DialogueStep.DialogueType.EnemyTalking)
-                ShowEnemyTalking();
-        }
-        else{
-            talkText.text = "No dialogue for this enemy, current talk step is " + currentTalkStep;
-            talkTextSpeakerName.text = "WARNING";
-        }
-        if (currentTalkStep == currentPlayerSpace.dialogueSteps.Length - 1)
-            backButtonText.text = "END";
-        else
-            backButtonText.text = "NEXT";
-    }
-
-    private void ShowPlayerTalking(){
-        talkTextSpeakerName.text = "PLAYER";
-        talkTextSpeakerName.alignment = TextAnchor.UpperLeft;
-        talkPlayerChatheadTransform.DOAnchorPosY(cahtheadStartingHeight, talkTransitionDuration);
-        talkPlayerChathead.DOColor(Color.white, talkTransitionDuration);
-        talkEnemyChathead.DOColor(Color.grey, talkTransitionDuration);
-
-    }
-
-    private void ShowEnemyTalking(){
-        talkTextSpeakerName.text = currentPlayerSpace.battleData.enemyPrefab.name.ToUpper();
-        talkTextSpeakerName.alignment = TextAnchor.UpperRight;
-        talkEnemyChatheadTransform.DOAnchorPosY(cahtheadStartingHeight, talkTransitionDuration);
-        talkEnemyChathead.DOColor(Color.white, talkTransitionDuration);
-        talkPlayerChathead.DOColor(Color.grey, talkTransitionDuration);
-    }
-
-    private void AdjustHeightsForHidingInfo(){
+    private void MoveOverworldDownIfRequired(){
         //no idea how this function works lol
-        interactOverlay.DOSizeDelta(interactOverlayStartingSize, interactOverlayMoveDuration);
+        interactOverlay.DOSizeDelta(interactOverlayStartingSize, transitionDuration);
         float diff = interactOverlayStartingSize.y - interactOverlay.sizeDelta.y;
-        float temp = overworldView.anchoredPosition.y + diff;
+        float temp = overworldSceneManager.overworldView.anchoredPosition.y + diff;
         if (temp < 0)
             temp = 0;
         if (diff < 0)
-            overworldView.DOAnchorPosY(temp, interactOverlayMoveDuration);
+            overworldSceneManager.overworldView.DOAnchorPosY(temp, transitionDuration);
     }
 
-    private void AdvanceTalkStage(){
-        currentTalkStep ++;
-        if (currentTalkStep >= currentPlayerSpace.dialogueSteps.Length){
-            EndTalk();
-            return;
-        }
-        ShowCurrentTalkStage();
-    }
-
-    private void EndTalk(){
-        ReturnButtonsToStartingPositions(talkTransitionDuration);
-        StaticVariables.WaitTimeThenCallFunction(talkTransitionDuration, FinishedEndingTalk);
-
-        backButtonText.text = "BACK";
-        Color c = Color.white;
-        c.a = 0;
-        talkText.DOColor(c, talkTransitionDuration);
-        talkTextSpeakerName.DOColor(c, talkTransitionDuration);
-        textSeparator.DOColor(c, talkTransitionDuration);
-        talkDarkenedBackground.DOColor(c, talkTransitionDuration);
-
-        talkPlayerChatheadTransform.DOAnchorPosY(-chatheadHiddenDepth, talkTransitionDuration);
-        talkEnemyChatheadTransform.DOAnchorPosY(-chatheadHiddenDepth, talkTransitionDuration);
-
-        
-         if (thisWorldNum == StaticVariables.highestUnlockedWorld){
-            if (StaticVariables.highestUnlockedLevel == GetLevelNumOfSpace(currentPlayerSpace)){
-                StaticVariables.hasTalkedToNewestEnemy = true;
-            }
-        }
-    }
-
-    private void HideOtherButtonsBehindBack(float duration){
-        talkButton.DOLocalMove(backButton.localPosition, duration);
-        battleButton.DOLocalMove(backButton.localPosition, duration);
-        infoButton.DOLocalMove(backButton.localPosition, duration);
-
-    }
-    private void ReturnButtonsToStartingPositions(float duration){
-        talkButton.DOLocalMove(talkButtonStartingPos, duration);
-        battleButton.DOLocalMove(battleButtonStartingPos, duration);
-        infoButton.DOLocalMove(infoButtonStartingPos, duration);
-        backButton.DOLocalMove(backButtonStartingPos, duration);
-    }
-
-    private void FinishedEndingTalk(){
-        isTalkShowing = false;
-        talkText.gameObject.SetActive(false);
-        talkTextSpeakerName.gameObject.SetActive(false);
-        talkDarkenedBackground.gameObject.SetActive(false);
-        talkPlayerChathead.gameObject.SetActive(false);
-        talkEnemyChathead.gameObject.SetActive(false);
-    }
-
-    private void FinishedShowingInfo(){
-        isInfoShowing = false;
-        infoText.gameObject.SetActive(false);
+    private void MoveOverworldUpIfRequired(){
+        float playerHasToBeAbove = interactOverlay.rect.height + minHeightAboveInteractOverlay;
+        float diff = overworldSceneManager.playerParent.position.y - playerHasToBeAbove;
+        if (diff < 0)
+            overworldSceneManager.overworldView.DOAnchorPosY(-diff, transitionDuration);
     }
 
     private void AdjustHeightsForShowingInfo(int lineCount){
@@ -299,15 +113,17 @@ public class InteractOverlayManager : MonoBehaviour{
         float heightPerAmount = 450f;
         float totalHeightAdded = extraAmount * heightPerAmount;
         Vector2 sd = new Vector2(interactOverlay.sizeDelta.x, interactOverlay.sizeDelta.y + totalHeightAdded);
-        interactOverlay.DOSizeDelta(sd, interactOverlayMoveDuration);
+        interactOverlay.DOSizeDelta(sd, transitionDuration);
         
         float playerHasToBeAbove = interactOverlay.rect.height + totalHeightAdded + minHeightAboveInteractOverlay;
-        float diff = playerParent.position.y - playerHasToBeAbove;
+        float diff = overworldSceneManager.playerParent.position.y - playerHasToBeAbove;
         if (diff < 0)
-            overworldView.DOAnchorPosY(overworldView.anchoredPosition.y -diff, interactOverlayMoveDuration);
+            overworldSceneManager.overworldView.DOAnchorPosY(overworldSceneManager.overworldView.anchoredPosition.y -diff, transitionDuration);
     }
 
     private InfoTextData GenerateEnemyInfoText(EnemyData enemy){
+        //maybe move this into static variables at some point?
+        //the infotextdata object definition would need to go somewhere else too
         InfoTextData infoText = new InfoTextData();
         int lineCount = 0;
         string text = "";
@@ -356,10 +172,42 @@ public class InteractOverlayManager : MonoBehaviour{
         return infoText; 
     }
 
+    public void PressedBackButton(){
+        if (isInfoShowing){   
+            ReturnButtonsToStartingPositions(transitionDuration);  
+            StaticVariables.WaitTimeThenCallFunction(transitionDuration, FinishedShowingInfo);
+            Color c = Color.white;
+            c.a = 0;
+            infoText.DOColor(c, transitionDuration);
+            MoveOverworldDownIfRequired();
+            return;
+        }
+        if (isInteractOverlayShowing)
+            HideInteractOverlay();
+    }
+
+    
+    private void HideOtherButtonsBehindBack(float duration){
+        talkButton.DOLocalMove(backButton.localPosition, duration);
+        battleButton.DOLocalMove(backButton.localPosition, duration);
+        infoButton.DOLocalMove(backButton.localPosition, duration);
+
+    }
+    private void ReturnButtonsToStartingPositions(float duration){
+        talkButton.DOLocalMove(talkButtonStartingPos, duration);
+        battleButton.DOLocalMove(battleButtonStartingPos, duration);
+        infoButton.DOLocalMove(infoButtonStartingPos, duration);
+        backButton.DOLocalMove(backButtonStartingPos, duration);
+    }
+
+    private void FinishedShowingInfo(){
+        isInfoShowing = false;
+        infoText.gameObject.SetActive(false);
+    }
+
     private void HideInteractOverlay(){
-        //Vector2 pos = new Vector2(0, -interactOverlay.rect.height);
-        interactOverlay.DOAnchorPosY(-interactOverlay.rect.height, interactOverlayMoveDuration);
-        overworldView.DOAnchorPosY(0, interactOverlayMoveDuration).OnComplete(FinishedHidingInteractOverlay);
+        interactOverlay.DOAnchorPosY(-interactOverlay.rect.height, transitionDuration);
+        overworldSceneManager.overworldView.DOAnchorPosY(0, transitionDuration).OnComplete(FinishedHidingInteractOverlay);
     }
 
     private void FinishedHidingInteractOverlay(){
@@ -367,13 +215,14 @@ public class InteractOverlayManager : MonoBehaviour{
     }
 
     public void ShowInteractOverlay(){
-        interactOverlay.DOAnchorPosY(0, interactOverlayMoveDuration);
+        interactOverlay.DOAnchorPosY(0, transitionDuration);
         isInteractOverlayShowing = true;
-
-        float playerHasToBeAbove = interactOverlay.rect.height + minHeightAboveInteractOverlay;
-        float diff = playerParent.position.y - playerHasToBeAbove;
-        if (diff < 0)
-            overworldView.DOAnchorPosY(-diff, interactOverlayMoveDuration);
+        MoveOverworldUpIfRequired();
     }
-    */
+}
+
+
+public class InfoTextData{
+    public string text;
+    public int lineCount;
 }

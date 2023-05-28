@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
+  data: {fileID: 0}
   burnDamageQueue: 
 --- !u!114 &815226952419649514
 MonoBehaviour:
@@ -129,4 +130,21 @@ MonoBehaviour:
   startingHealth: 1
   attackSpeed: 20
   attackDamage: 1
-  isDraconic: 0
+  isDraconic: 1
+  isHorde: 0
+  isHoly: 0
+  isDark: 1
+  victoryDialogueSteps:
+  - type: 0
+    description: 'Will you listen to me???
+
+      I want to pass peacefully!'
+  - type: 1
+    description: Well why didn't you say so!
+  - type: 1
+    description: The enchanted valley is just down that cliff path. You can see it
+      from here!
+  - type: 0
+    description: Yeah, thanks, I guess...
+  - type: 1
+    description: Good day!

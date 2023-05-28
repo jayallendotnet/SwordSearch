@@ -14,4 +14,6 @@ public class EnemyData : MonoBehaviour{
     public bool isHoly = false;
     public bool isDark = false;
 
+    public DialogueStep[] victoryDialogueSteps;
+
 }

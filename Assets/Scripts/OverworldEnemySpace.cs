@@ -28,11 +28,13 @@ public class OverworldEnemySpace : MonoBehaviour{
 
     public void ClickedSpace(){
         if (overworldSceneManager.isInteractOverlayShowing)
+            return;        
+        if (overworldSceneManager.isPlayerMoving)
             return;
         if (overworldSceneManager.currentPlayerSpace != this)
             MovePlayerToThisSpace();
         else
-            overworldSceneManager.ShowInteractOverlay();
+            overworldSceneManager.interactOverlayManager.ShowInteractOverlay();
     }
 
     public void FadeInVisuals(){
