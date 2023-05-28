@@ -654,6 +654,7 @@ public class UIManager : MonoBehaviour {
     public void PushedContinueButton(){
         //shows up after winning
         StaticVariables.beatCurrentBattle = true;
+        StaticVariables.hasTalkedToNewestEnemy = false;
         StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
         //StaticVariables.FadeOutThenLoadScene("Selection Scene");
     }

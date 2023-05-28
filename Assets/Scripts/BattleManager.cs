@@ -445,7 +445,6 @@ public class BattleManager : MonoBehaviour {
         }
     }
 
-
     private void SetLastTwoLetterSpaces(){
         lastLetterSpace = null;
         secondToLastLetterSpace = null;
@@ -453,10 +452,7 @@ public class BattleManager : MonoBehaviour {
             lastLetterSpace = letterSpacesForWord[letterSpacesForWord.Count - 1];
         if (letterSpacesForWord.Count > 1)
             secondToLastLetterSpace = letterSpacesForWord[letterSpacesForWord.Count - 2];
-
     }
-
-
 
     public bool CanAddLetter(LetterSpace letterSpace){
         if ((playerHealth == 0) || (enemyHealth == 0) || (isGamePaused))
@@ -607,8 +603,6 @@ public class BattleManager : MonoBehaviour {
 
     public void TriggerEnemyAttack(){
         if (!stopNextAttack){
-            //if (enemyData.isHorde && )
-            //    return;
             DecrementRefreshPuzzleCountdown();
             UpdateSubmitVisuals();
             uiManager.StartEnemyAttackAnimation();

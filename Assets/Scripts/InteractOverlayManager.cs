@@ -5,14 +5,16 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 
-public class OverworldSceneManager : MonoBehaviour{
+public class InteractOverlayManager : MonoBehaviour{
 
-    [Header("Scene References")]
-    public GeneralSceneManager generalSceneManager;
+
+   /* 
+    //[Header("Scene References")]
+    //public GeneralSceneManager generalSceneManager;
     public RectTransform interactOverlay;
-    public RectTransform overworldView;
-    public RectTransform playerParent;
-    public Animator playerAnimator;
+    //public RectTransform overworldView;
+    //public RectTransform playerParent;
+    //public Animator playerAnimator;
     public RectTransform battleButton;
     public RectTransform talkButton;
     public Text talkText;
@@ -24,26 +26,26 @@ public class OverworldSceneManager : MonoBehaviour{
     public Text infoText;
     public RectTransform backButton;
     public Text backButtonText;
-    public OverworldEnemySpace[] overworldEnemySpaces;
+    //public OverworldEnemySpace[] overworldEnemySpaces;
 
 
-    [Header("Timing Configurations")]
-    public float playerWalkSpeed = 500f;
-    public float minTimeToMove = 1f;
+    //[Header("Timing Configurations")]
+    //public float playerWalkSpeed = 500f;
+    //public float minTimeToMove = 1f;
     public float interactOverlayMoveDuration = 3f;
     public float infoTransitionDuration = 0.5f;
     public float talkTransitionDuration = 0.5f;
 
-    [Header("Other")]
-    public int thisWorldNum;
+    //[Header("Other")]
+    //public int thisWorldNum;
     public float minHeightAboveInteractOverlay = 200;
 
 
 
-    [HideInInspector]
-    public bool isPlayerMoving = false;
-    [HideInInspector]
-    public OverworldEnemySpace currentPlayerSpace = null;
+    //[HideInInspector]
+    //public bool isPlayerMoving = false;
+    //[HideInInspector]
+    //public OverworldEnemySpace currentPlayerSpace = null;
     [HideInInspector]
     public bool isInteractOverlayShowing = false;
     [HideInInspector]
@@ -66,11 +68,11 @@ public class OverworldSceneManager : MonoBehaviour{
 
 
     void Start(){
-        SetupOverworldEnemySpaces();
-        ShowProgress();
-        PlacePlayerAtPosition(StaticVariables.currentBattleLevel);
-        AdvanceGameIfAppropriate();
-        ClearCurrentBattleStats();
+        //SetupOverworldEnemySpaces();
+        //ShowProgress();
+        //PlacePlayerAtPosition(StaticVariables.currentBattleLevel);
+        //AdvanceGameIfAppropriate();
+        //ClearCurrentBattleStats();
         StartInteractOverlayHidden();
         SetOverlayStartingValues();
     }
@@ -94,72 +96,6 @@ public class OverworldSceneManager : MonoBehaviour{
         talkDarkenedBackground.gameObject.SetActive(false);
         talkPlayerChathead.gameObject.SetActive(false);
         talkEnemyChathead.gameObject.SetActive(false);
-    }
-
-    private void SetupOverworldEnemySpaces(){
-        for (int i = 0; i < overworldEnemySpaces.Length; i++){
-            OverworldEnemySpace space = overworldEnemySpaces[i];
-            space.overworldSceneManager = this;
-            space.playerDestination.transform.GetChild(0).gameObject.SetActive(false);
-        }
-    }
-
-    private void AdvanceGameIfAppropriate(){
-        if ((thisWorldNum == StaticVariables.currentBattleWorld) && (thisWorldNum == StaticVariables.highestUnlockedWorld)){
-            if (StaticVariables.highestUnlockedLevel == StaticVariables.currentBattleLevel){
-                if (StaticVariables.beatCurrentBattle){
-                    UnlockNextEnemy();
-                    AdvanceGameProgress();
-                }
-            }
-        }
-    }
-
-    public void MovePlayerToPosition(GameObject destination){
-        Vector2 vectorToMove = destination.transform.position - playerParent.position;
-        float distanceToMove = vectorToMove.magnitude;
-        float timeToMove = distanceToMove / playerWalkSpeed;
-        if (timeToMove < minTimeToMove)
-            timeToMove = minTimeToMove;
-
-        playerParent.DOMove(destination.transform.position, timeToMove).OnComplete(EndPlayerWalk);
-        playerAnimator.SetTrigger("WalkStart");
-        isPlayerMoving = true;
-        if (destination.transform.position.x < playerParent.position.x){
-            Vector3 s = playerParent.localScale;
-            s.x = -1;
-            playerParent.localScale = s;
-        }
-    }
-
-
-    private void PlacePlayerAtPosition(int battleNum){
-        if (battleNum == 0)
-            return;
-        int index = battleNum -1;
-        OverworldEnemySpace space = overworldEnemySpaces[index];
-        GameObject newSpot = space.playerDestination;
-        playerParent.transform.position = newSpot.transform.position;
-        currentPlayerSpace = space;
-    }
-
-    private void EndPlayerWalk(){
-        playerAnimator.SetTrigger("WalkEnd");
-        isPlayerMoving = false;
-        Vector3 s = playerParent.localScale;
-        s.x = 1;
-        playerParent.localScale = s;
-
-        if (thisWorldNum == StaticVariables.highestUnlockedWorld){
-            if (StaticVariables.highestUnlockedLevel == GetLevelNumOfSpace(currentPlayerSpace)){
-                if (!StaticVariables.hasTalkedToNewestEnemy){
-                    ShowInteractOverlay();
-                    PressedTalkButton();
-                    return;
-                }
-            }
-        }
-        ShowInteractOverlay();
     }
 
     private void StartInteractOverlayHidden(){
@@ -439,82 +375,5 @@ public class OverworldSceneManager : MonoBehaviour{
         if (diff < 0)
             overworldView.DOAnchorPosY(-diff, interactOverlayMoveDuration);
     }
-    
-    public void LoadBattleWithData(OverworldEnemySpace space){
-        StaticVariables.battleData = space.battleData;
-        SetCurrentBattleData(space);
-        StaticVariables.FadeOutThenLoadScene(StaticVariables.battleSceneName);
-    }
-
-    private void ShowProgress(){
-        if (thisWorldNum < StaticVariables.highestUnlockedWorld)
-            return; 
-        for (int i = StaticVariables.highestUnlockedLevel; i < overworldEnemySpaces.Length; i++){
-            overworldEnemySpaces[i].gameObject.SetActive(false);
-        }
-    }
-
-    private void UnlockNextEnemy(){
-        OverworldEnemySpace nextSpace = GetFirstLockedEnemySpace();
-        if (nextSpace != null){
-            nextSpace.gameObject.SetActive(true);
-            nextSpace.FadeInVisuals();
-        }
-    }
-
-    private OverworldEnemySpace GetFirstLockedEnemySpace(){
-        for (int i = 0; i < overworldEnemySpaces.Length; i++){
-            OverworldEnemySpace space = overworldEnemySpaces[i];
-            if (!space.gameObject.activeSelf)
-                return space;
-        }
-        return null;
-    }
-
-    private void SetCurrentBattleData(OverworldEnemySpace space){
-        int worldNum = thisWorldNum;
-        int levelNum = GetLevelNumOfSpace(space);
-        //int levelNum = 0;
-        //int i = 0;
-        //while ((levelNum == 0) && (i < overworldEnemySpaces.Length)){
-        //    if (space == overworldEnemySpaces[i])
-        //        levelNum = i + 1;
-        //    i++;
-        //}
-        StaticVariables.currentBattleWorld = worldNum;
-        StaticVariables.currentBattleLevel = levelNum;
-        StaticVariables.beatCurrentBattle = false;
-    }
-
-    private int GetLevelNumOfSpace(OverworldEnemySpace space){
-        int i = 0;
-        foreach (OverworldEnemySpace s in overworldEnemySpaces){
-            i++;
-            if (s == space)
-                return i;
-        }
-        return -1;
-    }
-
-    private void AdvanceGameProgress(){
-        StaticVariables.highestUnlockedLevel ++;
-        if (StaticVariables.highestUnlockedLevel > overworldEnemySpaces.Length){
-            StaticVariables.highestUnlockedWorld ++;
-            StaticVariables.highestUnlockedLevel = 1;
-            if (StaticVariables.highestUnlockedWorld > 6)
-                StaticVariables.highestUnlockedWorld = 6;
-        }
-    }
-
-    private void ClearCurrentBattleStats(){
-        StaticVariables.currentBattleLevel = 0;
-        StaticVariables.currentBattleWorld = 0;
-        StaticVariables.beatCurrentBattle = false;
-    }
-
-}
-
-public class InfoTextData{
-    public string text;
-    public int lineCount;
+    */
 }

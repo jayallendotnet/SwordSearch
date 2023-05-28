@@ -23,7 +23,7 @@ public class StaticVariables
     static public bool swordActive = false;
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
     static public int highestUnlockedWorld = 1;
-    static public int highestUnlockedLevel = 9;
+    static public int highestUnlockedLevel = 7;
     static public int currentBattleWorld = 0;
     static public int currentBattleLevel = 0;
     static public string battleSceneName = "Battle Scene";
@@ -34,6 +34,7 @@ public class StaticVariables
     static public string world5Name = "World 5 - Frostlands";
     static public string world6Name = "World 6 - Dragonlands";
     static public bool beatCurrentBattle = false;
+    static public bool hasTalkedToNewestEnemy = false;
 
 
     static public void WaitTimeThenCallFunction(float delay, TweenCallback function) {
