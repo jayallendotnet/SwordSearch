@@ -64,7 +64,7 @@ public class InteractOverlayManager : MonoBehaviour{
     public void PressedTalkButton(){
         if (isInfoShowing)
             return;
-        DialogueStep[] steps = overworldSceneManager.currentPlayerSpace.dialogueSteps;
+        DialogueStep[] steps = overworldSceneManager.currentEnemyData.overworldDialogueSteps;
         BattleData bd = overworldSceneManager.currentPlayerSpace.battleData;
         overworldSceneManager.dialogueManager.Setup(steps, bd, true);
     }
@@ -78,7 +78,7 @@ public class InteractOverlayManager : MonoBehaviour{
         c.a = 0;
         infoText.color = c;
         infoText.DOColor(Color.white, transitionDuration);
-        InfoTextData infoTextData = GenerateEnemyInfoText(overworldSceneManager.currentPlayerSpace.battleData.enemyPrefab.GetComponent<EnemyData>());
+        InfoTextData infoTextData = GenerateEnemyInfoText(overworldSceneManager.currentEnemyData);
         infoText.text = infoTextData.text;
         AdjustHeightsForShowingInfo(infoTextData.lineCount);
         isInfoShowing = true;

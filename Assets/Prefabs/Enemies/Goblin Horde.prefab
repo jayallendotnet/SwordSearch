@@ -68,7 +68,16 @@ MonoBehaviour:
   attackDamage: 0
   isDraconic: 0
   isHorde: 1
-  isInHolyArea: 0
+  isHoly: 0
+  isDark: 0
+  overworldDialogueSteps:
+  - type: 0
+    description: Whoa look, it's a whole horde of goblins! Isn't that so crazy??
+  - type: 1
+    description: Grah bah gahbah!
+  - type: 0
+    description: Well, I guess this is going to be a fight...
+  victoryDialogueSteps: []
 --- !u!114 &730767153068028742
 MonoBehaviour:
   m_ObjectHideFlags: 0

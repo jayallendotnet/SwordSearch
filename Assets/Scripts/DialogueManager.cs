@@ -7,7 +7,6 @@ using DG.Tweening;
 
 public class DialogueManager : MonoBehaviour{
 
-   
     [Header("Scene References")]
     public RectTransform overlay;
     public Text dialogueTextBox;
@@ -18,25 +17,6 @@ public class DialogueManager : MonoBehaviour{
     public Text buttonText;
     [HideInInspector]
     public BattleData enemyBattleData;
-
-
-    [Header("Configurations")]
-    public float transitionDuration = 0.5f;
-
-
-
-    [HideInInspector]
-    public DialogueStep[] dialogueSteps;
-    private int currentTalkStep;
-    private Image nameSeparator;
-    private Color nameSeparatorColor;
-    private Color screenDarkenerColor;
-    private float chatheadHiddenDepth = 200f;
-    private float cahtheadStartingHeight;
-    private RectTransform playerChatheadTransform;
-    private RectTransform enemyChatheadTransform;
-    public bool isInOverworld = false;
-
     public RectTransform fakeButton1;
     public Text fakeButton1Text;
     public RectTransform fakeButton2;
@@ -44,10 +24,26 @@ public class DialogueManager : MonoBehaviour{
     public RectTransform fakeButton3;
     public Text fakeButton3Text;
 
+    [Header("Configurations")]
+    public float transitionDuration = 0.5f;
+    public bool isInOverworld = false;
+    public bool isInBattle = false;
+
+    [HideInInspector]
+    public DialogueStep[] dialogueSteps;
+    private int currentTalkStep;
+    private Image nameSeparator;
+    private Color nameSeparatorColor;
+    private Color screenDarkenerColor;
+    private int chatheadHiddenDepth = 450;
+    private float cahtheadStartingHeight;
+    private RectTransform playerChatheadTransform;
+    private RectTransform enemyChatheadTransform;
     private float fakeButtonStartingHeight;
     private float fakeButton1Pos = 920f;
     private float fakeButton2Pos = 640f;
     private float fakeButton3Pos = 360f;
+    private EnemyData enemyData;
 
 
     void Start(){
@@ -59,6 +55,7 @@ public class DialogueManager : MonoBehaviour{
         gameObject.SetActive(true);
         if (startShown){
             ShowFakeButtonsSlidingOut();
+            overlay.anchoredPosition = Vector2.zero;
         }
         else{
             overlay.anchoredPosition = new Vector2(0, -overlay.rect.height);
@@ -85,6 +82,7 @@ public class DialogueManager : MonoBehaviour{
     private void StartDialogue(DialogueStep[] dialogueSteps, BattleData battleData){
         this.dialogueSteps = dialogueSteps;
         enemyBattleData = battleData;
+        enemyData = battleData.enemyPrefab.GetComponent<EnemyData>();
         
         currentTalkStep = 0;
         ShowCurrentTalkStage();
@@ -154,6 +152,7 @@ public class DialogueManager : MonoBehaviour{
         enemyChatheadTransform.DOAnchorPosY(cahtheadStartingHeight, transitionDuration);
         enemyChathead.DOColor(Color.white, transitionDuration);
         playerChathead.DOColor(Color.grey, transitionDuration);
+        enemyChathead.sprite = enemyData.chathead;
     }
 
     private void AdvanceTalkStage(){
@@ -166,6 +165,10 @@ public class DialogueManager : MonoBehaviour{
     }
 
     private void EndTalk(){
+        if (isInBattle){
+            FindObjectOfType<UIManager>().EndDialogue();
+            return;
+        }
         StaticVariables.WaitTimeThenCallFunction(transitionDuration, FinishedEndingTalk);
 
         Color c = Color.white;

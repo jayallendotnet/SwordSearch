@@ -4096,6 +4096,7 @@ MonoBehaviour:
   thisWorldNum: 1
   isPlayerMoving: 0
   currentPlayerSpace: {fileID: 0}
+  currentEnemyData: {fileID: 0}
   isInteractOverlayShowing: 0
   interactOverlayManager: {fileID: 734309496}
   dialogueManager: {fileID: 1670146879}
@@ -7851,7 +7852,6 @@ MonoBehaviour:
   battleData:
     enemyPrefab: {fileID: 815226952419649516, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
-  dialogueSteps: []
 --- !u!114 &3549283041696303936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8176,7 +8176,6 @@ MonoBehaviour:
   battleData:
     enemyPrefab: {fileID: 815226952419649516, guid: a00239d84170e3c47baa79c5fe2590f8, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
-  dialogueSteps: []
 --- !u!114 &4605736156506248158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8196,7 +8195,6 @@ MonoBehaviour:
   battleData:
     enemyPrefab: {fileID: 815226952419649516, guid: 852fece800642a54a93201ab37da1bef, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
-  dialogueSteps: []
 --- !u!224 &4605736156506248159
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8280,7 +8278,6 @@ MonoBehaviour:
   battleData:
     enemyPrefab: {fileID: 815226952419649516, guid: 64502270ffd5ebd4c9b81880e29ae333, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
-  dialogueSteps: []
 --- !u!114 &5190446805219216904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9097,13 +9094,6 @@ MonoBehaviour:
   battleData:
     enemyPrefab: {fileID: 1107962101534003457, guid: 13dc66c555317f3479f4d4f5f43619f0, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
-  dialogueSteps:
-  - type: 0
-    description: Whoa look, it's a whole horde of goblins! Isn't that so crazy??
-  - type: 1
-    description: Grah bah gahbah!
-  - type: 0
-    description: Well, I guess this is going to be a fight...
 --- !u!114 &6887982018724220718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9123,16 +9113,6 @@ MonoBehaviour:
   battleData:
     enemyPrefab: {fileID: 815226952419649516, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: 18fd931978dc05d4fa0cee1c86561fe8, type: 3}
-  dialogueSteps:
-  - type: 1
-    description: What are ye doing in me swamp??
-  - type: 0
-    description: I need to get through here to get to the enchanted forest. Could
-      you -
-  - type: 1
-    description: No! You only get through here over my dead body!
-  - type: 1
-    description: RAAAAAAGH!!!!
 --- !u!224 &6887982018724220719
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9176,7 +9156,6 @@ MonoBehaviour:
   battleData:
     enemyPrefab: {fileID: 815226952419649516, guid: 90521a70664622e4f8423dc19b6ed285, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
-  dialogueSteps: []
 --- !u!224 &6962664377051636997
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9381,7 +9360,6 @@ MonoBehaviour:
   battleData:
     enemyPrefab: {fileID: 1107962101534003457, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
-  dialogueSteps: []
 --- !u!1 &8856846020306632831
 GameObject:
   m_ObjectHideFlags: 0
@@ -9443,6 +9421,3 @@ MonoBehaviour:
   battleData:
     enemyPrefab: {fileID: 815226952419649516, guid: 84eefe6b209a4ef4ab9b33c516d0fda8, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
-  dialogueSteps:
-  - type: 0
-    description: IMA KILL YA

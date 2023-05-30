@@ -27,11 +27,10 @@ public class OverworldSceneManager : MonoBehaviour{
     [HideInInspector]
     public OverworldEnemySpace currentPlayerSpace = null;
     [HideInInspector]
+    public EnemyData currentEnemyData;
+    [HideInInspector]
     public bool isInteractOverlayShowing = false;
     public InteractOverlayManager interactOverlayManager;
-
-    
-
     public DialogueManager dialogueManager;
 
 
@@ -89,6 +88,7 @@ public class OverworldSceneManager : MonoBehaviour{
         GameObject newSpot = space.playerDestination;
         playerParent.transform.position = newSpot.transform.position;
         currentPlayerSpace = space;
+        currentEnemyData = space.battleData.enemyPrefab.GetComponent<EnemyData>();
     }
 
     private void EndPlayerWalk(){
@@ -100,7 +100,7 @@ public class OverworldSceneManager : MonoBehaviour{
 
         interactOverlayManager.ShowInteractOverlay();
         if ((IsCurrentEnemyNewestEnemy()) && (!StaticVariables.hasTalkedToNewestEnemy))
-            dialogueManager.Setup(currentPlayerSpace.dialogueSteps, currentPlayerSpace.battleData);
+            dialogueManager.Setup(currentEnemyData.overworldDialogueSteps, currentPlayerSpace.battleData);
     }
 
     private bool IsCurrentEnemyNewestEnemy(){

@@ -649,21 +649,22 @@ public class UIManager : MonoBehaviour {
         //shows up while paused
         StaticVariables.beatCurrentBattle = false;
         StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
-        //StaticVariables.FadeOutThenLoadScene("Selection Scene");
     }
 
     public void PushedContinueButton(){
         //shows up after winning
+        dialogueManager.Setup(battleManager.enemyData.victoryDialogueSteps, StaticVariables.battleData);
+    }
+
+    public void EndDialogue(){
         StaticVariables.beatCurrentBattle = true;
         StaticVariables.hasTalkedToNewestEnemy = false;
         StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
-        //StaticVariables.FadeOutThenLoadScene("Selection Scene");
     }
 
     public void ShowVictoryPage(){
         ShowPageTurn(true);
         victoryPage.SetActive(true);
-        dialogueManager.Setup(battleManager.enemyData.victoryDialogueSteps, StaticVariables.battleData);
     }
 
     public void ShowDefeatPage(){

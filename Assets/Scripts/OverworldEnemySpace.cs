@@ -19,10 +19,10 @@ public class OverworldEnemySpace : MonoBehaviour{
 
     [Header("Gameplay Stuff")]
     public BattleData battleData;
-    public DialogueStep[] dialogueSteps;
 
     public void MovePlayerToThisSpace(){
         overworldSceneManager.currentPlayerSpace = this;
+        overworldSceneManager.currentEnemyData = battleData.enemyPrefab.GetComponent<EnemyData>();
         overworldSceneManager.MovePlayerToPosition(playerDestination);
     }
 
@@ -84,10 +84,3 @@ public class BattleData{
     public GameObject backgroundPrefab;
 }
 
-[System.Serializable]
-public class DialogueStep{
-    public enum DialogueType{PlayerTalking, EnemyTalking, Event};
-    public DialogueType type;
-    [TextArea(2,5)]
-    public string description;
-}
