@@ -17,8 +17,10 @@ public class EnemyData : MonoBehaviour{
     public bool isHoly = false;
     public bool isDark = false;
 
-    [Header("Visuals")]
-    public Sprite chathead;
+    [Header("Chatheads")]
+    public Sprite normal;
+    public Sprite angry;
+    public Sprite defeated;
 
     [Header("Dialogue Steps")]
     public DialogueStep[] overworldDialogueSteps;
@@ -29,7 +31,9 @@ public class EnemyData : MonoBehaviour{
 [System.Serializable]
 public class DialogueStep{
     public enum DialogueType{PlayerTalking, EnemyTalking, Event};
+    public enum Emotion{Normal, Angry, Defeated};
     public DialogueType type;
+    public Emotion emotion;
     [TextArea(2,5)]
     public string description;
 }

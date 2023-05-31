@@ -24,10 +24,16 @@ public class DialogueManager : MonoBehaviour{
     public RectTransform fakeButton3;
     public Text fakeButton3Text;
 
+    [Header("Player Chatheads")]
+    public Sprite playerChatheadNormal;
+    public Sprite playerChatheadAngry;
+    public Sprite playerChatheadDefeated;
+
     [Header("Configurations")]
     public float transitionDuration = 0.5f;
     public bool isInOverworld = false;
     public bool isInBattle = false;
+
 
     [HideInInspector]
     public DialogueStep[] dialogueSteps;
@@ -35,7 +41,7 @@ public class DialogueManager : MonoBehaviour{
     private Image nameSeparator;
     private Color nameSeparatorColor;
     private Color screenDarkenerColor;
-    private int chatheadHiddenDepth = 450;
+    //private int chatheadHiddenDepth = 450;
     private float cahtheadStartingHeight;
     private RectTransform playerChatheadTransform;
     private RectTransform enemyChatheadTransform;
@@ -98,8 +104,10 @@ public class DialogueManager : MonoBehaviour{
         playerChathead.gameObject.SetActive(true);
         enemyChathead.gameObject.SetActive(true);
 
-        playerChatheadTransform.anchoredPosition = new Vector2(playerChatheadTransform.anchoredPosition.x, -chatheadHiddenDepth);
-        enemyChatheadTransform.anchoredPosition = new Vector2(enemyChatheadTransform.anchoredPosition.x, -chatheadHiddenDepth);
+        float playerChatheadSize = playerChatheadTransform.sizeDelta.y * playerChatheadTransform.localScale.y;
+        float enemyChatheadSize = enemyChatheadTransform.sizeDelta.y * enemyChatheadTransform.localScale.y;
+        playerChatheadTransform.anchoredPosition = new Vector2(playerChatheadTransform.anchoredPosition.x, -playerChatheadSize);
+        enemyChatheadTransform.anchoredPosition = new Vector2(enemyChatheadTransform.anchoredPosition.x, -enemyChatheadSize);
 
         Color c = Color.white;
         c.a = 0;
@@ -124,9 +132,9 @@ public class DialogueManager : MonoBehaviour{
         if (currentTalkStep < dialogueSteps.Length){
             dialogueTextBox.text = dialogueSteps[currentTalkStep].description;
             if (dialogueSteps[currentTalkStep].type == DialogueStep.DialogueType.PlayerTalking)
-                ShowPlayerTalking();
+                ShowPlayerTalking(dialogueSteps[currentTalkStep].emotion);
             else if (dialogueSteps[currentTalkStep].type == DialogueStep.DialogueType.EnemyTalking)
-                ShowEnemyTalking();
+                ShowEnemyTalking(dialogueSteps[currentTalkStep].emotion);
         }
         else{
             dialogueTextBox.text = "No dialogue for this enemy, current talk step is " + currentTalkStep;
@@ -138,21 +146,56 @@ public class DialogueManager : MonoBehaviour{
             buttonText.text = "NEXT";
     }
 
-    private void ShowPlayerTalking(){
+    private void ShowPlayerTalking(DialogueStep.Emotion emotion){
         speakerNameTetxBox.text = "PLAYER";
         speakerNameTetxBox.alignment = TextAnchor.UpperLeft;
         playerChatheadTransform.DOAnchorPosY(cahtheadStartingHeight, transitionDuration);
         playerChathead.DOColor(Color.white, transitionDuration);
         enemyChathead.DOColor(Color.grey, transitionDuration);
+        playerChatheadTransform.DOScale(new Vector2(40, 40), transitionDuration);
+        enemyChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
+
+        Sprite sprite;
+        switch (emotion){
+            case (DialogueStep.Emotion.Angry):
+                sprite = playerChatheadAngry;
+                break;
+            case (DialogueStep.Emotion.Defeated):
+                sprite = playerChatheadDefeated;
+                break;
+            default:
+                sprite = playerChatheadNormal;
+                break;
+        }
+        playerChathead.sprite = sprite;
     }
 
-    private void ShowEnemyTalking(){
+    private void ShowEnemyTalking(DialogueStep.Emotion emotion){
         speakerNameTetxBox.text = enemyBattleData.enemyPrefab.name.ToUpper();
         speakerNameTetxBox.alignment = TextAnchor.UpperRight;
         enemyChatheadTransform.DOAnchorPosY(cahtheadStartingHeight, transitionDuration);
         enemyChathead.DOColor(Color.white, transitionDuration);
         playerChathead.DOColor(Color.grey, transitionDuration);
-        enemyChathead.sprite = enemyData.chathead;
+        playerChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
+        enemyChatheadTransform.DOScale(new Vector2(40, 40), transitionDuration);
+
+        Sprite sprite;
+        switch (emotion){
+            case (DialogueStep.Emotion.Angry):
+                sprite = enemyData.angry;
+                break;
+            case (DialogueStep.Emotion.Defeated):
+                sprite = enemyData.defeated;
+                break;
+            default:
+                sprite = enemyData.normal;
+                break;
+        }
+        enemyChathead.sprite = sprite;
+        int scaleFactor = 100;
+        if ((sprite.bounds.size.x * 100) >= 20)
+            scaleFactor = 75;
+        enemyChatheadTransform.sizeDelta = (new Vector2(sprite.bounds.size.x, sprite.bounds.size.y) * scaleFactor);
     }
 
     private void AdvanceTalkStage(){
@@ -180,8 +223,11 @@ public class DialogueManager : MonoBehaviour{
         c2.a = 0;
         screenDarkener.DOColor(c2, transitionDuration);
 
-        playerChatheadTransform.DOAnchorPosY(-chatheadHiddenDepth, transitionDuration);
-        enemyChatheadTransform.DOAnchorPosY(-chatheadHiddenDepth, transitionDuration);
+
+        float playerChatheadSize = playerChatheadTransform.sizeDelta.y * playerChatheadTransform.localScale.y;
+        float enemyChatheadSize = enemyChatheadTransform.sizeDelta.y * enemyChatheadTransform.localScale.y;
+        playerChatheadTransform.DOAnchorPosY(-playerChatheadSize, transitionDuration);
+        enemyChatheadTransform.DOAnchorPosY(-enemyChatheadSize, transitionDuration);
 
         if (isInOverworld){
             buttonText.text = "BACK";

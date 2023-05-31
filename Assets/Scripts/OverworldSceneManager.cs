@@ -28,8 +28,6 @@ public class OverworldSceneManager : MonoBehaviour{
     public OverworldEnemySpace currentPlayerSpace = null;
     [HideInInspector]
     public EnemyData currentEnemyData;
-    [HideInInspector]
-    public bool isInteractOverlayShowing = false;
     public InteractOverlayManager interactOverlayManager;
     public DialogueManager dialogueManager;
 

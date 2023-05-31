@@ -27,7 +27,7 @@ public class OverworldEnemySpace : MonoBehaviour{
     }
 
     public void ClickedSpace(){
-        if (overworldSceneManager.isInteractOverlayShowing)
+        if (overworldSceneManager.interactOverlayManager.isInteractOverlayShowing)
             return;        
         if (overworldSceneManager.isPlayerMoving)
             return;

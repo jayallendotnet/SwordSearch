@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
+  data: {fileID: 0}
   burnDamageQueue: 
 --- !u!114 &815226952419649514
 MonoBehaviour:
@@ -130,3 +131,23 @@ MonoBehaviour:
   attackSpeed: 15
   attackDamage: 30
   isDraconic: 1
+  isHorde: 0
+  isHoly: 0
+  isDark: 0
+  normal: {fileID: 21300000, guid: e44e1fefd716712429c7b9b51190f4b2, type: 3}
+  angry: {fileID: 21300000, guid: 7334a046efdaf3845853a26d1ed2434e, type: 3}
+  defeated: {fileID: 21300000, guid: 38172e91ad64b9d4f92e4bfd3d780233, type: 3}
+  overworldDialogueSteps:
+  - type: 1
+    emotion: 0
+    description: Test Normal
+  - type: 0
+    emotion: 1
+    description: Test Player Angry
+  - type: 1
+    emotion: 1
+    description: Test Angry
+  - type: 1
+    emotion: 2
+    description: Test Defeated
+  victoryDialogueSteps: []
