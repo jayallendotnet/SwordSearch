@@ -114,7 +114,7 @@ public class BattleManager : MonoBehaviour {
 
     private bool SearchLibraryForWord(string word){
         //returns true if the library contains the word
-        int result = System.Array.BinarySearch<string>(wordLibraryForChecking, word);
+        int result = System.Array.BinarySearch<string>(wordLibraryForChecking, word.ToLower());
         return (result > -1);
     }
 

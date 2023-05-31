@@ -70,6 +70,7 @@ public class PuzzleGenerator : MonoBehaviour {
                     searching = false;     
                     result[i] = word;
                 }
+                print(word);
             }
         }
         return result;
