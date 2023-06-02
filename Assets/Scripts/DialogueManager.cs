@@ -33,16 +33,19 @@ public class DialogueManager : MonoBehaviour{
     public float transitionDuration = 0.5f;
     public bool isInOverworld = false;
     public bool isInBattle = false;
+    public bool isInCutscene = false;
 
 
     [HideInInspector]
     public DialogueStep[] dialogueSteps;
-    private int currentTalkStep;
+    [HideInInspector]
+    public CutsceneStep[] cutsceneSteps;
+    private int currentStep;
     private Image nameSeparator;
     private Color nameSeparatorColor;
     private Color screenDarkenerColor;
     //private int chatheadHiddenDepth = 450;
-    private float cahtheadStartingHeight;
+    private float chatheadStartingHeight;
     private RectTransform playerChatheadTransform;
     private RectTransform enemyChatheadTransform;
     private float fakeButtonStartingHeight;
@@ -50,10 +53,12 @@ public class DialogueManager : MonoBehaviour{
     private float fakeButton2Pos = 640f;
     private float fakeButton3Pos = 360f;
     private EnemyData enemyData;
+    private CutsceneManager.AfterCutsceneDo afterCutsceneDo;
 
 
     void Start(){
-        gameObject.SetActive(false);
+        if (!isInCutscene)
+            gameObject.SetActive(false);
         SetStartingValues();
     }
 
@@ -69,13 +74,20 @@ public class DialogueManager : MonoBehaviour{
         StartDialogue(ds, bd);
     } 
 
+    public void Setup(CutsceneStep[] cs, CutsceneManager.AfterCutsceneDo afterCutsceneDo){
+        //for cutscenes, the dialogue box is always showing
+        overlay.anchoredPosition = Vector2.zero;
+        this.afterCutsceneDo = afterCutsceneDo;
+        StartCutscene(cs);
+    }
+
     private void SetStartingValues(){
         nameSeparator = speakerNameTetxBox.transform.GetChild(0).GetComponent<Image>();
         nameSeparatorColor = nameSeparator.color;
         screenDarkenerColor = screenDarkener.color;
         playerChatheadTransform = playerChathead.GetComponent<RectTransform>();
         enemyChatheadTransform = enemyChathead.GetComponent<RectTransform>();
-        cahtheadStartingHeight = playerChatheadTransform.anchoredPosition.y;
+        chatheadStartingHeight = playerChatheadTransform.anchoredPosition.y;
         fakeButtonStartingHeight = buttonText.transform.parent.GetComponent<RectTransform>().anchoredPosition.y;
 
         dialogueTextBox.gameObject.SetActive(false);
@@ -90,7 +102,15 @@ public class DialogueManager : MonoBehaviour{
         enemyBattleData = battleData;
         enemyData = battleData.enemyPrefab.GetComponent<EnemyData>();
         
-        currentTalkStep = 0;
+        currentStep = 0;
+        ShowCurrentTalkStage();
+        TransitionToShowing();
+    }
+
+    private void StartCutscene(CutsceneStep[] cutsceneSteps){
+        this.cutsceneSteps = cutsceneSteps;
+
+        currentStep = 0;
         ShowCurrentTalkStage();
         TransitionToShowing();
     }
@@ -121,6 +141,8 @@ public class DialogueManager : MonoBehaviour{
         speakerNameTetxBox.DOColor(Color.white, transitionDuration);
         nameSeparator.DOColor(nameSeparatorColor, transitionDuration);
         screenDarkener.DOColor(screenDarkenerColor, transitionDuration);
+        if (isInCutscene)
+            screenDarkener.gameObject.SetActive(false);
     }
 
     
@@ -129,18 +151,38 @@ public class DialogueManager : MonoBehaviour{
     }
 
     private void ShowCurrentTalkStage(){
-        if (currentTalkStep < dialogueSteps.Length){
-            dialogueTextBox.text = dialogueSteps[currentTalkStep].description;
-            if (dialogueSteps[currentTalkStep].type == DialogueStep.DialogueType.PlayerTalking)
-                ShowPlayerTalking(dialogueSteps[currentTalkStep].emotion);
-            else if (dialogueSteps[currentTalkStep].type == DialogueStep.DialogueType.EnemyTalking)
-                ShowEnemyTalking(dialogueSteps[currentTalkStep].emotion);
+        bool validStage = false;
+        bool isLastStep = false;
+        if (isInCutscene){
+            if (currentStep < cutsceneSteps.Length){
+                validStage = true;
+                dialogueTextBox.text = cutsceneSteps[currentStep].description;
+                if (cutsceneSteps[currentStep].isPlayerTalking)
+                    ShowPlayerTalking(cutsceneSteps[currentStep].emotion);
+                else
+                    ShowEnemyTalking(cutsceneSteps[currentStep].emotion);
+            }
+            if (currentStep == cutsceneSteps.Length - 1)
+                isLastStep = true;
         }
         else{
-            dialogueTextBox.text = "No dialogue for this enemy, current talk step is " + currentTalkStep;
+            if (currentStep < dialogueSteps.Length){
+                validStage = true;
+                dialogueTextBox.text = dialogueSteps[currentStep].description;
+                if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.PlayerTalking)
+                    ShowPlayerTalking(dialogueSteps[currentStep].emotion);
+                else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.EnemyTalking)
+                    ShowEnemyTalking(dialogueSteps[currentStep].emotion);
+            }
+            if (currentStep == dialogueSteps.Length - 1)
+                isLastStep = true;
+        }
+
+        if (!validStage){
+            dialogueTextBox.text = "No dialogue for this enemy, current talk step is " + currentStep;
             speakerNameTetxBox.text = "WARNING";
         }
-        if (currentTalkStep == dialogueSteps.Length - 1)
+        if (isLastStep)
             buttonText.text = "CONTINUE";
         else
             buttonText.text = "NEXT";
@@ -149,7 +191,7 @@ public class DialogueManager : MonoBehaviour{
     private void ShowPlayerTalking(DialogueStep.Emotion emotion){
         speakerNameTetxBox.text = "PLAYER";
         speakerNameTetxBox.alignment = TextAnchor.UpperLeft;
-        playerChatheadTransform.DOAnchorPosY(cahtheadStartingHeight, transitionDuration);
+        playerChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
         playerChathead.DOColor(Color.white, transitionDuration);
         enemyChathead.DOColor(Color.grey, transitionDuration);
         playerChatheadTransform.DOScale(new Vector2(40, 40), transitionDuration);
@@ -171,24 +213,32 @@ public class DialogueManager : MonoBehaviour{
     }
 
     private void ShowEnemyTalking(DialogueStep.Emotion emotion){
-        speakerNameTetxBox.text = enemyBattleData.enemyPrefab.name.ToUpper();
         speakerNameTetxBox.alignment = TextAnchor.UpperRight;
-        enemyChatheadTransform.DOAnchorPosY(cahtheadStartingHeight, transitionDuration);
+        enemyChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
         enemyChathead.DOColor(Color.white, transitionDuration);
         playerChathead.DOColor(Color.grey, transitionDuration);
         playerChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
         enemyChatheadTransform.DOScale(new Vector2(40, 40), transitionDuration);
 
         Sprite sprite;
+        EnemyData ed;
+        if (isInCutscene){
+            ed = cutsceneSteps[currentStep].characterTalking;
+            speakerNameTetxBox.text = ed.name.ToUpper();
+        }
+        else{
+            ed = enemyData;
+            speakerNameTetxBox.text = enemyBattleData.enemyPrefab.name.ToUpper();
+        }
         switch (emotion){
             case (DialogueStep.Emotion.Angry):
-                sprite = enemyData.angry;
+                sprite = ed.angry;
                 break;
             case (DialogueStep.Emotion.Defeated):
-                sprite = enemyData.defeated;
+                sprite = ed.defeated;
                 break;
             default:
-                sprite = enemyData.normal;
+                sprite = ed.normal;
                 break;
         }
         enemyChathead.sprite = sprite;
@@ -199,10 +249,18 @@ public class DialogueManager : MonoBehaviour{
     }
 
     private void AdvanceTalkStage(){
-        currentTalkStep ++;
-        if (currentTalkStep >= dialogueSteps.Length){
-            EndTalk();
-            return;
+        currentStep ++;
+        if (isInCutscene){
+            if (currentStep >= cutsceneSteps.Length){
+                EndTalk();
+                return;
+            }
+        }
+        else{
+            if (currentStep >= dialogueSteps.Length){
+                EndTalk();
+                return;
+            }
         }
         ShowCurrentTalkStage();
     }
@@ -233,12 +291,20 @@ public class DialogueManager : MonoBehaviour{
             buttonText.text = "BACK";
             ShowFakeButtonsSlidingIn();
         }
+        else if (isInCutscene){
+            if (afterCutsceneDo == CutsceneManager.AfterCutsceneDo.GoToOverworld)
+                StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
+            //else if (afterCutsceneDo == CutsceneManager.AfterCutsceneDo.GoToNextCutscene)
+                //StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
+
+        }
         else
             overlay.DOAnchorPosY(-overlay.rect.height, transitionDuration);
     }
 
 
     private void FinishedEndingTalk(){
+        //print("finished ending talk");
         dialogueTextBox.gameObject.SetActive(false);
         speakerNameTetxBox.gameObject.SetActive(false);
         screenDarkener.gameObject.SetActive(false);
