@@ -43,19 +43,28 @@ public class StaticVariables
 
     static public void FadeOutThenLoadScene(string name){
         sceneName = name;
+        StartFadeDarken(sceneFadeDuration);
+        WaitTimeThenCallFunction(sceneFadeDuration, LoadScene);
+    }
+
+    static public void FadeIntoScene(){
+        StartFadeLighten(sceneFadeDuration);
+    }
+
+    static public void StartFadeDarken(float duration){
         Color currentColor = Color.black;
         currentColor.a = 0;
         fadeImage.color = currentColor;
         fadeImage.gameObject.SetActive(true);
-        fadeImage.DOColor(Color.black, sceneFadeDuration).OnComplete(LoadScene);
+        fadeImage.DOColor(Color.black, duration);
     }
 
-    static public void FadeIntoScene(){
+    static public void StartFadeLighten(float duration){
         Color nextColor = Color.black;
         nextColor.a = 0;
         fadeImage.color = Color.black;
         fadeImage.gameObject.SetActive(true);
-        fadeImage.DOColor(nextColor, sceneFadeDuration).OnComplete(HideFadeObject);
+        fadeImage.DOColor(nextColor, duration).OnComplete(HideFadeObject);
     }
 
     static private void HideFadeObject(){

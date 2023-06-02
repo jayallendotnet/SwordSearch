@@ -174,25 +174,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generalSceneManager: {fileID: 1062107288}
   dialogueManager: {fileID: 8075790154464997901}
+  cutsceneImage: {fileID: 1930130380}
   cutsceneData:
+    startingImage: {fileID: 21300000, guid: 942defd0d72957842bad9afc2a8406af, type: 3}
     cutsceneSteps:
-    - isPlayerTalking: 1
+    - type: 0
       characterTalking: {fileID: 0}
       emotion: 0
+      newImage: {fileID: 0}
       description: You kids got me a newspaper?
-    - isPlayerTalking: 0
+    - type: 1
       characterTalking: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
       emotion: 1
+      newImage: {fileID: 0}
       description: Yeah this one looks important!
-    - isPlayerTalking: 1
+    - type: 0
       characterTalking: {fileID: 0}
       emotion: 2
+      newImage: {fileID: 0}
       description: It does ye
-    - isPlayerTalking: 0
+    - type: 1
       characterTalking: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
       emotion: 0
+      newImage: {fileID: 0}
       description: Pls read it for us!
-    afterCutsceneDo: 0
+    - type: 2
+      characterTalking: {fileID: 0}
+      emotion: 0
+      newImage: {fileID: 21300000, guid: 11fecbb66b0823d479a080be49796696, type: 3}
+      description: 
+    - type: 5
+      characterTalking: {fileID: 0}
+      emotion: 0
+      newImage: {fileID: 0}
+      description: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

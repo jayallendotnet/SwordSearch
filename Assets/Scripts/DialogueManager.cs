@@ -53,8 +53,8 @@ public class DialogueManager : MonoBehaviour{
     private float fakeButton2Pos = 640f;
     private float fakeButton3Pos = 360f;
     private EnemyData enemyData;
-    private CutsceneData.AfterCutsceneDo afterCutsceneDo;
-
+    private Image cutsceneImage;
+    private bool isTransitioningCutsceneImage = false;
 
     void Start(){
         if (!isInCutscene)
@@ -76,11 +76,10 @@ public class DialogueManager : MonoBehaviour{
         StartDialogue(ds, bd);
     } 
 
-    public void Setup(CutsceneStep[] cs, CutsceneData.AfterCutsceneDo afterCutsceneDo){
+    public void Setup(CutsceneData cutsceneData, Image cutsceneImage){
         //for cutscenes, the dialogue box is always showing
         overlay.anchoredPosition = Vector2.zero;
-        this.afterCutsceneDo = afterCutsceneDo;
-        StartCutscene(cs);
+        StartCutscene(cutsceneData, cutsceneImage);
     }
 
     private void SetStartingValues(){
@@ -109,8 +108,9 @@ public class DialogueManager : MonoBehaviour{
         TransitionToShowing();
     }
 
-    private void StartCutscene(CutsceneStep[] cutsceneSteps){
-        this.cutsceneSteps = cutsceneSteps;
+    private void StartCutscene(CutsceneData cutsceneData, Image cutsceneImage){
+        this.cutsceneSteps = cutsceneData.cutsceneSteps;
+        this.cutsceneImage = cutsceneImage;
 
         currentStep = 0;
         ShowCurrentTalkStage();
@@ -149,6 +149,8 @@ public class DialogueManager : MonoBehaviour{
 
     
     public void PressedButton(){
+        if (isTransitioningCutsceneImage)
+            return;
         AdvanceTalkStage();
     }
 
@@ -159,12 +161,20 @@ public class DialogueManager : MonoBehaviour{
             if (currentStep < cutsceneSteps.Length){
                 validStage = true;
                 dialogueTextBox.text = cutsceneSteps[currentStep].description;
-                if (cutsceneSteps[currentStep].isPlayerTalking)
+                if (cutsceneSteps[currentStep].type == CutsceneStep.CutsceneType.PlayerTalking)
                     ShowPlayerTalking(cutsceneSteps[currentStep].emotion);
-                else
+                else if (cutsceneSteps[currentStep].type == CutsceneStep.CutsceneType.OtherTalking)
                     ShowEnemyTalking(cutsceneSteps[currentStep].emotion);
+                else if (cutsceneSteps[currentStep].type == CutsceneStep.CutsceneType.ChangeImage)
+                    StartCutsceneImageTransition();
+                else if (cutsceneSteps[currentStep].type == CutsceneStep.CutsceneType.GoToOverworld)
+                    StaticVariables.FadeOutThenLoadScene("World 1 - Grasslands");
+                else if (cutsceneSteps[currentStep].type == CutsceneStep.CutsceneType.GoToTutorial)
+                    print("going to tutorial");
+                else if (cutsceneSteps[currentStep].type == CutsceneStep.CutsceneType.GoToBattle)
+                    print("going to battle");
             }
-            if (currentStep == cutsceneSteps.Length - 1)
+            if (currentStep >= cutsceneSteps.Length - 2)
                 isLastStep = true;
         }
         else{
@@ -188,6 +198,24 @@ public class DialogueManager : MonoBehaviour{
             buttonText.text = "CONTINUE";
         else
             buttonText.text = "NEXT";
+    }
+
+    private void StartCutsceneImageTransition(){
+        isTransitioningCutsceneImage = true;
+        
+        StaticVariables.StartFadeDarken(0.5f);
+        StaticVariables.WaitTimeThenCallFunction(0.5f, MidCutsceneImageTransition);
+    }
+
+    private void MidCutsceneImageTransition(){
+        cutsceneImage.sprite = cutsceneSteps[currentStep].newImage;
+        
+        StaticVariables.StartFadeLighten(0.5f);
+        StaticVariables.WaitTimeThenCallFunction(0.5f, EndCutsceneImageTransition);
+    }
+
+    private void EndCutsceneImageTransition(){
+        isTransitioningCutsceneImage = false;
     }
 
     private void ShowPlayerTalking(DialogueStep.Emotion emotion){
@@ -287,20 +315,12 @@ public class DialogueManager : MonoBehaviour{
             buttonText.text = "BACK";
             ShowFakeButtonsSlidingIn();
         }
-        else if (isInCutscene){
-            if (afterCutsceneDo == CutsceneData.AfterCutsceneDo.GoToOverworld)
-                StaticVariables.FadeOutThenLoadScene("World 1 - Grasslands");
-            //else if (afterCutsceneDo == CutsceneManager.AfterCutsceneDo.GoToNextCutscene)
-                //StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
-
-        }
         else
             overlay.DOAnchorPosY(-overlay.rect.height, transitionDuration);
     }
 
 
     private void FinishedEndingTalk(){
-        //print("finished ending talk");
         dialogueTextBox.gameObject.SetActive(false);
         speakerNameTetxBox.gameObject.SetActive(false);
         screenDarkener.gameObject.SetActive(false);
