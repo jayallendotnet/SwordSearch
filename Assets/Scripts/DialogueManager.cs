@@ -53,12 +53,14 @@ public class DialogueManager : MonoBehaviour{
     private float fakeButton2Pos = 640f;
     private float fakeButton3Pos = 360f;
     private EnemyData enemyData;
-    private CutsceneManager.AfterCutsceneDo afterCutsceneDo;
+    private CutsceneData.AfterCutsceneDo afterCutsceneDo;
 
 
     void Start(){
         if (!isInCutscene)
             gameObject.SetActive(false);
+        else
+            buttonText.text = "NEXT";
         SetStartingValues();
     }
 
@@ -74,7 +76,7 @@ public class DialogueManager : MonoBehaviour{
         StartDialogue(ds, bd);
     } 
 
-    public void Setup(CutsceneStep[] cs, CutsceneManager.AfterCutsceneDo afterCutsceneDo){
+    public void Setup(CutsceneStep[] cs, CutsceneData.AfterCutsceneDo afterCutsceneDo){
         //for cutscenes, the dialogue box is always showing
         overlay.anchoredPosition = Vector2.zero;
         this.afterCutsceneDo = afterCutsceneDo;
@@ -213,6 +215,9 @@ public class DialogueManager : MonoBehaviour{
     }
 
     private void ShowEnemyTalking(DialogueStep.Emotion emotion){
+        if (isInCutscene)
+            enemyData = cutsceneSteps[currentStep].characterTalking;
+        speakerNameTetxBox.text = enemyData.name.ToUpper();
         speakerNameTetxBox.alignment = TextAnchor.UpperRight;
         enemyChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
         enemyChathead.DOColor(Color.white, transitionDuration);
@@ -221,24 +226,15 @@ public class DialogueManager : MonoBehaviour{
         enemyChatheadTransform.DOScale(new Vector2(40, 40), transitionDuration);
 
         Sprite sprite;
-        EnemyData ed;
-        if (isInCutscene){
-            ed = cutsceneSteps[currentStep].characterTalking;
-            speakerNameTetxBox.text = ed.name.ToUpper();
-        }
-        else{
-            ed = enemyData;
-            speakerNameTetxBox.text = enemyBattleData.enemyPrefab.name.ToUpper();
-        }
         switch (emotion){
             case (DialogueStep.Emotion.Angry):
-                sprite = ed.angry;
+                sprite = enemyData.angry;
                 break;
             case (DialogueStep.Emotion.Defeated):
-                sprite = ed.defeated;
+                sprite = enemyData.defeated;
                 break;
             default:
-                sprite = ed.normal;
+                sprite = enemyData.normal;
                 break;
         }
         enemyChathead.sprite = sprite;
@@ -292,8 +288,8 @@ public class DialogueManager : MonoBehaviour{
             ShowFakeButtonsSlidingIn();
         }
         else if (isInCutscene){
-            if (afterCutsceneDo == CutsceneManager.AfterCutsceneDo.GoToOverworld)
-                StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
+            if (afterCutsceneDo == CutsceneData.AfterCutsceneDo.GoToOverworld)
+                StaticVariables.FadeOutThenLoadScene("World 1 - Grasslands");
             //else if (afterCutsceneDo == CutsceneManager.AfterCutsceneDo.GoToNextCutscene)
                 //StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
 

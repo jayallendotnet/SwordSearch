@@ -9,9 +9,7 @@ public class CutsceneManager : MonoBehaviour{
 
     public GeneralSceneManager generalSceneManager;
     public DialogueManager dialogueManager;
-    public CutsceneStep[] cutsceneSteps;
-    public enum AfterCutsceneDo {GoToOverworld, GoToNextCutscene}
-    public AfterCutsceneDo afterCutsceneDo;
+    public CutsceneData cutsceneData;
 
     
     void Start(){
@@ -20,20 +18,10 @@ public class CutsceneManager : MonoBehaviour{
     }
 
     private void StartCutscene(){
-        dialogueManager.Setup(cutsceneSteps, afterCutsceneDo);
+        dialogueManager.Setup(cutsceneData.cutsceneSteps, cutsceneData.afterCutsceneDo);
     }
 
 
 }
 
-[System.Serializable]
-public class CutsceneStep{
-
-    public bool isPlayerTalking = false;
-    public EnemyData characterTalking;
-    public DialogueStep.Emotion emotion;
-    
-    [TextArea(2,5)]
-    public string description;
-}
 

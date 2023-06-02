@@ -174,28 +174,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generalSceneManager: {fileID: 1062107288}
   dialogueManager: {fileID: 8075790154464997901}
-  cutsceneSteps:
-  - isPlayerTalking: 0
-    characterTalking: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    emotion: 2
-    description: What does it say??
-  - isPlayerTalking: 1
-    characterTalking: {fileID: 0}
-    emotion: 0
-    description: Give me the paper and I'll take a look!
-  - isPlayerTalking: 0
-    characterTalking: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    emotion: 1
-    description: Hurry! You are the only one in town who can read it!
-  - isPlayerTalking: 0
-    characterTalking: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    emotion: 2
-    description: It looks important! Look at those big letters!
-  - isPlayerTalking: 1
-    characterTalking: {fileID: 0}
-    emotion: 1
-    description: You're right! It does look important...
-  afterCutsceneDo: 0
+  cutsceneData:
+    cutsceneSteps:
+    - isPlayerTalking: 1
+      characterTalking: {fileID: 0}
+      emotion: 0
+      description: You kids got me a newspaper?
+    - isPlayerTalking: 0
+      characterTalking: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+      emotion: 1
+      description: Yeah this one looks important!
+    - isPlayerTalking: 1
+      characterTalking: {fileID: 0}
+      emotion: 2
+      description: It does ye
+    - isPlayerTalking: 0
+      characterTalking: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+      emotion: 0
+      description: Pls read it for us!
+    afterCutsceneDo: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
