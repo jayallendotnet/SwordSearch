@@ -31,7 +31,7 @@ public class EnemyData : MonoBehaviour{
 [System.Serializable]
 public class DialogueStep{
     public enum DialogueType{PlayerTalking, EnemyTalking, Event};
-    public enum Emotion{Normal, Angry, Defeated};
+    public enum Emotion{Normal, Angry, Defeated, Excited, Happy, Questioning, Worried};
     public DialogueType type;
     public Emotion emotion;
     [TextArea(2,5)]

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class CutsceneData{
+public class CutsceneData: MonoBehaviour{
 
     public Sprite startingImage;
     public CutsceneStep[] cutsceneSteps;

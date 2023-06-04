@@ -33,13 +33,11 @@ public class DialogueManager : MonoBehaviour{
     public float transitionDuration = 0.5f;
     public bool isInOverworld = false;
     public bool isInBattle = false;
+
+    [HideInInspector]
     public bool isInCutscene = false;
-
-
     [HideInInspector]
     public DialogueStep[] dialogueSteps;
-    [HideInInspector]
-    public CutsceneStep[] cutsceneSteps;
     private int currentStep;
     private Image nameSeparator;
     private Color nameSeparatorColor;
@@ -53,14 +51,12 @@ public class DialogueManager : MonoBehaviour{
     private float fakeButton2Pos = 640f;
     private float fakeButton3Pos = 360f;
     private EnemyData enemyData;
-    private Image cutsceneImage;
-    private bool isTransitioningCutsceneImage = false;
+    [HideInInspector]
+    public CutsceneManager cutsceneManager;
 
     void Start(){
         if (!isInCutscene)
             gameObject.SetActive(false);
-        else
-            buttonText.text = "NEXT";
         SetStartingValues();
     }
 
@@ -75,12 +71,6 @@ public class DialogueManager : MonoBehaviour{
         }
         StartDialogue(ds, bd);
     } 
-
-    public void Setup(CutsceneData cutsceneData, Image cutsceneImage){
-        //for cutscenes, the dialogue box is always showing
-        overlay.anchoredPosition = Vector2.zero;
-        StartCutscene(cutsceneData, cutsceneImage);
-    }
 
     private void SetStartingValues(){
         nameSeparator = speakerNameTetxBox.transform.GetChild(0).GetComponent<Image>();
@@ -108,16 +98,7 @@ public class DialogueManager : MonoBehaviour{
         TransitionToShowing();
     }
 
-    private void StartCutscene(CutsceneData cutsceneData, Image cutsceneImage){
-        this.cutsceneSteps = cutsceneData.cutsceneSteps;
-        this.cutsceneImage = cutsceneImage;
-
-        currentStep = 0;
-        ShowCurrentTalkStage();
-        TransitionToShowing();
-    }
-
-    private void TransitionToShowing(){
+    public void TransitionToShowing(){
         overlay.DOAnchorPosY(0, transitionDuration);
 
         dialogueTextBox.gameObject.SetActive(true);
@@ -146,79 +127,37 @@ public class DialogueManager : MonoBehaviour{
         if (isInCutscene)
             screenDarkener.gameObject.SetActive(false);
     }
-
     
     public void PressedButton(){
-        if (isTransitioningCutsceneImage)
-            return;
-        AdvanceTalkStage();
+        if (isInCutscene)
+            cutsceneManager.PressedButton();
+        else
+            AdvanceTalkStage();
+        //if (isTransitioningCutsceneImage)
+        //    return;
+        //AdvanceTalkStage();
     }
 
     private void ShowCurrentTalkStage(){
-        bool validStage = false;
-        bool isLastStep = false;
-        if (isInCutscene){
-            if (currentStep < cutsceneSteps.Length){
-                validStage = true;
-                dialogueTextBox.text = cutsceneSteps[currentStep].description;
-                if (cutsceneSteps[currentStep].type == CutsceneStep.CutsceneType.PlayerTalking)
-                    ShowPlayerTalking(cutsceneSteps[currentStep].emotion);
-                else if (cutsceneSteps[currentStep].type == CutsceneStep.CutsceneType.OtherTalking)
-                    ShowEnemyTalking(cutsceneSteps[currentStep].emotion);
-                else if (cutsceneSteps[currentStep].type == CutsceneStep.CutsceneType.ChangeImage)
-                    StartCutsceneImageTransition();
-                else if (cutsceneSteps[currentStep].type == CutsceneStep.CutsceneType.GoToOverworld)
-                    StaticVariables.FadeOutThenLoadScene("World 1 - Grasslands");
-                else if (cutsceneSteps[currentStep].type == CutsceneStep.CutsceneType.GoToTutorial)
-                    print("going to tutorial");
-                else if (cutsceneSteps[currentStep].type == CutsceneStep.CutsceneType.GoToBattle)
-                    print("going to battle");
-            }
-            if (currentStep >= cutsceneSteps.Length - 2)
-                isLastStep = true;
-        }
-        else{
-            if (currentStep < dialogueSteps.Length){
-                validStage = true;
-                dialogueTextBox.text = dialogueSteps[currentStep].description;
-                if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.PlayerTalking)
-                    ShowPlayerTalking(dialogueSteps[currentStep].emotion);
-                else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.EnemyTalking)
-                    ShowEnemyTalking(dialogueSteps[currentStep].emotion);
-            }
-            if (currentStep == dialogueSteps.Length - 1)
-                isLastStep = true;
-        }
 
-        if (!validStage){
+        if (currentStep < dialogueSteps.Length){
+            dialogueTextBox.text = dialogueSteps[currentStep].description;
+            if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.PlayerTalking)
+                ShowPlayerTalking(dialogueSteps[currentStep].emotion);
+            else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.EnemyTalking)
+                ShowEnemyTalking(enemyData, dialogueSteps[currentStep].emotion);
+        }
+        else
             dialogueTextBox.text = "No dialogue for this enemy, current talk step is " + currentStep;
             speakerNameTetxBox.text = "WARNING";
-        }
-        if (isLastStep)
+        if (currentStep == dialogueSteps.Length - 1)
             buttonText.text = "CONTINUE";
         else
             buttonText.text = "NEXT";
+
     }
 
-    private void StartCutsceneImageTransition(){
-        isTransitioningCutsceneImage = true;
-        
-        StaticVariables.StartFadeDarken(0.5f);
-        StaticVariables.WaitTimeThenCallFunction(0.5f, MidCutsceneImageTransition);
-    }
-
-    private void MidCutsceneImageTransition(){
-        cutsceneImage.sprite = cutsceneSteps[currentStep].newImage;
-        
-        StaticVariables.StartFadeLighten(0.5f);
-        StaticVariables.WaitTimeThenCallFunction(0.5f, EndCutsceneImageTransition);
-    }
-
-    private void EndCutsceneImageTransition(){
-        isTransitioningCutsceneImage = false;
-    }
-
-    private void ShowPlayerTalking(DialogueStep.Emotion emotion){
+    public void ShowPlayerTalking(DialogueStep.Emotion emotion){
         speakerNameTetxBox.text = "PLAYER";
         speakerNameTetxBox.alignment = TextAnchor.UpperLeft;
         playerChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
@@ -235,6 +174,18 @@ public class DialogueManager : MonoBehaviour{
             case (DialogueStep.Emotion.Defeated):
                 sprite = playerChatheadDefeated;
                 break;
+            case (DialogueStep.Emotion.Excited):
+                sprite = playerChatheadAngry;
+                break;
+            case (DialogueStep.Emotion.Happy):
+                sprite = playerChatheadAngry;
+                break;
+            case (DialogueStep.Emotion.Questioning):
+                sprite = playerChatheadAngry;
+                break;
+            case (DialogueStep.Emotion.Worried):
+                sprite = playerChatheadAngry;
+                break;
             default:
                 sprite = playerChatheadNormal;
                 break;
@@ -242,10 +193,8 @@ public class DialogueManager : MonoBehaviour{
         playerChathead.sprite = sprite;
     }
 
-    private void ShowEnemyTalking(DialogueStep.Emotion emotion){
-        if (isInCutscene)
-            enemyData = cutsceneSteps[currentStep].characterTalking;
-        speakerNameTetxBox.text = enemyData.name.ToUpper();
+    public void ShowEnemyTalking(EnemyData data, DialogueStep.Emotion emotion){
+        speakerNameTetxBox.text = data.name.ToUpper();
         speakerNameTetxBox.alignment = TextAnchor.UpperRight;
         enemyChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
         enemyChathead.DOColor(Color.white, transitionDuration);
@@ -256,13 +205,25 @@ public class DialogueManager : MonoBehaviour{
         Sprite sprite;
         switch (emotion){
             case (DialogueStep.Emotion.Angry):
-                sprite = enemyData.angry;
+                sprite = data.angry;
                 break;
             case (DialogueStep.Emotion.Defeated):
-                sprite = enemyData.defeated;
+                sprite = data.defeated;
+                break;
+            case (DialogueStep.Emotion.Excited):
+                sprite = data.angry;
+                break;
+            case (DialogueStep.Emotion.Happy):
+                sprite = data.angry;
+                break;
+            case (DialogueStep.Emotion.Questioning):
+                sprite = data.angry;
+                break;
+            case (DialogueStep.Emotion.Worried):
+                sprite = data.angry;
                 break;
             default:
-                sprite = enemyData.normal;
+                sprite = data.normal;
                 break;
         }
         enemyChathead.sprite = sprite;
@@ -274,17 +235,9 @@ public class DialogueManager : MonoBehaviour{
 
     private void AdvanceTalkStage(){
         currentStep ++;
-        if (isInCutscene){
-            if (currentStep >= cutsceneSteps.Length){
-                EndTalk();
-                return;
-            }
-        }
-        else{
-            if (currentStep >= dialogueSteps.Length){
-                EndTalk();
-                return;
-            }
+        if (currentStep >= dialogueSteps.Length){
+            EndTalk();
+            return;
         }
         ShowCurrentTalkStage();
     }
