@@ -68,6 +68,9 @@ public class CutsceneManager : MonoBehaviour{
                 case (CutsceneStep.CutsceneType.PlayAnimation):
                     PlayAnimation();
                     break;
+                case (CutsceneStep.CutsceneType.ShakeScreen):
+                    ShakeScreen();
+                    break;
             }
         }
 
@@ -78,6 +81,22 @@ public class CutsceneManager : MonoBehaviour{
 
         if (steps[currentStep].advanceAutomatically)
             StaticVariables.WaitTimeThenCallFunction(steps[currentStep].advanceTime, AdvanceCutsceneStage);
+    }
+
+    private void ShakeScreen(){
+        float duration = steps[currentStep].shakeDuration / 3;
+        backgroundParent.DOLocalMoveX(50, duration).OnComplete(ContinueShakeScreen);
+    }
+
+    private void ContinueShakeScreen(){
+        float duration = steps[currentStep].shakeDuration / 3;
+        backgroundParent.DOLocalMoveX(-50, duration).OnComplete(FinishShakeScreen);
+
+    }
+
+    private void FinishShakeScreen(){
+        float duration = steps[currentStep].shakeDuration / 3;
+        backgroundParent.DOLocalMoveX(0, duration);
     }
 
     private void PlayAnimation (){
@@ -98,9 +117,11 @@ public class CutsceneManager : MonoBehaviour{
                     float newPosX = steps[currentStep].newPosX;
                     float newPosY = steps[currentStep].newPosY;
                     if (newPosX != -12345)
-                        anim.transform.DOLocalMoveX(newPosX, durationOfAnimation);
+                        anim.GetComponent<RectTransform>().DOAnchorPosX(newPosX, durationOfAnimation);
                     if (newPosY != -12345)
-                        anim.transform.DOLocalMoveY(newPosY, durationOfAnimation);
+                        anim.GetComponent<RectTransform>().DOAnchorPosY(newPosY, durationOfAnimation);
+                    if (steps[currentStep].changeFacing)
+                        anim.transform.localScale = new Vector2(anim.transform.localScale.x * -1, anim.transform.localScale.y);
                 }
             }
         }

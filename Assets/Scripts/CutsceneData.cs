@@ -14,7 +14,7 @@ public class CutsceneData: MonoBehaviour{
 [System.Serializable]
 public class CutsceneStep{
 
-    public enum CutsceneType{PlayerTalking, OtherTalking, ChangeBackground, PlayAnimation, GoToBattle, GoToOverworld, GoToTutorial};
+    public enum CutsceneType{PlayerTalking, OtherTalking, ChangeBackground, PlayAnimation, GoToBattle, GoToOverworld, GoToTutorial, ShakeScreen};
     public CutsceneType type;
     
     [ConditionalField(nameof(type), false, CutsceneType.OtherTalking)]
@@ -29,9 +29,9 @@ public class CutsceneStep{
     public GameObject newBackground;
 
 
-    [ConditionalField(nameof(type), false, CutsceneType.ChangeBackground, CutsceneType.PlayAnimation)]
+    [ConditionalField(nameof(type), false, CutsceneType.ChangeBackground, CutsceneType.PlayAnimation, CutsceneType.ShakeScreen)]
     public bool advanceAutomatically = false;
-    [ConditionalField(nameof(type), false, CutsceneType.ChangeBackground, CutsceneType.PlayAnimation)]
+    [ConditionalField(nameof(advanceAutomatically))]
     public float advanceTime = 0.5f;
 
     [ConditionalField(nameof(type), false, CutsceneType.PlayerTalking, CutsceneType.OtherTalking)]
@@ -53,4 +53,10 @@ public class CutsceneStep{
     public float newPosX = -12345;
     [ConditionalField(nameof(alsoMoveCharacter))]
     public float newPosY = -12345;
+    [ConditionalField(nameof(alsoMoveCharacter))]
+    public bool changeFacing = false;
+
+    
+    [ConditionalField(nameof(type), false, CutsceneType.ShakeScreen)]
+    public float shakeDuration = 1;
 }

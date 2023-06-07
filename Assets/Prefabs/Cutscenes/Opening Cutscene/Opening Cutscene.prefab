@@ -63,6 +63,8 @@ MonoBehaviour:
     alsoMoveCharacter: 1
     newPosX: 75
     newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
   - type: 3
     characterTalking: {fileID: 0}
     emotion: 6
@@ -75,6 +77,8 @@ MonoBehaviour:
     alsoMoveCharacter: 1
     newPosX: 134
     newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
   - type: 1
     characterTalking: {fileID: 1107962101534003463, guid: 0c7549ad0b5194047b3d5594aa634407, type: 3}
     emotion: 3
@@ -87,6 +91,8 @@ MonoBehaviour:
     alsoMoveCharacter: 0
     newPosX: -12345
     newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
   - type: 0
     characterTalking: {fileID: 0}
     emotion: 4
@@ -99,6 +105,22 @@ MonoBehaviour:
     alsoMoveCharacter: 0
     newPosX: -12345
     newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
+  - type: 3
+    characterTalking: {fileID: 0}
+    emotion: 0
+    newBackground: {fileID: 0}
+    advanceAutomatically: 1
+    advanceTime: 0
+    dialogue: 
+    characterToAnimate: Child 2
+    animationName: Show Newspaper
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
   - type: 1
     characterTalking: {fileID: 1107962101534003463, guid: 6af1075751ba2644b837b46432be8071, type: 3}
     emotion: 3
@@ -111,6 +133,8 @@ MonoBehaviour:
     alsoMoveCharacter: 0
     newPosX: -12345
     newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
   - type: 1
     characterTalking: {fileID: 1107962101534003463, guid: 0c7549ad0b5194047b3d5594aa634407, type: 3}
     emotion: 3
@@ -123,18 +147,22 @@ MonoBehaviour:
     alsoMoveCharacter: 0
     newPosX: -12345
     newPosY: -12345
-  - type: 3
-    characterTalking: {fileID: 0}
-    emotion: 0
+    changeFacing: 0
+    shakeDuration: 1
+  - type: 1
+    characterTalking: {fileID: 1107962101534003463, guid: 6af1075751ba2644b837b46432be8071, type: 3}
+    emotion: 3
     newBackground: {fileID: 0}
-    advanceAutomatically: 1
+    advanceAutomatically: 0
     advanceTime: 0.5
-    dialogue: 
-    characterToAnimate: Child 2
-    animationName: Show Newspaper
+    dialogue: You're the only person in the whole town who knows how to read!
+    characterToAnimate: 
+    animationName: 
     alsoMoveCharacter: 0
     newPosX: -12345
     newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
   - type: 0
     characterTalking: {fileID: 0}
     emotion: 5
@@ -147,19 +175,8 @@ MonoBehaviour:
     alsoMoveCharacter: 0
     newPosX: -12345
     newPosY: -12345
-  - type: 1
-    characterTalking: {fileID: 1107962101534003463, guid: 6af1075751ba2644b837b46432be8071, type: 3}
-    emotion: 3
-    newBackground: {fileID: 0}
-    advanceAutomatically: 0
-    advanceTime: 0.5
-    dialogue: Miss Player, tell us what it says! You're the only person in the whole
-      town who knows how to read!
-    characterToAnimate: 
-    animationName: 
-    alsoMoveCharacter: 0
-    newPosX: -12345
-    newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
   - type: 0
     characterTalking: {fileID: 0}
     emotion: 0
@@ -172,6 +189,8 @@ MonoBehaviour:
     alsoMoveCharacter: 0
     newPosX: -12345
     newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
   - type: 0
     characterTalking: {fileID: 0}
     emotion: 6
@@ -184,18 +203,22 @@ MonoBehaviour:
     alsoMoveCharacter: 0
     newPosX: -12345
     newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
   - type: 3
     characterTalking: {fileID: 0}
     emotion: 0
     newBackground: {fileID: 0}
     advanceAutomatically: 1
-    advanceTime: 0.5
+    advanceTime: 0
     dialogue: 
     characterToAnimate: Child 2
     animationName: Put Away Newspaper
     alsoMoveCharacter: 0
     newPosX: -12345
     newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
   - type: 1
     characterTalking: {fileID: 1107962101534003463, guid: 0c7549ad0b5194047b3d5594aa634407, type: 3}
     emotion: 5
@@ -208,6 +231,8 @@ MonoBehaviour:
     alsoMoveCharacter: 0
     newPosX: -12345
     newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
   - type: 0
     characterTalking: {fileID: 0}
     emotion: 6
@@ -220,3 +245,75 @@ MonoBehaviour:
     alsoMoveCharacter: 0
     newPosX: -12345
     newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
+  - type: 1
+    characterTalking: {fileID: 815226952419649514, guid: 628e74f4aeb52a643adcb3baeb14277f, type: 3}
+    emotion: 1
+    newBackground: {fileID: 0}
+    advanceAutomatically: 0
+    advanceTime: 0.5
+    dialogue: ROOOOAR!!!!
+    characterToAnimate: 
+    animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
+  - type: 3
+    characterTalking: {fileID: 815226952419649514, guid: 628e74f4aeb52a643adcb3baeb14277f, type: 3}
+    emotion: 1
+    newBackground: {fileID: 0}
+    advanceAutomatically: 1
+    advanceTime: 2
+    dialogue: ROOOOAR!!!!
+    characterToAnimate: Red Dragon
+    animationName: Fly
+    alsoMoveCharacter: 1
+    newPosX: 1200
+    newPosY: 1177
+    changeFacing: 0
+    shakeDuration: 1
+  - type: 3
+    characterTalking: {fileID: 815226952419649514, guid: 628e74f4aeb52a643adcb3baeb14277f, type: 3}
+    emotion: 1
+    newBackground: {fileID: 0}
+    advanceAutomatically: 1
+    advanceTime: 2
+    dialogue: ROOOOAR!!!!
+    characterToAnimate: Red Dragon
+    animationName: Fly
+    alsoMoveCharacter: 1
+    newPosX: 521
+    newPosY: 850
+    changeFacing: 1
+    shakeDuration: 1
+  - type: 3
+    characterTalking: {fileID: 815226952419649514, guid: 628e74f4aeb52a643adcb3baeb14277f, type: 3}
+    emotion: 1
+    newBackground: {fileID: 0}
+    advanceAutomatically: 1
+    advanceTime: 0.6
+    dialogue: ROOOOAR!!!!
+    characterToAnimate: Red Dragon
+    animationName: Land
+    alsoMoveCharacter: 1
+    newPosX: -12345
+    newPosY: 800
+    changeFacing: 0
+    shakeDuration: 1
+  - type: 7
+    characterTalking: {fileID: 0}
+    emotion: 6
+    newBackground: {fileID: 0}
+    advanceAutomatically: 1
+    advanceTime: 1
+    dialogue: It is very bad! We have to warn everyone!
+    characterToAnimate: 
+    animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
