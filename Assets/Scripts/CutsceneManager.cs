@@ -18,21 +18,26 @@ public class CutsceneManager : MonoBehaviour{
     
     void Start(){
         steps = cutsceneData.cutsceneSteps;
-        cutsceneImage.sprite = cutsceneData.startingImage;
+        //cutsceneImage.sprite = cutsceneData.startingImage;
         generalSceneManager.Setup();
-        StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration, StartCutscene);
+        //StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration, StartCutscene);
         dialogueManager.buttonText.text = "NEXT";
         dialogueManager.isInBattle = false;
         dialogueManager.isInOverworld = false;
         dialogueManager.isInCutscene = true;
         dialogueManager.cutsceneManager = this;
         currentStep = 0;
+        StartCutscene();
 
     }
 
     private void StartCutscene(){
-        ShowCurrentCutsceneStage();
+        //ShowCurrentCutsceneStage();
+        SetCutsceneBackground(cutsceneData.startingImage);
+        dialogueManager.ClearDialogue();
+        dialogueManager.SetStartingValues();
         dialogueManager.TransitionToShowing();
+        StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration, ShowCurrentCutsceneStage);
     }
 
 
@@ -97,9 +102,14 @@ public class CutsceneManager : MonoBehaviour{
     }
 
     private void MidCutsceneImageTransition(){
-        cutsceneImage.sprite = steps[currentStep].newImage;
+        SetCutsceneBackground(steps[currentStep].newImage);
         StaticVariables.StartFadeLighten(0.5f);
         StaticVariables.WaitTimeThenCallFunction(0.5f, EndCutsceneImageTransition);
+    }
+
+    private void SetCutsceneBackground(Sprite image){
+        cutsceneImage.sprite = image;
+
     }
 
     private void EndCutsceneImageTransition(){

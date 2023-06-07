@@ -18,6 +18,8 @@ public class CutsceneStep{
     public EnemyData characterTalking;
     public DialogueStep.Emotion emotion;
     public Sprite newImage;
+    public bool advanceAutomatically = false;
+    public float advanceTime = 0.5f;
     
     [TextArea(2,5)]
     public string description;

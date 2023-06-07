@@ -53,6 +53,7 @@ public class DialogueManager : MonoBehaviour{
     private EnemyData enemyData;
     [HideInInspector]
     public CutsceneManager cutsceneManager;
+    private bool hasSetStartingValues = false;
 
     void Start(){
         if (!isInCutscene)
@@ -72,7 +73,10 @@ public class DialogueManager : MonoBehaviour{
         StartDialogue(ds, bd);
     } 
 
-    private void SetStartingValues(){
+    public void SetStartingValues(){
+        if (hasSetStartingValues)
+            return;
+        hasSetStartingValues = true;
         nameSeparator = speakerNameTetxBox.transform.GetChild(0).GetComponent<Image>();
         nameSeparatorColor = nameSeparator.color;
         screenDarkenerColor = screenDarkener.color;
@@ -324,6 +328,11 @@ public class DialogueManager : MonoBehaviour{
     private void HideFakeButtonsAndDisableSelf(){
         HideFakeButtons();
         gameObject.SetActive(false);
+    }
+
+    public void ClearDialogue(){
+        speakerNameTetxBox.text = "";
+        dialogueTextBox.text = "";
     }
 
 
