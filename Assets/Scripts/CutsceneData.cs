@@ -6,7 +6,7 @@ using MyBox;
 
 public class CutsceneData: MonoBehaviour{
 
-    public Sprite startingImage;
+    public GameObject startingBackground;
     public CutsceneStep[] cutsceneSteps;
 }
 
@@ -14,7 +14,7 @@ public class CutsceneData: MonoBehaviour{
 [System.Serializable]
 public class CutsceneStep{
 
-    public enum CutsceneType{PlayerTalking, OtherTalking, ChangeImage, PlayAnimation, GoToBattle, GoToOverworld, GoToTutorial};
+    public enum CutsceneType{PlayerTalking, OtherTalking, ChangeBackground, PlayAnimation, GoToBattle, GoToOverworld, GoToTutorial};
     public CutsceneType type;
     
     [ConditionalField(nameof(type), false, CutsceneType.OtherTalking)]
@@ -25,17 +25,23 @@ public class CutsceneStep{
     public DialogueStep.Emotion emotion;
 
 
-    [ConditionalField(nameof(type), false, CutsceneType.ChangeImage)]
-    public Sprite newImage;
+    [ConditionalField(nameof(type), false, CutsceneType.ChangeBackground)]
+    public GameObject newBackground;
 
 
-    [ConditionalField(nameof(type), false, CutsceneType.ChangeImage, CutsceneType.PlayAnimation)]
+    [ConditionalField(nameof(type), false, CutsceneType.ChangeBackground, CutsceneType.PlayAnimation)]
     public bool advanceAutomatically = false;
-    [ConditionalField(nameof(type), false, CutsceneType.ChangeImage, CutsceneType.PlayAnimation)]
+    [ConditionalField(nameof(type), false, CutsceneType.ChangeBackground, CutsceneType.PlayAnimation)]
     public float advanceTime = 0.5f;
-    
 
     [ConditionalField(nameof(type), false, CutsceneType.PlayerTalking, CutsceneType.OtherTalking)]
     [TextArea(2,5)]
-    public string description;
+    public string dialogue;
+
+
+    [ConditionalField(nameof(type), false, CutsceneType.PlayAnimation)]
+    public string characterToAnimate;
+
+    [ConditionalField(nameof(type), false, CutsceneType.PlayAnimation)]
+    public string animationName;
 }

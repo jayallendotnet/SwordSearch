@@ -9,11 +9,12 @@ public class CutsceneManager : MonoBehaviour{
 
     public GeneralSceneManager generalSceneManager;
     public DialogueManager dialogueManager;
-    public Image cutsceneImage;
+    public Transform backgroundParent;
     public CutsceneData cutsceneData;
     private int currentStep;
     private CutsceneStep[] steps;
     private bool isTransitioningCutsceneImage = false;
+    private List<Animator> animatedObjectsInCutscene = new List<Animator>();
 
     
     void Start(){
@@ -33,7 +34,7 @@ public class CutsceneManager : MonoBehaviour{
 
     private void StartCutscene(){
         //ShowCurrentCutsceneStage();
-        SetCutsceneBackground(cutsceneData.startingImage);
+        SetCutsceneBackground(cutsceneData.startingBackground);
         dialogueManager.ClearDialogue();
         dialogueManager.SetStartingValues();
         dialogueManager.TransitionToShowing();
@@ -46,13 +47,13 @@ public class CutsceneManager : MonoBehaviour{
             switch (steps[currentStep].type){
                 case (CutsceneStep.CutsceneType.PlayerTalking):
                     dialogueManager.ShowPlayerTalking(steps[currentStep].emotion);
-                    dialogueManager.dialogueTextBox.text = steps[currentStep].description;
+                    dialogueManager.dialogueTextBox.text = steps[currentStep].dialogue;
                     break;
                 case (CutsceneStep.CutsceneType.OtherTalking):
                     dialogueManager.ShowEnemyTalking(steps[currentStep].characterTalking, steps[currentStep].emotion);
-                    dialogueManager.dialogueTextBox.text = steps[currentStep].description;
+                    dialogueManager.dialogueTextBox.text = steps[currentStep].dialogue;
                     break;
-                case (CutsceneStep.CutsceneType.ChangeImage):
+                case (CutsceneStep.CutsceneType.ChangeBackground):
                     StartCutsceneImageTransition();
                     break;
                 case (CutsceneStep.CutsceneType.GoToOverworld):
@@ -65,7 +66,7 @@ public class CutsceneManager : MonoBehaviour{
                     print("going to battle");
                     break;
                 case (CutsceneStep.CutsceneType.PlayAnimation):
-                    PlayAnimation(steps[currentStep].description);
+                    PlayAnimation();
                     break;
             }
         }
@@ -74,14 +75,25 @@ public class CutsceneManager : MonoBehaviour{
             dialogueManager.dialogueTextBox.text = "No dialogue for this enemy, current talk step is " + currentStep;
             dialogueManager.speakerNameTetxBox.text = "WARNING";
         }
+
+        if (steps[currentStep].advanceAutomatically)
+            StaticVariables.WaitTimeThenCallFunction(steps[currentStep].advanceTime, AdvanceCutsceneStage);
     }
 
-    private void PlayAnimation (string description){
-        print("playing animation titled: " + description);
+    private void PlayAnimation (){
+        string characterName = steps[currentStep].characterToAnimate;
+        string animationName = steps[currentStep].animationName;
+
+        foreach (Animator anim in animatedObjectsInCutscene){
+            if (anim.gameObject.name == characterName)
+                anim.Play(animationName);
+        }
     }
 
     public void PressedButton(){
         if (isTransitioningCutsceneImage)
+            return;
+        if (steps[currentStep].advanceAutomatically)
             return;
         AdvanceCutsceneStage();
     }
@@ -102,20 +114,30 @@ public class CutsceneManager : MonoBehaviour{
     }
 
     private void MidCutsceneImageTransition(){
-        SetCutsceneBackground(steps[currentStep].newImage);
+        SetCutsceneBackground(steps[currentStep].newBackground);
         StaticVariables.StartFadeLighten(0.5f);
         StaticVariables.WaitTimeThenCallFunction(0.5f, EndCutsceneImageTransition);
     }
 
-    private void SetCutsceneBackground(Sprite image){
-        cutsceneImage.sprite = image;
+    private void SetCutsceneBackground(GameObject prefab){
 
+        animatedObjectsInCutscene = new List<Animator>();
+        Transform backgroundPrefab = prefab.transform.GetChild(0).transform;
+
+        foreach (Transform t in backgroundParent)
+            Destroy(t.gameObject);
+        foreach(Transform t in backgroundPrefab){
+            GameObject go = Instantiate(t.gameObject, backgroundParent);
+            go.name = t.gameObject.name;
+            Animator anim = go.GetComponent<Animator>();
+            if (anim != null)
+                animatedObjectsInCutscene.Add(anim);
+        }
     }
 
     private void EndCutsceneImageTransition(){
         isTransitioningCutsceneImage = false;
     }
-
 
 }
 
