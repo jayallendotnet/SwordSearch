@@ -37,7 +37,7 @@ public class CutsceneManager : MonoBehaviour{
         dialogueManager.ClearDialogue();
         dialogueManager.SetStartingValues();
         dialogueManager.TransitionToShowing();
-        StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration, ShowCurrentCutsceneStage);
+        StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration + 1f, ShowCurrentCutsceneStage);
     }
 
 
