@@ -2,25 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MyBox;
 
 public class EnemyData : MonoBehaviour{
 
+    public bool isBattleable = true;
 
-    [Header("Stats")]
-    public int startingHealth = 10;
-    public float attackSpeed = 6f;
-    public int attackDamage = 2;
     
-    [Header("Attributes")]
-    public bool isDraconic = false;
-    public bool isHorde = false;
-    public bool isHoly = false;
-    public bool isDark = false;
+    [Header("Battle Stats")]
+    [ConditionalField(nameof(isBattleable))]    public int startingHealth = 10;
+    [ConditionalField(nameof(isBattleable))]    public float attackSpeed = 6f;
+    [ConditionalField(nameof(isBattleable))]    public int attackDamage = 2;
+    [ConditionalField(nameof(isBattleable))]    public bool isDraconic = false;
+    [ConditionalField(nameof(isBattleable))]    public bool isHorde = false;
+    [ConditionalField(nameof(isBattleable))]    public bool isHoly = false;
+    [ConditionalField(nameof(isBattleable))]    public bool isDark = false;
 
     [Header("Chatheads")]
     public Sprite normal;
     public Sprite angry;
     public Sprite defeated;
+    public Sprite excited;
+    public Sprite questioning;
 
     [Header("Dialogue Steps")]
     public DialogueStep[] overworldDialogueSteps;

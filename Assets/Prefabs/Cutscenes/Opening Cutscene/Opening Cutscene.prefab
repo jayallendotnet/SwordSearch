@@ -56,10 +56,25 @@ MonoBehaviour:
     emotion: 6
     newBackground: {fileID: 0}
     advanceAutomatically: 1
-    advanceTime: 2
+    advanceTime: 0.3
     dialogue: It is very bad! We have to warn everyone!
-    characterToAnimate: 1
-    animationName: Attack
+    characterToAnimate: Child 1
+    animationName: Walk
+    alsoMoveCharacter: 1
+    newPosX: 75
+    newPosY: -12345
+  - type: 3
+    characterTalking: {fileID: 0}
+    emotion: 6
+    newBackground: {fileID: 0}
+    advanceAutomatically: 1
+    advanceTime: 1.5
+    dialogue: It is very bad! We have to warn everyone!
+    characterToAnimate: Child 2
+    animationName: Walk
+    alsoMoveCharacter: 1
+    newPosX: 134
+    newPosY: -12345
   - type: 1
     characterTalking: {fileID: 1107962101534003463, guid: 0c7549ad0b5194047b3d5594aa634407, type: 3}
     emotion: 3
@@ -69,6 +84,9 @@ MonoBehaviour:
     dialogue: Miss Player! Miss Player!
     characterToAnimate: 
     animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
   - type: 0
     characterTalking: {fileID: 0}
     emotion: 4
@@ -78,8 +96,11 @@ MonoBehaviour:
     dialogue: What is it, children?
     characterToAnimate: 
     animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
   - type: 1
-    characterTalking: {fileID: 1107962101534003463, guid: 421cde1d8a99cc0449ebd62789e49e8a, type: 3}
+    characterTalking: {fileID: 1107962101534003463, guid: 6af1075751ba2644b837b46432be8071, type: 3}
     emotion: 3
     newBackground: {fileID: 0}
     advanceAutomatically: 0
@@ -87,24 +108,33 @@ MonoBehaviour:
     dialogue: There's a new newspaper!
     characterToAnimate: 
     animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
   - type: 1
     characterTalking: {fileID: 1107962101534003463, guid: 0c7549ad0b5194047b3d5594aa634407, type: 3}
-    emotion: 5
+    emotion: 3
     newBackground: {fileID: 0}
     advanceAutomatically: 0
     advanceTime: 0.5
     dialogue: Can you read it? It looks important!
     characterToAnimate: 
     animationName: 
-  - type: 2
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
+  - type: 3
     characterTalking: {fileID: 0}
     emotion: 0
     newBackground: {fileID: 0}
-    advanceAutomatically: 0
+    advanceAutomatically: 1
     advanceTime: 0.5
     dialogue: 
-    characterToAnimate: 
-    animationName: 
+    characterToAnimate: Child 2
+    animationName: Show Newspaper
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
   - type: 0
     characterTalking: {fileID: 0}
     emotion: 5
@@ -114,8 +144,11 @@ MonoBehaviour:
     dialogue: This does look important...
     characterToAnimate: 
     animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
   - type: 1
-    characterTalking: {fileID: 1107962101534003463, guid: 421cde1d8a99cc0449ebd62789e49e8a, type: 3}
+    characterTalking: {fileID: 1107962101534003463, guid: 6af1075751ba2644b837b46432be8071, type: 3}
     emotion: 3
     newBackground: {fileID: 0}
     advanceAutomatically: 0
@@ -124,6 +157,9 @@ MonoBehaviour:
       town who knows how to read!
     characterToAnimate: 
     animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
   - type: 0
     characterTalking: {fileID: 0}
     emotion: 0
@@ -133,6 +169,9 @@ MonoBehaviour:
     dialogue: '"A new threat from far-off lands..."'
     characterToAnimate: 
     animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
   - type: 0
     characterTalking: {fileID: 0}
     emotion: 6
@@ -142,6 +181,21 @@ MonoBehaviour:
     dialogue: '"A group of dragons terrorizes the kingdom!"'
     characterToAnimate: 
     animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
+  - type: 3
+    characterTalking: {fileID: 0}
+    emotion: 0
+    newBackground: {fileID: 0}
+    advanceAutomatically: 1
+    advanceTime: 0.5
+    dialogue: 
+    characterToAnimate: Child 2
+    animationName: Put Away Newspaper
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
   - type: 1
     characterTalking: {fileID: 1107962101534003463, guid: 0c7549ad0b5194047b3d5594aa634407, type: 3}
     emotion: 5
@@ -151,6 +205,9 @@ MonoBehaviour:
     dialogue: That sounds bad.
     characterToAnimate: 
     animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
   - type: 0
     characterTalking: {fileID: 0}
     emotion: 6
@@ -160,3 +217,6 @@ MonoBehaviour:
     dialogue: It is very bad! We have to warn everyone!
     characterToAnimate: 
     animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345

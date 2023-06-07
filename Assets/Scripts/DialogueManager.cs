@@ -215,13 +215,13 @@ public class DialogueManager : MonoBehaviour{
                 sprite = data.defeated;
                 break;
             case (DialogueStep.Emotion.Excited):
-                sprite = data.angry;
+                sprite = data.excited;
                 break;
             case (DialogueStep.Emotion.Happy):
                 sprite = data.angry;
                 break;
             case (DialogueStep.Emotion.Questioning):
-                sprite = data.angry;
+                sprite = data.questioning;
                 break;
             case (DialogueStep.Emotion.Worried):
                 sprite = data.angry;

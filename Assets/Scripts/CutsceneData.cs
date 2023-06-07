@@ -44,4 +44,13 @@ public class CutsceneStep{
 
     [ConditionalField(nameof(type), false, CutsceneType.PlayAnimation)]
     public string animationName;
+
+    [ConditionalField(nameof(type), false, CutsceneType.PlayAnimation)]
+    public bool alsoMoveCharacter = false;
+
+    
+    [ConditionalField(nameof(alsoMoveCharacter))]
+    public float newPosX = -12345;
+    [ConditionalField(nameof(alsoMoveCharacter))]
+    public float newPosY = -12345;
 }

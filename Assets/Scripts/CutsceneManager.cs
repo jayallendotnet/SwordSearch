@@ -38,7 +38,7 @@ public class CutsceneManager : MonoBehaviour{
         dialogueManager.ClearDialogue();
         dialogueManager.SetStartingValues();
         dialogueManager.TransitionToShowing();
-        StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration + 1f, ShowCurrentCutsceneStage);
+        StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration, ShowCurrentCutsceneStage);
     }
 
 
@@ -85,8 +85,24 @@ public class CutsceneManager : MonoBehaviour{
         string animationName = steps[currentStep].animationName;
 
         foreach (Animator anim in animatedObjectsInCutscene){
-            if (anim.gameObject.name == characterName)
+            if (anim.gameObject.name == characterName){
                 anim.Play(animationName);
+
+                if (steps[currentStep].alsoMoveCharacter){
+                    float durationOfAnimation = 0;
+                    AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
+                    foreach(AnimationClip clip in clips){
+                        if (clip.name.Contains(animationName))
+                            durationOfAnimation = clip.length;
+                    }
+                    float newPosX = steps[currentStep].newPosX;
+                    float newPosY = steps[currentStep].newPosY;
+                    if (newPosX != -12345)
+                        anim.transform.DOLocalMoveX(newPosX, durationOfAnimation);
+                    if (newPosY != -12345)
+                        anim.transform.DOLocalMoveY(newPosY, durationOfAnimation);
+                }
+            }
         }
     }
 
