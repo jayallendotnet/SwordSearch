@@ -9,19 +9,19 @@ public class CutsceneManager : MonoBehaviour{
 
     public GeneralSceneManager generalSceneManager;
     public DialogueManager dialogueManager;
-    public Transform backgroundParent;
+    public RectTransform backgroundParent;
     public CutsceneData cutsceneData;
     private int currentStep;
     private CutsceneStep[] steps;
     private bool isTransitioningCutsceneImage = false;
     private List<Animator> animatedObjectsInCutscene = new List<Animator>();
+    private float shakeTimer = 0f;
+    public float screenShakeSegment = 0.1f;
 
     
     void Start(){
         steps = cutsceneData.cutsceneSteps;
-        //cutsceneImage.sprite = cutsceneData.startingImage;
         generalSceneManager.Setup();
-        //StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration, StartCutscene);
         dialogueManager.buttonText.text = "NEXT";
         dialogueManager.isInBattle = false;
         dialogueManager.isInOverworld = false;
@@ -33,7 +33,6 @@ public class CutsceneManager : MonoBehaviour{
     }
 
     private void StartCutscene(){
-        //ShowCurrentCutsceneStage();
         SetCutsceneBackground(cutsceneData.startingBackground);
         dialogueManager.ClearDialogue();
         dialogueManager.SetStartingValues();
@@ -83,20 +82,20 @@ public class CutsceneManager : MonoBehaviour{
             StaticVariables.WaitTimeThenCallFunction(steps[currentStep].advanceTime, AdvanceCutsceneStage);
     }
 
+    private void StartScreenShake(){
+        shakeTimer = -screenShakeSegment;
+        ShakeScreen();
+    }
+
     private void ShakeScreen(){
-        float duration = steps[currentStep].shakeDuration / 3;
-        backgroundParent.DOLocalMoveX(50, duration).OnComplete(ContinueShakeScreen);
-    }
-
-    private void ContinueShakeScreen(){
-        float duration = steps[currentStep].shakeDuration / 3;
-        backgroundParent.DOLocalMoveX(-50, duration).OnComplete(FinishShakeScreen);
-
-    }
-
-    private void FinishShakeScreen(){
-        float duration = steps[currentStep].shakeDuration / 3;
-        backgroundParent.DOLocalMoveX(0, duration);
+        float duration = screenShakeSegment;
+        shakeTimer += duration;
+        if (shakeTimer >= steps[currentStep].shakeDuration){
+            backgroundParent.DOAnchorPos(Vector2.zero, duration).OnComplete(ShakeScreen);
+            return;
+        }
+        Vector2 newSpot = new Vector2 (StaticVariables.rand.Next(-50, 50), StaticVariables.rand.Next(-50, 50));
+        backgroundParent.DOAnchorPos(newSpot, duration).OnComplete(ShakeScreen);
     }
 
     private void PlayAnimation (){
