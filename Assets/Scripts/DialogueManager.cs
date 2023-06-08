@@ -28,6 +28,9 @@ public class DialogueManager : MonoBehaviour{
     public Sprite playerChatheadNormal;
     public Sprite playerChatheadAngry;
     public Sprite playerChatheadDefeated;
+    public Sprite playerChatheadHappy;
+    public Sprite playerChatheadQuestioning;
+    public Sprite playerChatheadWorried;
 
     [Header("Configurations")]
     public float transitionDuration = 0.5f;
@@ -42,7 +45,6 @@ public class DialogueManager : MonoBehaviour{
     private Image nameSeparator;
     private Color nameSeparatorColor;
     private Color screenDarkenerColor;
-    //private int chatheadHiddenDepth = 450;
     private float chatheadStartingHeight;
     private RectTransform playerChatheadTransform;
     private RectTransform enemyChatheadTransform;
@@ -137,9 +139,6 @@ public class DialogueManager : MonoBehaviour{
             cutsceneManager.PressedButton();
         else
             AdvanceTalkStage();
-        //if (isTransitioningCutsceneImage)
-        //    return;
-        //AdvanceTalkStage();
     }
 
     private void ShowCurrentTalkStage(){
@@ -182,13 +181,13 @@ public class DialogueManager : MonoBehaviour{
                 sprite = playerChatheadAngry;
                 break;
             case (DialogueStep.Emotion.Happy):
-                sprite = playerChatheadAngry;
+                sprite = playerChatheadHappy;
                 break;
             case (DialogueStep.Emotion.Questioning):
-                sprite = playerChatheadAngry;
+                sprite = playerChatheadQuestioning;
                 break;
             case (DialogueStep.Emotion.Worried):
-                sprite = playerChatheadAngry;
+                sprite = playerChatheadWorried;
                 break;
             default:
                 sprite = playerChatheadNormal;
@@ -198,7 +197,10 @@ public class DialogueManager : MonoBehaviour{
     }
 
     public void ShowEnemyTalking(EnemyData data, DialogueStep.Emotion emotion){
-        speakerNameTetxBox.text = data.name.ToUpper();
+        if (data.nameOverride == "")
+            speakerNameTetxBox.text = data.name.ToUpper();
+        else
+            speakerNameTetxBox.text = data.nameOverride.ToUpper();
         speakerNameTetxBox.alignment = TextAnchor.UpperRight;
         enemyChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
         enemyChathead.DOColor(Color.white, transitionDuration);

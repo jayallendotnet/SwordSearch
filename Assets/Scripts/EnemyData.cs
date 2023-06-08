@@ -7,6 +7,7 @@ using MyBox;
 public class EnemyData : MonoBehaviour{
 
     public bool isBattleable = true;
+    public string nameOverride = "";
 
     
     [Header("Battle Stats")]

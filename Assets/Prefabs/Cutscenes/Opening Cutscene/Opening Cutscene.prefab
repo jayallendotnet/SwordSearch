@@ -183,7 +183,10 @@ MonoBehaviour:
     newBackground: {fileID: 0}
     advanceAutomatically: 0
     advanceTime: 0.5
-    dialogue: '"A new threat from far-off lands..."'
+    dialogue: '"Kingdom under new rule!
+
+      The Lich King has been driven into
+      hiding..."'
     characterToAnimate: 
     animationName: 
     alsoMoveCharacter: 0
@@ -193,11 +196,28 @@ MonoBehaviour:
     shakeDuration: 1
   - type: 0
     characterTalking: {fileID: 0}
-    emotion: 6
+    emotion: 4
     newBackground: {fileID: 0}
     advanceAutomatically: 0
     advanceTime: 0.5
-    dialogue: '"A group of dragons terrorizes the kingdom!"'
+    dialogue: Well that's great! I never liked His Lichness anyway.
+    characterToAnimate: 
+    animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
+  - type: 0
+    characterTalking: {fileID: 0}
+    emotion: 5
+    newBackground: {fileID: 0}
+    advanceAutomatically: 0
+    advanceTime: 0.5
+    dialogue: 'There''s more here...
+
+      "The Kingdom has been subjugated by a
+      group of -"'
     characterToAnimate: 
     animationName: 
     alsoMoveCharacter: 0
@@ -220,35 +240,7 @@ MonoBehaviour:
     changeFacing: 0
     shakeDuration: 1
   - type: 1
-    characterTalking: {fileID: 1107962101534003463, guid: 0c7549ad0b5194047b3d5594aa634407, type: 3}
-    emotion: 5
-    newBackground: {fileID: 0}
-    advanceAutomatically: 0
-    advanceTime: 0.5
-    dialogue: That sounds bad.
-    characterToAnimate: 
-    animationName: 
-    alsoMoveCharacter: 0
-    newPosX: -12345
-    newPosY: -12345
-    changeFacing: 0
-    shakeDuration: 1
-  - type: 0
-    characterTalking: {fileID: 0}
-    emotion: 6
-    newBackground: {fileID: 0}
-    advanceAutomatically: 0
-    advanceTime: 0.5
-    dialogue: It is very bad! We have to warn everyone!
-    characterToAnimate: 
-    animationName: 
-    alsoMoveCharacter: 0
-    newPosX: -12345
-    newPosY: -12345
-    changeFacing: 0
-    shakeDuration: 1
-  - type: 1
-    characterTalking: {fileID: 815226952419649514, guid: 628e74f4aeb52a643adcb3baeb14277f, type: 3}
+    characterTalking: {fileID: 815226952419649514, guid: 3f5e83e34cfa7f34eae61f3302aef3ea, type: 3}
     emotion: 1
     newBackground: {fileID: 0}
     advanceAutomatically: 0
@@ -266,7 +258,7 @@ MonoBehaviour:
     emotion: 1
     newBackground: {fileID: 0}
     advanceAutomatically: 1
-    advanceTime: 2
+    advanceTime: 1
     dialogue: ROOOOAR!!!!
     characterToAnimate: Red Dragon
     animationName: Fly
@@ -274,6 +266,34 @@ MonoBehaviour:
     newPosX: 1200
     newPosY: 1177
     changeFacing: 0
+    shakeDuration: 1
+  - type: 3
+    characterTalking: {fileID: 815226952419649514, guid: 628e74f4aeb52a643adcb3baeb14277f, type: 3}
+    emotion: 1
+    newBackground: {fileID: 0}
+    advanceAutomatically: 1
+    advanceTime: 0
+    dialogue: ROOOOAR!!!!
+    characterToAnimate: Child 1
+    animationName: 
+    alsoMoveCharacter: 1
+    newPosX: -12345
+    newPosY: -12345
+    changeFacing: 1
+    shakeDuration: 1
+  - type: 3
+    characterTalking: {fileID: 815226952419649514, guid: 628e74f4aeb52a643adcb3baeb14277f, type: 3}
+    emotion: 1
+    newBackground: {fileID: 0}
+    advanceAutomatically: 1
+    advanceTime: 1
+    dialogue: ROOOOAR!!!!
+    characterToAnimate: Child 2
+    animationName: 
+    alsoMoveCharacter: 1
+    newPosX: -12345
+    newPosY: -12345
+    changeFacing: 1
     shakeDuration: 1
   - type: 3
     characterTalking: {fileID: 815226952419649514, guid: 628e74f4aeb52a643adcb3baeb14277f, type: 3}
@@ -310,6 +330,63 @@ MonoBehaviour:
     advanceAutomatically: 1
     advanceTime: 1
     dialogue: It is very bad! We have to warn everyone!
+    characterToAnimate: 
+    animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
+  - type: 1
+    characterTalking: {fileID: 815226952419649514, guid: 628e74f4aeb52a643adcb3baeb14277f, type: 3}
+    emotion: 1
+    newBackground: {fileID: 0}
+    advanceAutomatically: 0
+    advanceTime: 0.5
+    dialogue: "Humans... \nTiny, tasty, delectable humans..."
+    characterToAnimate: 
+    animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
+  - type: 1
+    characterTalking: {fileID: 815226952419649514, guid: 628e74f4aeb52a643adcb3baeb14277f, type: 3}
+    emotion: 1
+    newBackground: {fileID: 0}
+    advanceAutomatically: 0
+    advanceTime: 0.5
+    dialogue: This town now belongs to the mighty King Dragon! Bow down to him and
+      all of dragonkind!
+    characterToAnimate: 
+    animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
+  - type: 1
+    characterTalking: {fileID: 815226952419649514, guid: 628e74f4aeb52a643adcb3baeb14277f, type: 3}
+    emotion: 1
+    newBackground: {fileID: 0}
+    advanceAutomatically: 0
+    advanceTime: 0.5
+    dialogue: We are your new rulers
+    characterToAnimate: 
+    animationName: 
+    alsoMoveCharacter: 0
+    newPosX: -12345
+    newPosY: -12345
+    changeFacing: 0
+    shakeDuration: 1
+  - type: 0
+    characterTalking: {fileID: 0}
+    emotion: 6
+    newBackground: {fileID: 0}
+    advanceAutomatically: 0
+    advanceTime: 0.5
+    dialogue: We have to warn everyone!
     characterToAnimate: 
     animationName: 
     alsoMoveCharacter: 0

@@ -104,7 +104,8 @@ public class CutsceneManager : MonoBehaviour{
 
         foreach (Animator anim in animatedObjectsInCutscene){
             if (anim.gameObject.name == characterName){
-                anim.Play(animationName);
+                if (animationName != "")
+                    anim.Play(animationName);
 
                 if (steps[currentStep].alsoMoveCharacter){
                     float durationOfAnimation = 0;
