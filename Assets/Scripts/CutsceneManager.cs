@@ -17,6 +17,7 @@ public class CutsceneManager : MonoBehaviour{
     private List<Animator> animatedObjectsInCutscene = new List<Animator>();
     private float shakeTimer = 0f;
     public float screenShakeSegment = 0.1f;
+    public GameObject emptyGameObject;
 
     
     void Start(){
@@ -117,11 +118,11 @@ public class CutsceneManager : MonoBehaviour{
                     float newPosX = steps[currentStep].newPosX;
                     float newPosY = steps[currentStep].newPosY;
                     if (newPosX != -12345)
-                        anim.GetComponent<RectTransform>().DOAnchorPosX(newPosX, durationOfAnimation);
+                        anim.transform.parent.GetComponent<RectTransform>().DOAnchorPosX(newPosX, durationOfAnimation);
                     if (newPosY != -12345)
-                        anim.GetComponent<RectTransform>().DOAnchorPosY(newPosY, durationOfAnimation);
+                        anim.transform.parent.GetComponent<RectTransform>().DOAnchorPosY(newPosY, durationOfAnimation);
                     if (steps[currentStep].changeFacing)
-                        anim.transform.localScale = new Vector2(anim.transform.localScale.x * -1, anim.transform.localScale.y);
+                        anim.transform.parent.localScale = new Vector2(anim.transform.parent.localScale.x * -1, anim.transform.parent.localScale.y);
                 }
             }
         }
@@ -164,11 +165,24 @@ public class CutsceneManager : MonoBehaviour{
         foreach (Transform t in backgroundParent)
             Destroy(t.gameObject);
         foreach(Transform t in backgroundPrefab){
-            GameObject go = Instantiate(t.gameObject, backgroundParent);
-            go.name = t.gameObject.name;
-            Animator anim = go.GetComponent<Animator>();
-            if (anim != null)
-                animatedObjectsInCutscene.Add(anim);
+
+            Animator a = t.gameObject.GetComponent<Animator>();
+            if (a != null){
+                GameObject parent = Instantiate(emptyGameObject, backgroundParent);
+                parent.transform.localPosition = t.localPosition;
+                parent.name = t.name;
+                GameObject go = Instantiate(t.gameObject, parent.transform.position, Quaternion.identity, parent.transform);
+                //go.transform.localPosition = Vector3.zero;
+                go.name = t.name;
+                animatedObjectsInCutscene.Add(go.GetComponent<Animator>());
+            }
+            else{
+                GameObject go = Instantiate(t.gameObject, backgroundParent);
+                go.name = t.gameObject.name;
+                Animator anim = go.GetComponent<Animator>();
+                if (anim != null)
+                    animatedObjectsInCutscene.Add(anim);
+            }
         }
     }
 
