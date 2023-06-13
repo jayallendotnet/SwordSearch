@@ -145,8 +145,6 @@ public class CutsceneManager : MonoBehaviour{
             if (newPosY != -12345)
                 anim.transform.parent.GetComponent<RectTransform>().DOAnchorPosY(newPosY, durationOfAnimation);
             if (steps[currentStep].changeFacing){
-                print("changed");
-                print(anim.transform.parent.name);
                 anim.transform.parent.localScale = new Vector2(anim.transform.parent.localScale.x * -1, anim.transform.parent.localScale.y);
             }
         }
@@ -195,8 +193,10 @@ public class CutsceneManager : MonoBehaviour{
                 GameObject parent = Instantiate(emptyGameObject, backgroundParent);
                 parent.transform.localPosition = t.localPosition;
                 parent.name = t.name;
+                parent.SetActive(t.gameObject.activeSelf);
                 GameObject go = Instantiate(t.gameObject, parent.transform.position, Quaternion.identity, parent.transform);
                 go.name = t.name;
+                go.SetActive(true);
                 animatedObjectsInCutscene.Add(go.GetComponent<Animator>());
             }
             else{

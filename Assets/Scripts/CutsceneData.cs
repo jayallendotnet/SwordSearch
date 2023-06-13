@@ -29,7 +29,7 @@ public class CutsceneStep{
     public GameObject newBackground;
 
 
-    [ConditionalField(nameof(type), false, CutsceneType.ChangeBackground, CutsceneType.PlayAnimation, CutsceneType.ShakeScreen)]
+    [ConditionalField(nameof(type), false, CutsceneType.ChangeBackground, CutsceneType.PlayAnimation, CutsceneType.ShakeScreen, CutsceneType.ShowHideObject, CutsceneType.PlayerTalking, CutsceneType.OtherTalking)]
     public bool advanceAutomatically = false;
     [ConditionalField(nameof(advanceAutomatically))]
     public float advanceTime = 0.5f;
