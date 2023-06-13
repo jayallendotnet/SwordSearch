@@ -18,6 +18,8 @@ public class CutsceneManager : MonoBehaviour{
     private float shakeTimer = 0f;
     public float screenShakeSegment = 0.1f;
     public GameObject emptyGameObject;
+    private Animator playerAnimator;
+    public int startAtStep = 0;
 
     
     void Start(){
@@ -28,7 +30,8 @@ public class CutsceneManager : MonoBehaviour{
         dialogueManager.isInOverworld = false;
         dialogueManager.isInCutscene = true;
         dialogueManager.cutsceneManager = this;
-        currentStep = 0;
+        //currentStep = 0;
+        currentStep = startAtStep;
         StartCutscene();
 
     }
@@ -71,6 +74,9 @@ public class CutsceneManager : MonoBehaviour{
                 case (CutsceneStep.CutsceneType.ShakeScreen):
                     ShakeScreen();
                     break;
+                case (CutsceneStep.CutsceneType.ShowHideObject):
+                    ShowHideObject();
+                    break;
             }
         }
 
@@ -81,6 +87,15 @@ public class CutsceneManager : MonoBehaviour{
 
         if (steps[currentStep].advanceAutomatically)
             StaticVariables.WaitTimeThenCallFunction(steps[currentStep].advanceTime, AdvanceCutsceneStage);
+    }
+
+    private void ShowHideObject(){
+        string objectName = steps[currentStep].objectName;
+        bool visibility = steps[currentStep].isShowing;
+        foreach (Transform t in backgroundParent){
+            if (t.name == objectName)
+                t.gameObject.SetActive(visibility);
+        }
     }
 
     private void StartScreenShake(){
@@ -103,27 +118,36 @@ public class CutsceneManager : MonoBehaviour{
         string characterName = steps[currentStep].characterToAnimate;
         string animationName = steps[currentStep].animationName;
 
-        foreach (Animator anim in animatedObjectsInCutscene){
-            if (anim.gameObject.name == characterName){
-                if (animationName != "")
-                    anim.Play(animationName);
+        if (characterName == "Player")
+            PlayAnimationForCharacter(playerAnimator, animationName);
 
-                if (steps[currentStep].alsoMoveCharacter){
-                    float durationOfAnimation = 0;
-                    AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
-                    foreach(AnimationClip clip in clips){
-                        if (clip.name.Contains(animationName))
-                            durationOfAnimation = clip.length;
-                    }
-                    float newPosX = steps[currentStep].newPosX;
-                    float newPosY = steps[currentStep].newPosY;
-                    if (newPosX != -12345)
-                        anim.transform.parent.GetComponent<RectTransform>().DOAnchorPosX(newPosX, durationOfAnimation);
-                    if (newPosY != -12345)
-                        anim.transform.parent.GetComponent<RectTransform>().DOAnchorPosY(newPosY, durationOfAnimation);
-                    if (steps[currentStep].changeFacing)
-                        anim.transform.parent.localScale = new Vector2(anim.transform.parent.localScale.x * -1, anim.transform.parent.localScale.y);
-                }
+        foreach (Animator anim in animatedObjectsInCutscene){
+            if (anim.gameObject.name == characterName)
+                PlayAnimationForCharacter(anim, animationName);
+        }
+    }
+
+    private void PlayAnimationForCharacter(Animator anim, string animationName){
+        if (animationName != "")
+            anim.Play(animationName);
+
+        if (steps[currentStep].alsoMoveCharacter){
+            float durationOfAnimation = 0;
+            AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
+            foreach(AnimationClip clip in clips){
+                if (clip.name.Contains(animationName))
+                    durationOfAnimation = clip.length;
+            }
+            float newPosX = steps[currentStep].newPosX;
+            float newPosY = steps[currentStep].newPosY;
+            if (newPosX != -12345)
+                anim.transform.parent.GetComponent<RectTransform>().DOAnchorPosX(newPosX, durationOfAnimation);
+            if (newPosY != -12345)
+                anim.transform.parent.GetComponent<RectTransform>().DOAnchorPosY(newPosY, durationOfAnimation);
+            if (steps[currentStep].changeFacing){
+                print("changed");
+                print(anim.transform.parent.name);
+                anim.transform.parent.localScale = new Vector2(anim.transform.parent.localScale.x * -1, anim.transform.parent.localScale.y);
             }
         }
     }
@@ -172,16 +196,17 @@ public class CutsceneManager : MonoBehaviour{
                 parent.transform.localPosition = t.localPosition;
                 parent.name = t.name;
                 GameObject go = Instantiate(t.gameObject, parent.transform.position, Quaternion.identity, parent.transform);
-                //go.transform.localPosition = Vector3.zero;
                 go.name = t.name;
                 animatedObjectsInCutscene.Add(go.GetComponent<Animator>());
             }
             else{
                 GameObject go = Instantiate(t.gameObject, backgroundParent);
                 go.name = t.gameObject.name;
-                Animator anim = go.GetComponent<Animator>();
-                if (anim != null)
-                    animatedObjectsInCutscene.Add(anim);
+                if (t.name.Contains("Player"))
+                    playerAnimator = go.transform.GetChild(0).GetComponent<Animator>();
+                //Animator anim = go.GetComponent<Animator>();
+                //if (anim != null)
+                //    animatedObjectsInCutscene.Add(anim);
             }
         }
     }

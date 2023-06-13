@@ -14,7 +14,7 @@ public class CutsceneData: MonoBehaviour{
 [System.Serializable]
 public class CutsceneStep{
 
-    public enum CutsceneType{PlayerTalking, OtherTalking, ChangeBackground, PlayAnimation, GoToBattle, GoToOverworld, GoToTutorial, ShakeScreen};
+    public enum CutsceneType{PlayerTalking, OtherTalking, ChangeBackground, PlayAnimation, GoToBattle, GoToOverworld, GoToTutorial, ShakeScreen, ShowHideObject};
     public CutsceneType type;
     
     [ConditionalField(nameof(type), false, CutsceneType.OtherTalking)]
@@ -59,4 +59,10 @@ public class CutsceneStep{
     
     [ConditionalField(nameof(type), false, CutsceneType.ShakeScreen)]
     public float shakeDuration = 1;
+
+    [ConditionalField(nameof(type), false, CutsceneType.ShowHideObject)]
+    public string objectName;
+    [ConditionalField(nameof(type), false, CutsceneType.ShowHideObject)]
+    public bool isShowing;
+    
 }
