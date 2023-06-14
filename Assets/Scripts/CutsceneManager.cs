@@ -64,6 +64,7 @@ public class CutsceneManager : MonoBehaviour{
                     break;
                 case (CutsceneStep.CutsceneType.GoToTutorial):
                     print("going to tutorial");
+                    StaticVariables.FadeOutThenLoadScene("Cutscene");
                     break;
                 case (CutsceneStep.CutsceneType.GoToBattle):
                     print("going to battle");
@@ -107,7 +108,7 @@ public class CutsceneManager : MonoBehaviour{
         float duration = screenShakeSegment;
         shakeTimer += duration;
         if (shakeTimer >= steps[currentStep].shakeDuration){
-            backgroundParent.DOAnchorPos(Vector2.zero, duration).OnComplete(ShakeScreen);
+            backgroundParent.DOAnchorPos(Vector2.zero, duration);
             return;
         }
         Vector2 newSpot = new Vector2 (StaticVariables.rand.Next(-50, 50), StaticVariables.rand.Next(-50, 50));
