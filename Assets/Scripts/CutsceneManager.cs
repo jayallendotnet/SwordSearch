@@ -64,7 +64,8 @@ public class CutsceneManager : MonoBehaviour{
                     break;
                 case (CutsceneStep.CutsceneType.GoToTutorial):
                     print("going to tutorial");
-                    StaticVariables.FadeOutThenLoadScene("Cutscene");
+                    StaticVariables.FadeOutThenLoadScene("Map Scene");
+                    //StaticVariables.FadeOutThenLoadScene("Cutscene");
                     break;
                 case (CutsceneStep.CutsceneType.GoToBattle):
                     print("going to battle");

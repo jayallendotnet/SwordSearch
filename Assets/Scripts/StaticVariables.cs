@@ -16,14 +16,14 @@ public class StaticVariables
     static public float sceneFadeDuration = 0.5f;
     static public bool healActive = true;
     static public bool waterActive = true;
-    static public bool fireActive = true;
+    static public bool fireActive = false;
     static public bool earthActive = false;
     static public bool lightningActive = false;
-    static public bool darkActive = true;
+    static public bool darkActive = false;
     static public bool swordActive = false;
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
     static public int highestUnlockedWorld = 1;
-    static public int highestUnlockedLevel = 9;
+    static public int highestUnlockedLevel = 1;
     static public int currentBattleWorld = 0;
     static public int currentBattleLevel = 0;
     static public string battleSceneName = "Battle Scene";
@@ -77,6 +77,9 @@ public class StaticVariables
 
     static public string GetCurrentWorldName(){
         switch (currentBattleWorld){
+            //temp
+            case -2:
+                return "Map Scene";
             case 1:
                 return world1Name;
             case 2:

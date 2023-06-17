@@ -9,7 +9,7 @@ public class OverworldEnemySpace : MonoBehaviour{
 
     [HideInInspector]
     public OverworldSceneManager overworldSceneManager;
-    private Image enemyImage;
+    private List<Image> enemyImages = new List<Image>();
     private int pathFadeIndex = 0;
     private float timeBetweenPathFadeSteps = 0.5f;
     [Header("Scene references")]
@@ -38,11 +38,20 @@ public class OverworldEnemySpace : MonoBehaviour{
     }
 
     public void FadeInVisuals(){
-        enemyImage = transform.GetChild(0).GetComponent<Image>();
-        Color enemyImageColor = Color.white;
-        enemyImageColor.a = 0;
-        enemyImage.color = enemyImageColor;
-        enemyImage.GetComponent<Animator>().enabled = false;
+        if (battleData.enemyPrefab.GetComponent<EnemyData>().isHorde){
+            foreach (Transform t in transform.GetChild(0))
+                enemyImages.Add(t.GetChild(0).GetComponent<Image>());
+        }
+        else
+            enemyImages.Add(transform.GetChild(0).GetComponent<Image>());
+
+        foreach (Image im in enemyImages){
+            Color enemyImageColor = Color.white;
+            enemyImageColor.a = 0;
+            im.color = enemyImageColor;
+            im.GetComponent<Animator>().enabled = false;
+        }
+
 
         button.SetActive(false);
 
@@ -68,11 +77,13 @@ public class OverworldEnemySpace : MonoBehaviour{
     }
 
     private void FadeInEnemy(){
-        enemyImage.DOColor(Color.white, timeBetweenPathFadeSteps).OnComplete(TurnEnemyAniamtionsOn);
+        foreach (Image im in enemyImages)
+            im.DOColor(Color.white, timeBetweenPathFadeSteps).OnComplete(TurnEnemyAniamtionsOn);
     }
 
     private void TurnEnemyAniamtionsOn(){
-        enemyImage.GetComponent<Animator>().enabled = true;
+        foreach (Image im in enemyImages)
+            im.GetComponent<Animator>().enabled = true;
         button.SetActive(true);
     }
 }

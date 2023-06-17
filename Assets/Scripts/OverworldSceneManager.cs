@@ -179,5 +179,9 @@ public class OverworldSceneManager : MonoBehaviour{
         LoadBattleWithData(currentPlayerSpace);
     }
 
+    public void BackToMap(){
+        StaticVariables.FadeOutThenLoadScene("Map Scene");
+    }
+
 }
 
