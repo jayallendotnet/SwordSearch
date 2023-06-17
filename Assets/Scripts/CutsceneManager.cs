@@ -84,7 +84,7 @@ public class CutsceneManager : MonoBehaviour{
 
         else{
             dialogueManager.dialogueTextBox.text = "No dialogue for this enemy, current talk step is " + currentStep;
-            dialogueManager.speakerNameTetxBox.text = "WARNING";
+            dialogueManager.speakerNameTextBox.text = "WARNING";
         }
 
         if (steps[currentStep].advanceAutomatically)

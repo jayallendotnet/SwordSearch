@@ -37,6 +37,8 @@ public class GeneralSceneManager : MonoBehaviour{
         int levelNum = 1;
         StaticVariables.currentBattleWorld = worldNum;
         StaticVariables.currentBattleLevel = levelNum;
+        StaticVariables.highestUnlockedWorld = 1;
+        StaticVariables.highestUnlockedLevel = 1;
         StaticVariables.beatCurrentBattle = false;
 
         StaticVariables.healActive = true;

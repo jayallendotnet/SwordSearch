@@ -10,7 +10,7 @@ public class DialogueManager : MonoBehaviour{
     [Header("Scene References")]
     public RectTransform overlay;
     public Text dialogueTextBox;
-    public Text speakerNameTetxBox;
+    public Text speakerNameTextBox;
     public Image screenDarkener;
     public Image playerChathead;
     public Image enemyChathead;
@@ -79,7 +79,7 @@ public class DialogueManager : MonoBehaviour{
         if (hasSetStartingValues)
             return;
         hasSetStartingValues = true;
-        nameSeparator = speakerNameTetxBox.transform.GetChild(0).GetComponent<Image>();
+        nameSeparator = speakerNameTextBox.transform.GetChild(0).GetComponent<Image>();
         nameSeparatorColor = nameSeparator.color;
         screenDarkenerColor = screenDarkener.color;
         playerChatheadTransform = playerChathead.GetComponent<RectTransform>();
@@ -88,7 +88,7 @@ public class DialogueManager : MonoBehaviour{
         fakeButtonStartingHeight = buttonText.transform.parent.GetComponent<RectTransform>().anchoredPosition.y;
 
         dialogueTextBox.gameObject.SetActive(false);
-        speakerNameTetxBox.gameObject.SetActive(false);
+        speakerNameTextBox.gameObject.SetActive(false);
         screenDarkener.gameObject.SetActive(false);
         playerChathead.gameObject.SetActive(false);
         enemyChathead.gameObject.SetActive(false);
@@ -108,7 +108,7 @@ public class DialogueManager : MonoBehaviour{
         overlay.DOAnchorPosY(0, transitionDuration);
 
         dialogueTextBox.gameObject.SetActive(true);
-        speakerNameTetxBox.gameObject.SetActive(true);
+        speakerNameTextBox.gameObject.SetActive(true);
         screenDarkener.gameObject.SetActive(true);
         playerChathead.gameObject.SetActive(true);
         enemyChathead.gameObject.SetActive(true);
@@ -121,13 +121,13 @@ public class DialogueManager : MonoBehaviour{
         Color c = Color.white;
         c.a = 0;
         dialogueTextBox.color = c;
-        speakerNameTetxBox.color = c;
+        speakerNameTextBox.color = c;
         nameSeparator.color = c;
         Color c2 = Color.black;
         c2.a = 0;
         screenDarkener.color = c2;
         dialogueTextBox.DOColor(Color.white, transitionDuration);
-        speakerNameTetxBox.DOColor(Color.white, transitionDuration);
+        speakerNameTextBox.DOColor(Color.white, transitionDuration);
         nameSeparator.DOColor(nameSeparatorColor, transitionDuration);
         screenDarkener.DOColor(screenDarkenerColor, transitionDuration);
         if (isInCutscene)
@@ -150,9 +150,10 @@ public class DialogueManager : MonoBehaviour{
             else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.EnemyTalking)
                 ShowEnemyTalking(enemyData, dialogueSteps[currentStep].emotion);
         }
-        else
+        else{
             dialogueTextBox.text = "No dialogue for this enemy, current talk step is " + currentStep;
-            speakerNameTetxBox.text = "WARNING";
+            speakerNameTextBox.text = "WARNING";
+        }
         if (currentStep == dialogueSteps.Length - 1)
             buttonText.text = "CONTINUE";
         else
@@ -161,8 +162,8 @@ public class DialogueManager : MonoBehaviour{
     }
 
     public void ShowPlayerTalking(DialogueStep.Emotion emotion){
-        speakerNameTetxBox.text = "PLAYER";
-        speakerNameTetxBox.alignment = TextAnchor.UpperLeft;
+        speakerNameTextBox.text = "PLAYER";
+        speakerNameTextBox.alignment = TextAnchor.UpperLeft;
         playerChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
         playerChathead.DOColor(Color.white, transitionDuration);
         enemyChathead.DOColor(Color.grey, transitionDuration);
@@ -198,10 +199,10 @@ public class DialogueManager : MonoBehaviour{
 
     public void ShowEnemyTalking(EnemyData data, DialogueStep.Emotion emotion){
         if (data.nameOverride == "")
-            speakerNameTetxBox.text = data.name.ToUpper();
+            speakerNameTextBox.text = data.name.ToUpper();
         else
-            speakerNameTetxBox.text = data.nameOverride.ToUpper();
-        speakerNameTetxBox.alignment = TextAnchor.UpperRight;
+            speakerNameTextBox.text = data.nameOverride.ToUpper();
+        speakerNameTextBox.alignment = TextAnchor.UpperRight;
         enemyChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
         enemyChathead.DOColor(Color.white, transitionDuration);
         playerChathead.DOColor(Color.grey, transitionDuration);
@@ -258,7 +259,7 @@ public class DialogueManager : MonoBehaviour{
         Color c = Color.white;
         c.a = 0;
         dialogueTextBox.DOColor(c, transitionDuration);
-        speakerNameTetxBox.DOColor(c, transitionDuration);
+        speakerNameTextBox.DOColor(c, transitionDuration);
         nameSeparator.DOColor(c, transitionDuration);
         Color c2 = Color.black;
         c2.a = 0;
@@ -281,7 +282,7 @@ public class DialogueManager : MonoBehaviour{
 
     private void FinishedEndingTalk(){
         dialogueTextBox.gameObject.SetActive(false);
-        speakerNameTetxBox.gameObject.SetActive(false);
+        speakerNameTextBox.gameObject.SetActive(false);
         screenDarkener.gameObject.SetActive(false);
         playerChathead.gameObject.SetActive(false);
         enemyChathead.gameObject.SetActive(false);
@@ -333,7 +334,7 @@ public class DialogueManager : MonoBehaviour{
     }
 
     public void ClearDialogue(){
-        speakerNameTetxBox.text = "";
+        speakerNameTextBox.text = "";
         dialogueTextBox.text = "";
     }
 
