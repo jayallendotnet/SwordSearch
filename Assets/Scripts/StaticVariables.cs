@@ -22,11 +22,12 @@ public class StaticVariables
     static public bool darkActive = false;
     static public bool swordActive = false;
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
-    static public int highestUnlockedWorld = 1;
-    static public int highestUnlockedLevel = 9;
+    static public int highestUnlockedWorld = 0;
+    static public int highestUnlockedLevel = 1;
     static public int currentBattleWorld = 0;
     static public int currentBattleLevel = 0;
     static public string battleSceneName = "Battle Scene";
+    static public string world0Name = "World 0 - Intro";
     static public string world1Name = "World 1 - Grasslands";
     static public string world2Name = "World 2 - Magical Forest";
     static public string world3Name = "World 3 - Desert";
@@ -35,6 +36,7 @@ public class StaticVariables
     static public string world6Name = "World 6 - Dragonlands";
     static public bool beatCurrentBattle = false;
     static public bool hasTalkedToNewestEnemy = false;
+    static public CutsceneData cutsceneToPlay;
 
 
     static public void WaitTimeThenCallFunction(float delay, TweenCallback function) {
@@ -80,6 +82,8 @@ public class StaticVariables
             //temp
             case -2:
                 return "Map Scene";
+            case 0:
+                return world0Name;
             case 1:
                 return world1Name;
             case 2:

@@ -10,6 +10,7 @@ public class GeneralSceneManager : MonoBehaviour{
     private bool hasStarted = false;
 
     public BattleData temp;
+    public CutsceneData temp2;
 
     void Start(){
         Setup();
@@ -27,6 +28,7 @@ public class GeneralSceneManager : MonoBehaviour{
 
     //temp for map scene start
     public void OpeningCutscene(){
+        StaticVariables.cutsceneToPlay = temp2;
         StaticVariables.FadeOutThenLoadScene("Cutscene");
     }
 

@@ -17,7 +17,9 @@ public class InteractOverlayManager : MonoBehaviour{
     public RectTransform battleButton;
     public RectTransform talkButton;
     public RectTransform infoButton;
+    public RectTransform cutsceneButton;
     public Text infoText;
+    public Text cutsceneText;
     public RectTransform backButton;
 
 
@@ -82,6 +84,12 @@ public class InteractOverlayManager : MonoBehaviour{
         infoText.text = infoTextData.text;
         AdjustHeightsForShowingInfo(infoTextData.lineCount);
         isInfoShowing = true;
+    }
+
+    public void PressedCutsceneButton(){
+        if (isInfoShowing)
+            return;
+        overworldSceneManager.StartCutscene();
     }
 
     private void MoveOverworldDownIfRequired(){
@@ -218,6 +226,32 @@ public class InteractOverlayManager : MonoBehaviour{
         interactOverlay.DOAnchorPosY(0, transitionDuration);
         isInteractOverlayShowing = true;
         MoveOverworldUpIfRequired();
+
+        SetInteractOptions();
+    }
+
+    private void SetInteractOptions(){
+        OverworldSpace.OverworldSpaceType type = overworldSceneManager.currentPlayerSpace.type;
+        if ((type == OverworldSpace.OverworldSpaceType.Battle) || (type == OverworldSpace.OverworldSpaceType.Tutorial)){
+            battleButton.gameObject.SetActive(true);
+            talkButton.gameObject.SetActive(true);
+            infoButton.gameObject.SetActive(true);
+            cutsceneButton.gameObject.SetActive(false);
+            infoText.gameObject.SetActive(false);
+            cutsceneText.gameObject.SetActive(false);
+
+        }
+        else if (type == OverworldSpace.OverworldSpaceType.Cutscene){
+            battleButton.gameObject.SetActive(false);
+            talkButton.gameObject.SetActive(false);
+            infoButton.gameObject.SetActive(false);
+            cutsceneButton.gameObject.SetActive(true);
+            infoText.gameObject.SetActive(false);
+            cutsceneText.gameObject.SetActive(true);
+
+            cutsceneText.text = overworldSceneManager.currentPlayerSpace.cutsceneDescription;
+
+        }
     }
 }
 

@@ -11,7 +11,7 @@ public class OverworldSceneManager : MonoBehaviour{
     public RectTransform overworldView;
     public RectTransform playerParent;
     public Animator playerAnimator;
-    public OverworldEnemySpace[] overworldEnemySpaces;
+    public OverworldSpace[] overworldSpaces;
 
 
     [Header("Timing Configurations")]
@@ -25,7 +25,7 @@ public class OverworldSceneManager : MonoBehaviour{
     [HideInInspector]
     public bool isPlayerMoving = false;
     [HideInInspector]
-    public OverworldEnemySpace currentPlayerSpace = null;
+    public OverworldSpace currentPlayerSpace = null;
     [HideInInspector]
     public EnemyData currentEnemyData;
     public InteractOverlayManager interactOverlayManager;
@@ -33,7 +33,9 @@ public class OverworldSceneManager : MonoBehaviour{
 
 
     void Start(){
-        SetupOverworldEnemySpaces();
+        //print("current progress - " + StaticVariables.currentBattleWorld + ":" + StaticVariables.currentBattleLevel);
+        //print("highest progress - " + StaticVariables.highestUnlockedWorld + ":" + StaticVariables.highestUnlockedLevel);
+        SetupOverworldSpaces();
         ShowProgress();
         PlacePlayerAtPosition(StaticVariables.currentBattleLevel);
         AdvanceGameIfAppropriate();
@@ -41,9 +43,9 @@ public class OverworldSceneManager : MonoBehaviour{
         interactOverlayManager.Setup();
     }
 
-    private void SetupOverworldEnemySpaces(){
-        for (int i = 0; i < overworldEnemySpaces.Length; i++){
-            OverworldEnemySpace space = overworldEnemySpaces[i];
+    private void SetupOverworldSpaces(){
+        for (int i = 0; i < overworldSpaces.Length; i++){
+            OverworldSpace space = overworldSpaces[i];
             space.overworldSceneManager = this;
             space.playerDestination.transform.GetChild(0).gameObject.SetActive(false);
         }
@@ -82,7 +84,7 @@ public class OverworldSceneManager : MonoBehaviour{
         if (battleNum == 0)
             return;
         int index = battleNum -1;
-        OverworldEnemySpace space = overworldEnemySpaces[index];
+        OverworldSpace space = overworldSpaces[index];
         GameObject newSpot = space.playerDestination;
         playerParent.transform.position = newSpot.transform.position;
         currentPlayerSpace = space;
@@ -110,7 +112,7 @@ public class OverworldSceneManager : MonoBehaviour{
         return false;
     }
 
-    public void LoadBattleWithData(OverworldEnemySpace space){
+    public void LoadBattleWithData(OverworldSpace space){
         StaticVariables.battleData = space.battleData;
         SetCurrentBattleData(space);
         StaticVariables.FadeOutThenLoadScene(StaticVariables.battleSceneName);
@@ -119,29 +121,29 @@ public class OverworldSceneManager : MonoBehaviour{
     private void ShowProgress(){
         if (thisWorldNum < StaticVariables.highestUnlockedWorld)
             return; 
-        for (int i = StaticVariables.highestUnlockedLevel; i < overworldEnemySpaces.Length; i++){
-            overworldEnemySpaces[i].gameObject.SetActive(false);
+        for (int i = StaticVariables.highestUnlockedLevel; i < overworldSpaces.Length; i++){
+            overworldSpaces[i].gameObject.SetActive(false);
         }
     }
 
     private void UnlockNextEnemy(){
-        OverworldEnemySpace nextSpace = GetFirstLockedEnemySpace();
+        OverworldSpace nextSpace = GetFirstLockedEnemySpace();
         if (nextSpace != null){
             nextSpace.gameObject.SetActive(true);
             nextSpace.FadeInVisuals();
         }
     }
 
-    private OverworldEnemySpace GetFirstLockedEnemySpace(){
-        for (int i = 0; i < overworldEnemySpaces.Length; i++){
-            OverworldEnemySpace space = overworldEnemySpaces[i];
+    private OverworldSpace GetFirstLockedEnemySpace(){
+        for (int i = 0; i < overworldSpaces.Length; i++){
+            OverworldSpace space = overworldSpaces[i];
             if (!space.gameObject.activeSelf)
                 return space;
         }
         return null;
     }
 
-    private void SetCurrentBattleData(OverworldEnemySpace space){
+    private void SetCurrentBattleData(OverworldSpace space){
         int worldNum = thisWorldNum;
         int levelNum = GetLevelNumOfSpace(space);
         StaticVariables.currentBattleWorld = worldNum;
@@ -149,9 +151,9 @@ public class OverworldSceneManager : MonoBehaviour{
         StaticVariables.beatCurrentBattle = false;
     }
 
-    private int GetLevelNumOfSpace(OverworldEnemySpace space){
+    private int GetLevelNumOfSpace(OverworldSpace space){
         int i = 0;
-        foreach (OverworldEnemySpace s in overworldEnemySpaces){
+        foreach (OverworldSpace s in overworldSpaces){
             i++;
             if (s == space)
                 return i;
@@ -161,7 +163,7 @@ public class OverworldSceneManager : MonoBehaviour{
 
     private void AdvanceGameProgress(){
         StaticVariables.highestUnlockedLevel ++;
-        if (StaticVariables.highestUnlockedLevel > overworldEnemySpaces.Length){
+        if (StaticVariables.highestUnlockedLevel > overworldSpaces.Length){
             StaticVariables.highestUnlockedWorld ++;
             StaticVariables.highestUnlockedLevel = 1;
             if (StaticVariables.highestUnlockedWorld > 6)
@@ -176,7 +178,23 @@ public class OverworldSceneManager : MonoBehaviour{
     }
 
     public void StartBattle(){
-        LoadBattleWithData(currentPlayerSpace);
+        if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Battle)
+            LoadBattleWithData(currentPlayerSpace);
+        else if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial)
+            StaticVariables.FadeOutThenLoadScene(currentPlayerSpace.tutorialName);
+
+        //else if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Cutscene){
+        //    StaticVariables.cutsceneToPlay = currentPlayerSpace.cutsceneData;
+        //    StaticVariables.FadeOutThenLoadScene("Cutscene");
+        //}
+
+    }
+
+    public void StartCutscene(){
+        if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Cutscene){
+            StaticVariables.cutsceneToPlay = currentPlayerSpace.cutsceneData;
+            StaticVariables.FadeOutThenLoadScene("Cutscene");
+        }
     }
 
     public void BackToMap(){

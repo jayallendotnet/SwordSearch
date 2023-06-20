@@ -64,5 +64,12 @@ public class CutsceneStep{
     public string objectName;
     [ConditionalField(nameof(type), false, CutsceneType.ShowHideObject)]
     public bool isShowing;
+
+
+    
+    [ConditionalField(nameof(type), false, CutsceneType.GoToOverworld)]
+    public int worldNum;
+    [ConditionalField(nameof(type), false, CutsceneType.GoToOverworld)]
+    public int spaceNum;
     
 }

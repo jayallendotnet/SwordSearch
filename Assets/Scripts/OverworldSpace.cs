@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using MyBox;
 
-public class OverworldEnemySpace : MonoBehaviour{
+public class OverworldSpace : MonoBehaviour{
 
     [HideInInspector]
     public OverworldSceneManager overworldSceneManager;
@@ -17,8 +18,18 @@ public class OverworldEnemySpace : MonoBehaviour{
     public Transform pathFromLastSpace;
     public GameObject button;
 
+
+    public enum OverworldSpaceType{Battle, Cutscene, Tutorial}
     [Header("Gameplay Stuff")]
+    public OverworldSpaceType type = OverworldSpaceType.Battle;
+    [ConditionalField(nameof(type), false, OverworldSpaceType.Battle)]
     public BattleData battleData;
+    [ConditionalField(nameof(type), false, OverworldSpaceType.Cutscene)]
+    public CutsceneData cutsceneData;
+    [ConditionalField(nameof(type), false, OverworldSpaceType.Cutscene)]
+    public string cutsceneDescription = "";
+    [ConditionalField(nameof(type), false, OverworldSpaceType.Tutorial)]
+    public string tutorialName;
 
     public void MovePlayerToThisSpace(){
         overworldSceneManager.currentPlayerSpace = this;

@@ -23,6 +23,7 @@ public class CutsceneManager : MonoBehaviour{
 
     
     void Start(){
+        cutsceneData = StaticVariables.cutsceneToPlay;
         steps = cutsceneData.cutsceneSteps;
         generalSceneManager.Setup();
         dialogueManager.buttonText.text = "NEXT";
@@ -60,7 +61,12 @@ public class CutsceneManager : MonoBehaviour{
                     StartCutsceneImageTransition();
                     break;
                 case (CutsceneStep.CutsceneType.GoToOverworld):
-                    StaticVariables.FadeOutThenLoadScene("World 1 - Grasslands");
+                    StaticVariables.currentBattleWorld = steps[currentStep].worldNum;
+                    StaticVariables.currentBattleLevel = steps[currentStep].spaceNum;
+                    StaticVariables.beatCurrentBattle = true;
+                    StaticVariables.hasTalkedToNewestEnemy = false;
+                    StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
+                    //StaticVariables.FadeOutThenLoadScene("World 1 - Grasslands");
                     break;
                 case (CutsceneStep.CutsceneType.GoToTutorial):
                     print("going to tutorial");

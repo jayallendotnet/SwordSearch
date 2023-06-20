@@ -543,7 +543,7 @@ GameObject:
   - component: {fileID: 6343622724260379883}
   - component: {fileID: 2708877614081805339}
   m_Layer: 5
-  m_Name: Overworld Enemy Space
+  m_Name: Overworld Space
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -592,9 +592,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c665cf1ea66fd44fa8e4f7d5c456ace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overworldSceneManager: {fileID: 0}
   playerDestination: {fileID: 5941702190162793383}
+  pathFromLastSpace: {fileID: 2109338398305284069}
+  button: {fileID: 5941702189331763657}
   battleData:
     enemyPrefab: {fileID: 1107962101534003457, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
-  pathFromLastSpace: {fileID: 2109338398305284069}
-  button: {fileID: 5941702189331763657}
