@@ -97,7 +97,8 @@ public class DialogueManager : MonoBehaviour{
     private void StartDialogue(DialogueStep[] dialogueSteps, BattleData battleData){
         this.dialogueSteps = dialogueSteps;
         enemyBattleData = battleData;
-        enemyData = battleData.enemyPrefab.GetComponent<EnemyData>();
+        if (battleData != null)
+            enemyData = battleData.enemyPrefab.GetComponent<EnemyData>();
         
         currentStep = 0;
         ShowCurrentTalkStage();

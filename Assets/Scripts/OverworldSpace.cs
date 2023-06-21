@@ -22,7 +22,7 @@ public class OverworldSpace : MonoBehaviour{
     public enum OverworldSpaceType{Battle, Cutscene, Tutorial}
     [Header("Gameplay Stuff")]
     public OverworldSpaceType type = OverworldSpaceType.Battle;
-    [ConditionalField(nameof(type), false, OverworldSpaceType.Battle)]
+    [ConditionalField(nameof(type), false, OverworldSpaceType.Battle, OverworldSpaceType.Tutorial)]
     public BattleData battleData;
     [ConditionalField(nameof(type), false, OverworldSpaceType.Cutscene)]
     public CutsceneData cutsceneData;

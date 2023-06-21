@@ -43,6 +43,7 @@ public class GeneralSceneManager : MonoBehaviour{
         StaticVariables.highestUnlockedLevel = 1;
         StaticVariables.beatCurrentBattle = false;
 
+
         StaticVariables.healActive = true;
         StaticVariables.waterActive = true;
         StaticVariables.fireActive = false;

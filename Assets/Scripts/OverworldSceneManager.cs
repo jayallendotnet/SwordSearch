@@ -33,7 +33,7 @@ public class OverworldSceneManager : MonoBehaviour{
 
 
     void Start(){
-        print(StaticVariables.hasTalkedToNewestEnemy);
+        //print(StaticVariables.hasTalkedToNewestEnemy);
         //print("current progress - " + StaticVariables.currentBattleWorld + ":" + StaticVariables.currentBattleLevel);
         //print("highest progress - " + StaticVariables.highestUnlockedWorld + ":" + StaticVariables.highestUnlockedLevel);
         SetupOverworldSpaces();
@@ -101,8 +101,13 @@ public class OverworldSceneManager : MonoBehaviour{
         playerParent.localScale = s;
 
         interactOverlayManager.ShowInteractOverlay();
-        if ((IsCurrentEnemyNewestEnemy()) && (!StaticVariables.hasTalkedToNewestEnemy) && (currentPlayerSpace.type != OverworldSpace.OverworldSpaceType.Cutscene))
-            dialogueManager.Setup(currentEnemyData.overworldDialogueSteps, currentPlayerSpace.battleData);
+        if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Cutscene)
+            return;
+        if ((IsCurrentEnemyNewestEnemy()) && (!StaticVariables.hasTalkedToNewestEnemy)){
+            if ((currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Battle) || (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial))
+                dialogueManager.Setup(currentEnemyData.overworldDialogueSteps, currentPlayerSpace.battleData);
+
+        }
     }
 
     private bool IsCurrentEnemyNewestEnemy(){
