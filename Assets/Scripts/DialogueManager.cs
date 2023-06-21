@@ -286,6 +286,8 @@ public class DialogueManager : MonoBehaviour{
         screenDarkener.gameObject.SetActive(false);
         playerChathead.gameObject.SetActive(false);
         enemyChathead.gameObject.SetActive(false);
+        if (isInOverworld)
+            FindObjectOfType<OverworldSceneManager>().FinishedTalking();
     }
 
     private void ShowFakeButtonsSlidingIn(){

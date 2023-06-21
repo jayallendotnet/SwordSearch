@@ -64,7 +64,7 @@ public class CutsceneManager : MonoBehaviour{
                     StaticVariables.currentBattleWorld = steps[currentStep].worldNum;
                     StaticVariables.currentBattleLevel = steps[currentStep].spaceNum;
                     StaticVariables.beatCurrentBattle = true;
-                    StaticVariables.hasTalkedToNewestEnemy = false;
+                    //StaticVariables.hasTalkedToNewestEnemy = false;
                     StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
                     //StaticVariables.FadeOutThenLoadScene("World 1 - Grasslands");
                     break;

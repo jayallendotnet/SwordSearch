@@ -658,7 +658,7 @@ public class UIManager : MonoBehaviour {
 
     public void EndDialogue(){
         StaticVariables.beatCurrentBattle = true;
-        StaticVariables.hasTalkedToNewestEnemy = false;
+        //StaticVariables.hasTalkedToNewestEnemy = false;
         StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
     }
 

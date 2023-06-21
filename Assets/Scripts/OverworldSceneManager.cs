@@ -33,6 +33,7 @@ public class OverworldSceneManager : MonoBehaviour{
 
 
     void Start(){
+        print(StaticVariables.hasTalkedToNewestEnemy);
         //print("current progress - " + StaticVariables.currentBattleWorld + ":" + StaticVariables.currentBattleLevel);
         //print("highest progress - " + StaticVariables.highestUnlockedWorld + ":" + StaticVariables.highestUnlockedLevel);
         SetupOverworldSpaces();
@@ -55,6 +56,7 @@ public class OverworldSceneManager : MonoBehaviour{
         if ((thisWorldNum == StaticVariables.currentBattleWorld) && (thisWorldNum == StaticVariables.highestUnlockedWorld)){
             if (StaticVariables.highestUnlockedLevel == StaticVariables.currentBattleLevel){
                 if (StaticVariables.beatCurrentBattle){
+                    StaticVariables.hasTalkedToNewestEnemy = false;
                     UnlockNextEnemy();
                     AdvanceGameProgress();
                 }
@@ -99,7 +101,7 @@ public class OverworldSceneManager : MonoBehaviour{
         playerParent.localScale = s;
 
         interactOverlayManager.ShowInteractOverlay();
-        if ((IsCurrentEnemyNewestEnemy()) && (!StaticVariables.hasTalkedToNewestEnemy))
+        if ((IsCurrentEnemyNewestEnemy()) && (!StaticVariables.hasTalkedToNewestEnemy) && (currentPlayerSpace.type != OverworldSpace.OverworldSpaceType.Cutscene))
             dialogueManager.Setup(currentEnemyData.overworldDialogueSteps, currentPlayerSpace.battleData);
     }
 
@@ -199,6 +201,11 @@ public class OverworldSceneManager : MonoBehaviour{
 
     public void BackToMap(){
         StaticVariables.FadeOutThenLoadScene("Map Scene");
+    }
+
+    public void FinishedTalking(){
+        if (IsCurrentEnemyNewestEnemy())
+            StaticVariables.hasTalkedToNewestEnemy = true;
     }
 
 }
