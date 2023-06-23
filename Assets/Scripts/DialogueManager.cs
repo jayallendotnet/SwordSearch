@@ -36,6 +36,7 @@ public class DialogueManager : MonoBehaviour{
     public float transitionDuration = 0.5f;
     public bool isInOverworld = false;
     public bool isInBattle = false;
+    public bool isInTutorial = false;
 
     [HideInInspector]
     public bool isInCutscene = false;
@@ -55,11 +56,11 @@ public class DialogueManager : MonoBehaviour{
     private EnemyData enemyData;
     [HideInInspector]
     public CutsceneManager cutsceneManager;
+    [HideInInspector]
+    public TutorialManager tutorialManager;
     private bool hasSetStartingValues = false;
 
     void Start(){
-        if (!isInCutscene)
-            gameObject.SetActive(false);
         SetStartingValues();
     }
 
@@ -78,6 +79,8 @@ public class DialogueManager : MonoBehaviour{
     public void SetStartingValues(){
         if (hasSetStartingValues)
             return;
+        
+        gameObject.SetActive(false);
         hasSetStartingValues = true;
         nameSeparator = speakerNameTextBox.transform.GetChild(0).GetComponent<Image>();
         nameSeparatorColor = nameSeparator.color;
@@ -92,6 +95,15 @@ public class DialogueManager : MonoBehaviour{
         screenDarkener.gameObject.SetActive(false);
         playerChathead.gameObject.SetActive(false);
         enemyChathead.gameObject.SetActive(false);
+
+        if (isInCutscene){
+            gameObject.SetActive(true);
+        }
+
+        if (isInTutorial){
+            gameObject.SetActive(true);
+            dialogueTextBox.gameObject.SetActive(true);
+        }
     }
 
     private void StartDialogue(DialogueStep[] dialogueSteps, BattleData battleData){
@@ -138,6 +150,8 @@ public class DialogueManager : MonoBehaviour{
     public void PressedButton(){
         if (isInCutscene)
             cutsceneManager.PressedButton();
+        else if (isInTutorial)
+            tutorialManager.PressedNextButton();
         else
             AdvanceTalkStage();
     }

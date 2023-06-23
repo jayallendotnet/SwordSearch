@@ -78,7 +78,7 @@ public class BattleManager : MonoBehaviour {
     public TextAsset wordLibraryForCheckingFile; //all words that can be considered valid, even if they are not in the generating list
     public TextAsset randomLetterPoolFile;
 
-    void Start(){
+    public virtual void Start(){
         setup.Setup();
         wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
         countdownToRefresh = maxPuzzleCountdown;
@@ -421,7 +421,7 @@ public class BattleManager : MonoBehaviour {
         UpdateSubmitVisuals();
     }
 
-    private void UpdateSubmitVisuals(){
+    public virtual void UpdateSubmitVisuals(){
         UpdatePowerupTypeAndLevel();
         uiManager.UpdateColorsForWord(word, powerupTypeForWord);
         uiManager.UpdatePowerupIcon(powerupTypeForWord);
@@ -545,7 +545,7 @@ public class BattleManager : MonoBehaviour {
         }
     }
 
-    public void QueueEnemyAttack(){
+    public virtual void QueueEnemyAttack(){
         if (playerHealth != 0){
             if (enemyData.isHorde)
                 uiManager.StartEnemyAttackTimer(firstEnemyInHorde.attackSpeed);

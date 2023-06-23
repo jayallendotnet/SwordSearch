@@ -13,8 +13,8 @@ public class PuzzleGenerator : MonoBehaviour {
     private char[,] letters;
     private BattleManager.PowerupTypes[,] powerupTypes;
     private char[] randomLetterPool;
-    private bool useStartingLayout = false;
-    private char[,] startingLayout = {{'-', '-', '-', '-', 'A'}, {'O', 'R', '-', 'L', 'V'}, {'W', 'S', 'D', 'S', 'I'}, {'-', 'A', 'R', 'R', 'U'}, {'-', '-', '-', 'P', 'Y'}, {'-', 'L', 'A', 'T', '-'}, {'P', '-', '-', '-', '-'}};
+    //private bool useStartingLayout = true;
+    //private char[,] startingLayout = {{'-', '-', '-', '-', 'A'}, {'O', 'R', '-', 'L', 'V'}, {'W', 'S', 'D', 'S', 'I'}, {'-', 'A', 'R', 'R', 'U'}, {'-', '-', '-', 'P', 'Y'}, {'-', 'L', 'A', 'T', '-'}, {'P', '-', '-', '-', '-'}};
     private string[] wordLibraryForGeneration;
     List<BattleManager.PowerupTypes> powerupTypeSelection;
 
@@ -326,6 +326,14 @@ public class PuzzleGenerator : MonoBehaviour {
         }
     }
 
+    public void FillPuzzleFromList(char[,] layout){
+        letters = layout;        
+        ClearAllPowerups();
+        PickAllSpacesForPowerups(); 
+        SetNextPuzzleData();
+        UpdateAllLetterVisuals();
+    }
+
     private void SetNextPuzzleData(){
         for (int i = 0; i < letterSpaces.GetLength(0); i++){
             for (int j = 0; j < letterSpaces.GetLength(1); j++){
@@ -420,8 +428,8 @@ public class PuzzleGenerator : MonoBehaviour {
         for (int i = 0; i < letters.GetLength(0); i++){
             for (int j = 0; j < letters.GetLength(1); j++){
                 letters[i,j] = '-';
-                if (useStartingLayout)
-                    letters[i,j] = startingLayout[i,j];
+                //if (useStartingLayout)
+                //    letters[i,j] = startingLayout[i,j];
             }
         }
     }
@@ -436,7 +444,7 @@ public class PuzzleGenerator : MonoBehaviour {
 
     private void PickAllSpacesForPowerups(){
         for (int i = 0; i < battleManager.powerupsPerPuzzle; i++)
-        PickRandomSpaceForPowerup();
+            PickRandomSpaceForPowerup();
     }
 
     private void PickRandomSpaceForPowerup(){
