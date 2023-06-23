@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour {
 
-    private string word = "";
+    [HideInInspector]
+    public string word = "";
     
     [HideInInspector]
     public List<LetterSpace> letterSpacesForWord = new List<LetterSpace>(){};
@@ -30,7 +31,8 @@ public class BattleManager : MonoBehaviour {
     [HideInInspector]
     public int playerHealth = 0;
     private string[] wordLibraryForChecking;
-    private int countdownToRefresh;
+    [HideInInspector]
+    public int countdownToRefresh;
     public enum PowerupTypes{None, Water, Fire, Heal, Dark, Earth, Lightning, Pebble, Sword};
     private bool isValidWord = false;
     private int wordStrength = 0;
@@ -128,7 +130,7 @@ public class BattleManager : MonoBehaviour {
         }
     }
 
-    public void DamageEnemyHealth(int amount){
+    public virtual void DamageEnemyHealth(int amount){
         enemyHealth -= amount;
         if (enemyHealth < 0)
             enemyHealth = 0;
@@ -170,7 +172,7 @@ public class BattleManager : MonoBehaviour {
             
     }
 
-    public void PressSubmitWordButton(){
+    public virtual void PressSubmitWordButton(){
         if ((playerHealth == 0) || (enemyHealth == 0) || (isGamePaused))
             return;
         if (isValidWord){
@@ -390,7 +392,7 @@ public class BattleManager : MonoBehaviour {
             countdownToRefresh = 0;
     }
 
-    public void AddLetter(LetterSpace ls){
+    public virtual void AddLetter(LetterSpace ls){
         word += ls.letter;
         SetIsValidWord();
         CalcWordStrength();
@@ -454,7 +456,7 @@ public class BattleManager : MonoBehaviour {
             secondToLastLetterSpace = letterSpacesForWord[letterSpacesForWord.Count - 2];
     }
 
-    public bool CanAddLetter(LetterSpace letterSpace){
+    public virtual bool CanAddLetter(LetterSpace letterSpace){
         if ((playerHealth == 0) || (enemyHealth == 0) || (isGamePaused))
             return false;
         if (letterSpace.hasBeenUsedInAWordAlready)
@@ -470,7 +472,7 @@ public class BattleManager : MonoBehaviour {
         return false;
     }
 
-    public bool CanRemoveLetter(LetterSpace letterSpace){
+    public virtual bool CanRemoveLetter(LetterSpace letterSpace){
         if (letterSpacesForWord.Count == 0)
             return false;
         return (lastLetterSpace == letterSpace);
@@ -616,7 +618,7 @@ public class BattleManager : MonoBehaviour {
         }
     }
 
-    public void EnemyDeathAnimationFinished(){
+    public virtual void EnemyDeathAnimationFinished(){
         if (enemyData.isHorde){
             if (enemyHealth == 0)
                 uiManager.ShowVictoryPage();

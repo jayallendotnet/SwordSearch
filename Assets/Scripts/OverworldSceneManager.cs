@@ -176,6 +176,10 @@ public class OverworldSceneManager : MonoBehaviour{
             if (StaticVariables.highestUnlockedWorld > 6)
                 StaticVariables.highestUnlockedWorld = 6;
         }
+
+        //print(StaticVariables.hasTalkedToNewestEnemy);
+        //print("current progress - " + StaticVariables.currentBattleWorld + ":" + StaticVariables.currentBattleLevel);
+        //print("highest progress - " + StaticVariables.highestUnlockedWorld + ":" + StaticVariables.highestUnlockedLevel);
     }
 
     private void ClearCurrentBattleStats(){
@@ -187,8 +191,10 @@ public class OverworldSceneManager : MonoBehaviour{
     public void StartBattle(){
         if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Battle)
             LoadBattleWithData(currentPlayerSpace);
-        else if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial)
+        else if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial){
+            SetCurrentBattleData(currentPlayerSpace);
             StaticVariables.FadeOutThenLoadScene(currentPlayerSpace.tutorialName);
+        }
 
         //else if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Cutscene){
         //    StaticVariables.cutsceneToPlay = currentPlayerSpace.cutsceneData;

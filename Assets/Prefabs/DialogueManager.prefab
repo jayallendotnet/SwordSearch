@@ -237,19 +237,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 1689cc2955a3cc74a8f76a3e718bfcd7, type: 3}
-    m_FontSize: 75
+    m_Font: {fileID: 12800000, guid: f2f6c2a7e990e9d44b6df431908ec54f, type: 3}
+    m_FontSize: 120
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
-    m_MaxSize: 300
+    m_MaxSize: 120
     m_Alignment: 1
     m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Here be dragons
+    m_LineSpacing: 0.7
+  m_Text: Test text
 --- !u!1 &8075790154245963789
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,9 +1190,11 @@ MonoBehaviour:
   transitionDuration: 0.5
   isInOverworld: 0
   isInBattle: 0
+  isInTutorial: 0
   isInCutscene: 0
   dialogueSteps: []
   cutsceneManager: {fileID: 0}
+  tutorialManager: {fileID: 0}
 --- !u!1 &8075790155039761364
 GameObject:
   m_ObjectHideFlags: 0

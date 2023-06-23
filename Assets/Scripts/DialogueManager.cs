@@ -102,7 +102,7 @@ public class DialogueManager : MonoBehaviour{
 
         if (isInTutorial){
             gameObject.SetActive(true);
-            dialogueTextBox.gameObject.SetActive(true);
+            //dialogueTextBox.gameObject.SetActive(false);
         }
     }
 
@@ -126,10 +126,11 @@ public class DialogueManager : MonoBehaviour{
         playerChathead.gameObject.SetActive(true);
         enemyChathead.gameObject.SetActive(true);
 
-        float playerChatheadSize = playerChatheadTransform.sizeDelta.y * playerChatheadTransform.localScale.y;
-        float enemyChatheadSize = enemyChatheadTransform.sizeDelta.y * enemyChatheadTransform.localScale.y;
-        playerChatheadTransform.anchoredPosition = new Vector2(playerChatheadTransform.anchoredPosition.x, -playerChatheadSize);
-        enemyChatheadTransform.anchoredPosition = new Vector2(enemyChatheadTransform.anchoredPosition.x, -enemyChatheadSize);
+        HideChatheads();
+        //float playerChatheadSize = playerChatheadTransform.sizeDelta.y * playerChatheadTransform.localScale.y;
+        //float enemyChatheadSize = enemyChatheadTransform.sizeDelta.y * enemyChatheadTransform.localScale.y;
+        //playerChatheadTransform.anchoredPosition = new Vector2(playerChatheadTransform.anchoredPosition.x, -playerChatheadSize);
+        //enemyChatheadTransform.anchoredPosition = new Vector2(enemyChatheadTransform.anchoredPosition.x, -enemyChatheadSize);
 
         Color c = Color.white;
         c.a = 0;
@@ -143,8 +144,19 @@ public class DialogueManager : MonoBehaviour{
         speakerNameTextBox.DOColor(Color.white, transitionDuration);
         nameSeparator.DOColor(nameSeparatorColor, transitionDuration);
         screenDarkener.DOColor(screenDarkenerColor, transitionDuration);
-        if (isInCutscene)
+        if (isInCutscene || isInTutorial)
             screenDarkener.gameObject.SetActive(false);
+    }
+
+    public void HideChatheads(float duration = 0f){
+        float playerChatheadSize = playerChatheadTransform.sizeDelta.y * playerChatheadTransform.localScale.y;
+        float enemyChatheadSize = enemyChatheadTransform.sizeDelta.y * enemyChatheadTransform.localScale.y;
+        if (duration <= 0){
+            playerChatheadTransform.anchoredPosition = new Vector2(playerChatheadTransform.anchoredPosition.x, -playerChatheadSize);
+            enemyChatheadTransform.anchoredPosition = new Vector2(enemyChatheadTransform.anchoredPosition.x, -enemyChatheadSize);
+        }
+        playerChatheadTransform.DOAnchorPos(new Vector2(playerChatheadTransform.anchoredPosition.x, -playerChatheadSize), duration);
+        enemyChatheadTransform.DOAnchorPos(new Vector2(enemyChatheadTransform.anchoredPosition.x, -enemyChatheadSize), duration);
     }
     
     public void PressedButton(){

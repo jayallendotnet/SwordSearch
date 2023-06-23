@@ -23,7 +23,7 @@ public class StaticVariables
     static public bool swordActive = false;
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
     static public int highestUnlockedWorld = 0;
-    static public int highestUnlockedLevel = 1;
+    static public int highestUnlockedLevel = 2;
     static public int currentBattleWorld = 0;
     static public int currentBattleLevel = 0;
     static public string battleSceneName = "Battle Scene";
