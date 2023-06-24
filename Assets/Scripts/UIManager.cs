@@ -433,6 +433,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ApplyBackground(GameObject backgroundPrefab){
+        //print(backgroundPrefab.name);
         animatedObjectsInWindow = new List<GameObject>();
         Transform background = backgroundPrefab.transform.GetChild(0).transform;
         Transform foreground = backgroundPrefab.transform.GetChild(2).transform;

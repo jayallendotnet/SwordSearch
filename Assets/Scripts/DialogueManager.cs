@@ -59,6 +59,8 @@ public class DialogueManager : MonoBehaviour{
     [HideInInspector]
     public TutorialManager tutorialManager;
     private bool hasSetStartingValues = false;
+    private Color dialogueTextColor;
+    private Color nameTextColor;
 
     void Start(){
         SetStartingValues();
@@ -85,6 +87,8 @@ public class DialogueManager : MonoBehaviour{
         nameSeparator = speakerNameTextBox.transform.GetChild(0).GetComponent<Image>();
         nameSeparatorColor = nameSeparator.color;
         screenDarkenerColor = screenDarkener.color;
+        dialogueTextColor = dialogueTextBox.color;
+        nameTextColor = speakerNameTextBox.color;
         playerChatheadTransform = playerChathead.GetComponent<RectTransform>();
         enemyChatheadTransform = enemyChathead.GetComponent<RectTransform>();
         chatheadStartingHeight = playerChatheadTransform.anchoredPosition.y;
@@ -140,8 +144,8 @@ public class DialogueManager : MonoBehaviour{
         Color c2 = Color.black;
         c2.a = 0;
         screenDarkener.color = c2;
-        dialogueTextBox.DOColor(Color.white, transitionDuration);
-        speakerNameTextBox.DOColor(Color.white, transitionDuration);
+        dialogueTextBox.DOColor(dialogueTextColor, transitionDuration);
+        speakerNameTextBox.DOColor(nameTextColor, transitionDuration);
         nameSeparator.DOColor(nameSeparatorColor, transitionDuration);
         screenDarkener.DOColor(screenDarkenerColor, transitionDuration);
         if (isInCutscene || isInTutorial)

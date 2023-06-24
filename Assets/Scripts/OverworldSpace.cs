@@ -28,8 +28,6 @@ public class OverworldSpace : MonoBehaviour{
     public CutsceneData cutsceneData;
     [ConditionalField(nameof(type), false, OverworldSpaceType.Cutscene)]
     public string cutsceneDescription = "";
-    [ConditionalField(nameof(type), false, OverworldSpaceType.Tutorial)]
-    public string tutorialName;
 
     public void MovePlayerToThisSpace(){
         overworldSceneManager.currentPlayerSpace = this;

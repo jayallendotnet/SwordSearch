@@ -20,10 +20,12 @@ public class CutsceneManager : MonoBehaviour{
     public GameObject emptyGameObject;
     private Animator playerAnimator;
     public int startAtStep = 0;
+    public RectTransform screenshakeTransform;
 
     
     void Start(){
-        cutsceneData = StaticVariables.cutsceneToPlay;
+        if (StaticVariables.cutsceneToPlay != null)
+            cutsceneData = StaticVariables.cutsceneToPlay;
         steps = cutsceneData.cutsceneSteps;
         generalSceneManager.Setup();
         dialogueManager.buttonText.text = "NEXT";
@@ -115,11 +117,11 @@ public class CutsceneManager : MonoBehaviour{
         float duration = screenShakeSegment;
         shakeTimer += duration;
         if (shakeTimer >= steps[currentStep].shakeDuration){
-            backgroundParent.DOAnchorPos(Vector2.zero, duration);
+            screenshakeTransform.DOAnchorPos(Vector2.zero, duration);
             return;
         }
         Vector2 newSpot = new Vector2 (StaticVariables.rand.Next(-50, 50), StaticVariables.rand.Next(-50, 50));
-        backgroundParent.DOAnchorPos(newSpot, duration).OnComplete(ShakeScreen);
+        screenshakeTransform.DOAnchorPos(newSpot, duration).OnComplete(ShakeScreen);
     }
 
     private void PlayAnimation (){
@@ -190,7 +192,7 @@ public class CutsceneManager : MonoBehaviour{
     private void SetCutsceneBackground(GameObject prefab){
 
         animatedObjectsInCutscene = new List<Animator>();
-        Transform backgroundPrefab = prefab.transform.GetChild(0).transform;
+        Transform backgroundPrefab = prefab.transform.GetChild(1).transform;
 
         foreach (Transform t in backgroundParent)
             Destroy(t.gameObject);

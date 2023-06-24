@@ -685,7 +685,6 @@ MonoBehaviour:
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
   cutsceneData: {fileID: 849400826518085704, guid: 4769462aaf26c7146a56c890b3b11cc2, type: 3}
   cutsceneDescription: In which our heroine begins her quest!
-  tutorialName: 
 --- !u!222 &313226024
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -909,7 +908,6 @@ MonoBehaviour:
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
   cutsceneData: {fileID: 849400826518085704, guid: 4769462aaf26c7146a56c890b3b11cc2, type: 3}
   cutsceneDescription: In which our heroine's home is under attack!
-  tutorialName: 
 --- !u!222 &353745780
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2163,9 +2161,9 @@ RectTransform:
   m_Children:
   - {fileID: 305248689}
   - {fileID: 2129462006}
+  - {fileID: 840911066}
   - {fileID: 734309494}
   - {fileID: 1670146878}
-  - {fileID: 840911066}
   - {fileID: 1496131950}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -2208,7 +2206,7 @@ RectTransform:
   m_Children:
   - {fileID: 1005857223}
   m_Father: {fileID: 811241014}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5599,7 +5597,6 @@ MonoBehaviour:
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
   cutsceneData: {fileID: 0}
   cutsceneDescription: 
-  tutorialName: Tutorial 4
 --- !u!224 &6787213608482882724
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5646,7 +5643,6 @@ MonoBehaviour:
     backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
   cutsceneData: {fileID: 0}
   cutsceneDescription: 
-  tutorialName: Tutorial 3
 --- !u!114 &6962664377051636996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5665,11 +5661,10 @@ MonoBehaviour:
   button: {fileID: 1676092377832405206}
   type: 2
   battleData:
-    enemyPrefab: {fileID: 815226952419649516, guid: 90521a70664622e4f8423dc19b6ed285, type: 3}
-    backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
+    enemyPrefab: {fileID: 1107962101534003457, guid: 0f46200e90e2ed74cb0d0f930822482d, type: 3}
+    backgroundPrefab: {fileID: 7543067620809557234, guid: 676ef7bcf20ca7a43bce0cf32ee4d92b, type: 3}
   cutsceneData: {fileID: 0}
   cutsceneDescription: 
-  tutorialName: Tutorial 2
 --- !u!224 &6962664377051636997
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5846,7 +5841,6 @@ MonoBehaviour:
   type: 2
   battleData:
     enemyPrefab: {fileID: 1107962101534003457, guid: ae5bfc3719a9f1546a6e2b323ccce65d, type: 3}
-    backgroundPrefab: {fileID: 7543067620809557234, guid: 94606198b79d4664597824742fc5caf6, type: 3}
+    backgroundPrefab: {fileID: 7543067620809557234, guid: 676ef7bcf20ca7a43bce0cf32ee4d92b, type: 3}
   cutsceneData: {fileID: 0}
   cutsceneDescription: 
-  tutorialName: Tutorial 1

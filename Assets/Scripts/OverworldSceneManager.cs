@@ -192,8 +192,9 @@ public class OverworldSceneManager : MonoBehaviour{
         if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Battle)
             LoadBattleWithData(currentPlayerSpace);
         else if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial){
+        StaticVariables.battleData = currentPlayerSpace.battleData;
             SetCurrentBattleData(currentPlayerSpace);
-            StaticVariables.FadeOutThenLoadScene(currentPlayerSpace.tutorialName);
+            StaticVariables.FadeOutThenLoadScene("Tutorial");
         }
 
         //else if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Cutscene){

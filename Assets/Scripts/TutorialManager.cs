@@ -6,16 +6,18 @@ using UnityEngine.UI;
 public class TutorialManager : BattleManager {
 
     private int tutorialStep = 0;
-    private char[,] startingLayout = {{'W', 'K', 'M', 'O', 'S'}, {'L', 'E', 'V', 'Y', 'S'}, {'A', 'D', 'O', 'G', 'R'}, {'C', 'H', 'I', 'R', 'Z'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
+    private char[,] startingLayout = {{'W', 'K', 'B', 'U', 'M'}, {'L', 'I', 'V', 'Y', 'P'}, {'A', 'D', 'O', 'G', 'E'}, {'C', 'H', 'I', 'R', 'Z'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
     public enum Cond{Click, SelectLetter, FinishWord, SubmitWord, EnemyTakesDamage, EnemyDies};
     private Cond advanceCondition;
     private char requiredLetter;
     private char[] requiredWord;
     private bool canEnemyTakeDamage = false;
     private bool canCountdown = false;
+    private bool canQueueAttack = false;
 
     
     [Header("Tutorial Stuff")]
+    public int tutorialNumber;
     public Text tutorialTextBox;
     public GameObject highlightWord1;
     public GameObject highlightWord2;
@@ -24,18 +26,58 @@ public class TutorialManager : BattleManager {
 
     public override void Start() {
         base.Start();
-        powerupsPerPuzzle = 0;
+        SetTutorialNumber();
+        switch (tutorialNumber){
+            case (1):
+                SetupTutorial1();
+                break;
+            case (2):
+                SetupTutorial2();
+                break;
+            case (3):
+                SetupTutorial3();
+                break;
+            case (4):
+                SetupTutorial4();
+                break;
+        }
         SetupDialogueManager();
         HideSubmitButtonExtras();
-        HideHealthDisplays();
-        //HidePowerups();
-        AdvanceTutorialStep();
         ButtonText("CONTINUE");
+        AdvanceTutorialStep();
+    }
 
+    private void SetTutorialNumber(){
+        string name = enemyData.name;
+        string[] split = name.Split(" ");
+        string n = split[1];
+        tutorialNumber = int.Parse(n);
+        //print(tutorialNumber);
+        if ((tutorialNumber > 4) || (tutorialNumber < 1))
+            print("tutorial number is wrong! number is " + tutorialNumber + ", retrieved from enemy name " + name);
+    }
+
+    private void SetupTutorial1(){
+        powerupsPerPuzzle = 0;
+        HideHealthDisplays();
+
+    }
+    
+    private void SetupTutorial2(){
+        
+    }
+    
+    private void SetupTutorial3(){
+        
+    }
+    
+    private void SetupTutorial4(){
+        
     }
 
     public override void QueueEnemyAttack(){
-        return;
+        if (canQueueAttack)
+            base.QueueEnemyAttack();
     }
 
 
@@ -46,7 +88,37 @@ public class TutorialManager : BattleManager {
 
     private void AdvanceTutorialStep(){
         tutorialStep ++;
+        switch (tutorialNumber){
+            case (1):
+                DoTutorial1Step();
+                break;
+            case (2):
+                DoTutorial2Step();
+                break;
+            case (3):
+                DoTutorial3Step();
+                break;
+            case (4):
+                DoTutorial4Step();
+                break;
+        }
+        switch (advanceCondition){
+            case (Cond.Click):
+                ToggleButton(true);
+                break;
+            case (Cond.SelectLetter):
+                ToggleButton(false);
+                break;
+            case (Cond.FinishWord):
+                ToggleButton(false);
+                break;
+            case (Cond.SubmitWord):
+                ToggleButton(false);
+                break;
+        }
+    }
 
+    private void DoTutorial1Step(){        
         switch (tutorialStep){
             case (1):
                 DisplayText("Tap a letter to select it. Start by selecting the letter 'D'.");
@@ -93,10 +165,10 @@ public class TutorialManager : BattleManager {
                 advanceCondition = Cond.Click;
                 break;
             case (9):
-                DisplayText("Try to make the word 'MOSSY' and attack the goblin.");
+                DisplayText("Try to make the word 'BUMPY' and attack the goblin.");
                 ToggleButton(false);
                 advanceCondition = Cond.FinishWord;
-                requiredWord = new char[] {'M', 'O', 'S', 'S', 'Y'};
+                requiredWord = new char[] {'B', 'U', 'M', 'P', 'Y'};
                 highlightWord2.SetActive(true);
                 break;
             case (10):
@@ -150,21 +222,15 @@ public class TutorialManager : BattleManager {
                 uiManager.EndDialogue();
                 break;
         }
-
-        switch (advanceCondition){
-            case (Cond.Click):
-                ToggleButton(true);
-                break;
-            case (Cond.SelectLetter):
-                ToggleButton(false);
-                break;
-            case (Cond.FinishWord):
-                ToggleButton(false);
-                break;
-            case (Cond.SubmitWord):
-                ToggleButton(false);
-                break;
-        }
+    }
+    private void DoTutorial2Step(){
+        
+    }
+    private void DoTutorial3Step(){
+        
+    }
+    private void DoTutorial4Step(){
+        
     }
 
     private void ToggleButton(bool value){
