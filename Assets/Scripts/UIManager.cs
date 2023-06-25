@@ -696,6 +696,7 @@ public class UIManager : MonoBehaviour {
 
     public void PageTurnEnded(){
         turningPage = false;
+        battleManager.TurnPageEnded();
     }
 
     public void HideLetterVisualsForSection(int sectionNum){

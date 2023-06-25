@@ -334,6 +334,15 @@ public class PuzzleGenerator : MonoBehaviour {
         UpdateAllLetterVisuals();
     }
 
+    public void GenerateNextPuzzleForTutorial(char[,] layout){
+        foreach (LetterSpace ls in letterSpaces)
+            ls.hasBeenUsedInAWordAlready = false;
+        letters = layout;        
+        ClearAllPowerups();
+        PickAllSpacesForPowerups(); 
+        SetNextPuzzleData();
+    }
+
     private void SetNextPuzzleData(){
         for (int i = 0; i < letterSpaces.GetLength(0); i++){
             for (int j = 0; j < letterSpaces.GetLength(1); j++){

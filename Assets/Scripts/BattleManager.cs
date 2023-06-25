@@ -34,7 +34,8 @@ public class BattleManager : MonoBehaviour {
     [HideInInspector]
     public int countdownToRefresh;
     public enum PowerupTypes{None, Water, Fire, Heal, Dark, Earth, Lightning, Pebble, Sword};
-    private bool isValidWord = false;
+    [HideInInspector]
+    public bool isValidWord = false;
     private int wordStrength = 0;
     private bool hasSwipedOffALetter = false;
     private bool waitingForEnemyAttackToFinish = false;
@@ -159,7 +160,7 @@ public class BattleManager : MonoBehaviour {
         }
     }
 
-    private void DamagePlayerHealth(int amount){
+    public virtual void DamagePlayerHealth(int amount){
         playerHealth -= amount;
         if (playerHealth < 0)
             playerHealth = 0;
@@ -603,7 +604,7 @@ public class BattleManager : MonoBehaviour {
             uiManager.ResumeEnemyAttackBar();
     }
 
-    public void TriggerEnemyAttack(){
+    public virtual void TriggerEnemyAttack(){
         if (!stopNextAttack){
             DecrementRefreshPuzzleCountdown();
             UpdateSubmitVisuals();
@@ -633,6 +634,10 @@ public class BattleManager : MonoBehaviour {
         else{
             uiManager.ShowVictoryPage();
         }
+    }
+
+    public virtual void TurnPageEnded(){
+
     }
 
 }

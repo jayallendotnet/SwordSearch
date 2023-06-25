@@ -30,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 1107962101534003457}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -13, y: 13, z: 1}
+  m_LocalScale: {x: 13, y: 13, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -129,8 +129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBattleable: 1
   nameOverride: Goblin
-  startingHealth: 3
-  attackSpeed: 5
+  startingHealth: 40
+  attackSpeed: 7
   attackDamage: 1
   isDraconic: 0
   isHorde: 0
@@ -143,6 +143,9 @@ MonoBehaviour:
   questioning: {fileID: 0}
   overworldDialogueSteps:
   - type: 0
+    emotion: 6
+    description: It looks like another goblin has noticed me!
+  - type: 0
     emotion: 0
-    description: I'll have to be careful... There's a goblin nearby!
+    description: I hope I can defeat this one too...
   victoryDialogueSteps: []
