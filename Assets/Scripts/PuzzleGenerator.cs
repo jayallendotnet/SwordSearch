@@ -13,9 +13,11 @@ public class PuzzleGenerator : MonoBehaviour {
     private char[,] letters;
     private BattleManager.PowerupTypes[,] powerupTypes;
     private char[] randomLetterPool;
-    //private bool useStartingLayout = true;
-    //private char[,] startingLayout = {{'-', '-', '-', '-', 'A'}, {'O', 'R', '-', 'L', 'V'}, {'W', 'S', 'D', 'S', 'I'}, {'-', 'A', 'R', 'R', 'U'}, {'-', '-', '-', 'P', 'Y'}, {'-', 'L', 'A', 'T', '-'}, {'P', '-', '-', '-', '-'}};
-    private string[] wordLibraryForGeneration;
+    [HideInInspector]
+    public bool useSmallerLayout = false;
+    private char[,] smallerLayout = {{'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'=', '=', '=', '=', '='}, {'=', '=', '=', '=', '='}, {'=', '=', '=', '=', '='}};
+    [HideInInspector]
+    public string[] wordLibraryForGeneration;
     List<BattleManager.PowerupTypes> powerupTypeSelection;
 
     [Header("Puzle Generation Rules")]
@@ -33,13 +35,14 @@ public class PuzzleGenerator : MonoBehaviour {
     [Header("Misc")]
     public BattleManager battleManager;
 
-    void Start() {
+    public void Setup(){
         wordLibraryForGeneration = battleManager.wordLibraryForGenerationFile.text.Split("\r\n");
         randomLetterPool = battleManager.randomLetterPoolFile.text.ToCharArray();
         SetPowerupTypeList();
         GetPuzzleDimensions();
         GenerateNewPuzzle();
         UpdateAllLetterVisuals();
+
     }
 
     public void GenerateNewPuzzle(){
@@ -57,37 +60,23 @@ public class PuzzleGenerator : MonoBehaviour {
 
     private bool PickWordsAndAttemptToGenerateSolution(){
         string[] words = GetRandomWordsFromLibrary();
+        //print("new puzzle about to be generated using words:");
+        //foreach (string w in words)
+        //    print(w);
         return AttemptToGenerateSolution(words);
     }
 
     private string[] GetRandomWordsFromLibrary(){
         string[] result = new string[wordCount];
-        for (int i = 0; i < wordCount; i++){
-            bool searching = true;
-            while (searching){
-                string word = wordLibraryForGeneration[StaticVariables.rand.Next(wordLibraryForGeneration.Length)];  
-                if (DoesWordFitCriteria(word)){
-                    searching = false;     
-                    result[i] = word;
-                }
-                //print(word);
-            }
-        }
+        for (int i = 0; i < wordCount; i++)
+            result[i] = wordLibraryForGeneration[StaticVariables.rand.Next(wordLibraryForGeneration.Length)];
         return result;
     }
 
-    private bool DoesWordFitCriteria(string word){
-        if (word.Length < minGenerationWordLength)
-            return false;
-        if (word.Length > maxGenerationWordLength)
-            return false;
-        return true;
-    }
 
     private bool AttemptToGenerateSolution(string[] words){
         int attemptCount = 0;
         bool succeeded = true;
-
         while (attemptCount < maxAttemptsPerPuzzle){
             foreach (string word in words){
                 bool couldGenerateWord = GenerateLetters(word);
@@ -107,12 +96,10 @@ public class PuzzleGenerator : MonoBehaviour {
         string remainingWord = requiredWord.ToUpper();;
         Vector2 previousSpace = new Vector2(-1,-1);
         int remainingLength = requiredWord.Length;
-        //Vector2 previousSpace = PlaceLetter(requiredWord[0], new Vector2(-1,-1), (requiredWord.Length - 1));
         bool cont = true;
         while (cont){
             previousSpace = PlaceLetter(remainingWord[0], previousSpace, remainingWord.Length);
             remainingWord = remainingWord.Substring(1);
-            //print("remaining word is " + remainingWord);
             remainingLength = remainingWord.Length - 1;
             if (remainingLength == -1)
                 cont = false;
@@ -334,6 +321,7 @@ public class PuzzleGenerator : MonoBehaviour {
         UpdateAllLetterVisuals();
     }
 
+    
     public void GenerateNextPuzzleForTutorial(char[,] layout){
         foreach (LetterSpace ls in letterSpaces)
             ls.hasBeenUsedInAWordAlready = false;
@@ -342,6 +330,7 @@ public class PuzzleGenerator : MonoBehaviour {
         PickAllSpacesForPowerups(); 
         SetNextPuzzleData();
     }
+    
 
     private void SetNextPuzzleData(){
         for (int i = 0; i < letterSpaces.GetLength(0); i++){
@@ -384,28 +373,6 @@ public class PuzzleGenerator : MonoBehaviour {
         }
     }
 
-    /*
-    public void HideLetterVisualsForSection(int sectionNum){
-        LetterSpace[] spaces;
-        switch (sectionNum){
-            case 1:
-                spaces = letterSection1;
-                break;
-            case 2:
-                spaces = letterSection2;
-                break;
-            case 3:
-                spaces = letterSection3;
-                break;
-            default:
-                spaces = letterSection4;
-                break;
-        }
-        foreach (LetterSpace ls in spaces)
-            ls.HideVisuals();
-    }
-    */
-
     private void GetPuzzleDimensions(){
         int totalCount = transform.childCount;
         int width = Mathf.FloorToInt(GetComponent<GridLayoutGroup>().constraintCount);
@@ -437,8 +404,8 @@ public class PuzzleGenerator : MonoBehaviour {
         for (int i = 0; i < letters.GetLength(0); i++){
             for (int j = 0; j < letters.GetLength(1); j++){
                 letters[i,j] = '-';
-                //if (useStartingLayout)
-                //    letters[i,j] = startingLayout[i,j];
+                if (useSmallerLayout)
+                    letters[i,j] = smallerLayout[i,j];
             }
         }
     }

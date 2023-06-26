@@ -7,7 +7,8 @@ public class TutorialManager : BattleManager {
 
     private int tutorialStep = 0;
     private char[,] startingLayout1 = {{'W', 'K', 'B', 'U', 'M'}, {'L', 'I', 'V', 'Y', 'P'}, {'A', 'D', 'O', 'G', 'E'}, {'C', 'H', 'I', 'R', 'Z'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
-    private char[,] startingLayout2 = {{'S', 'P', 'U', 'N', 'K'}, {'N', 'E', 'W', 'Y', 'S'}, {'T', 'E', 'A', 'G', 'S'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
+    private char[,] startingLayout2 = {{'S', 'P', 'U', 'N', 'K'}, {'N', 'E', 'W', 'Y', 'S'}, {'T', 'E', 'A', 'G', 'S'}, {'L', 'O', 'M', 'I', 'T'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
+    private char[,] startingLayout3 = {{'O', 'G', 'E', 'N', 'N'}, {'F', 'R', 'I', 'L', 'U'}, {'E', 'A', 'O', 'Z', 'P'}, {'T', 'N', 'E', 'I', 'M'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
 
     public enum Cond{Click, SelectLetter, FinishWord, SubmitWord, EnemyTakesDamage, EnemyDies, SubmitAnyWord, EnemyAttacks, PlayerTakesDamage, TurnPage, TurnPageEnds, NormalBattle};
     private Cond advanceCondition;
@@ -35,9 +36,15 @@ public class TutorialManager : BattleManager {
     public GameObject highlightEnemyTimer;
     public GameObject highlightPlayerHealth;
     public GameObject highlightCountdown;
+    public TextAsset wordLibraryForSmallerPuzzles;
     
 
     public override void Start() {
+        wordLibraryForGenerationFile = wordLibraryForSmallerPuzzles;
+        puzzleGenerator.wordCount = 4;
+        puzzleGenerator.useSmallerLayout = true;
+        
+        //puzzleGenerator.wordLibraryForGeneration = wordLibraryForGenerationFile.text.Split("\r\n");
         base.Start();
         SetTutorialNumber();
         switch (tutorialNumber){
@@ -264,7 +271,6 @@ public class TutorialManager : BattleManager {
                 break;
             case (4):
                 DisplayText("A word has to be at least 3 letters long to be used for an attack.");
-                //HidePlayerHealth();
                 advanceCondition = Cond.Click;
                 break;
             case (5):
@@ -341,10 +347,8 @@ public class TutorialManager : BattleManager {
                 break;
             case (19):
                 DisplayText("Try to get the enemy's health to 0 before your health gets depleted.");
-                //canEnemyDie = true;
-                TurnToPredefinedPage(startingLayout1);
+                TurnToPredefinedPage(startingLayout3);
                 advanceCondition = Cond.SubmitAnyWord;
-                //advanceCondition = Cond.EnemyDies;
                 break;
             case (20):
                 advanceCondition = Cond.SubmitAnyWord;
@@ -431,12 +435,23 @@ public class TutorialManager : BattleManager {
         }
     }
 
+    
     private void TurnToPredefinedPage(char[,] layout){
         puzzleGenerator.GenerateNextPuzzleForTutorial(layout);
         countdownToRefresh = maxPuzzleCountdown; 
         ClearWord(true); 
         uiManager.ShowPageTurn();  
     }
+    
+    
+    private void TurnToSmallerPage(){
+        puzzleGenerator.GenerateNewPuzzle();
+        countdownToRefresh = maxPuzzleCountdown; 
+        ClearWord(true); 
+        uiManager.ShowPageTurn();  
+
+    }
+    
 
     private void ToggleButton(bool value){
         uiManager.dialogueManager.buttonText.transform.parent.gameObject.SetActive(value);
@@ -595,7 +610,8 @@ public class TutorialManager : BattleManager {
                 }
                 break;
             case (Cond.TurnPage):
-                TurnToPredefinedPage(startingLayout2);   
+                //TurnToPredefinedPage(startingLayout2);   
+                TurnToSmallerPage();
                 AdvanceTutorialStep();
                 break;
             case (Cond.NormalBattle):

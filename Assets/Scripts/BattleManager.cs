@@ -106,6 +106,7 @@ public class BattleManager : MonoBehaviour {
         uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
         StaticVariables.FadeIntoScene();
         StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration, QueueEnemyAttack);
+        puzzleGenerator.Setup();
     }
     
     public void SetIsValidWord(){
@@ -458,6 +459,8 @@ public class BattleManager : MonoBehaviour {
     }
 
     public virtual bool CanAddLetter(LetterSpace letterSpace){
+        if (letterSpace.letter == '=')
+            return false;
         if ((playerHealth == 0) || (enemyHealth == 0) || (isGamePaused))
             return false;
         if (letterSpace.hasBeenUsedInAWordAlready)
