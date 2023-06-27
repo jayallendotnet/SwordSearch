@@ -58,6 +58,39 @@ public class PuzzleGenerator : MonoBehaviour {
         SetNextPuzzleData();
     }
 
+    public void SetCustomPowerups(char[,] powerupsLayout){
+        ClearAllPowerups();
+        for (int i = 0; i < powerupsLayout.GetLength(0); i++){
+            for (int j = 0; j < powerupsLayout.GetLength(1); j++){
+                switch (powerupsLayout[i,j]){
+                    case ('H'):
+                        letterSpaces[i,j].powerupType = BattleManager.PowerupTypes.Heal;
+                        break;
+                    case ('W'):
+                        letterSpaces[i,j].powerupType = BattleManager.PowerupTypes.Water;
+                        break;
+                    case ('F'):
+                        letterSpaces[i,j].powerupType = BattleManager.PowerupTypes.Fire;
+                        break;
+                    case ('L'):
+                        letterSpaces[i,j].powerupType = BattleManager.PowerupTypes.Lightning;
+                        break;
+                    case ('D'):
+                        letterSpaces[i,j].powerupType = BattleManager.PowerupTypes.Dark;
+                        break;
+                    case ('E'):
+                        letterSpaces[i,j].powerupType = BattleManager.PowerupTypes.Earth;
+                        break;
+                    case ('S'):
+                        letterSpaces[i,j].powerupType = BattleManager.PowerupTypes.Sword;
+                        break;
+
+                }
+                letterSpaces[i,j].ShowPowerup();
+            }
+        }
+    }
+
     private bool PickWordsAndAttemptToGenerateSolution(){
         string[] words = GetRandomWordsFromLibrary();
         //print("new puzzle about to be generated using words:");
@@ -426,6 +459,8 @@ public class PuzzleGenerator : MonoBehaviour {
     private void PickRandomSpaceForPowerup(){
         int t1 = StaticVariables.rand.Next(letters.GetLength(0));
         int t2 = StaticVariables.rand.Next(letters.GetLength(1));
+        if (useSmallerLayout)
+            t1 = StaticVariables.rand.Next(4);
         if (powerupTypes[t1, t2] != BattleManager.PowerupTypes.None)
             PickRandomSpaceForPowerup();
         else{

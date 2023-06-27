@@ -9,8 +9,10 @@ public class TutorialManager : BattleManager {
     private char[,] startingLayout1 = {{'W', 'K', 'B', 'U', 'M'}, {'L', 'I', 'V', 'Y', 'P'}, {'A', 'D', 'O', 'G', 'E'}, {'C', 'H', 'I', 'R', 'Z'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
     private char[,] startingLayout2 = {{'S', 'P', 'U', 'N', 'K'}, {'N', 'E', 'W', 'Y', 'S'}, {'T', 'E', 'A', 'G', 'S'}, {'L', 'O', 'M', 'I', 'T'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
     private char[,] startingLayout3 = {{'O', 'G', 'E', 'N', 'N'}, {'F', 'R', 'I', 'L', 'U'}, {'E', 'A', 'O', 'Z', 'P'}, {'T', 'N', 'E', 'I', 'M'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
+    private char[,] startingLayout4 = {{'C', 'A', 'L', 'D', 'E'}, {'E', 'S', 'I', 'N', 'M'}, {'T', 'A', 'E', 'B', 'R'}, {'T', 'K', 'C', 'O', 'L'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
+    private char[,] startingPowerups1 = {{'-', '-', '-', '-', '-'}, {'-', 'H', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', 'W', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
 
-    public enum Cond{Click, SelectLetter, FinishWord, SubmitWord, EnemyTakesDamage, EnemyDies, SubmitAnyWord, EnemyAttacks, PlayerTakesDamage, TurnPage, TurnPageEnds, NormalBattle};
+    public enum Cond{Click, SelectLetter, FinishWord, SubmitWord, EnemyTakesDamage, EnemyDies, SubmitAnyWord, EnemyAttacks, PlayerTakesDamage, TurnPage, TurnPageEnds, NormalBattle, SubmitHealingWord, PlayerGetsHealed, SubmitWaterWord, WaterFillsPage, WaterDrains};
     private Cond advanceCondition;
     private char requiredLetter;
     private char[] requiredWord;
@@ -22,6 +24,8 @@ public class TutorialManager : BattleManager {
     private bool canShowPlayerHealth = false;
     private bool canShowEnemyHealth = false;
     private bool canEnemyDie = true;
+
+    private float originalFloatDuration;
 
     
     [Header("Tutorial Stuff")]
@@ -44,7 +48,6 @@ public class TutorialManager : BattleManager {
         puzzleGenerator.wordCount = 4;
         puzzleGenerator.useSmallerLayout = true;
         
-        //puzzleGenerator.wordLibraryForGeneration = wordLibraryForGenerationFile.text.Split("\r\n");
         base.Start();
         SetTutorialNumber();
         switch (tutorialNumber){
@@ -56,9 +59,6 @@ public class TutorialManager : BattleManager {
                 break;
             case (3):
                 SetupTutorial3();
-                break;
-            case (4):
-                SetupTutorial4();
                 break;
         }
         SetupDialogueManager();
@@ -73,7 +73,7 @@ public class TutorialManager : BattleManager {
         string n = split[1];
         tutorialNumber = int.Parse(n);
         //print(tutorialNumber);
-        if ((tutorialNumber > 4) || (tutorialNumber < 1))
+        if ((tutorialNumber > 3) || (tutorialNumber < 1))
             print("tutorial number is wrong! number is " + tutorialNumber + ", retrieved from enemy name " + name);
     }
 
@@ -104,10 +104,15 @@ public class TutorialManager : BattleManager {
     }
     
     private void SetupTutorial3(){
-        
-    }
-    
-    private void SetupTutorial4(){
+        powerupsPerPuzzle = 0;
+        canEnemyTakeDamage = true;
+        canCountdown = true;
+        canQueueAttack = false;
+        canShowStrength = true;
+        canShowCountdown = true;
+        canShowPlayerHealth = true;
+        canShowEnemyHealth = true;
+        canEnemyDie = false;
         
     }
 
@@ -136,9 +141,6 @@ public class TutorialManager : BattleManager {
                 break;
             case (3):
                 DoTutorial3Step();
-                break;
-            case (4):
-                DoTutorial4Step();
                 break;
         }
         switch (advanceCondition){
@@ -421,10 +423,133 @@ public class TutorialManager : BattleManager {
         }
     }
     private void DoTutorial3Step(){
-        
-    }
-    private void DoTutorial4Step(){
-        
+        switch (tutorialStep){
+            case (1):
+                DisplayText("The true powers of the element of water have awakened!");
+                LoadCustomPuzzle(startingLayout4);
+                puzzleGenerator.SetCustomPowerups(startingPowerups1);
+                advanceCondition = Cond.Click;
+                break;
+            case (2):
+                DisplayText("Some letters are now glowing with special powerups.");
+                puzzleGenerator.letterSpaces[1,1].ToggleTutorialSelector(true);
+                puzzleGenerator.letterSpaces[3,3].ToggleTutorialSelector(true);
+                advanceCondition = Cond.Click;
+                break;
+            case (3):
+                DisplayText("First is the power of healing, which has a light green color.");
+                puzzleGenerator.letterSpaces[3,3].ToggleTutorialSelector(false);
+                advanceCondition = Cond.Click;
+                break;
+            case (4):
+                DisplayText("If you make a word with the power of healing, your health will be restored.");
+                advanceCondition = Cond.Click;
+                break;
+            case (5):
+                DisplayText("The powerup does not have to be in the first letter of the word to take effect.");
+                advanceCondition = Cond.Click;
+                break;
+            case (6):
+                DisplayText("Try making a word that includes the power of healing.");
+                advanceCondition = Cond.SubmitHealingWord;
+                break;
+            case (7):
+                DisplayText("");
+                puzzleGenerator.letterSpaces[1,1].ToggleTutorialSelector(false);
+                advanceCondition = Cond.PlayerGetsHealed;
+                break;
+            case (8):
+                DisplayPlayerTalking("Wow! I feel so refreshed!", DialogueStep.Emotion.Happy);
+                advanceCondition = Cond.Click;
+                break;
+            case (9):
+                DisplayText("The power of healing heals you for 3 times the strength of the attack.");
+                advanceCondition = Cond.Click;
+                break;
+            case (10):
+                DisplayText("This means the power of healing is more effective with longer words!");
+                advanceCondition = Cond.Click;
+                break;
+            case (11):
+                DisplayText("However, attacks made with the power of healing do not damage the enemy.");
+                advanceCondition = Cond.Click;
+                break;
+            case (12):
+                DisplayText("The power of water is better for dealing more damage.");
+                puzzleGenerator.letterSpaces[3,3].ToggleTutorialSelector(true);
+                advanceCondition = Cond.Click;
+                break;
+            case (13):
+                DisplayText("The power of water has a blue coloration.");
+                advanceCondition = Cond.Click;
+                break;
+            case (14):
+                DisplayText("Try making a word that includes the power of water.");
+                advanceCondition = Cond.SubmitWaterWord;
+                break;
+            case (15):
+                DisplayText("");
+                puzzleGenerator.letterSpaces[3,3].ToggleTutorialSelector(false);
+                advanceCondition = Cond.WaterFillsPage;
+                originalFloatDuration = uiManager.waterFloatDuration;
+                uiManager.waterFloatDuration = -1;
+                break;
+            case (16):
+                DisplayText("After making an attack with the power of water, the book's pages are flooded!");
+                advanceCondition = Cond.Click;
+                break;
+            case (17):
+                DisplayText("For the next 20 seconds, every attack you make does +2 more damage!");
+                advanceCondition = Cond.Click;
+                break;
+            case (18):
+                DisplayText("To make the most of this powerup, make as many words as you can in the next 20 seconds.");
+                ButtonText("READY!");
+                advanceCondition = Cond.Click;
+                break;
+            case (19):
+                DisplayText("Attack!!");
+                uiManager.StartDrainingWaterSmallerPage();
+                advanceCondition = Cond.WaterDrains;
+                break;
+            case (20):
+                DisplayText("From now on, both healing and water powerups will appear on letters!");
+                ButtonText("CONTINUE");
+                advanceCondition = Cond.Click;
+                break;
+            case (21):
+                DisplayText("Keep using normal attacks and powerups to defeat the goblin general!");
+                advanceCondition = Cond.Click;
+                break;
+            case (22):
+                canEnemyDie = true;
+                powerupsPerPuzzle = 3;
+                TurnToSmallerPage();
+                canQueueAttack = true;
+                QueueEnemyAttack();
+                uiManager.waterFloatDuration = originalFloatDuration;
+                advanceCondition = Cond.NormalBattle;
+                break;
+            case (23):
+                DisplayText("");
+                advanceCondition = Cond.EnemyDies;
+                break;
+            case (24):
+                DisplayPlayerTalking("Take that!!!", DialogueStep.Emotion.Angry);
+                advanceCondition = Cond.Click;
+                break;
+            case (25):
+                DisplayEnemyTalking("We can't win! Not with those guards and this witch too!", enemyData, DialogueStep.Emotion.Angry);
+                advanceCondition = Cond.Click;
+                break;
+            case (26):
+                DisplayEnemyTalking("Goblins! Retreat!!", enemyData, DialogueStep.Emotion.Angry);
+                advanceCondition = Cond.Click;
+                break;
+            case (27):
+                uiManager.EndDialogue();
+                break;
+        }
     }
 
     public override void TurnPageEnded(){
@@ -434,6 +559,16 @@ public class TutorialManager : BattleManager {
                 break;
         }
     }
+
+    public override void WaterReachedTopOfPage(){
+        switch(advanceCondition){
+            case (Cond.WaterFillsPage):
+                AdvanceTutorialStep();
+                break;
+        }
+    }
+
+
 
     
     private void TurnToPredefinedPage(char[,] layout){
@@ -445,9 +580,9 @@ public class TutorialManager : BattleManager {
     
     
     private void TurnToSmallerPage(){
+        ClearWord(true); 
         puzzleGenerator.GenerateNewPuzzle();
         countdownToRefresh = maxPuzzleCountdown; 
-        ClearWord(true); 
         uiManager.ShowPageTurn();  
 
     }
@@ -566,7 +701,13 @@ public class TutorialManager : BattleManager {
             case (Cond.SubmitAnyWord):
                 return true;  
             case (Cond.NormalBattle):
-                return true;                  
+                return true;        
+            case (Cond.SubmitHealingWord):
+                return true;          
+            case (Cond.SubmitWaterWord):
+                return true;         
+            case (Cond.WaterDrains):
+                return true;              
         }
 
         return false;
@@ -616,7 +757,22 @@ public class TutorialManager : BattleManager {
                 break;
             case (Cond.NormalBattle):
                 base.PressSubmitWordButton();
-                break;
+                break;    
+            case (Cond.SubmitHealingWord):
+                if((isValidWord) && (powerupTypeForWord == BattleManager.PowerupTypes.Heal)){
+                    base.PressSubmitWordButton();
+                    AdvanceTutorialStep();
+                }
+                break;   
+            case (Cond.SubmitWaterWord):
+                if((isValidWord) && (powerupTypeForWord == BattleManager.PowerupTypes.Water)){
+                    base.PressSubmitWordButton();
+                    AdvanceTutorialStep();
+                }
+                break;      
+            case (Cond.WaterDrains):
+                base.PressSubmitWordButton();
+                break;   
         }
         if (!canCountdown)
             countdownToRefresh ++;
@@ -671,6 +827,24 @@ public class TutorialManager : BattleManager {
                 break;
         }
         
+    }
+
+    public override void ApplyHealToSelf(int strength, int powerupLevel){
+        base.ApplyHealToSelf(strength, powerupLevel);
+        switch (advanceCondition){
+            case (Cond.PlayerGetsHealed):
+                AdvanceTutorialStep();
+                break;
+        }
+    }
+
+    public override void WaterDrainComplete(){
+        base.WaterDrainComplete();
+        switch (advanceCondition){
+            case (Cond.WaterDrains):
+                AdvanceTutorialStep();
+                break;
+        }
     }
 }
  

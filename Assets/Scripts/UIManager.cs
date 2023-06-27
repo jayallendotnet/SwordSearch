@@ -515,7 +515,16 @@ public class UIManager : MonoBehaviour {
     }
     
     private void FloatWater(){
+        battleManager.WaterReachedTopOfPage();
+        if (waterFloatDuration == -1)
+            return;
         StaticVariables.WaitTimeThenCallFunction(waterFloatDuration, StartDrainingWater);
+    }
+
+    public void StartDrainingWaterSmallerPage(){
+        float offset = 650f;
+        waterBuffBottom.DOSizeDelta(new Vector2(waterBuffBottom.sizeDelta.x, offset), waterDrainDuration).SetEase(Ease.Linear);
+        waterBuffTop.DOAnchorPos(new Vector2(0, (-waterBuffBottom.sizeDelta.y + waterBuffTop.anchoredPosition.y + offset)), waterDrainDuration).SetEase(Ease.Linear).OnComplete(DrainingComplete);
     }
 
     public void StartDrainingWater(){

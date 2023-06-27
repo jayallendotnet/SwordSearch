@@ -298,7 +298,7 @@ public class BattleManager : MonoBehaviour {
         DamageEnemyHealth(enemyDamage);
     }
 
-    public void WaterDrainComplete(){
+    public virtual void WaterDrainComplete(){
         isWaterInPuzzleArea = false;
         CalcWordStrength();
         UpdateSubmitVisuals();
@@ -363,7 +363,7 @@ public class BattleManager : MonoBehaviour {
         DamageEnemyHealth(enemyDamage);
     }
 
-    public void ApplyHealToSelf(int strength, int powerupLevel){
+    public virtual void ApplyHealToSelf(int strength, int powerupLevel){
         int healAmount = strength * 3;
         if (enemyData.isHoly)
             healAmount *= 2;
@@ -640,6 +640,10 @@ public class BattleManager : MonoBehaviour {
     }
 
     public virtual void TurnPageEnded(){
+
+    }
+
+    public virtual void WaterReachedTopOfPage(){
 
     }
 

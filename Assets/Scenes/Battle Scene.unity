@@ -2322,6 +2322,7 @@ MonoBehaviour:
   temp:
     enemyPrefab: {fileID: 0}
     backgroundPrefab: {fileID: 0}
+  temp2: {fileID: 0}
 --- !u!1 &376672707
 GameObject:
   m_ObjectHideFlags: 0
@@ -3927,6 +3928,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb2885709b559db4c9f3c4350094d36f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useSmallerLayout: 0
+  wordLibraryForGeneration: []
   wordCount: 3
   maxAttemptsPerPuzzle: 3
   minGenerationWordLength: 3
@@ -11240,6 +11243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52cb758619926ec49b2dd205dd6dd07c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  word: 
   letterSpacesForWord: []
   powerupTypeForWord: 0
   powerupLevel: 0
@@ -11249,6 +11253,8 @@ MonoBehaviour:
   currentHordeEnemyCount: 0
   firstEnemyInHorde: {fileID: 0}
   playerHealth: 0
+  countdownToRefresh: 0
+  isValidWord: 0
   enemyData: {fileID: 0}
   enemyAttackAnimatorFunctions: {fileID: 0}
   enemyHordeAttackAnimatorFunctions: []
@@ -11266,7 +11272,7 @@ MonoBehaviour:
   lightningStunDuration: 15
   darkPowerupDamageMultiplier: 2.5
   waterFloodDuration: 20
-  waterFloodDamageBonus: 1
+  waterFloodDamageBonus: 2
   swordPowerupDamageMultiplier: 2
   swordPowerupDamageMultiplierVsDragons: 5
   defaultBattleData:
