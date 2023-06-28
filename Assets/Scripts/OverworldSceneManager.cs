@@ -196,17 +196,11 @@ public class OverworldSceneManager : MonoBehaviour{
             SetCurrentBattleData(currentPlayerSpace);
             StaticVariables.FadeOutThenLoadScene("Tutorial");
         }
-
-        //else if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Cutscene){
-        //    StaticVariables.cutsceneToPlay = currentPlayerSpace.cutsceneData;
-        //    StaticVariables.FadeOutThenLoadScene("Cutscene");
-        //}
-
     }
 
     public void StartCutscene(){
         if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Cutscene){
-            StaticVariables.cutsceneToPlay = currentPlayerSpace.cutsceneData;
+            StaticVariables.cutsceneID = currentPlayerSpace.cutsceneID;
             StaticVariables.FadeOutThenLoadScene("Cutscene");
         }
     }

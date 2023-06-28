@@ -165,7 +165,7 @@ public class DialogueManager : MonoBehaviour{
     
     public void PressedButton(){
         if (isInCutscene)
-            cutsceneManager.PressedButton();
+            cutsceneManager.PressedNextButton();
         else if (isInTutorial)
             tutorialManager.PressedNextButton();
         else

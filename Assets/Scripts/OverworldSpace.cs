@@ -25,7 +25,7 @@ public class OverworldSpace : MonoBehaviour{
     [ConditionalField(nameof(type), false, OverworldSpaceType.Battle, OverworldSpaceType.Tutorial)]
     public BattleData battleData;
     [ConditionalField(nameof(type), false, OverworldSpaceType.Cutscene)]
-    public CutsceneData cutsceneData;
+    public CutsceneManager.Cutscene cutsceneID;
     [ConditionalField(nameof(type), false, OverworldSpaceType.Cutscene)]
     public string cutsceneDescription = "";
 
