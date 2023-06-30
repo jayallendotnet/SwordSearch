@@ -162,6 +162,14 @@ public class DialogueManager : MonoBehaviour{
         playerChatheadTransform.DOAnchorPos(new Vector2(playerChatheadTransform.anchoredPosition.x, -playerChatheadSize), duration);
         enemyChatheadTransform.DOAnchorPos(new Vector2(enemyChatheadTransform.anchoredPosition.x, -enemyChatheadSize), duration);
     }
+    public void HideEnemyChathead(float duration = 0f){
+        float enemyChatheadSize = enemyChatheadTransform.sizeDelta.y * enemyChatheadTransform.localScale.y;
+        if (duration <= 0){
+            enemyChatheadTransform.anchoredPosition = new Vector2(enemyChatheadTransform.anchoredPosition.x, -enemyChatheadSize);
+        }
+        enemyChatheadTransform.DOAnchorPos(new Vector2(enemyChatheadTransform.anchoredPosition.x, -enemyChatheadSize), duration);
+
+    }
     
     public void PressedButton(){
         if (isInCutscene)
