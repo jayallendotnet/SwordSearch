@@ -30,7 +30,7 @@ public class CutsceneManager : MonoBehaviour{
 
     public void Start() {
         //manually start at a later cutscene step (put 1 less than the step you actually want to start on)
-        //cutsceneStep = 31;
+        cutsceneStep = 50;
         SetCutsceneID();
         switch (cutsceneID){
             case (Cutscene.Opening):
