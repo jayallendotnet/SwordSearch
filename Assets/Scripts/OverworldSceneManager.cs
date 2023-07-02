@@ -30,12 +30,16 @@ public class OverworldSceneManager : MonoBehaviour{
     public EnemyData currentEnemyData;
     public InteractOverlayManager interactOverlayManager;
     public DialogueManager dialogueManager;
+    private List<GameObject> stepsToNextSpace;
+    private bool changePlayerDirectionAtNextStep = false;
 
 
     void Start(){
         //print(StaticVariables.hasTalkedToNewestEnemy);
         //print("current progress - " + StaticVariables.currentBattleWorld + ":" + StaticVariables.currentBattleLevel);
         //print("highest progress - " + StaticVariables.highestUnlockedWorld + ":" + StaticVariables.highestUnlockedLevel);
+        interactOverlayManager.gameObject.SetActive(true);
+        dialogueManager.gameObject.SetActive(true);
         SetupOverworldSpaces();
         ShowProgress();
         PlacePlayerAtPosition(StaticVariables.currentBattleLevel);
@@ -48,7 +52,7 @@ public class OverworldSceneManager : MonoBehaviour{
         for (int i = 0; i < overworldSpaces.Length; i++){
             OverworldSpace space = overworldSpaces[i];
             space.overworldSceneManager = this;
-            space.playerDestination.transform.GetChild(0).gameObject.SetActive(false);
+            //space.playerDestination.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 
@@ -60,6 +64,82 @@ public class OverworldSceneManager : MonoBehaviour{
                     UnlockNextEnemy();
                     AdvanceGameProgress();
                 }
+            }
+        }
+    }
+
+    public void StartMovingPlayerToSpace(OverworldSpace space){
+        bool reverse = false;
+        int currentSpaceIndex = 0;
+        int destinationSpaceIndex = 0;
+        for (int i = 0; i < overworldSpaces.Length; i++){
+            if (overworldSpaces[i] == currentPlayerSpace)
+                currentSpaceIndex = i;
+            if (overworldSpaces[i] == space)
+                destinationSpaceIndex = i;
+        }
+        int earlierIndex = currentSpaceIndex;
+        int laterIndex = destinationSpaceIndex;
+        if (destinationSpaceIndex < currentSpaceIndex){
+            earlierIndex = destinationSpaceIndex;
+            laterIndex = currentSpaceIndex;
+            reverse = true;
+        }
+
+        //print("earlierIndex[" + earlierIndex + "], laterIndex[" + laterIndex + "]");
+
+        stepsToNextSpace = new List<GameObject>();
+        for (int i = 0; i < overworldSpaces.Length; i++){
+            if (i == earlierIndex)
+                stepsToNextSpace.Add(overworldSpaces[i].playerDestination);
+            if ((i > earlierIndex) && (i <= laterIndex)){
+                foreach (Transform t in overworldSpaces[i].pathFromLastSpace)
+                    stepsToNextSpace.Add(t.gameObject);
+                stepsToNextSpace.Add(overworldSpaces[i].playerDestination);
+            }
+        }
+
+        if (reverse)
+            stepsToNextSpace.Reverse();
+
+        stepsToNextSpace.RemoveAt(0);
+
+        playerAnimator.SetTrigger("WalkStart");
+        isPlayerMoving = true;
+        MovePlayerToNextStep();
+        PointPlayerTowardNextEnemy();
+
+        //print(stepsToNextSpace.Count);
+    }
+
+    private void MovePlayerToNextStep(){
+        if (stepsToNextSpace.Count == 0){
+            EndPlayerWalk();
+            return;
+        }
+        GameObject space = stepsToNextSpace[0];
+        stepsToNextSpace.RemoveAt(0);
+
+        playerParent.DOMove(space.transform.position, 0.3f).OnComplete(MovePlayerToNextStep);
+
+        if (changePlayerDirectionAtNextStep){
+            PointPlayerTowardNextEnemy();
+            changePlayerDirectionAtNextStep = false;
+        }
+
+        if (space.transform.parent.GetComponent<OverworldSpace>() != null)
+            changePlayerDirectionAtNextStep = true;
+    }
+
+    private void PointPlayerTowardNextEnemy(){
+        foreach (GameObject space in stepsToNextSpace){
+            if (space.transform.parent.GetComponent<OverworldSpace>() != null){
+                Vector3 s = playerParent.localScale;
+                s.x = 1;
+                if (space.transform.position.x < playerParent.position.x)
+                    s.x = -1;
+                playerParent.localScale = s;
+                return;
             }
         }
     }
@@ -84,7 +164,7 @@ public class OverworldSceneManager : MonoBehaviour{
 
     private void PlacePlayerAtPosition(int battleNum){
         if (battleNum == 0)
-            return;
+            battleNum = 1;
         int index = battleNum -1;
         OverworldSpace space = overworldSpaces[index];
         GameObject newSpot = space.playerDestination;

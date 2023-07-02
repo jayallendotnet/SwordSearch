@@ -29,10 +29,45 @@ public class OverworldSpace : MonoBehaviour{
     [ConditionalField(nameof(type), false, OverworldSpaceType.Cutscene)]
     public string cutsceneDescription = "";
 
+    void Start(){
+        //Destroy(playerDestination.transform.GetChild(0).gameObject);
+        TurnStepArrows();
+    }
+
+    private void TurnStepArrows(){
+        for (int i = 0; i < pathFromLastSpace.childCount; i++){
+            if (i == pathFromLastSpace.childCount - 1)
+                TurnStepArrow(pathFromLastSpace.GetChild(i), transform.GetChild(3).position);
+            else
+                TurnStepArrow(pathFromLastSpace.GetChild(i), pathFromLastSpace.GetChild(i + 1).position);
+        }
+    }
+
+    private void TurnStepArrow(Transform parent, Vector2 nextStep){
+        Transform arrow = parent.GetChild(0).GetChild(0);
+        Vector2 start = arrow.position;
+
+        Vector2 diff = (nextStep - start).normalized;
+        //print(diff);
+        //Vector2 diff = (start - nextStep).normalized;
+        //float angle = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        float angle = Vector2.Angle(Vector2.down, diff);
+        if (diff.x < 0)
+            angle = 360 - angle;
+        arrow.rotation = Quaternion.Euler(0,0, angle);
+        //Vector3 diff2 = new Vector3 (diff.x, diff.y, 0);
+
+        //arrow.rotation = Quaternion.LookRotation(Vector3.right);
+        //parent.GetChild(1).LookAt(nextStep);
+        //Vector2 startPos = arrow.transform.position;
+        //Vector2 facing = (startPos - nextStep).normalized;
+    }
+
     public void MovePlayerToThisSpace(){
+        overworldSceneManager.StartMovingPlayerToSpace(this);
         overworldSceneManager.currentPlayerSpace = this;
         overworldSceneManager.currentEnemyData = battleData.enemyPrefab.GetComponent<EnemyData>();
-        overworldSceneManager.MovePlayerToPosition(playerDestination);
+        //overworldSceneManager.MovePlayerToPosition(playerDestination);
     }
 
     public void ClickedSpace(){
