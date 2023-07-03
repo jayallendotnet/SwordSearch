@@ -29,6 +29,13 @@ public class EnemyData : MonoBehaviour{
     [Header("Dialogue Steps")]
     public DialogueStep[] overworldDialogueSteps;
     public DialogueStep[] victoryDialogueSteps;
+
+    public string GetDisplayName(){
+        string n = name;
+        if (nameOverride != "")
+            n = nameOverride;
+        return n;
+    }
 }
 
 

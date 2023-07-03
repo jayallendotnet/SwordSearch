@@ -21,6 +21,10 @@ public class InteractOverlayManager : MonoBehaviour{
     public Text infoText;
     public Text cutsceneText;
     public RectTransform backButton;
+    public Text enemyNameText;
+    public GameObject clickableBackground;
+    public GameObject infoHighlight;
+    public RectTransform fullTalkButton;
 
 
     [Header("Configurations")]
@@ -37,6 +41,11 @@ public class InteractOverlayManager : MonoBehaviour{
     private Vector2 infoButtonStartingPos;
     private Vector2 backButtonStartingPos;
     private Vector2 interactOverlayStartingSize;
+    private Vector2 enemyNameTextStartingPos;
+    private Vector2 fullTalkButtonStartingPos;
+
+    private bool isMovingInteractOverlay = false;
+    private string defaultEnemyInfo = "This enemy has no particular weaknesses.";
 
 
     public void Setup(){
@@ -47,46 +56,74 @@ public class InteractOverlayManager : MonoBehaviour{
     private void StartInteractOverlayHidden(){
         Vector2 pos = new Vector2(0, -interactOverlay.rect.height);
         interactOverlay.anchoredPosition = pos;
+        clickableBackground.SetActive(false);
     }    
 
     private void SetStartingValues(){
         talkButtonStartingPos = talkButton.localPosition;
+        fullTalkButtonStartingPos = fullTalkButton.localPosition;
         battleButtonStartingPos = battleButton.localPosition;
         infoButtonStartingPos = infoButton.localPosition;
         backButtonStartingPos = backButton.localPosition;
         interactOverlayStartingSize = interactOverlay.sizeDelta;
+        enemyNameTextStartingPos = enemyNameText.transform.localPosition;
     }
 
     public void PressedBattleButton(){
+        if (isMovingInteractOverlay)
+            return;
         if (isInfoShowing)
             return;
         overworldSceneManager.StartBattle();
     }
    
     public void PressedTalkButton(){
+        if (isMovingInteractOverlay)
+            return;
         if (isInfoShowing)
             return;
         DialogueStep[] steps = overworldSceneManager.currentEnemyData.overworldDialogueSteps;
         BattleData bd = overworldSceneManager.currentPlayerSpace.battleData;
-        overworldSceneManager.dialogueManager.Setup(steps, bd, true);
+        overworldSceneManager.dialogueManager.Setup(steps, bd, true, (overworldSceneManager.currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial));
     }
 
     public void PressedInfoButton(){
+        if (isMovingInteractOverlay)
+            return;
         if (isInfoShowing)
             return;
         HideOtherButtonsBehindBack(transitionDuration);
         infoText.gameObject.SetActive(true);
-        Color c = Color.white;
-        c.a = 0;
-        infoText.color = c;
-        infoText.DOColor(Color.white, transitionDuration);
+        FadeInText(infoText, Color.white);
+        //FadeOutText(enemyNameText, Color.white);
+        //Color c = Color.white;
+        //c.a = 0;
+        //infoText.color = c;
+        //infoText.DOColor(Color.white, transitionDuration);
         InfoTextData infoTextData = GenerateEnemyInfoText(overworldSceneManager.currentEnemyData);
         infoText.text = infoTextData.text;
         AdjustHeightsForShowingInfo(infoTextData.lineCount);
         isInfoShowing = true;
     }
 
+    private void FadeOutText(Text text, Color color){
+        Color c = color;
+        c.a = 0;
+        text.color = color;
+        text.DOColor(c, transitionDuration);
+    }
+
+    private void FadeInText(Text text, Color color){
+        Color c = color;
+        c.a = 0;
+        text.color = c;
+        text.DOColor(color, transitionDuration);
+
+    }
+
     public void PressedCutsceneButton(){
+        if (isMovingInteractOverlay)
+            return;
         if (isInfoShowing)
             return;
         overworldSceneManager.StartCutscene();
@@ -172,7 +209,7 @@ public class InteractOverlayManager : MonoBehaviour{
             }
         }
         if (text == ""){
-            text = "This enemy has no particular weaknesses.";
+            text = defaultEnemyInfo;
             lineCount ++;
         }
         infoText.text = text;
@@ -181,12 +218,16 @@ public class InteractOverlayManager : MonoBehaviour{
     }
 
     public void PressedBackButton(){
+        if (isMovingInteractOverlay)
+            return;
         if (isInfoShowing){   
             ReturnButtonsToStartingPositions(transitionDuration);  
             StaticVariables.WaitTimeThenCallFunction(transitionDuration, FinishedShowingInfo);
-            Color c = Color.white;
-            c.a = 0;
-            infoText.DOColor(c, transitionDuration);
+            FadeOutText(infoText, Color.white);
+            //FadeInText(enemyNameText, Color.white);
+            //Color c = Color.white;
+            //c.a = 0;
+            //infoText.DOColor(c, transitionDuration);
             MoveOverworldDownIfRequired();
             return;
         }
@@ -196,9 +237,11 @@ public class InteractOverlayManager : MonoBehaviour{
 
     
     private void HideOtherButtonsBehindBack(float duration){
-        talkButton.DOLocalMove(backButton.localPosition, duration);
-        battleButton.DOLocalMove(backButton.localPosition, duration);
-        infoButton.DOLocalMove(backButton.localPosition, duration);
+        talkButton.DOLocalMoveY(backButton.localPosition.y, duration);
+        battleButton.DOLocalMoveY(backButton.localPosition.y, duration);
+        infoButton.DOLocalMoveY(backButton.localPosition.y, duration);
+        enemyNameText.transform.DOLocalMoveY(backButton.localPosition.y, duration);
+        fullTalkButton.DOLocalMoveY(backButton.localPosition.y, duration);
 
     }
     private void ReturnButtonsToStartingPositions(float duration){
@@ -206,6 +249,8 @@ public class InteractOverlayManager : MonoBehaviour{
         battleButton.DOLocalMove(battleButtonStartingPos, duration);
         infoButton.DOLocalMove(infoButtonStartingPos, duration);
         backButton.DOLocalMove(backButtonStartingPos, duration);
+        enemyNameText.transform.DOLocalMove(enemyNameTextStartingPos, duration);
+        fullTalkButton.DOLocalMove(fullTalkButtonStartingPos, duration);
     }
 
     private void FinishedShowingInfo(){
@@ -215,19 +260,40 @@ public class InteractOverlayManager : MonoBehaviour{
 
     private void HideInteractOverlay(){
         interactOverlay.DOAnchorPosY(-interactOverlay.rect.height, transitionDuration);
+        clickableBackground.SetActive(false);
+        isMovingInteractOverlay = true;
         overworldSceneManager.overworldView.DOAnchorPosY(0, transitionDuration).OnComplete(FinishedHidingInteractOverlay);
     }
 
     private void FinishedHidingInteractOverlay(){
         isInteractOverlayShowing = false;
+        isMovingInteractOverlay = false;
     }
 
     public void ShowInteractOverlay(){
-        interactOverlay.DOAnchorPosY(0, transitionDuration);
+        interactOverlay.DOAnchorPosY(0, transitionDuration).OnComplete(FinishedShowingInteractOverlay);
         isInteractOverlayShowing = true;
+        isMovingInteractOverlay = true;
+        clickableBackground.SetActive(true);
         MoveOverworldUpIfRequired();
 
         SetInteractOptions();
+    }
+
+    private void FinishedShowingInteractOverlay(){
+        isMovingInteractOverlay = false;
+    }
+
+    public void DisplayEnemyName(EnemyData enemy){
+        enemyNameText.text = enemy.GetDisplayName().ToUpper();
+    }
+
+    public void DisplayInfoHighlightIfAppropriate(EnemyData enemy){
+        InfoTextData infoTextData = GenerateEnemyInfoText(overworldSceneManager.currentEnemyData);
+        if (infoTextData.text == defaultEnemyInfo)
+            infoHighlight.SetActive(false);
+        else
+            infoHighlight.SetActive(true);
     }
 
     private void SetInteractOptions(){
@@ -239,6 +305,13 @@ public class InteractOverlayManager : MonoBehaviour{
             cutsceneButton.gameObject.SetActive(false);
             infoText.gameObject.SetActive(false);
             cutsceneText.gameObject.SetActive(false);
+            fullTalkButton.gameObject.SetActive(true);
+            if (type == OverworldSpace.OverworldSpaceType.Battle)
+                fullTalkButton.gameObject.SetActive(false);
+            if (type == OverworldSpace.OverworldSpaceType.Tutorial){
+                talkButton.gameObject.SetActive(false);
+                infoButton.gameObject.SetActive(false);
+            }
 
         }
         else if (type == OverworldSpace.OverworldSpaceType.Cutscene){
@@ -248,6 +321,7 @@ public class InteractOverlayManager : MonoBehaviour{
             cutsceneButton.gameObject.SetActive(true);
             infoText.gameObject.SetActive(false);
             cutsceneText.gameObject.SetActive(true);
+            fullTalkButton.gameObject.SetActive(false);
 
             cutsceneText.text = overworldSceneManager.currentPlayerSpace.cutsceneDescription;
 

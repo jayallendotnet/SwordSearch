@@ -106,6 +106,7 @@ public class OverworldSceneManager : MonoBehaviour{
 
         playerAnimator.SetTrigger("WalkStart");
         isPlayerMoving = true;
+        currentPlayerSpace.transform.GetChild(2).GetChild(0).gameObject.SetActive(true);
         MovePlayerToNextStep();
         PointPlayerTowardNextEnemy();
 
@@ -171,18 +172,23 @@ public class OverworldSceneManager : MonoBehaviour{
         playerParent.transform.position = newSpot.transform.position;
         currentPlayerSpace = space;
         currentEnemyData = space.battleData.enemyPrefab.GetComponent<EnemyData>();
+        currentPlayerSpace.transform.GetChild(2).Find("Overworld Player Space Icon").gameObject.SetActive(false);
     }
 
     private void EndPlayerWalk(){
         playerAnimator.SetTrigger("WalkEnd");
         isPlayerMoving = false;
+        currentPlayerSpace.transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
         Vector3 s = playerParent.localScale;
         s.x = 1;
         playerParent.localScale = s;
 
         interactOverlayManager.ShowInteractOverlay();
         if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Cutscene)
-            return;
+            return;    
+        EnemyData ed = currentPlayerSpace.battleData.enemyPrefab.GetComponent<EnemyData>();
+        interactOverlayManager.DisplayEnemyName(ed);
+        interactOverlayManager.DisplayInfoHighlightIfAppropriate(ed);
         if ((IsCurrentEnemyNewestEnemy()) && (!StaticVariables.hasTalkedToNewestEnemy)){
             if ((currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Battle) || (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial))
                 dialogueManager.Setup(currentEnemyData.overworldDialogueSteps, currentPlayerSpace.battleData);

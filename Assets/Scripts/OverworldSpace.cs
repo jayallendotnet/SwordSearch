@@ -30,14 +30,14 @@ public class OverworldSpace : MonoBehaviour{
     public string cutsceneDescription = "";
 
     void Start(){
-        //Destroy(playerDestination.transform.GetChild(0).gameObject);
+        Destroy(playerDestination.transform.GetChild(0).gameObject);
         TurnStepArrows();
     }
 
     private void TurnStepArrows(){
         for (int i = 0; i < pathFromLastSpace.childCount; i++){
             if (i == pathFromLastSpace.childCount - 1)
-                TurnStepArrow(pathFromLastSpace.GetChild(i), transform.GetChild(3).position);
+                TurnStepArrow(pathFromLastSpace.GetChild(i), transform.GetChild(2).GetChild(1).position);
             else
                 TurnStepArrow(pathFromLastSpace.GetChild(i), pathFromLastSpace.GetChild(i + 1).position);
         }
