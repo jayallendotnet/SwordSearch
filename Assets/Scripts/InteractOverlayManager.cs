@@ -322,6 +322,7 @@ public class InteractOverlayManager : MonoBehaviour{
             infoText.gameObject.SetActive(false);
             cutsceneText.gameObject.SetActive(true);
             fullTalkButton.gameObject.SetActive(false);
+            enemyNameText.gameObject.SetActive(false);
 
             cutsceneText.text = overworldSceneManager.currentPlayerSpace.cutsceneDescription;
 

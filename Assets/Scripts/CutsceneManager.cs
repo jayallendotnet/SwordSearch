@@ -30,7 +30,7 @@ public class CutsceneManager : MonoBehaviour{
 
     public void Start() {
         //manually start at a later cutscene step (put 1 less than the step you actually want to start on)
-        cutsceneStep = 50;
+        //cutsceneStep = 25;
         SetCutsceneID();
         switch (cutsceneID){
             case (Cutscene.Opening):
@@ -238,10 +238,10 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            PlayAnimationAndMoveThenIdle("Wolf Rider", "Walk", 575, 451, 2f);
+            PlayAnimationAndMoveThenIdle("Wolf Rider", "Walk", 188, 451, 2f);
             PlayAnimationAndMoveThenIdle("Goblin 1", "Walk", -47, 348, 2f);
-            PlayAnimationAndMoveThenIdle("Goblin 2", "Walk", 157, 348, 2f);
-            PlayAnimationAndMoveThenIdle("Goblin 3", "Walk", 350, 348, 2f);
+            PlayAnimationAndMoveThenIdle("Goblin 2", "Walk", 575, 348, 2f);
+            PlayAnimationAndMoveThenIdle("Goblin 3", "Walk", 391, 348, 2f);
             advanceCondition = Cond.Wait;
             WaitThenAdvance(2f);
         }
@@ -257,8 +257,9 @@ public class CutsceneManager : MonoBehaviour{
             DisplayEnemyTalking("Ha ha ha!!!", "Red Dragon", DialogueStep.Emotion.Angry);
             PlayAnimationAndMoveThenIdle("Red Dragon", "Fly", -1500, 1400, 2f);
             PlayAnimationAndMoveThenIdle("Goblin 1", "Walk", -244, 191, 2f);
-            PlayAnimationAndMoveThenIdle("Goblin 2", "Walk", 21, 16, 2f);
+            PlayAnimationAndMoveThenIdle("Wolf Rider", "Walk", 57, 117, 2f);
             PlayAnimationAndMoveThenIdle("Goblin 3", "Walk", 446, 489, 2f);
+            FlipDirection("Goblin 2");
             advanceCondition = Cond.Wait;
             WaitThenAdvance(2f);
         }
