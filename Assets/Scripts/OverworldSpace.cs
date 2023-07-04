@@ -17,6 +17,8 @@ public class OverworldSpace : MonoBehaviour{
     public GameObject playerDestination;
     public Transform pathFromLastSpace;
     public GameObject button;
+    public GameObject overworldPlayerSpaceIcon;
+    
 
 
     public enum OverworldSpaceType{Battle, Cutscene, Tutorial}
@@ -30,6 +32,7 @@ public class OverworldSpace : MonoBehaviour{
     public string cutsceneDescription = "";
 
     void Start(){
+        //overworldPlayerSpaceIcon = playerDestination.transform.GetChild(1).gameObject;
         Destroy(playerDestination.transform.GetChild(0).gameObject);
         TurnStepArrows();
     }
@@ -87,7 +90,7 @@ public class OverworldSpace : MonoBehaviour{
                 enemyImages.Add(t.GetChild(0).GetComponent<Image>());
         }
         else
-            enemyImages.Add(transform.GetChild(0).GetComponent<Image>());
+            enemyImages.Add(transform.GetChild(0).GetChild(0).GetComponent<Image>());
 
         foreach (Image im in enemyImages){
             Color enemyImageColor = Color.white;
@@ -96,15 +99,30 @@ public class OverworldSpace : MonoBehaviour{
             im.GetComponent<Animator>().enabled = false;
         }
 
+        overworldPlayerSpaceIcon.GetComponent<PathStep>().HideStep(0);
+
+        //Image playerSpotIm = playerDestination.transform.Find("Overworld Player Space Icon").GetComponent<Image>();
+        //Color spotColor = playerSpotIm.color;
+        //spotColor.a = 0;
+        //playerSpotIm.color = spotColor;
+
 
         button.SetActive(false);
 
         foreach (Transform t in pathFromLastSpace){
-            Image im = t.GetComponent<Image>();
-            Color pathColor = im.color;
-            pathColor.a = 0;
-            im.color = pathColor;
+            t.GetComponent<PathStep>().HideStep(0);
+            //Image im = t.GetChild(0).GetComponent<Image>();
+            //Color pathColor = im.color;
+            //pathColor.a = 0;
+            //im.color = pathColor;
+
+            
+            //Image im2 = t.GetChild(0).GetChild(0).GetComponent<Image>();
+            //Color pathColor2 = im2.color;
+            //pathColor2.a = 0;
+            //im2.color = pathColor2;
         }
+        pathFadeIndex = -1;
         StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration, FadeNextStepOfPath);
     }
 
@@ -114,15 +132,38 @@ public class OverworldSpace : MonoBehaviour{
             FadeInEnemy();
             return;
         }
-        Image im = pathFromLastSpace.GetChild(pathFadeIndex).GetComponent<Image>();
-        Color c = im.color;
-        c.a = 1;
-        im.DOColor(c, timeBetweenPathFadeSteps).OnComplete(FadeNextStepOfPath);
+
+        pathFromLastSpace.GetChild(pathFadeIndex).GetComponent<PathStep>().ShowStep(timeBetweenPathFadeSteps);
+        StaticVariables.WaitTimeThenCallFunction(timeBetweenPathFadeSteps, FadeNextStepOfPath);
+
+        //Image im = pathFromLastSpace.GetChild(pathFadeIndex).GetChild(0).GetComponent<Image>();
+        //Color c = im.color;
+        //c.a = 1;
+        
+        //Image im2 = pathFromLastSpace.GetChild(pathFadeIndex).GetChild(0).GetChild(0).GetComponent<Image>();
+        //Color c2 = im2.color;
+        //c2.a = 1;
+        //im2.DOColor(c, timeBetweenPathFadeSteps);
+        //im.DOColor(c, timeBetweenPathFadeSteps).OnComplete(FadeNextStepOfPath);
     }
 
     private void FadeInEnemy(){
         foreach (Image im in enemyImages)
             im.DOColor(Color.white, timeBetweenPathFadeSteps).OnComplete(TurnEnemyAniamtionsOn);
+
+
+        overworldPlayerSpaceIcon.GetComponent<PathStep>().ShowStep(timeBetweenPathFadeSteps);
+
+        //Image playerSpotIm = playerDestination.transform.GetChild(0).GetComponent<Image>();
+        //Color spotColor = playerSpotIm.color;
+        //spotColor.a = 1;
+        //playerSpotIm.DOColor(spotColor, timeBetweenPathFadeSteps);
+        //playerSpotIm.color = spotColor;
+
+        //            Image im2 = pathFromLastSpace.GetChild(pathFadeIndex).GetChild(0).GetChild(0).GetComponent<Image>();
+        //Color c2 = im2.color;
+        //c2.a = 1;
+        //im2.DOColor(c, timeBetweenPathFadeSteps);
     }
 
     private void TurnEnemyAniamtionsOn(){

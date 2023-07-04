@@ -49,7 +49,7 @@ public class GeneralSceneManager : MonoBehaviour{
         StaticVariables.lightningActive = false;
         StaticVariables.darkActive = false;
         StaticVariables.swordActive = false;
-        StaticVariables.FadeOutThenLoadScene(StaticVariables.world1Name);
+        StaticVariables.FadeOutThenLoadScene(StaticVariables.world0Name);
     }
 
     public void JustBattle(){

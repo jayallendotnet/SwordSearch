@@ -306,6 +306,7 @@ public class InteractOverlayManager : MonoBehaviour{
             infoText.gameObject.SetActive(false);
             cutsceneText.gameObject.SetActive(false);
             fullTalkButton.gameObject.SetActive(true);
+            enemyNameText.gameObject.SetActive(true);
             if (type == OverworldSpace.OverworldSpaceType.Battle)
                 fullTalkButton.gameObject.SetActive(false);
             if (type == OverworldSpace.OverworldSpaceType.Tutorial){

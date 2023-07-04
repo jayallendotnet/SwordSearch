@@ -191,7 +191,7 @@ public class OverworldSceneManager : MonoBehaviour{
         interactOverlayManager.DisplayInfoHighlightIfAppropriate(ed);
         if ((IsCurrentEnemyNewestEnemy()) && (!StaticVariables.hasTalkedToNewestEnemy)){
             if ((currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Battle) || (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial))
-                dialogueManager.Setup(currentEnemyData.overworldDialogueSteps, currentPlayerSpace.battleData);
+                dialogueManager.Setup(currentEnemyData.overworldDialogueSteps, currentPlayerSpace.battleData, showFakeTalkButton: (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial));
 
         }
     }
