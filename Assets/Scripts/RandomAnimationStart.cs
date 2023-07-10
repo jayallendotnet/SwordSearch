@@ -5,10 +5,15 @@ using UnityEngine.UI;
 
 public class RandomAnimationStart : MonoBehaviour{
 
+    public string stateNameOverride = "";
+
     void Start(){
         Animator anim = GetComponent<Animator>();
+        string statename = stateNameOverride;
+        if (statename == "")
+            statename = anim.runtimeAnimatorController.name;
         //print(anim.runtimeAnimatorController.name);
-        anim.Play(anim.runtimeAnimatorController.name, 0, (float)StaticVariables.rand.NextDouble());
+        anim.Play(statename, 0, (float)StaticVariables.rand.NextDouble());
         Destroy(this);
     }
 

@@ -31,7 +31,7 @@ public class CutsceneManager : MonoBehaviour{
 
     public void Start() {
         //manually start at a later cutscene step (put 1 less than the step you actually want to start on)
-        //cutsceneStep = 58;
+        //cutsceneStep = 6;
         SetCutsceneID();
         switch (cutsceneID){
             case (Cutscene.Opening):
@@ -61,6 +61,10 @@ public class CutsceneManager : MonoBehaviour{
 
     private void SetupSavedTown(){
         SetCutsceneBackground(savedTownBackground);
+        PlayAnimation("Redhead Woman", "Idle Back");
+        PlayAnimation("Bartender", "Idle Front");
+        PlayAnimation("Child 1", "Idle Front");
+        PlayAnimation("Child 2", "Idle Front");
 
     }
 
@@ -391,17 +395,23 @@ public class CutsceneManager : MonoBehaviour{
     
         int i = 0;
         if (++i == cutsceneStep){
-            DisplayEnemyTalking("The invaders have been driven off!", "Blacksmith", DialogueStep.Emotion.Excited);
-            advanceCondition = Cond.Click;
-            //the invaders have been driven off!
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("It's time to celebrate!!!", "Blacksmith", DialogueStep.Emotion.Excited);
-            //animate a bunch of people celebrating
+            DisplayNarrator("After the invaders were driven off, the town held a celebration in the tavern.");
             advanceCondition = Cond.Wait;
             WaitThenAdvance(8f);
-            //it's time to celebrate!!
+            //the invaders have been driven off!
         }
+        //if (++i == cutsceneStep){
+        //    DisplayEnemyTalking("The invaders have been driven off!", "Blacksmith", DialogueStep.Emotion.Excited);
+        //    advanceCondition = Cond.Click;
+        //    //the invaders have been driven off!
+        //}
+        //else if (++i == cutsceneStep){
+        //    DisplayEnemyTalking("It's time to celebrate!!!", "Blacksmith", DialogueStep.Emotion.Excited);
+        //    //animate a bunch of people celebrating
+        //    advanceCondition = Cond.Wait;
+        //    WaitThenAdvance(8f);
+        //    //it's time to celebrate!!
+        //}
         else if (++i == cutsceneStep){
             advanceCondition = Cond.Click;
         }
@@ -548,6 +558,11 @@ public class CutsceneManager : MonoBehaviour{
 
     private void DisplayEnemyTalking(string s, string enemyName, DialogueStep.Emotion emotion){
         DisplayEnemyTalking(s, GetAnimatorFromName(enemyName).GetComponent<EnemyData>(), emotion);
+    }
+
+    private void DisplayNarrator(string s){
+        dialogueManager.ShowNobodyTalking();
+        dialogueManager.dialogueTextBox.text = s;
     }
 
     private Animator GetAnimatorFromName(string name){

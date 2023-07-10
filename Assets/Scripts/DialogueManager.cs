@@ -243,6 +243,10 @@ public class DialogueManager : MonoBehaviour{
         playerChathead.sprite = sprite;
     }
 
+    public void ShowNobodyTalking(){
+        //might need some stuff here in the future, if we are going to have the narrator speak in between other dialogues
+    }
+
     public void ShowEnemyTalking(EnemyData data, DialogueStep.Emotion emotion){
         if (data.nameOverride == "")
             speakerNameTextBox.text = data.name.ToUpper();
