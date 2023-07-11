@@ -396,8 +396,9 @@ public class CutsceneManager : MonoBehaviour{
         int i = 0;
         if (++i == cutsceneStep){
             DisplayNarrator("After the invaders were driven off, the town held a celebration in the tavern.");
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(8f);
+            advanceCondition = Cond.Click;
+            //advanceCondition = Cond.Wait;
+            //WaitThenAdvance(8f);
             //the invaders have been driven off!
         }
         //if (++i == cutsceneStep){
@@ -412,43 +413,78 @@ public class CutsceneManager : MonoBehaviour{
         //    WaitThenAdvance(8f);
         //    //it's time to celebrate!!
         //}
-        else if (++i == cutsceneStep){
-            advanceCondition = Cond.Click;
-        }
+        //else if (++i == cutsceneStep){
+        //    advanceCondition = Cond.Click;
+        //}
         else if (++i == cutsceneStep){
             DisplayEnemyTalking("Say, Player, we saw what you did to drive off the goblins!", "Blacksmith", DialogueStep.Emotion.Excited);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("You were shooting jets of water at them!", "Blacksmith", DialogueStep.Emotion.Excited);
+            DisplayEnemyTalking("You were shooting jets of water at them!", "Orange Shirt Black Woman", DialogueStep.Emotion.Excited);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("And you brought down rain to put out the dragon's fires!", "Blacksmith", DialogueStep.Emotion.Excited);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("How did you do it??", "Blacksmith", DialogueStep.Emotion.Excited);
-            //organized counter-clockwise from 12:00
-            PlayAnimationAndMoveThenIdle("Blacksmith", "Walk", -205, 763, 2f);
-            PlayAnimationAndMoveThenIdle("Player", "Walk", -326, 2086, 2f);
-            PlayAnimationAndMoveThenIdle("Orange Shirt Black Woman", "Walk", -384, 413, 2f);
-            PlayAnimationAndMoveThenIdle("Chef", "Walk", -284, 254, 2f);
-            PlayAnimationAndMoveThenIdle("Shopkeeper", "Walk", -156, 129, 2f);
-            PlayAnimationAndMoveThenIdle("Bluehead Woman", "Walk", 106, 114, 2f);
-            PlayAnimationAndMoveThenIdle("Child 2", "Walk", 268, 172, 2f);
-            PlayAnimationAndMoveThenIdle("Child 1", "Walk", 361, 370, 2f);
-            PlayAnimationAndMoveThenIdle("Redhead Woman", "Walk", 348, 573, 2f);
-            PlayAnimationAndMoveThenIdle("Short Black Man", "Walk", 219, 724, 2f);
-            PlayAnimationAndMoveThenIdle("Yellowhead Woman", "Walk", 73, 803, 2f);
+            DisplayEnemyTalking("And you brought down rain to put out the dragon's fires!", "Chef", DialogueStep.Emotion.Excited);
+            //PlayAnimationAndMoveThenIdle("Chef", "Walk", -450, 490, 1f);
+            PlayAnimationAndMoveThenIdle("Chef", "Walk", -284, 254, 1.6f);
             advanceCondition = Cond.Wait;
-            WaitThenAdvance(2f);
+            WaitThenAdvance(1.6f);
         }
         else if (++i == cutsceneStep){
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Don't keep any secrets to yourself!", "Blacksmith", DialogueStep.Emotion.Excited);
+            DisplayEnemyTalking("How did you do it??", "Child 1", DialogueStep.Emotion.Excited);
+            //organized counter-clockwise from 12:00
+            //PlayAnimationAndMoveThenIdle("Blacksmith", "Walk", -205, 763, 2f);
+            //PlayAnimationAndMoveThenIdle("Player", "Walk", -326, 2086, 2f);
+            //PlayAnimationAndMoveThenIdle("Orange Shirt Black Woman", "Walk", -384, 413, 2f);
+            //PlayAnimationAndMoveThenIdle("Chef", "Walk", -284, 254, 2f);
+            FlipDirection("Shopkeeper");
+            PlayAnimationAndMoveThenIdle("Shopkeeper", "Walk", -156, 129, 2.3f);
+            FlipDirection("Bluehead Woman");
+            PlayAnimationAndMoveThenIdle("Bluehead Woman", "Walk", 106, 114, 2f);
+            PlayAnimationAndMoveThenIdle("Child 2", "Walk", 268, 172, 2.2f);
+            PlayAnimationAndMoveThenIdle("Child 1", "Walk", 361, 370, 1.6f);
+            //PlayAnimationAndMoveThenIdle("Orange Shirt Black Woman", "Walk", -384, 413, 0.8f);
+            //PlayAnimationAndMoveThenIdle("Redhead Woman", "Walk", 348, 573, 2f);
+            //PlayAnimationAndMoveThenIdle("Short Black Man", "Walk", 219, 724, 2f);
+            //PlayAnimationAndMoveThenIdle("Yellowhead Woman", "Walk", 73, 803, 2f);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.8f);
+        }        
+        else if (++i == cutsceneStep){
+            PlayAnimationAndMoveThenIdle("Orange Shirt Black Woman", "Walk", -384, 413, 0.8f);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.8f);
+        }
+        else if (++i == cutsceneStep){
+            FlipDirection("Orange Shirt Black Woman");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.7f);
+        }
+        else if (++i == cutsceneStep){
+            FlipDirection("Shopkeeper");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("Don't keep any secrets to yourself!", "Short Black Man", DialogueStep.Emotion.Excited);
+            FlipDirection("Short Black Man");
+            FlipDirection("Yellowhead Woman");
+            PlayAnimationAndMoveThenIdle("Redhead Woman", "Walk", 348, 573, 2.1f);
+            PlayAnimationAndMoveThenIdle("Short Black Man", "Walk", 219, 724, 2.2f);
+            PlayAnimationAndMoveThenIdle("Yellowhead Woman", "Walk", 73, 803, 2.3f);
+            PlayAnimationAndMoveThenIdle("Blacksmith", "Walk", -205, 763, 0.5f);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        }
+        else if (++i == cutsceneStep){
+            FlipDirection("Blacksmith");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1.8f);
+        }
+        else if (++i == cutsceneStep){
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
