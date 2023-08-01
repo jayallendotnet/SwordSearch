@@ -22,8 +22,8 @@ public class StaticVariables
     static public bool darkActive = false;
     static public bool swordActive = false;
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
-    static public int highestUnlockedWorld = 0; //0 for start of game
-    static public int highestUnlockedLevel = 5;
+    static public int highestUnlockedWorld = 1; //0 for start of game
+    static public int highestUnlockedLevel = 10;
     static public int currentBattleWorld = 0;
     static public int currentBattleLevel = 0;
     static public string battleSceneName = "Battle Scene";
