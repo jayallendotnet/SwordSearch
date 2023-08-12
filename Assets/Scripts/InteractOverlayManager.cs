@@ -177,6 +177,10 @@ public class InteractOverlayManager : MonoBehaviour{
                 text += "Horde enemies take more burn damage from fire spells.\n\n";
                 lineCount ++;
             }
+            if (StaticVariables.waterActive){
+                text += "Horde enemies are hit harder from flooded attacks.\n\n";
+                lineCount ++;
+            }
             if (StaticVariables.lightningActive){
                 text += "Horde enemies are stunned for less time from lightning spells.\n\n";
                 lineCount ++;
@@ -205,6 +209,12 @@ public class InteractOverlayManager : MonoBehaviour{
             }
             if (StaticVariables.darkActive){
                 text += "This creature's dark aura bolsters the power of darkness.\n\n";
+                lineCount ++;
+            }
+        }     
+        if (enemy.isNearWater){
+            if (StaticVariables.waterActive){
+                text += "The nearby river empowers flooded attacks.\n\n";
                 lineCount ++;
             }
         }

@@ -195,6 +195,8 @@ public class DialogueManager : MonoBehaviour{
                 ShowPlayerTalking(dialogueSteps[currentStep].emotion);
             else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.EnemyTalking)
                 ShowEnemyTalking(enemyData, dialogueSteps[currentStep].emotion);
+            else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.OtherTalking)
+                ShowEnemyTalking(dialogueSteps[currentStep].talker, dialogueSteps[currentStep].emotion);
         }
         else{
             dialogueTextBox.text = "No dialogue for this enemy, current talk step is " + currentStep;

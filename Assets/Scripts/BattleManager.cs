@@ -127,8 +127,15 @@ public class BattleManager : MonoBehaviour {
             wordStrength = 0;
         else{
             wordStrength =  Mathf.FloorToInt(Mathf.Pow((word.Length - 2), 2));
-            if (isWaterInPuzzleArea)
-                wordStrength += waterFloodDamageBonus;
+            if (isWaterInPuzzleArea){
+                if (enemyData.isHorde)
+                    wordStrength += (waterFloodDamageBonus * currentHordeEnemyCount);
+                else
+                    wordStrength += waterFloodDamageBonus;
+                if (enemyData.isNearWater) //if near water add +1x to the water flood bonus. added at the end to work with hordes near water
+                    wordStrength += waterFloodDamageBonus;
+                    
+            }
         }
     }
 
@@ -290,8 +297,8 @@ public class BattleManager : MonoBehaviour {
 
     private void DoSwordAttack(int strength, int powerupLevel){
         float mult = swordPowerupDamageMultiplier;
-        if (enemyData.isHorde && firstEnemyInHorde.isDraconic)
-            mult = swordPowerupDamageMultiplierVsDragons;
+        //if (enemyData.isHorde && firstEnemyInHorde.isDraconic)
+        //    mult = swordPowerupDamageMultiplierVsDragons;
         if (enemyData.isDraconic)
             mult = swordPowerupDamageMultiplierVsDragons;
         int enemyDamage = (int)(strength * (powerupLevel * mult));

@@ -18,6 +18,7 @@ public class EnemyData : MonoBehaviour{
     [ConditionalField(nameof(isBattleable))]    public bool isHorde = false;
     [ConditionalField(nameof(isBattleable))]    public bool isHoly = false;
     [ConditionalField(nameof(isBattleable))]    public bool isDark = false;
+    [ConditionalField(nameof(isBattleable))]    public bool isNearWater = false;
 
     [Header("Chatheads")]
     public Sprite normal;
@@ -41,9 +42,11 @@ public class EnemyData : MonoBehaviour{
 
 [System.Serializable]
 public class DialogueStep{
-    public enum DialogueType{PlayerTalking, EnemyTalking, Event};
+    public enum DialogueType{PlayerTalking, EnemyTalking, OtherTalking, Event};
+    
     public enum Emotion{Normal, Angry, Defeated, Excited, Happy, Questioning, Worried};
-    public DialogueType type;
+    public DialogueType type;    
+    [ConditionalField(nameof(type), false, DialogueType.OtherTalking)] public EnemyData talker;
     public Emotion emotion;
     [TextArea(2,5)]
     public string description;

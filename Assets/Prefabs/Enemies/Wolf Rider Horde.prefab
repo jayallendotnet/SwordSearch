@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBattleable: 1
-  nameOverride: 
+  nameOverride: Goblin General Horde
   startingHealth: 0
   attackSpeed: 0
   attackDamage: 0
@@ -70,22 +70,71 @@ MonoBehaviour:
   isHorde: 1
   isHoly: 0
   isDark: 0
-  normal: {fileID: 0}
-  angry: {fileID: 0}
-  defeated: {fileID: 0}
+  isNearWater: 0
+  normal: {fileID: 21300000, guid: b49f52f681ca8704b9065f3f0de87512, type: 3}
+  angry: {fileID: 21300000, guid: 33625fcaa087dba40a24db45a1603313, type: 3}
+  defeated: {fileID: 21300000, guid: 683176d32c9b98648872384ea1a3f732, type: 3}
   excited: {fileID: 0}
   questioning: {fileID: 0}
   overworldDialogueSteps:
-  - type: 0
-    emotion: 0
-    description: Whoa look, it's a whole horde of goblins! Isn't that so crazy??
   - type: 1
-    emotion: 0
-    description: Grah bah gahbah!
+    talker: {fileID: 31044923072073363}
+    emotion: 1
+    description: You dare to attack our innocent goblin underlings, out in broad
+      daylight??
   - type: 0
+    talker: {fileID: 0}
+    emotion: 6
+    description: They have a point, we did attack those goblins unprovoked...
+  - type: 2
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    emotion: 1
+    description: Now you listen here, goblins! We won't be terrorized by your kind
+      no more!
+  - type: 2
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    emotion: 1
+    description: Miss, you take on those two fellers over there. These ones are mine!!
+  victoryDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 2
+    description: Who knew the humans were so strong...
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 4
+    description: I don't think you'll have to worry about them any longer!
+  - type: 2
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
     emotion: 0
-    description: Well, I guess this is going to be a fight...
-  victoryDialogueSteps: []
+    description: Thank you kindly, miss.
+  - type: 2
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    emotion: 0
+    description: Now you need to get yourself to the enchanted forest?
+  - type: 0
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    emotion: 0
+    description: Yes, I'll need to cross the forest to find a sword that can kill
+      dragons.
+  - type: 2
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    emotion: 1
+    description: Dragons??? With all due respect, I hope you are speakin in fairy
+      tales, miss.
+  - type: 2
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    emotion: 0
+    description: The entrance to the enchanted forest is down that there gorge.
+  - type: 2
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    emotion: 0
+    description: Be careful down there, miss! The guardian of the forest uses some
+      strange magic!
+  - type: 0
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    emotion: 4
+    description: I think I can manage. I have some strange magic of my own!
 --- !u!114 &730767153068028742
 MonoBehaviour:
   m_ObjectHideFlags: 0
