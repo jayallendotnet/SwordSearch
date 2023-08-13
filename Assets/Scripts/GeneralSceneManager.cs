@@ -42,13 +42,13 @@ public class GeneralSceneManager : MonoBehaviour{
         StaticVariables.beatCurrentBattle = false;
 
 
-        StaticVariables.healActive = true;
-        StaticVariables.waterActive = true;
-        StaticVariables.fireActive = false;
-        StaticVariables.earthActive = false;
-        StaticVariables.lightningActive = false;
-        StaticVariables.darkActive = false;
-        StaticVariables.swordActive = false;
+        //StaticVariables.healActive = true;
+        //StaticVariables.waterActive = true;
+        //StaticVariables.fireActive = false;
+        //StaticVariables.earthActive = false;
+        //StaticVariables.lightningActive = false;
+        //StaticVariables.darkActive = false;
+        //StaticVariables.swordActive = false;
         StaticVariables.FadeOutThenLoadScene(StaticVariables.world0Name);
     }
 

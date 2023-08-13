@@ -452,7 +452,7 @@ public class PuzzleGenerator : MonoBehaviour {
     }
 
     private void PickAllSpacesForPowerups(){
-        for (int i = 0; i < battleManager.powerupsPerPuzzle; i++)
+        for (int i = 0; i < StaticVariables.powerupsPerPuzzle; i++)
             PickRandomSpaceForPowerup();
     }
 

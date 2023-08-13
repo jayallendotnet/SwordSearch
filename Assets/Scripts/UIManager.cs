@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Dynamic;
 
 public class UIManager : MonoBehaviour {
     private Color textColorForWord = Color.black;
@@ -18,6 +19,7 @@ public class UIManager : MonoBehaviour {
     private bool movingBook = false;
     private List<GameObject> animatedObjectsInWindow = new List<GameObject>();
     private bool turningPage = false;
+    private List<Image> wordStrengthIconImages = new List<Image>();
 
     [Header("Submit Word Button")]
     public Text wordDisplay;
@@ -28,7 +30,13 @@ public class UIManager : MonoBehaviour {
     public Image wordStrengthImageOnes;
     public Image wordStrengthImageTens;
     public GameObject wordStrengthDivider;
-    public Image wordStrengthIcon;
+    public List<GameObject> wordStrengthIconGameObjects;
+    //public GameObject wordStrengthIconSingle;
+    //public GameObject wordStrengthIconDouble;
+    //public GameObject wordStrengthIconTriple;
+    //public GameObject wordStrengthIconQuadruple;
+    //public GameObject wordStrengthIconQuintuple;
+    //public GameObject wordStrengthIconSextuple;
 
 
     [Header("Colors")]
@@ -125,6 +133,15 @@ public class UIManager : MonoBehaviour {
         letterMask2Mask.enabled = false;
         letterMask3Im.enabled = false;
         letterMask3Mask.enabled = false;
+
+        SetupStrengthIcons();
+    }
+
+    private void SetupStrengthIcons(){
+        foreach (GameObject go in wordStrengthIconGameObjects){
+            foreach (Transform t in go.transform)
+                wordStrengthIconImages.Add(t.GetComponent<Image>());
+        }
     }
 
 
@@ -263,9 +280,19 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public void UpdatePowerupIcon(BattleManager.PowerupTypes type){
+    public void UpdatePowerupIcon(BattleManager.PowerupTypes type, int powerupLevel){
         PowerupDisplayData d =GetPowerupDisplayDataWithType(type);
-        wordStrengthIcon.sprite = d.icon;
+        foreach (Image im in wordStrengthIconImages)
+            im.sprite = d.icon;
+        foreach (GameObject go in wordStrengthIconGameObjects)
+            go.SetActive(false);
+        int numToShow = powerupLevel - 1;
+        if (numToShow >= wordStrengthIconGameObjects.Count)
+            numToShow = wordStrengthIconGameObjects.Count - 1;
+        else if (numToShow < 0)
+            numToShow = 0;
+        wordStrengthIconGameObjects[numToShow].SetActive(true);
+        //wordStrengthIcon.sprite = d.icon;
     }
 
     public void UpdateVisualsForLettersInWord(List<LetterSpace> letterSpacesForWord){

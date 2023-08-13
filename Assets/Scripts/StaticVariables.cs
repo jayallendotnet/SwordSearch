@@ -21,6 +21,7 @@ public class StaticVariables
     static public bool lightningActive = false;
     static public bool darkActive = false;
     static public bool swordActive = false;
+    static public int powerupsPerPuzzle = 3;
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
     static public int highestUnlockedWorld = 1; //0 for start of game
     static public int highestUnlockedLevel = 10;

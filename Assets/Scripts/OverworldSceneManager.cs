@@ -18,8 +18,16 @@ public class OverworldSceneManager : MonoBehaviour{
     public float playerWalkSpeed = 500f;
     public float minTimeToMove = 1f;
 
-    [Header("Other")]
+    [Header("Overworld Settings")]
     public int thisWorldNum;
+    public int powerupsPerPuzzle = 3;
+    public bool healActive = false;
+    public bool waterActive = false;
+    public bool fireActive = false;
+    public bool earthActive = false;
+    public bool lightningActive = false;
+    public bool darkActive = false;
+    public bool swordActive = false;
     
 
     [HideInInspector]
@@ -40,12 +48,24 @@ public class OverworldSceneManager : MonoBehaviour{
         //print("highest progress - " + StaticVariables.highestUnlockedWorld + ":" + StaticVariables.highestUnlockedLevel);
         interactOverlayManager.gameObject.SetActive(true);
         dialogueManager.gameObject.SetActive(true);
+        SetPowerupAvailability();
         SetupOverworldSpaces();
         ShowProgress();
         PlacePlayerAtPosition(StaticVariables.currentBattleLevel);
         AdvanceGameIfAppropriate();
         ClearCurrentBattleStats();
         interactOverlayManager.Setup();
+    }
+
+    private void SetPowerupAvailability(){
+        StaticVariables.healActive = healActive;
+        StaticVariables.waterActive = waterActive;
+        StaticVariables.fireActive = fireActive;
+        StaticVariables.earthActive = earthActive;
+        StaticVariables.lightningActive = lightningActive;
+        StaticVariables.darkActive = darkActive;
+        StaticVariables.swordActive = swordActive;
+        StaticVariables.powerupsPerPuzzle = powerupsPerPuzzle;
     }
 
     private void SetupOverworldSpaces(){

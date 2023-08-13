@@ -54,7 +54,7 @@ public class BattleManager : MonoBehaviour {
     [Header("Game Variables")]
     public int startingPlayerHealth = 30;
     public int maxHealth = 999; //for display purposes
-    public int powerupsPerPuzzle = 4;
+    //public int powerupsPerPuzzle = 4;
     public int minCheckingWordLength = 3;
     public int maxPuzzleCountdown = 3;
     public int selfDamageFromDarkAttack = 5;
@@ -435,7 +435,7 @@ public class BattleManager : MonoBehaviour {
     public virtual void UpdateSubmitVisuals(){
         UpdatePowerupTypeAndLevel();
         uiManager.UpdateColorsForWord(word, powerupTypeForWord);
-        uiManager.UpdatePowerupIcon(powerupTypeForWord);
+        uiManager.UpdatePowerupIcon(powerupTypeForWord, powerupLevel);
         uiManager.UpdateVisualsForLettersInWord(letterSpacesForWord);
         uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
     }

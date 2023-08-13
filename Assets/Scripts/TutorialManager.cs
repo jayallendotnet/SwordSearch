@@ -78,7 +78,7 @@ public class TutorialManager : BattleManager {
     }
 
     private void SetupTutorial1(){
-        powerupsPerPuzzle = 0;
+        StaticVariables.powerupsPerPuzzle = 0;
         HideHealthDisplays();
         canEnemyTakeDamage = false;
         canCountdown = false;
@@ -91,7 +91,7 @@ public class TutorialManager : BattleManager {
     }
     
     private void SetupTutorial2(){
-        powerupsPerPuzzle = 0;
+        StaticVariables.powerupsPerPuzzle = 0;
         HidePlayerHealth();
         canEnemyTakeDamage = true;
         canCountdown = false;
@@ -104,7 +104,7 @@ public class TutorialManager : BattleManager {
     }
     
     private void SetupTutorial3(){
-        powerupsPerPuzzle = 0;
+        StaticVariables.powerupsPerPuzzle = 0;
         canEnemyTakeDamage = true;
         canCountdown = true;
         canQueueAttack = false;
@@ -280,7 +280,7 @@ public class TutorialManager : BattleManager {
                 highlightAttackStrength.SetActive(true);
                 canShowStrength = true;
                 UpdateSubmitVisuals();
-                uiManager.wordStrengthIcon.gameObject.SetActive(true);
+                //uiManager.wordStrengthIcon.gameObject.SetActive(true);
                 advanceCondition = Cond.Click;
                 break;
             case (6):
@@ -523,7 +523,7 @@ public class TutorialManager : BattleManager {
                 break;
             case (22):
                 canEnemyDie = true;
-                powerupsPerPuzzle = 3;
+                StaticVariables.powerupsPerPuzzle = 3;
                 TurnToSmallerPage();
                 canQueueAttack = true;
                 QueueEnemyAttack();
@@ -617,7 +617,7 @@ public class TutorialManager : BattleManager {
         uiManager.wordStrengthImageOnes.gameObject.SetActive(false);
         uiManager.wordStrengthImageTens.gameObject.SetActive(false);
         uiManager.wordStrengthImageSingle.gameObject.SetActive(false);
-        uiManager.wordStrengthIcon.gameObject.SetActive(false);
+        //uiManager.wordStrengthIcon.gameObject.SetActive(false);
     }
 
     private void HideHealthDisplays(){
