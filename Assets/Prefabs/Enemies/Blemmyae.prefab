@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
+  data: {fileID: 0}
   burnDamageQueue: 
 --- !u!114 &815226952419649514
 MonoBehaviour:
@@ -127,11 +128,107 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6c71501f9ece54da354ee8431c25ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBattleable: 1
+  nameOverride: 
   startingHealth: 1
   attackSpeed: 2
   attackDamage: 1
   isDraconic: 0
   isHorde: 0
+  isHoly: 0
+  isDark: 0
+  isNearWater: 0
+  normal: {fileID: 21300000, guid: 2f6411819f791df479fb24c0d11d4637, type: 3}
+  angry: {fileID: 21300000, guid: 7b512dc604265574e8741ad62a4cef37, type: 3}
+  defeated: {fileID: 21300000, guid: 13b938fa30908c14196ee3b7c8f18dc5, type: 3}
+  excited: {fileID: 0}
+  questioning: {fileID: 0}
+  overworldDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 5
+    description: It looks like this creature is guarding the path that leads into
+      the forest...
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 5
+    description: It has no head?? Its face is on its torso??
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 4
+    description: Hello, I come in peace! I am trying to pass through here to get
+      to the enchanted forest!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: I'm sorry, but I can't let you through!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: Ugh, not this again! I really do come in peace!!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: I believe you, human woman. But if I let you through, you will surely
+      meet your demise from the guardian of the forest.
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 6
+    description: I'm afraid I must insist. Dragons have taken over the land, and
+      I have to do my part to stop them!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: No, ma'am. I'm afraid I must insist. For your own safety, I will
+      have to stop you myself!
+  victoryDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 2
+    description: Oh no, that battle was making a big ruckus...
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: Well, you shouldn't have picked a fight with me in the first place!!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: The guardian of the forest has surely awoken by now! Be careful!!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 5
+    description: Who is this guardian of the forest, anyway?
+  - type: 1
+    talker: {fileID: 815226952419649514}
+    emotion: 0
+    description: A cyclops! And this one has been blessed with the magic of the element
+      of earth!
+  - type: 0
+    talker: {fileID: 815226952419649514}
+    emotion: 6
+    description: A CYCLOPS???? I thought those were just the stuff of legend!
+  - type: 1
+    talker: {fileID: 815226952419649514}
+    emotion: 0
+    description: Ma'am, you are talking to a man with his face on his torso.
+  - type: 1
+    talker: {fileID: 815226952419649514}
+    emotion: 0
+    description: All of the creatures of the enchanted forest are the stuff of legend.
+  - type: 0
+    talker: {fileID: 815226952419649514}
+    emotion: 0
+    description: Well, if I want to proceed, I will just have to defeat a magical
+      super-powered cyclops.
+  - type: 1
+    talker: {fileID: 815226952419649514}
+    emotion: 0
+    description: I wish you good luck, but even luck won't help you against this
+      foe.
+  - type: 1
+    talker: {fileID: 815226952419649514}
+    emotion: 2
+    description: Now if you'll excuse me, I will be watching your demise from safety.
 --- !u!1 &9039942117280077413
 GameObject:
   m_ObjectHideFlags: 0

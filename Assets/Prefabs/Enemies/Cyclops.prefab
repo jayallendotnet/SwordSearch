@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
+  data: {fileID: 0}
   burnDamageQueue: 
 --- !u!114 &815226952419649514
 MonoBehaviour:
@@ -127,10 +128,89 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6c71501f9ece54da354ee8431c25ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBattleable: 1
+  nameOverride: 
   startingHealth: 1
   attackSpeed: 20
   attackDamage: 1
   isDraconic: 0
+  isHorde: 0
+  isHoly: 0
+  isDark: 0
+  isNearWater: 0
+  normal: {fileID: 21300000, guid: 4177b5a23ea0b9942a3e1c8e50b45220, type: 3}
+  angry: {fileID: 21300000, guid: f2cbaeb012bbdec44abc62b79df36309, type: 3}
+  defeated: {fileID: 21300000, guid: ef805cb2add3b5f44894cc5b07d65f2f, type: 3}
+  excited: {fileID: 0}
+  questioning: {fileID: 0}
+  overworldDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 6
+    description: So you're a cyclops, huh. You are so very, very big.
+  - type: 1
+    talker: {fileID: 815226952419649514, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
+    emotion: 1
+    description: 'Intruder!!
+
+      Trespasser!!'
+  - type: 0
+    talker: {fileID: 815226952419649514, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
+    emotion: 1
+    description: Well really I just want to pass through. But I guess you've made
+      up your mind about who I am already.
+  - type: 1
+    talker: {fileID: 815226952419649514, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
+    emotion: 1
+    description: 'Interloper!!
+
+      Loiterer!!
+
+      Transgressor!!
+
+      Hoodlum!!'
+  - type: 0
+    talker: {fileID: 815226952419649514, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
+    emotion: 6
+    description: Alright, alright. If I'm going to die, let's just get it over with.
+  - type: 0
+    talker: {fileID: 815226952419649514, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
+    emotion: 0
+    description: Before I have to hear every possible synonym for "person who should
+      not be here".
+  victoryDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 2
+    description: 'Ugh...
+
+      Miscreant...
+
+      Ruffian...'
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: Yeah, yeah, can it already!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 2
+    description: Zzzzz.....
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: Well, now that the cyclops is dealt with, I can continue on my journey.
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 5
+    description: But what's that up ahead?
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 5
+    description: There's a glow coming from the cyclops' cave!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 4
+    description: He's already asleep, so I hope he doesn't mind if I investigate!
 --- !u!1 &9039942117280077413
 GameObject:
   m_ObjectHideFlags: 0

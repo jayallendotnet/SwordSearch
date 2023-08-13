@@ -127,9 +127,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6c71501f9ece54da354ee8431c25ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBattleable: 1
+  nameOverride: 
   startingHealth: 1
   attackSpeed: 20
   attackDamage: 1
   isDraconic: 0
   isHorde: 0
-  isInHolyArea: 0
+  isHoly: 0
+  isDark: 0
+  isNearWater: 0
+  normal: {fileID: 0}
+  angry: {fileID: 0}
+  defeated: {fileID: 0}
+  excited: {fileID: 0}
+  questioning: {fileID: 0}
+  overworldDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: There's an orc up ahead.
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 6
+    description: It's a little close to town. I can't let it attack them while they
+      are still rebuilding from the dragon attack!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 5
+    description: Hey, orc! Are you looking for trouble?
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: I want to kill and eat the humans.
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: I can't let you do that!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: Okay then , I will kill and eat you, human.
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: I can't let you do that, either!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: GRAAAAAAH!!!!
+  victoryDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 2
+    description: Are the other humans scary like you, little human lady?
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: Yes! Some of them are strong scary big humans!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 2
+    description: Okay then, I will go away. I will kill and eat someone else.
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 6
+    description: I'm not sure that was the best possible outcome here...
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 4
+    description: Well, at least the orc is gone and the town is safe from another
+      attack!

@@ -53,7 +53,7 @@ public class DialogueManager : MonoBehaviour{
     //private float fakeButton1Pos = 920f;
     private float fakeButton1Pos = 640;
     private float fakeButton2Pos = 360;
-    private float fakeEnemyNamePos = 900;
+    private float fakeEnemyNamePos = 950;
     //private float fakeButton2Pos = 640f;
     //private float fakeButton3Pos = 360f;
     private EnemyData enemyData;
