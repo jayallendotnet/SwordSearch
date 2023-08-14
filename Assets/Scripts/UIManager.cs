@@ -577,12 +577,10 @@ public class UIManager : MonoBehaviour {
         book.DOAnchorPos(new Vector2(-book.anchoredPosition.x, book.anchoredPosition.y), 0.5f).OnComplete(MovingBookEnded);
         if (IsPuzzlePageShowing()){
             pauseButton.DOAnchorPos((pauseButton.anchoredPosition + new Vector2(0, 300)), 0.5f);
-            //pauseArrow.DORotate(new Vector3(0,0,270), 0.5f);
             battleManager.PauseEverything();
         }
         else
             pauseButton.DOAnchorPos((pauseButton.anchoredPosition + new Vector2(0, -300)), 0.5f);
-            //pauseArrow.DORotate(new Vector3(0,0,90), 0.5f);
     }
 
     private void MovingBookEnded(){

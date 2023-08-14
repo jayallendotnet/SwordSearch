@@ -18,13 +18,14 @@ public class InteractOverlayManager : MonoBehaviour{
     public RectTransform talkButton;
     public RectTransform infoButton;
     public RectTransform cutsceneButton;
-    public Text infoText;
     public Text cutsceneText;
     public RectTransform backButton;
     public Text enemyNameText;
     public GameObject clickableBackground;
     public GameObject infoHighlight;
     public RectTransform fullTalkButton;
+    public RectTransform scrollableInfoParent;
+    public GameObject infoTextPrefab;
 
 
     [Header("Configurations")]
@@ -93,16 +94,20 @@ public class InteractOverlayManager : MonoBehaviour{
         if (isInfoShowing)
             return;
         HideOtherButtonsBehindBack(transitionDuration);
-        infoText.gameObject.SetActive(true);
-        FadeInText(infoText, Color.white);
-        //FadeOutText(enemyNameText, Color.white);
-        //Color c = Color.white;
-        //c.a = 0;
-        //infoText.color = c;
-        //infoText.DOColor(Color.white, transitionDuration);
-        InfoTextData infoTextData = GenerateEnemyInfoText(overworldSceneManager.currentEnemyData);
-        infoText.text = infoTextData.text;
-        AdjustHeightsForShowingInfo(infoTextData.lineCount);
+        scrollableInfoParent.parent.parent.gameObject.SetActive(true);
+
+        foreach (Transform t in scrollableInfoParent)
+            Destroy(t.gameObject);
+        List<string> enemyInfoText = GenerateEnemyInfoText(overworldSceneManager.currentEnemyData);
+        foreach (string s in enemyInfoText){
+            GameObject obj = Instantiate(infoTextPrefab, scrollableInfoParent);
+            obj.GetComponent<Text>().text = s;
+        }
+        FadeInInfoText(Color.white);
+        clickableBackground.SetActive(false);
+
+        StaticVariables.WaitTimeThenCallFunction(0.01f, AdjustHeightsForShowingInfo);
+
         isInfoShowing = true;
     }
 
@@ -119,6 +124,18 @@ public class InteractOverlayManager : MonoBehaviour{
         text.color = c;
         text.DOColor(color, transitionDuration);
 
+    }
+
+    private void FadeInInfoText(Color color){
+        foreach (Transform t in scrollableInfoParent){
+            FadeInText(t.GetComponent<Text>(), color);
+        }
+    }
+
+    private void FadeOutInfoText(Color color){
+        foreach (Transform t in scrollableInfoParent){
+            FadeOutText(t.GetComponent<Text>(), color);
+        }
     }
 
     public void PressedCutsceneButton(){
@@ -138,6 +155,8 @@ public class InteractOverlayManager : MonoBehaviour{
             temp = 0;
         if (diff < 0)
             overworldSceneManager.overworldView.DOAnchorPosY(temp, transitionDuration);
+            
+        clickableBackground.SetActive(false);
     }
 
     private void MoveOverworldUpIfRequired(){
@@ -147,84 +166,65 @@ public class InteractOverlayManager : MonoBehaviour{
             overworldSceneManager.overworldView.DOAnchorPosY(-diff, transitionDuration);
     }
 
-    private void AdjustHeightsForShowingInfo(int lineCount){
-        if (lineCount < 3)
+    private void AdjustHeightsForShowingInfo(){
+        float newHeight = scrollableInfoParent.rect.height + 400;
+        if (newHeight > 2400)
+            newHeight = 2400;
+        if (newHeight < interactOverlayStartingSize.y)
             return;
-        int extraAmount = lineCount - 2;
-        if (extraAmount > 3){
-            extraAmount = 3;
-            //change font size to fit more spaces?
-        }
-        float heightPerAmount = 450f;
-        float totalHeightAdded = extraAmount * heightPerAmount;
-        Vector2 sd = new Vector2(interactOverlay.sizeDelta.x, interactOverlay.sizeDelta.y + totalHeightAdded);
+        Vector2 sd = new Vector2(interactOverlay.sizeDelta.x, newHeight);
         interactOverlay.DOSizeDelta(sd, transitionDuration);
-        
-        float playerHasToBeAbove = interactOverlay.rect.height + totalHeightAdded + minHeightAboveInteractOverlay;
+
+        float playerHasToBeAbove = newHeight + minHeightAboveInteractOverlay;
         float diff = overworldSceneManager.playerParent.position.y - playerHasToBeAbove;
         if (diff < 0)
             overworldSceneManager.overworldView.DOAnchorPosY(overworldSceneManager.overworldView.anchoredPosition.y -diff, transitionDuration);
     }
 
-    private InfoTextData GenerateEnemyInfoText(EnemyData enemy){
-        //maybe move this into static variables at some point?
-        //the infotextdata object definition would need to go somewhere else too
-        InfoTextData infoText = new InfoTextData();
-        int lineCount = 0;
-        string text = "";
+    private List<string> GenerateEnemyInfoText(EnemyData enemy){
+        List<string> result = new List<string>();
         if (enemy.isHorde){
             if (StaticVariables.fireActive){
-                text += "Horde enemies take more burn damage from fire spells.\n\n";
-                lineCount ++;
+                result.Add("Horde enemies take more burn damage from fire spells.");
             }
             if (StaticVariables.waterActive){
-                text += "Horde enemies are hit harder from flooded attacks.\n\n";
-                lineCount ++;
+                result.Add("Horde enemies are hit harder from flooded attacks.");
             }
             if (StaticVariables.lightningActive){
-                text += "Horde enemies are stunned for less time from lightning spells.\n\n";
-                lineCount ++;
+                result.Add("Horde enemies are stunned for less time from lightning spells.");
             }
         }
         if (enemy.isDraconic){
             if (StaticVariables.swordActive){
-                text += "This dragon takes more damage from the sword of slaying.\n\n";
-                lineCount ++;
+                result.Add("This dragon takes more damage from the sword of slaying.");
             }
         }
         if (enemy.isHoly){
             if (StaticVariables.healActive){
-                text += "This creature's holy aura amplifies healing magic.\n\n";
-                lineCount ++;
+                result.Add("This creature's holy aura amplifies healing magic.");
             }
             if (StaticVariables.darkActive){
-                text += "This creature's holy aura diminishes the power of darkness.\n\n";
-                lineCount ++;
+                result.Add("This creature's holy aura diminishes the power of darkness.");
             }
         }        
         if (enemy.isDark){
             if (StaticVariables.healActive){
-                text += "This creature's dark aura dampens healing magic.\n\n";
-                lineCount ++;
+                result.Add("This creature's dark aura dampens healing magic.");
             }
             if (StaticVariables.darkActive){
-                text += "This creature's dark aura bolsters the power of darkness.\n\n";
-                lineCount ++;
+                result.Add("This creature's dark aura bolsters the power of darkness.");
             }
         }     
         if (enemy.isNearWater){
             if (StaticVariables.waterActive){
-                text += "The nearby river empowers flooded attacks.\n\n";
-                lineCount ++;
+                result.Add("The nearby river empowers flooded attacks 1.");
             }
         }
-        if (text == ""){
-            text = defaultEnemyInfo;
-            lineCount ++;
-        }
-        infoText.text = text;
-        infoText.lineCount = lineCount;
-        return infoText; 
+
+        if (result.Count == 0)
+            result.Add(defaultEnemyInfo);
+        return result;
+
     }
 
     public void PressedBackButton(){
@@ -233,11 +233,7 @@ public class InteractOverlayManager : MonoBehaviour{
         if (isInfoShowing){   
             ReturnButtonsToStartingPositions(transitionDuration);  
             StaticVariables.WaitTimeThenCallFunction(transitionDuration, FinishedShowingInfo);
-            FadeOutText(infoText, Color.white);
-            //FadeInText(enemyNameText, Color.white);
-            //Color c = Color.white;
-            //c.a = 0;
-            //infoText.DOColor(c, transitionDuration);
+            FadeOutInfoText(Color.white);
             MoveOverworldDownIfRequired();
             return;
         }
@@ -265,13 +261,14 @@ public class InteractOverlayManager : MonoBehaviour{
 
     private void FinishedShowingInfo(){
         isInfoShowing = false;
-        infoText.gameObject.SetActive(false);
+        scrollableInfoParent.parent.parent.gameObject.SetActive(false);
     }
 
     private void HideInteractOverlay(){
         interactOverlay.DOAnchorPosY(-interactOverlay.rect.height, transitionDuration);
         clickableBackground.SetActive(false);
         isMovingInteractOverlay = true;
+        overworldSceneManager.ShowMapButton(transitionDuration);
         overworldSceneManager.overworldView.DOAnchorPosY(0, transitionDuration).OnComplete(FinishedHidingInteractOverlay);
     }
 
@@ -285,6 +282,7 @@ public class InteractOverlayManager : MonoBehaviour{
         isInteractOverlayShowing = true;
         isMovingInteractOverlay = true;
         clickableBackground.SetActive(true);
+        overworldSceneManager.HideMapButton(transitionDuration);
         MoveOverworldUpIfRequired();
 
         SetInteractOptions();
@@ -299,8 +297,8 @@ public class InteractOverlayManager : MonoBehaviour{
     }
 
     public void DisplayInfoHighlightIfAppropriate(EnemyData enemy){
-        InfoTextData infoTextData = GenerateEnemyInfoText(overworldSceneManager.currentEnemyData);
-        if (infoTextData.text == defaultEnemyInfo)
+        List<string> infoTextData = GenerateEnemyInfoText(overworldSceneManager.currentEnemyData);
+        if (infoTextData[0] == defaultEnemyInfo)
             infoHighlight.SetActive(false);
         else
             infoHighlight.SetActive(true);
@@ -313,7 +311,7 @@ public class InteractOverlayManager : MonoBehaviour{
             talkButton.gameObject.SetActive(true);
             infoButton.gameObject.SetActive(true);
             cutsceneButton.gameObject.SetActive(false);
-            infoText.gameObject.SetActive(false);
+            scrollableInfoParent.parent.parent.gameObject.SetActive(false);
             cutsceneText.gameObject.SetActive(false);
             fullTalkButton.gameObject.SetActive(true);
             enemyNameText.gameObject.SetActive(true);
@@ -330,7 +328,7 @@ public class InteractOverlayManager : MonoBehaviour{
             talkButton.gameObject.SetActive(false);
             infoButton.gameObject.SetActive(false);
             cutsceneButton.gameObject.SetActive(true);
-            infoText.gameObject.SetActive(false);
+            scrollableInfoParent.parent.parent.gameObject.SetActive(false);
             cutsceneText.gameObject.SetActive(true);
             fullTalkButton.gameObject.SetActive(false);
             enemyNameText.gameObject.SetActive(false);
@@ -341,8 +339,3 @@ public class InteractOverlayManager : MonoBehaviour{
     }
 }
 
-
-public class InfoTextData{
-    public string text;
-    public int lineCount;
-}

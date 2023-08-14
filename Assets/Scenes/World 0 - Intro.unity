@@ -5968,9 +5968,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeImage: {fileID: 1496131951}
-  temp:
-    enemyPrefab: {fileID: 0}
-    backgroundPrefab: {fileID: 0}
 --- !u!1 &377625880
 GameObject:
   m_ObjectHideFlags: 0
@@ -13797,9 +13794,9 @@ RectTransform:
   - {fileID: 305248689}
   - {fileID: 2129462006}
   - {fileID: 1010773533}
+  - {fileID: 1496131950}
   - {fileID: 734309494}
   - {fileID: 1670146878}
-  - {fileID: 1496131950}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16117,7 +16114,7 @@ GameObject:
   - component: {fileID: 1010773535}
   - component: {fileID: 1010773534}
   m_Layer: 5
-  m_Name: Home Button
+  m_Name: Map Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17895,6 +17892,7 @@ MonoBehaviour:
   - {fileID: 1535408992}
   - {fileID: 1855988554}
   - {fileID: 1118834665}
+  mapButton: {fileID: 1010773533}
   playerWalkSpeed: 1000
   minTimeToMove: 1
   thisWorldNum: 0
@@ -24138,7 +24136,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 811241014}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

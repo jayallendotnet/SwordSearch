@@ -12,6 +12,7 @@ public class OverworldSceneManager : MonoBehaviour{
     public RectTransform playerParent;
     public Animator playerAnimator;
     public OverworldSpace[] overworldSpaces;
+    public RectTransform mapButton;
 
 
     [Header("Timing Configurations")]
@@ -43,9 +44,6 @@ public class OverworldSceneManager : MonoBehaviour{
 
 
     void Start(){
-        //print(StaticVariables.hasTalkedToNewestEnemy);
-        //print("current progress - " + StaticVariables.currentBattleWorld + ":" + StaticVariables.currentBattleLevel);
-        //print("highest progress - " + StaticVariables.highestUnlockedWorld + ":" + StaticVariables.highestUnlockedLevel);
         interactOverlayManager.gameObject.SetActive(true);
         dialogueManager.gameObject.SetActive(true);
         SetPowerupAvailability();
@@ -72,7 +70,6 @@ public class OverworldSceneManager : MonoBehaviour{
         for (int i = 0; i < overworldSpaces.Length; i++){
             OverworldSpace space = overworldSpaces[i];
             space.overworldSceneManager = this;
-            //space.playerDestination.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 
@@ -106,8 +103,6 @@ public class OverworldSceneManager : MonoBehaviour{
             reverse = true;
         }
 
-        //print("earlierIndex[" + earlierIndex + "], laterIndex[" + laterIndex + "]");
-
         stepsToNextSpace = new List<GameObject>();
         for (int i = 0; i < overworldSpaces.Length; i++){
             if (i == earlierIndex)
@@ -129,8 +124,6 @@ public class OverworldSceneManager : MonoBehaviour{
         currentPlayerSpace.transform.GetChild(2).GetChild(0).gameObject.SetActive(true);
         MovePlayerToNextStep();
         PointPlayerTowardNextEnemy();
-
-        //print(stepsToNextSpace.Count);
     }
 
     private void MovePlayerToNextStep(){
@@ -282,10 +275,6 @@ public class OverworldSceneManager : MonoBehaviour{
             if (StaticVariables.highestUnlockedWorld > 6)
                 StaticVariables.highestUnlockedWorld = 6;
         }
-
-        //print(StaticVariables.hasTalkedToNewestEnemy);
-        //print("current progress - " + StaticVariables.currentBattleWorld + ":" + StaticVariables.currentBattleLevel);
-        //print("highest progress - " + StaticVariables.highestUnlockedWorld + ":" + StaticVariables.highestUnlockedLevel);
     }
 
     private void ClearCurrentBattleStats(){
@@ -318,6 +307,15 @@ public class OverworldSceneManager : MonoBehaviour{
     public void FinishedTalking(){
         if (IsCurrentEnemyNewestEnemy())
             StaticVariables.hasTalkedToNewestEnemy = true;
+    }
+
+    
+    public void HideMapButton(float duration){
+        mapButton.DOAnchorPos((mapButton.anchoredPosition + new Vector2(0, 300)), duration);
+    }
+
+    public void ShowMapButton(float duration){
+        mapButton.DOAnchorPos((mapButton.anchoredPosition + new Vector2(0, -300)), duration);
     }
 
 }

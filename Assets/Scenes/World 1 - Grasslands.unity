@@ -10983,9 +10983,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeImage: {fileID: 1496131951}
-  temp:
-    enemyPrefab: {fileID: 0}
-    backgroundPrefab: {fileID: 0}
 --- !u!1 &376751869
 GameObject:
   m_ObjectHideFlags: 0
@@ -24370,7 +24367,7 @@ GameObject:
   - component: {fileID: 840911068}
   - component: {fileID: 840911067}
   m_Layer: 5
-  m_Name: Home Button
+  m_Name: Map Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32457,6 +32454,7 @@ MonoBehaviour:
   - {fileID: 882906236}
   - {fileID: 1889680495}
   - {fileID: 1118834665}
+  mapButton: {fileID: 840911066}
   playerWalkSpeed: 1000
   minTimeToMove: 1
   thisWorldNum: 1
