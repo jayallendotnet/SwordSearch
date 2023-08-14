@@ -54,6 +54,11 @@ public class TouchManager : MonoBehaviour {
             }
         }
         else if (Input.GetMouseButtonUp(0)){
+            if (StaticVariables.useAutoSubmit){
+                ProcessFingerRelease();
+                return;
+            }
+            
             if (tapping){
                 ProcessTapReleaseOnLetterSpace(spaceUnderFinger);
             }
@@ -99,6 +104,10 @@ public class TouchManager : MonoBehaviour {
         if (space == null)
             return;
         battleManager.ProcessTapReleaseOnLetterSpace(space);
+    }
+
+    private void ProcessFingerRelease(){
+        battleManager.ProcessFingerRelease();
     }
 
 

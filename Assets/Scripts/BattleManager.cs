@@ -550,6 +550,15 @@ public class BattleManager : MonoBehaviour {
             RemoveLetter(space);
     }
 
+    public void ProcessFingerRelease(){
+        if (StaticVariables.useAutoSubmit){
+            if (isValidWord)
+                PressSubmitWordButton();
+            else
+                ClearWord(false);
+        }
+    }
+
     private void SetLetterSpaceActiveBeforeFingerDown(){
         foreach (LetterSpace ls in puzzleGenerator.letterSpaces){
             ls.wasActiveBeforeFingerDown = false;

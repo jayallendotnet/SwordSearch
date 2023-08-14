@@ -101,7 +101,7 @@ public class UIManager : MonoBehaviour {
     public Transform backgroundParent;
     public Transform foregroundParent;
     public RectTransform book;
-    public RectTransform pauseArrow;
+    public RectTransform pauseButton;
     public GameObject puzzlePage;
     public GameObject victoryPage;
     public GameObject defeatPage;
@@ -576,11 +576,13 @@ public class UIManager : MonoBehaviour {
         movingBook = true;
         book.DOAnchorPos(new Vector2(-book.anchoredPosition.x, book.anchoredPosition.y), 0.5f).OnComplete(MovingBookEnded);
         if (IsPuzzlePageShowing()){
-            pauseArrow.DORotate(new Vector3(0,0,270), 0.5f);
+            pauseButton.DOAnchorPos((pauseButton.anchoredPosition + new Vector2(0, 300)), 0.5f);
+            //pauseArrow.DORotate(new Vector3(0,0,270), 0.5f);
             battleManager.PauseEverything();
         }
         else
-            pauseArrow.DORotate(new Vector3(0,0,90), 0.5f);
+            pauseButton.DOAnchorPos((pauseButton.anchoredPosition + new Vector2(0, -300)), 0.5f);
+            //pauseArrow.DORotate(new Vector3(0,0,90), 0.5f);
     }
 
     private void MovingBookEnded(){

@@ -38,6 +38,7 @@ public class StaticVariables
     static public bool beatCurrentBattle = false;
     static public bool hasTalkedToNewestEnemy = false;
     static public CutsceneManager.Cutscene cutsceneID;
+    static public bool useAutoSubmit = true;
 
 
     static public void WaitTimeThenCallFunction(float delay, TweenCallback function) {
