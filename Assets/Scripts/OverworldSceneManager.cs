@@ -50,8 +50,10 @@ public class OverworldSceneManager : MonoBehaviour{
         SetupOverworldSpaces();
         ShowProgress();
         PlacePlayerAtPosition(StaticVariables.currentBattleLevel);
-        AdvanceGameIfAppropriate();
-        ClearCurrentBattleStats();
+        bool shouldUnlockNextEnemy = StaticVariables.AdvanceGameIfAppropriate(thisWorldNum, overworldSpaces.Length);
+        if (shouldUnlockNextEnemy)
+            UnlockNextEnemy();
+        //StaticVariables.ClearCurrentBattleStats();
         interactOverlayManager.Setup();
     }
 
@@ -73,6 +75,7 @@ public class OverworldSceneManager : MonoBehaviour{
         }
     }
 
+    /*
     private void AdvanceGameIfAppropriate(){
         if ((thisWorldNum == StaticVariables.currentBattleWorld) && (thisWorldNum == StaticVariables.highestUnlockedWorld)){
             if (StaticVariables.highestUnlockedLevel == StaticVariables.currentBattleLevel){
@@ -84,6 +87,7 @@ public class OverworldSceneManager : MonoBehaviour{
             }
         }
     }
+    */
 
     public void StartMovingPlayerToSpace(OverworldSpace space){
         bool reverse = false;
@@ -267,6 +271,7 @@ public class OverworldSceneManager : MonoBehaviour{
         return -1;
     }
 
+    /*
     private void AdvanceGameProgress(){
         StaticVariables.highestUnlockedLevel ++;
         if (StaticVariables.highestUnlockedLevel > overworldSpaces.Length){
@@ -274,14 +279,19 @@ public class OverworldSceneManager : MonoBehaviour{
             StaticVariables.highestUnlockedLevel = 1;
             if (StaticVariables.highestUnlockedWorld > 6)
                 StaticVariables.highestUnlockedWorld = 6;
+            //play some animation then go back to the map scene
+            //StaticVariables.FadeOutThenLoadScene("Map Scene");
         }
     }
+    */
 
+    /*
     private void ClearCurrentBattleStats(){
         StaticVariables.currentBattleLevel = 0;
         StaticVariables.currentBattleWorld = 0;
         StaticVariables.beatCurrentBattle = false;
     }
+    */
 
     public void StartBattle(){
         if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Battle)

@@ -24,11 +24,11 @@ public class StaticVariables
     static public int powerupsPerPuzzle = 3;
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
     static public int highestUnlockedWorld = 1; //0 for start of game
-    static public int highestUnlockedLevel = 10;
+    static public int highestUnlockedLevel = 3;
     static public int currentBattleWorld = 0;
     static public int currentBattleLevel = 0;
     static public string battleSceneName = "Battle Scene";
-    static public string world0Name = "World 0 - Intro";
+    static public string world0Name = "World 0 - Hometown";
     static public string world1Name = "World 1 - Grasslands";
     static public string world2Name = "World 2 - Magical Forest";
     static public string world3Name = "World 3 - Desert";
@@ -103,6 +103,42 @@ public class StaticVariables
             default:
                 return world6Name;
         }
+    }
+
+    static public bool AdvanceGameIfAppropriate(int worldNum, int spacesInWorld){
+        //returns if the next overworld space should be unlocked
+        if ((worldNum == currentBattleWorld) && (worldNum == highestUnlockedWorld)){
+            if (highestUnlockedLevel == currentBattleLevel){
+                if (beatCurrentBattle){
+                    hasTalkedToNewestEnemy = false;
+                    AdvanceGameProgress(spacesInWorld);
+                    ClearCurrentBattleStats();
+                    return true;
+                }
+            }
+        }
+        ClearCurrentBattleStats();
+        return false;
+    }
+
+    
+    static private void AdvanceGameProgress(int spacesInWorld){
+        highestUnlockedLevel ++;
+        if (highestUnlockedLevel > spacesInWorld){
+            highestUnlockedWorld ++;
+            highestUnlockedLevel = 1;
+            if (highestUnlockedWorld > 6)
+                highestUnlockedWorld = 6;
+            //play some animation then go back to the map scene
+            //StaticVariables.FadeOutThenLoadScene("Map Scene");
+        }
+    }
+
+    static public void ClearCurrentBattleStats(){
+        currentBattleLevel = 0;
+        currentBattleWorld = 0;
+        beatCurrentBattle = false;
+
     }
 
 }

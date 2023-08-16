@@ -11,6 +11,7 @@ public class MapSceneManager : MonoBehaviour{
     public Text levelProgressText;
     public Text autoSubmitText;
     public BattleData JustBattleOpponent;
+    public GameObject coverUpGrasslands;
 
     void Start(){
         Setup();
@@ -31,9 +32,11 @@ public class MapSceneManager : MonoBehaviour{
         switch (StaticVariables.highestUnlockedWorld){
             case (0):
                 worldProgressText.text = "Hometown";
+                coverUpGrasslands.SetActive(true);
                 break;
             case (1):
                 worldProgressText.text = "Grasslands";
+                coverUpGrasslands.SetActive(false);
                 break;
             case (2):
                 worldProgressText.text = "Enchanted Forest";
@@ -65,7 +68,8 @@ public class MapSceneManager : MonoBehaviour{
         StaticVariables.FadeOutThenLoadScene(StaticVariables.world0Name);
     }
     public void GoToGrasslands(){
-        StaticVariables.FadeOutThenLoadScene(StaticVariables.world1Name);
+        if (StaticVariables.highestUnlockedWorld >= 1)
+            StaticVariables.FadeOutThenLoadScene(StaticVariables.world1Name);
     }
 
     private void DisplayAutoSubmit(){

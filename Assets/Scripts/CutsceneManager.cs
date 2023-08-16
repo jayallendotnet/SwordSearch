@@ -10,7 +10,7 @@ public class CutsceneManager : MonoBehaviour{
     private int cutsceneStep = 0;
     private enum Cond{Click, Wait, BackgroundChange};
     private Cond advanceCondition;
-    public enum Cutscene{Opening, SavedTown};
+    public enum Cutscene{HometownIntro, HometownOutro, GrasslandsIntro, GrasslandsOutro};
     private Cutscene cutsceneID;
     private List<Animator> animatedObjectsInCutscene = new List<Animator>();
     private float shakeTimer = 0f;
@@ -23,22 +23,30 @@ public class CutsceneManager : MonoBehaviour{
     public GameObject emptyGameObject;
     public RectTransform screenshakeTransform;
 
-    public GameObject openingBackground1;
-    public GameObject openingBackground2;
-    public GameObject openingBackground3;
-    public GameObject savedTownBackground;
+    public GameObject hometownIntroBackground1;
+    public GameObject hometownIntroBackground2;
+    public GameObject hometownIntroBackground3;
+    public GameObject hometownOutroBackground;
+    public GameObject grasslandsIntroBackground;
+    public GameObject grasslandsOutroBackground;
     
 
     public void Start() {
         //manually start at a later cutscene step (put 1 less than the step you actually want to start on)
-        //cutsceneStep = 6;
+        //cutsceneStep = 50;
         SetCutsceneID();
         switch (cutsceneID){
-            case (Cutscene.Opening):
-                SetupOpening();
+            case (Cutscene.HometownIntro):
+                SetupHometownIntro();
                 break;
-            case (Cutscene.SavedTown):
-                SetupSavedTown();
+            case (Cutscene.HometownOutro):
+                SetupHometownOutro();
+                break;
+            case (Cutscene.GrasslandsIntro):
+                SetupGrasslandsIntro();
+                break;
+            case (Cutscene.GrasslandsOutro):
+                SetupGrasslandsOutro();
                 break;
         }
         ButtonText("CONTINUE");
@@ -51,31 +59,42 @@ public class CutsceneManager : MonoBehaviour{
 
     private void SetCutsceneID(){
         cutsceneID = StaticVariables.cutsceneID;
-        //cutsceneID = Cutscene.SavedTown;
     }
 
-    private void SetupOpening(){
-        SetCutsceneBackground(openingBackground1);
-
+    private void SetupHometownIntro(){
+        SetCutsceneBackground(hometownIntroBackground1);
     }
 
-    private void SetupSavedTown(){
-        SetCutsceneBackground(savedTownBackground);
+    private void SetupHometownOutro(){
+        SetCutsceneBackground(hometownOutroBackground);
         PlayAnimation("Redhead Woman", "Idle Back");
         PlayAnimation("Bartender", "Idle Front");
         PlayAnimation("Child 1", "Idle Front");
         PlayAnimation("Child 2", "Idle Front");
+    }
 
+    private void SetupGrasslandsIntro(){
+        SetCutsceneBackground(grasslandsIntroBackground);
+    }
+
+    private void SetupGrasslandsOutro(){
+        SetCutsceneBackground(grasslandsOutroBackground);
     }
 
     private void AdvanceCutsceneStep(){
         cutsceneStep ++;
         switch (cutsceneID){
-            case (Cutscene.Opening):
-                DoOpeningStep();
+            case (Cutscene.HometownIntro):
+                DoHometownIntroStep();
                 break;
-            case (Cutscene.SavedTown):
-                DoSavedTownStep();
+            case (Cutscene.HometownOutro):
+                DoHometownOutroStep();
+                break;
+            case (Cutscene.GrasslandsIntro):
+                DoGrasslandsIntroStep();
+                break;
+            case (Cutscene.GrasslandsOutro):
+                DoGrasslandsOutroStep();
                 break;
         }
         switch (advanceCondition){
@@ -88,7 +107,7 @@ public class CutsceneManager : MonoBehaviour{
         }
     }
 
-    private void DoOpeningStep(){   
+    private void DoHometownIntroStep(){   
         int i = 0;
         if (++i == cutsceneStep){
             DisplayEnemyTalking("Miss Player! Miss Player!", "Child 1", DialogueStep.Emotion.Excited);
@@ -238,7 +257,7 @@ public class CutsceneManager : MonoBehaviour{
             WaitThenAdvance(1.5f);
         }
         else if (++i == cutsceneStep){
-            StartCutsceneImageTransition(openingBackground2);
+            StartCutsceneImageTransition(hometownIntroBackground2);
             advanceCondition = Cond.BackgroundChange;
         }
         else if (++i == cutsceneStep){
@@ -341,7 +360,7 @@ public class CutsceneManager : MonoBehaviour{
             WaitThenAdvance(5f);
         }
         else if (++i == cutsceneStep){
-            StartCutsceneImageTransition(openingBackground3);
+            StartCutsceneImageTransition(hometownIntroBackground3);
             advanceCondition = Cond.BackgroundChange;
         }
         else if (++i == cutsceneStep){
@@ -389,9 +408,8 @@ public class CutsceneManager : MonoBehaviour{
             StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
         }
     }
-
-
-    private void DoSavedTownStep(){
+    
+    private void DoHometownOutroStep(){
     
         int i = 0;
         if (++i == cutsceneStep){
@@ -540,9 +558,13 @@ public class CutsceneManager : MonoBehaviour{
         }
         else if (++i == cutsceneStep){
             DisplayPlayerTalking("I was able to recover the book from the fire, but some passages are now unreadable.", DialogueStep.Emotion.Defeated);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
             advanceCondition = Cond.Wait;
             WaitThenAdvance(2f);
-            //play the taking book out animation
+            PlayAnimation("Player", "Take Out Book (dragon book)");
+            DisplayPlayerTalking("", DialogueStep.Emotion.Defeated);
         }
         else if (++i == cutsceneStep){
             advanceCondition = Cond.Click;
@@ -582,6 +604,12 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             DisplayPlayerTalking("And that's it, the rest of the pages are blackened.", DialogueStep.Emotion.Worried);
             advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){ 
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1.5f);
+            PlayAnimation("Player", "Put Away Book (dragon book)");
+            DisplayPlayerTalking("", DialogueStep.Emotion.Worried);
         }
         else if (++i == cutsceneStep){
             DisplayEnemyTalking("Great! The legend is cut off, right before the location of the dragon killing sword is specified.", "Yellowhead Woman", DialogueStep.Emotion.Angry);
@@ -631,7 +659,90 @@ public class CutsceneManager : MonoBehaviour{
             StaticVariables.currentBattleWorld = 0;
             StaticVariables.currentBattleLevel = 5;
             StaticVariables.beatCurrentBattle = true;
+            StaticVariables.AdvanceGameIfAppropriate(0, 5);
+            StaticVariables.FadeOutThenLoadScene("Map Scene");
+        }
+    }
+
+
+    private void DoGrasslandsIntroStep(){   
+        int i = 0;
+        if (++i == cutsceneStep){
+            DisplayPlayerTalking("What a great day to begin an adventure!", DialogueStep.Emotion.Happy);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("The sun is shining, the river is flowing, and the grass is dancing in the wind!", DialogueStep.Emotion.Happy);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Going out into the grasslands, just me and my... weird magical book...", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){            
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(2f);
+            PlayAnimation("Player", "Take Out Book");
+            DisplayPlayerTalking("", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("You're a magic book. Can you understand me?", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("The magic book says nothing.", "Magic Book", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Okay, well your pages fill with letters when I'm in danger. Can you say something to me with them?", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("The book's pages are empty.", "Magic Book", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("It'd be nice to have a picnic in the warm grass, reading a book full of magical secrets. Doesn't that sound fun?", DialogueStep.Emotion.Happy);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("The magic book continues to be silent.", "Magic Book", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Fine, be that way!" , DialogueStep.Emotion.Angry);   
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){ 
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1.5f);
+            PlayAnimation("Player", "Put Away Book");
+            dialogueManager.HideEnemyChathead(1.5f);
+            DisplayPlayerTalking("", DialogueStep.Emotion.Angry);
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("We should get going anyway. The dragon-killing sword isn't going to find itself!", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(2f);
+            PlayAnimationAndMoveThenIdle("Player", "Walk", 500, 2592, 5f);
+        }
+        else if (++i == cutsceneStep){
+            StaticVariables.currentBattleWorld = 1;
+            StaticVariables.currentBattleLevel = 1;
+            StaticVariables.beatCurrentBattle = true;
             StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
+        }
+    }
+    
+    private void DoGrasslandsOutroStep(){
+    
+        int i = 0;
+        if (++i == cutsceneStep){
+        }
+        else if (++i == cutsceneStep){
         }
     }
 
