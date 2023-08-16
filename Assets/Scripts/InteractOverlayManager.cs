@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class InteractOverlayManager : MonoBehaviour{
 
@@ -26,6 +27,7 @@ public class InteractOverlayManager : MonoBehaviour{
     public RectTransform fullTalkButton;
     public RectTransform scrollableInfoParent;
     public GameObject infoTextPrefab;
+    public Image infoTextHider;
 
 
     [Header("Configurations")]
@@ -46,7 +48,10 @@ public class InteractOverlayManager : MonoBehaviour{
     private Vector2 fullTalkButtonStartingPos;
 
     private bool isMovingInteractOverlay = false;
-    private string defaultEnemyInfo = "This enemy has no particular weaknesses.";
+    private readonly string defaultEnemyInfo = "This  enemy  has  no  particular  weaknesses.";
+
+    private readonly string damageKeywordColor = "9C2931";
+    private readonly string waterKeywordColor = "0A95D0";
 
 
     public void Setup(){
@@ -96,14 +101,25 @@ public class InteractOverlayManager : MonoBehaviour{
         HideOtherButtonsBehindBack(transitionDuration);
         scrollableInfoParent.parent.parent.gameObject.SetActive(true);
 
-        foreach (Transform t in scrollableInfoParent)
-            Destroy(t.gameObject);
-        List<string> enemyInfoText = GenerateEnemyInfoText(overworldSceneManager.currentEnemyData);
-        foreach (string s in enemyInfoText){
+        while(scrollableInfoParent.childCount > 0)
+            DestroyImmediate(scrollableInfoParent.GetChild(0).gameObject);
+        //foreach (Transform t in scrollableInfoParent)
+        //    Destroy(t.gameObject);
+        EnemyInfoText enemyInfoText = GenerateEnemyInfoText(overworldSceneManager.currentEnemyData);
+
+        for (int i = 0; i<enemyInfoText.summary.Count; i++){
+            string s = enemyInfoText.summary[i];
+            string d = enemyInfoText.details[i];
             GameObject obj = Instantiate(infoTextPrefab, scrollableInfoParent);
-            obj.GetComponent<Text>().text = s;
+            obj.transform.GetChild(0).GetComponent<Text>().text = s;
+            obj.transform.GetChild(2).GetComponent<Text>().text = d;
         }
-        FadeInInfoText(Color.white);
+
+        if (enemyInfoText.summary.Count == 0){
+            ShowDefaultEnemyInfo();
+        }
+
+        FadeInInfoText();
         clickableBackground.SetActive(false);
 
         StaticVariables.WaitTimeThenCallFunction(0.01f, AdjustHeightsForShowingInfo);
@@ -111,31 +127,31 @@ public class InteractOverlayManager : MonoBehaviour{
         isInfoShowing = true;
     }
 
-    private void FadeOutText(Text text, Color color){
-        Color c = color;
-        c.a = 0;
-        text.color = color;
-        text.DOColor(c, transitionDuration);
+    private void ShowDefaultEnemyInfo(){
+        string s = defaultEnemyInfo;
+        GameObject obj = Instantiate(infoTextPrefab, scrollableInfoParent);
+        obj.transform.GetChild(0).GetComponent<Text>().text = s;
+        obj.transform.GetChild(1).gameObject.SetActive(false);
+        obj.transform.GetChild(2).gameObject.SetActive(false);
     }
 
-    private void FadeInText(Text text, Color color){
-        Color c = color;
-        c.a = 0;
-        text.color = c;
-        text.DOColor(color, transitionDuration);
 
+    private void FadeInInfoText(){
+        Color c = infoTextHider.color;
+        c.a = 1;
+        Color c2 = c;
+        c2.a = 0;
+        infoTextHider.color = c;
+        infoTextHider.DOColor(c2, transitionDuration);
     }
 
-    private void FadeInInfoText(Color color){
-        foreach (Transform t in scrollableInfoParent){
-            FadeInText(t.GetComponent<Text>(), color);
-        }
-    }
-
-    private void FadeOutInfoText(Color color){
-        foreach (Transform t in scrollableInfoParent){
-            FadeOutText(t.GetComponent<Text>(), color);
-        }
+    private void FadeOutInfoText(){
+        Color c = infoTextHider.color;
+        c.a = 1;
+        Color c2 = c;
+        c2.a = 0;
+        infoTextHider.color = c2;
+        infoTextHider.DOColor(c, transitionDuration);
     }
 
     public void PressedCutsceneButton(){
@@ -181,50 +197,83 @@ public class InteractOverlayManager : MonoBehaviour{
             overworldSceneManager.overworldView.DOAnchorPosY(overworldSceneManager.overworldView.anchoredPosition.y -diff, transitionDuration);
     }
 
-    private List<string> GenerateEnemyInfoText(EnemyData enemy){
-        List<string> result = new List<string>();
+    private EnemyInfoText GenerateEnemyInfoText(EnemyData enemy){
+        List<string> summary = new();
+        List<string> details = new();
         if (enemy.isHorde){
             if (StaticVariables.fireActive){
-                result.Add("Horde enemies take more burn damage from fire spells.");
+                summary.Add("Horde enemies take more burn damage from fire spells.\nBurn damage from the <color=red>power of fire</color> is multiplied by the number of enemies in the horde.");
             }
-            if (StaticVariables.waterActive){
-                result.Add("Horde enemies are hit harder from flooded attacks.");
+            if (StaticVariables.waterActive){                
+                summary.Add("Horde enemies are hit harder from flooded attacks.");
+                details.Add("While the book is flooded by the power of water, attacks do +2 damage for each enemy in the horde.");
             }
             if (StaticVariables.lightningActive){
-                result.Add("Horde enemies are stunned for less time from lightning spells.");
+                summary.Add("Horde enemies are stunned for less time from lightning spells.");
             }
         }
         if (enemy.isDraconic){
             if (StaticVariables.swordActive){
-                result.Add("This dragon takes more damage from the sword of slaying.");
+                summary.Add("This dragon takes more damage from the sword of slaying.");
             }
         }
         if (enemy.isHoly){
             if (StaticVariables.healActive){
-                result.Add("This creature's holy aura amplifies healing magic.");
+                summary.Add("This creature's holy aura amplifies healing magic.");
             }
             if (StaticVariables.darkActive){
-                result.Add("This creature's holy aura diminishes the power of darkness.");
+                summary.Add("This creature's holy aura diminishes the power of darkness.");
             }
         }        
         if (enemy.isDark){
             if (StaticVariables.healActive){
-                result.Add("This creature's dark aura dampens healing magic.");
+                summary.Add("This creature's dark aura dampens healing magic.");
             }
             if (StaticVariables.darkActive){
-                result.Add("This creature's dark aura bolsters the power of darkness.");
+                summary.Add("This creature's dark aura bolsters the power of darkness.");
             }
         }     
         if (enemy.isNearWater){
             if (StaticVariables.waterActive){
-                result.Add("The nearby river empowers flooded attacks 1.");
+                summary.Add("The nearby river empowers flooded attacks.");
+                details.Add("While the book is flooded by the power of water, attacks do +4 damage.");
+            
             }
         }
 
-        if (result.Count == 0)
-            result.Add(defaultEnemyInfo);
-        return result;
+        summary = FormatInfoText(summary);
+        details = FormatInfoText(details);
 
+        EnemyInfoText eit = new();
+        eit.summary = summary;
+        eit.details = details;
+
+        return eit;
+
+    }
+
+    private List<string> FormatInfoText(List<string> input){
+
+        List<string> output = new();
+        foreach (string streeng in input){
+            string s = streeng;
+            HighlightKeyword(ref s, "+1 damage", damageKeywordColor);
+            HighlightKeyword(ref s, "+2 damage", damageKeywordColor);
+            HighlightKeyword(ref s, "+3 damage", damageKeywordColor);
+            HighlightKeyword(ref s, "+4 damage", damageKeywordColor);
+
+            HighlightKeyword(ref s, "flooded", waterKeywordColor);
+            HighlightKeyword(ref s, "power of water", waterKeywordColor);
+
+            output.Add(s.Replace(" ", "  "));
+        }
+        return output;
+
+    }
+
+    private void HighlightKeyword(ref string original, string keyword, string color){
+        string replacement = "<color=#" + color + ">" + keyword + "</color>";
+        original = original.Replace(keyword, replacement);
     }
 
     public void PressedBackButton(){
@@ -233,7 +282,7 @@ public class InteractOverlayManager : MonoBehaviour{
         if (isInfoShowing){   
             ReturnButtonsToStartingPositions(transitionDuration);  
             StaticVariables.WaitTimeThenCallFunction(transitionDuration, FinishedShowingInfo);
-            FadeOutInfoText(Color.white);
+            FadeOutInfoText();
             MoveOverworldDownIfRequired();
             return;
         }
@@ -297,8 +346,8 @@ public class InteractOverlayManager : MonoBehaviour{
     }
 
     public void DisplayInfoHighlightIfAppropriate(EnemyData enemy){
-        List<string> infoTextData = GenerateEnemyInfoText(overworldSceneManager.currentEnemyData);
-        if (infoTextData[0] == defaultEnemyInfo)
+        EnemyInfoText infoTextData = GenerateEnemyInfoText(overworldSceneManager.currentEnemyData);
+        if (infoTextData.summary.Count == 0)
             infoHighlight.SetActive(false);
         else
             infoHighlight.SetActive(true);
@@ -338,4 +387,11 @@ public class InteractOverlayManager : MonoBehaviour{
         }
     }
 }
+
+public class EnemyInfoText{
+    public List<string> summary;
+    public List<string> details;
+
+}
+
 
