@@ -771,12 +771,12 @@ public class CutsceneManager : MonoBehaviour{
     
     private void DisplayPlayerTalking(string s, DialogueStep.Emotion emotion){
         dialogueManager.ShowPlayerTalking(emotion);
-        dialogueManager.dialogueTextBox.text = s;
+        dialogueManager.dialogueTextBox.text = TextFormatter.FormatString(s);
     }
 
     private void DisplayEnemyTalking(string s, EnemyData enemyData, DialogueStep.Emotion emotion){
         dialogueManager.ShowEnemyTalking(enemyData, emotion);
-        dialogueManager.dialogueTextBox.text = s;
+        dialogueManager.dialogueTextBox.text = TextFormatter.FormatString(s);
 
     }
 

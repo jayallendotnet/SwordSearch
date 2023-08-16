@@ -84,25 +84,16 @@ public class StaticVariables
     }
 
     static public string GetCurrentWorldName(){
-        switch (currentBattleWorld){
-            //temp
-            case -2:
-                return "Map Scene";
-            case 0:
-                return world0Name;
-            case 1:
-                return world1Name;
-            case 2:
-                return world2Name;
-            case 3:
-                return world3Name;
-            case 4:
-                return world4Name;
-            case 5:
-                return world5Name;
-            default:
-                return world6Name;
-        }
+        return currentBattleWorld switch{
+            -2 => "Map Scene",
+            0 => world0Name,
+            1 => world1Name,
+            2 => world2Name,
+            3 => world3Name,
+            4 => world4Name,
+            5 => world5Name,
+            _ => world6Name,
+        };
     }
 
     static public bool AdvanceGameIfAppropriate(int worldNum, int spacesInWorld){
@@ -129,8 +120,6 @@ public class StaticVariables
             highestUnlockedLevel = 1;
             if (highestUnlockedWorld > 6)
                 highestUnlockedWorld = 6;
-            //play some animation then go back to the map scene
-            //StaticVariables.FadeOutThenLoadScene("Map Scene");
         }
     }
 

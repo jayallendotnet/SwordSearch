@@ -190,7 +190,7 @@ public class DialogueManager : MonoBehaviour{
     private void ShowCurrentTalkStage(){
 
         if (currentStep < dialogueSteps.Length){
-            dialogueTextBox.text = dialogueSteps[currentStep].description;
+            dialogueTextBox.text = TextFormatter.FormatString(dialogueSteps[currentStep].description);
             if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.PlayerTalking)
                 ShowPlayerTalking(dialogueSteps[currentStep].emotion);
             else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.EnemyTalking)
@@ -217,31 +217,41 @@ public class DialogueManager : MonoBehaviour{
         enemyChathead.DOColor(Color.grey, transitionDuration);
         playerChatheadTransform.DOScale(new Vector2(40, 40), transitionDuration);
         enemyChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
-
-        Sprite sprite;
+        Sprite sprite = emotion switch
+        {
+            (DialogueStep.Emotion.Angry) => playerChatheadAngry,
+            (DialogueStep.Emotion.Defeated) => playerChatheadDefeated,
+            (DialogueStep.Emotion.Excited) => playerChatheadAngry,
+            (DialogueStep.Emotion.Happy) => playerChatheadHappy,
+            (DialogueStep.Emotion.Questioning) => playerChatheadQuestioning,
+            (DialogueStep.Emotion.Worried) => playerChatheadWorried,
+            _ => playerChatheadNormal,
+        };
+        /*
         switch (emotion){
-            case (DialogueStep.Emotion.Angry):
-                sprite = playerChatheadAngry;
-                break;
-            case (DialogueStep.Emotion.Defeated):
-                sprite = playerChatheadDefeated;
-                break;
-            case (DialogueStep.Emotion.Excited):
-                sprite = playerChatheadAngry;
-                break;
-            case (DialogueStep.Emotion.Happy):
-                sprite = playerChatheadHappy;
-                break;
-            case (DialogueStep.Emotion.Questioning):
-                sprite = playerChatheadQuestioning;
-                break;
-            case (DialogueStep.Emotion.Worried):
-                sprite = playerChatheadWorried;
-                break;
-            default:
-                sprite = playerChatheadNormal;
-                break;
+        case (DialogueStep.Emotion.Angry):
+            sprite = playerChatheadAngry;
+            break;
+        case (DialogueStep.Emotion.Defeated):
+            sprite = playerChatheadDefeated;
+            break;
+        case (DialogueStep.Emotion.Excited):
+            sprite = playerChatheadAngry;
+            break;
+        case (DialogueStep.Emotion.Happy):
+            sprite = playerChatheadHappy;
+            break;
+        case (DialogueStep.Emotion.Questioning):
+            sprite = playerChatheadQuestioning;
+            break;
+        case (DialogueStep.Emotion.Worried):
+            sprite = playerChatheadWorried;
+            break;
+        default:
+            sprite = playerChatheadNormal;
+            break;
         }
+        */
         playerChathead.sprite = sprite;
     }
 

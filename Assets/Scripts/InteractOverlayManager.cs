@@ -241,8 +241,8 @@ public class InteractOverlayManager : MonoBehaviour{
             }
         }
 
-        summary = FormatInfoText(summary);
-        details = FormatInfoText(details);
+        summary = TextFormatter.FormatStringList(summary);
+        details = TextFormatter.FormatStringList(details);
 
         EnemyInfoText eit = new();
         eit.summary = summary;
@@ -251,31 +251,6 @@ public class InteractOverlayManager : MonoBehaviour{
         return eit;
 
     }
-
-    private List<string> FormatInfoText(List<string> input){
-
-        List<string> output = new();
-        foreach (string streeng in input){
-            string s = streeng;
-            HighlightKeyword(ref s, "+1 damage", damageKeywordColor);
-            HighlightKeyword(ref s, "+2 damage", damageKeywordColor);
-            HighlightKeyword(ref s, "+3 damage", damageKeywordColor);
-            HighlightKeyword(ref s, "+4 damage", damageKeywordColor);
-
-            HighlightKeyword(ref s, "flooded", waterKeywordColor);
-            HighlightKeyword(ref s, "power of water", waterKeywordColor);
-
-            output.Add(s.Replace(" ", "  "));
-        }
-        return output;
-
-    }
-
-    private void HighlightKeyword(ref string original, string keyword, string color){
-        string replacement = "<color=#" + color + ">" + keyword + "</color>";
-        original = original.Replace(keyword, replacement);
-    }
-
     public void PressedBackButton(){
         if (isMovingInteractOverlay)
             return;
@@ -382,7 +357,7 @@ public class InteractOverlayManager : MonoBehaviour{
             fullTalkButton.gameObject.SetActive(false);
             enemyNameText.gameObject.SetActive(false);
 
-            cutsceneText.text = overworldSceneManager.currentPlayerSpace.cutsceneDescription;
+            cutsceneText.text = TextFormatter.FormatString(overworldSceneManager.currentPlayerSpace.cutsceneDescription);
 
         }
     }
