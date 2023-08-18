@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 public static class TextFormatter{
 
     private static readonly string damageKeywordColor = "9C2931";
+
     private static readonly string healKeywordColor = "92E8C0";
     private static readonly string waterKeywordColor = "0A95D0";
     private static readonly string earthKeywordColor = "7D5743";

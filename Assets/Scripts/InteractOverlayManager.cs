@@ -121,8 +121,9 @@ public class InteractOverlayManager : MonoBehaviour{
 
         FadeInInfoText();
         clickableBackground.SetActive(false);
+        AdjustHeightsForShowingInfo();
 
-        StaticVariables.WaitTimeThenCallFunction(0.01f, AdjustHeightsForShowingInfo);
+        //StaticVariables.WaitTimeThenCallFunction(0.01f, AdjustHeightsForShowingInfo);
 
         isInfoShowing = true;
     }
@@ -183,6 +184,9 @@ public class InteractOverlayManager : MonoBehaviour{
     }
 
     private void AdjustHeightsForShowingInfo(){
+        //print(scrollableInfoParent.rect.height);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(scrollableInfoParent);
+        //print(scrollableInfoParent.rect.height);
         float newHeight = scrollableInfoParent.rect.height + 400;
         if (newHeight > 2400)
             newHeight = 2400;
@@ -202,7 +206,8 @@ public class InteractOverlayManager : MonoBehaviour{
         List<string> details = new();
         if (enemy.isHorde){
             if (StaticVariables.fireActive){
-                summary.Add("Horde enemies take more burn damage from fire spells.\nBurn damage from the <color=red>power of fire</color> is multiplied by the number of enemies in the horde.");
+                summary.Add("Horde enemies take more burn damage from fire spells.");
+                details.Add("Burn damage from the power of fire is multiplied by the number of enemies in the horde.");
             }
             if (StaticVariables.waterActive){                
                 summary.Add("Horde enemies are hit harder from flooded attacks.");
@@ -210,27 +215,33 @@ public class InteractOverlayManager : MonoBehaviour{
             }
             if (StaticVariables.lightningActive){
                 summary.Add("Horde enemies are stunned for less time from lightning spells.");
+                details.Add("The duration of the stun applied by the power of lightning is divided by the number of enemies in the horde.");
             }
         }
         if (enemy.isDraconic){
             if (StaticVariables.swordActive){
                 summary.Add("This dragon takes more damage from the sword of slaying.");
+                details.Add("Dragons take 5x damage from the power of the sword.");
             }
         }
         if (enemy.isHoly){
             if (StaticVariables.healActive){
                 summary.Add("This creature's holy aura amplifies healing magic.");
+                details.Add("The health gained by the power of healing is doubled.");
             }
             if (StaticVariables.darkActive){
                 summary.Add("This creature's holy aura diminishes the power of darkness.");
+                details.Add("The power of darkness deals double damage.");
             }
         }        
         if (enemy.isDark){
             if (StaticVariables.healActive){
                 summary.Add("This creature's dark aura dampens healing magic.");
+                details.Add("The health gained by the power of healing is halved.");
             }
             if (StaticVariables.darkActive){
                 summary.Add("This creature's dark aura bolsters the power of darkness.");
+                details.Add("The power of darkness deals half damage.");
             }
         }     
         if (enemy.isNearWater){
