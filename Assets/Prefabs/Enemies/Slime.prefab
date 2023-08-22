@@ -130,12 +130,18 @@ MonoBehaviour:
   isBattleable: 1
   nameOverride: 
   startingHealth: 8
-  attackSpeed: 4
-  attackDamage: 2
+  attackOrder:
+    Value:
+    - attackSpeed: 3
+      attackDamage: 2
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
   isDark: 0
+  isNearWater: 0
   normal: {fileID: 21300000, guid: 7ac30876ae05fca45b544bd92cb504c7, type: 3}
   angry: {fileID: 21300000, guid: cb1f872e907c2d54183c3b30fcbd146f, type: 3}
   defeated: {fileID: 21300000, guid: 4158f1359bc5ec04a976931349479963, type: 3}
@@ -143,34 +149,44 @@ MonoBehaviour:
   questioning: {fileID: 0}
   overworldDialogueSteps:
   - type: 0
+    talker: {fileID: 0}
     emotion: 4
     description: What a cute little slime.
   - type: 1
+    talker: {fileID: 0}
     emotion: 0
     description: Gloop.
   - type: 0
+    talker: {fileID: 0}
     emotion: 5
     description: I've heard these slimes are dangerous, but you don't look like you
       could hurt a fly!
   - type: 1
+    talker: {fileID: 0}
     emotion: 0
     description: Gloop.
   - type: 0
+    talker: {fileID: 0}
     emotion: 4
     description: Come here sweetie, let me give you a big hug!
   - type: 1
+    talker: {fileID: 0}
     emotion: 1
     description: Gloop!
   - type: 0
+    talker: {fileID: 0}
     emotion: 1
     description: Ouch! It bit me!!
   - type: 1
+    talker: {fileID: 0}
     emotion: 1
     description: GLOOOOOOP!!!!
   victoryDialogueSteps:
   - type: 1
+    talker: {fileID: 0}
     emotion: 2
     description: Gloop...
   - type: 0
+    talker: {fileID: 0}
     emotion: 1
     description: You are not so cute any more, little slime.

@@ -664,7 +664,6 @@ public class CutsceneManager : MonoBehaviour{
         }
     }
 
-
     private void DoGrasslandsIntroStep(){   
         int i = 0;
         if (++i == cutsceneStep){
@@ -741,8 +740,123 @@ public class CutsceneManager : MonoBehaviour{
     
         int i = 0;
         if (++i == cutsceneStep){
+            DisplayPlayerTalking("So this is where the cyclops lives?", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
+            DisplayPlayerTalking("It's so dark... The only light source is that strange brown glow at the back of the cave.", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(4f);
+            //PlayAnimation("Player", "Walk");
+            PlayAnimationAndMoveThenIdle("Player", "Walk", 1500, 2086, 4f);
+            backgroundParent.DOMoveX(-1000, 4f);
+            DisplayPlayerTalking("", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("What is this, some kind of weird glowy rock?", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("It illuminates the rest of the room pretty well.", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("", DialogueStep.Emotion.Normal);
+            FlipDirection("Player");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.6f);
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("", DialogueStep.Emotion.Normal);
+            FlipDirection("Player");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.6f);
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("", DialogueStep.Emotion.Normal);
+            FlipDirection("Player");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.6f);
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("There are so many books here!", DialogueStep.Emotion.Excited);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("This rivals the collection I have in the library back home!", DialogueStep.Emotion.Happy);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("But what kinds of books does a cyclops read?", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("(list funny book names)", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("There are eleven different thesauruses here, too!", DialogueStep.Emotion.Excited);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("No wonder he pulled out all of those synonyms when we were talking earlier...", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Oh, what's this one?", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("", DialogueStep.Emotion.Questioning);
+            PlayAnimation("Player", "Take Book Off Shelf");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(2f);
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("This book has no title!!", DialogueStep.Emotion.Excited);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("", DialogueStep.Emotion.Excited);
+            PlayAnimation("Player", "Put Book On Table");
+            MoveObject("Player", 1500, 2592, 1f);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(2f);
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("It also has no words on the inside!!", DialogueStep.Emotion.Excited);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Alright magic book, you have to see this.", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){            
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(2f);
+            PlayAnimation("Player", "Take Out Book");
+            DisplayPlayerTalking("", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("There's another book here, just like you. It has no title or text anywhere!", DialogueStep.Emotion.Excited);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Does that make you want to talk yet??", DialogueStep.Emotion.Angry);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("The magic book says nothing.", "Magic Book", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            //StaticVariables.currentBattleWorld = 1;
+            //StaticVariables.currentBattleLevel = 1;
+            //StaticVariables.beatCurrentBattle = true;
+            //StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
         }
     }
 

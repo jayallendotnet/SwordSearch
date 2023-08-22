@@ -132,10 +132,18 @@ MonoBehaviour:
   startingHealth: 40
   attackSpeed: 7
   attackDamage: 1
+  attackOrder:
+    Value:
+    - attackSpeed: 7
+      attackDamage: 1
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
   isDark: 0
+  isNearWater: 0
   normal: {fileID: 21300000, guid: 4c631392dddfa5747a099a279bdf5479, type: 3}
   angry: {fileID: 21300000, guid: 8654e1b0a98668a44a45cc07c910ebd4, type: 3}
   defeated: {fileID: 21300000, guid: 527c10aa04cb1c64e8e3939c337c952f, type: 3}
@@ -143,12 +151,15 @@ MonoBehaviour:
   questioning: {fileID: 0}
   overworldDialogueSteps:
   - type: 1
+    talker: {fileID: 0}
     emotion: 1
     description: Human!
   - type: 0
+    talker: {fileID: 0}
     emotion: 6
     description: Oh no, I've been spotted by another goblin!
   - type: 0
+    talker: {fileID: 0}
     emotion: 0
     description: I hope I can defeat this one too...
   victoryDialogueSteps: []

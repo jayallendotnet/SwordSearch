@@ -49,6 +49,7 @@ public class BattleManager : MonoBehaviour {
     [HideInInspector]
     public bool isWaterInPuzzleArea = false;
     private bool isGamePaused = false;
+    private int enemyAttackIndex = 0;
 
 
     [Header("Game Variables")]
@@ -252,12 +253,52 @@ public class BattleManager : MonoBehaviour {
     }
 
     public void DoEnemyAttackEffect(EnemyAttackAnimatorFunctions enemy){
+        EnemyAttack ea = null;
         if (enemyData.isHorde){
             if (enemy.data == firstEnemyInHorde)
-                DamagePlayerHealth(firstEnemyInHorde.attackDamage * currentHordeEnemyCount);
+                ea = firstEnemyInHorde.attackOrder.Value[enemyAttackIndex];
         }
         else
-            DamagePlayerHealth(enemyData.attackDamage);
+            ea = enemyData.attackOrder.Value[enemyAttackIndex];
+
+
+        if (ea == null)
+            return;
+        if (enemyData.isHorde)
+            DamagePlayerHealth(ea.attackDamage * currentHordeEnemyCount);
+        else
+            DamagePlayerHealth(ea.attackDamage);
+
+
+        if (ea.isSpecial){
+            switch (ea.specialType){
+                case EnemyAttack.EnemyAttackTypes.ThrowRocks:
+                    print("rocks should now cover some of the screen.");
+                    break;
+            }
+
+        }
+
+
+        IncrementAttackIndex();
+
+    }
+
+    private void IncrementAttackIndex(){
+        enemyAttackIndex = GetNextAttackIndex();
+    }
+
+    private int GetNextAttackIndex(){
+        int val = enemyAttackIndex;
+        val ++;
+        int attackCount;
+        if (enemyData.isHorde)
+            attackCount = firstEnemyInHorde.attackOrder.Value.Length;
+        else
+            attackCount = enemyData.attackOrder.Value.Length;
+        if (val >= attackCount)
+            val = 0;
+        return val;
     }
 
 
@@ -569,10 +610,15 @@ public class BattleManager : MonoBehaviour {
 
     public virtual void QueueEnemyAttack(){
         if (playerHealth != 0){
+            EnemyAttack ea;
             if (enemyData.isHorde)
-                uiManager.StartEnemyAttackTimer(firstEnemyInHorde.attackSpeed);
+                ea = firstEnemyInHorde.attackOrder.Value[enemyAttackIndex];    
             else
-                uiManager.StartEnemyAttackTimer(enemyData.attackSpeed);
+                ea = enemyData.attackOrder.Value[enemyAttackIndex];
+            if (ea.isSpecial)
+                uiManager.StartEnemyAttackTimer(ea.attackSpeed, ea.specialColor);
+            else
+                uiManager.StartEnemyAttackTimer(ea.attackSpeed);
         }
     }
 

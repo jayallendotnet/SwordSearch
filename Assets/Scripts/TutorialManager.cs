@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class TutorialManager : BattleManager {
 
+    //temp, resolve after we decide what to do about auto-submit and the tutorial
+    private bool wasUsingAutoSubmit = false;
+
     private int tutorialStep = 0;
     private char[,] startingLayout1 = {{'W', 'K', 'B', 'U', 'M'}, {'L', 'I', 'V', 'Y', 'P'}, {'A', 'D', 'O', 'G', 'E'}, {'C', 'H', 'I', 'R', 'Z'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
     private char[,] startingLayout2 = {{'S', 'P', 'U', 'N', 'K'}, {'N', 'E', 'W', 'Y', 'S'}, {'T', 'E', 'A', 'G', 'S'}, {'L', 'O', 'M', 'I', 'T'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
@@ -47,6 +50,10 @@ public class TutorialManager : BattleManager {
         wordLibraryForGenerationFile = wordLibraryForSmallerPuzzles;
         puzzleGenerator.wordCount = 4;
         puzzleGenerator.useSmallerLayout = true;
+
+        //temp, remove later
+        wasUsingAutoSubmit = StaticVariables.useAutoSubmit;
+        StaticVariables.useAutoSubmit = false;
         
         base.Start();
         SetTutorialNumber();
@@ -250,6 +257,8 @@ public class TutorialManager : BattleManager {
                 advanceCondition = Cond.Click;
                 break;
             case (20):
+                //temp, remove later
+                StaticVariables.useAutoSubmit = wasUsingAutoSubmit;
                 uiManager.EndDialogue();
                 break;
         }
@@ -418,6 +427,8 @@ public class TutorialManager : BattleManager {
                 advanceCondition = Cond.Click;
                 break;
             case (33):
+                //temp, remove later
+                StaticVariables.useAutoSubmit = wasUsingAutoSubmit;
                 uiManager.EndDialogue();
                 break;
         }
@@ -547,6 +558,8 @@ public class TutorialManager : BattleManager {
                 advanceCondition = Cond.Click;
                 break;
             case (27):
+                //temp, remove later
+                StaticVariables.useAutoSubmit = wasUsingAutoSubmit;
                 uiManager.EndDialogue();
                 break;
         }
@@ -617,6 +630,8 @@ public class TutorialManager : BattleManager {
         uiManager.wordStrengthImageOnes.gameObject.SetActive(false);
         uiManager.wordStrengthImageTens.gameObject.SetActive(false);
         uiManager.wordStrengthImageSingle.gameObject.SetActive(false);
+        foreach (GameObject go in uiManager.wordStrengthIconGameObjects)
+            go.SetActive(false);
         //uiManager.wordStrengthIcon.gameObject.SetActive(false);
     }
 
@@ -648,6 +663,7 @@ public class TutorialManager : BattleManager {
     }
 
     private void DisplayText(string s){
+        print("displaying text: " + s);
         tutorialTextBox.text = s;
         tutorialTextBox.gameObject.SetActive(true);
         uiManager.dialogueManager.dialogueTextBox.gameObject.SetActive(false);

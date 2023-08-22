@@ -131,8 +131,23 @@ MonoBehaviour:
   isBattleable: 1
   nameOverride: 
   startingHealth: 1
-  attackSpeed: 20
-  attackDamage: 1
+  attackOrder:
+    Value:
+    - attackSpeed: 1
+      attackDamage: 8
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
+    - attackSpeed: 1
+      attackDamage: 6
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
+    - attackSpeed: 5
+      attackDamage: 3
+      isSpecial: 1
+      specialType: 0
+      specialColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
@@ -150,21 +165,41 @@ MonoBehaviour:
     description: So you're a cyclops, huh. You are so very, very big.
   - type: 1
     talker: {fileID: 815226952419649514, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
+    emotion: 0
+    description: Hmmm...
+  - type: 1
+    talker: {fileID: 815226952419649514, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
     emotion: 1
-    description: 'Intruder!!
-
-      Trespasser!!'
+    description: Intruder!!
   - type: 0
     talker: {fileID: 815226952419649514, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
     emotion: 1
-    description: Well really I just want to pass through. But I guess you've made
-      up your mind about who I am already.
+    description: No, wait a second! Why does everyone here think I -
+  - type: 1
+    talker: {fileID: 815226952419649514, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
+    emotion: 1
+    description: Trespasser!!
+  - type: 0
+    talker: {fileID: 815226952419649514, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
+    emotion: 1
+    description: I guess you've made up your mind about who I am already!
   - type: 1
     talker: {fileID: 815226952419649514, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
     emotion: 1
     description: 'Interloper!!
 
-      Loiterer!!
+      Loiterer!!'
+  - type: 0
+    talker: {fileID: 815226952419649514, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
+    emotion: 5
+    description: What is with all of these long words?? I thought cyclopes were supposed
+      to be dumb!
+  - type: 1
+    talker: {fileID: 815226952419649514, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
+    emotion: 1
+    description: 'Ruffian!!
+
+      Brigand!!
 
       Transgressor!!
 
@@ -176,8 +211,8 @@ MonoBehaviour:
   - type: 0
     talker: {fileID: 815226952419649514, guid: 05e2881b5f1c7df4093e59081a51d097, type: 3}
     emotion: 0
-    description: Before I have to hear every possible synonym for "person who should
-      not be here".
+    description: Before I have to hear every possible permutation of "person who
+      should not be here".
   victoryDialogueSteps:
   - type: 1
     talker: {fileID: 0}

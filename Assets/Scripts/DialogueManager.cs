@@ -80,11 +80,8 @@ public class DialogueManager : MonoBehaviour{
             SynchronizeInfoIconAnimations();
             overlay.anchoredPosition = Vector2.zero;
         }
-        else{
+        else
             overlay.anchoredPosition = new Vector2(0, -overlay.rect.height);
-        }
-        //if (isInOverworld)
-        //    SynchronizeInfoIconAnimations();
 
         StartDialogue(ds, bd);
     } 
@@ -115,14 +112,19 @@ public class DialogueManager : MonoBehaviour{
             gameObject.SetActive(true);
         }
 
-        if (isInTutorial){
+        if (isInTutorial)
             gameObject.SetActive(true);
-            //dialogueTextBox.gameObject.SetActive(false);
-        }
     }
 
     public void SynchronizeInfoIconAnimations(){
-        fakeButton3.GetChild(2).GetChild(0).GetComponent<Animator>().Play("Info Icon", 0, FindObjectOfType<InteractOverlayManager>().infoHighlight.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime);
+        GameObject original = FindObjectOfType<InteractOverlayManager>().infoHighlight;
+        GameObject faker = fakeButton3.GetChild(2).GetChild(0).gameObject;
+        if (original.activeSelf){
+            faker.SetActive(true);
+            faker.GetComponent<Animator>().Play("Info Icon", 0, original.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime);
+        }
+        else
+            faker.SetActive(false);
     }
 
     private void StartDialogue(DialogueStep[] dialogueSteps, BattleData battleData){

@@ -25,8 +25,8 @@ public class StaticVariables
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
     static public int highestUnlockedWorld = 1; //0 for start of game
     static public int highestUnlockedLevel = 10;
-    static public int currentBattleWorld = 0;
-    static public int currentBattleLevel = 0;
+    static public int currentBattleWorld = 1;
+    static public int currentBattleLevel = 9;
     static public string battleSceneName = "Battle Scene";
     static public string world0Name = "World 0 - Hometown";
     static public string world1Name = "World 1 - Grasslands";

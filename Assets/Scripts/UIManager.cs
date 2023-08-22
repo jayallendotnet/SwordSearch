@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour {
     private List<GameObject> animatedObjectsInWindow = new List<GameObject>();
     private bool turningPage = false;
     private List<Image> wordStrengthIconImages = new List<Image>();
+    private Image enemyTimerBarImage;
+    private Color defaultEnemyTimerBarColor;
 
     [Header("Submit Word Button")]
     public Text wordDisplay;
@@ -133,6 +135,8 @@ public class UIManager : MonoBehaviour {
         letterMask2Mask.enabled = false;
         letterMask3Im.enabled = false;
         letterMask3Mask.enabled = false;
+        enemyTimerBarImage = enemyTimerBar.GetComponent<Image>();
+        defaultEnemyTimerBarColor = enemyTimerBarImage.color;
 
         SetupStrengthIcons();
     }
@@ -409,9 +413,13 @@ public class UIManager : MonoBehaviour {
         enemyStunBarAnimation.SetTrigger("End");
     }
 
-    public void StartEnemyAttackTimer(float duration){
+    public void StartEnemyAttackTimer(float duration, Color? c = null){
         enemyTimerBar.localScale = Vector3.one;
         enemyTimerBar.DOScale(new Vector3(0,1,1), duration).SetEase(Ease.Linear).OnComplete(battleManager.TriggerEnemyAttack);
+        if (c == null)
+            enemyTimerBarImage.color = defaultEnemyTimerBarColor;
+        else
+            enemyTimerBarImage.color = (Color)c;
     }
 
 
@@ -433,6 +441,7 @@ public class UIManager : MonoBehaviour {
             enemyAnimator.SetTrigger("Attack");
         }
         enemyTimerBar.DOScale(Vector3.one, 1f).SetEase(Ease.Linear);
+        enemyTimerBarImage.color = defaultEnemyTimerBarColor;
     }
 
     public void AddEnemyToScene(GameObject enemyPrefab){

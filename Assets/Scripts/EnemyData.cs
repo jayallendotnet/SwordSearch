@@ -12,8 +12,9 @@ public class EnemyData : MonoBehaviour{
     
     [Header("Battle Stats")]
     [ConditionalField(nameof(isBattleable))]    public int startingHealth = 10;
-    [ConditionalField(nameof(isBattleable))]    public float attackSpeed = 6f;
-    [ConditionalField(nameof(isBattleable))]    public int attackDamage = 2;
+    //[ConditionalField(nameof(isBattleable))]    public float attackSpeed = 6f;
+    //[ConditionalField(nameof(isBattleable))]    public int attackDamage = 2;
+    [ConditionalField(nameof(isBattleable))]    public CollectionWrapper<EnemyAttack> attackOrder;
     [ConditionalField(nameof(isBattleable))]    public bool isDraconic = false;
     [ConditionalField(nameof(isBattleable))]    public bool isHorde = false;
     [ConditionalField(nameof(isBattleable))]    public bool isHoly = false;
@@ -50,4 +51,15 @@ public class DialogueStep{
     public Emotion emotion;
     [TextArea(2,5)]
     public string description;
+}
+
+[System.Serializable]
+public class EnemyAttack{
+    public enum EnemyAttackTypes{ThrowRocks}
+
+    public float attackSpeed = 2f;
+    public int attackDamage = 6;
+    public bool isSpecial = false;
+    [ConditionalField(nameof(isSpecial))] public EnemyAttackTypes specialType;
+    [ConditionalField(nameof(isSpecial))] public Color specialColor;
 }

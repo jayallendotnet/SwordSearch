@@ -50,9 +50,6 @@ public class InteractOverlayManager : MonoBehaviour{
     private bool isMovingInteractOverlay = false;
     private readonly string defaultEnemyInfo = "This  enemy  has  no  particular  weaknesses.";
 
-    private readonly string damageKeywordColor = "9C2931";
-    private readonly string waterKeywordColor = "0A95D0";
-
 
     public void Setup(){
         StartInteractOverlayHidden();
