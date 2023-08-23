@@ -129,14 +129,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBattleable: 1
   nameOverride: Troll
-  startingHealth: 5
-  attackSpeed: 20
-  attackDamage: 1
+  startingHealth: 90
+  attackOrder:
+    Value:
+    - attackSpeed: 7
+      attackDamage: 4
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
   isDark: 0
   isNearWater: 1
+  canApplyDebuff: 0
   normal: {fileID: 21300000, guid: e7b60168e025bdf49a2327823e605d5a, type: 3}
   angry: {fileID: 21300000, guid: c29fbc2e1c4e41a438f0775c735a3744, type: 3}
   defeated: {fileID: 21300000, guid: 96728db1d36d37245a390630410d5420, type: 3}
@@ -144,37 +150,47 @@ MonoBehaviour:
   questioning: {fileID: 0}
   overworldDialogueSteps:
   - type: 0
+    talker: {fileID: 0}
     emotion: 0
     description: I can see some buildings on the other side of this river.
   - type: 0
+    talker: {fileID: 0}
     emotion: 5
     description: I wonder if there's someone there that can give me directions to
       the Enchanted Forest.
   - type: 0
+    talker: {fileID: 0}
     emotion: 0
     description: There's a bridge here, over this troubled water. I hope there's
       not a -
   - type: 1
+    talker: {fileID: 0}
     emotion: 0
     description: Buh. Money or Life.
   - type: 0
+    talker: {fileID: 0}
     emotion: 2
     description: Great. A bridge troll. I don't see any other bridges, and it could
       take days to find another way around...
   - type: 1
+    talker: {fileID: 0}
     emotion: 1
     description: Money! Or! Life!
   - type: 0
+    talker: {fileID: 0}
     emotion: 1
     description: Fine, I choose life!
   victoryDialogueSteps:
   - type: 1
+    talker: {fileID: 0}
     emotion: 2
     description: Go. Free pass.
   - type: 0
+    talker: {fileID: 0}
     emotion: 4
     description: Thank you, troll.
   - type: 0
+    talker: {fileID: 0}
     emotion: 0
     description: Now to see if there are any people at those buildings who can point
       me in the right direction.

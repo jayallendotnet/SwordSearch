@@ -129,14 +129,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBattleable: 1
   nameOverride: Goblin General
-  startingHealth: 1
-  attackSpeed: 20
-  attackDamage: 1
+  startingHealth: 45
+  attackOrder:
+    Value:
+    - attackSpeed: 6
+      attackDamage: 3
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
   isDark: 0
   isNearWater: 0
+  canApplyDebuff: 0
   normal: {fileID: 21300000, guid: b49f52f681ca8704b9065f3f0de87512, type: 3}
   angry: {fileID: 21300000, guid: 33625fcaa087dba40a24db45a1603313, type: 3}
   defeated: {fileID: 21300000, guid: 683176d32c9b98648872384ea1a3f732, type: 3}

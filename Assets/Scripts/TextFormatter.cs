@@ -12,11 +12,11 @@ public static class TextFormatter{
 
     private static readonly string healKeywordColor = "92E8C0";
     private static readonly string waterKeywordColor = "0A95D0";
-    private static readonly string earthKeywordColor = "7D5743";
-    private static readonly string fireKeywordColor = "F87820";
-    private static readonly string lightningKeywordColor = "FFCF00";
-    private static readonly string darkKeywordColor = "534F8F";
-    private static readonly string swordKeywordColor = "981F88";
+    //private static readonly string earthKeywordColor = "7D5743";
+    //private static readonly string fireKeywordColor = "F87820";
+    //private static readonly string lightningKeywordColor = "FFCF00";
+    //private static readonly string darkKeywordColor = "534F8F";
+    //private static readonly string swordKeywordColor = "981F88";
 
     public static List<string> FormatStringList(List<string> input){
         List<string> output = new();
@@ -34,6 +34,7 @@ public static class TextFormatter{
         string output = input;
 
         //damage keywords
+        HighlightKeyword(ref output, "debuff", damageKeywordColor);
         HighlightKeyword(ref output, "+1 damage", damageKeywordColor);
         HighlightKeyword(ref output, "+2 damage", damageKeywordColor);
         HighlightKeyword(ref output, "+3 damage", damageKeywordColor);
@@ -42,6 +43,10 @@ public static class TextFormatter{
         //water keywords
         HighlightKeyword(ref output, "flooded", waterKeywordColor);
         HighlightKeyword(ref output, "power of water", waterKeywordColor);
+        
+        //healing keywords
+        HighlightKeyword(ref output, "healing magic", healKeywordColor);
+        HighlightKeyword(ref output, "power of healing", healKeywordColor);
 
         //double spaces for readability
         output = output.Replace(" ", "  ");

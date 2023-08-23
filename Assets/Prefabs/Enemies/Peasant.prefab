@@ -129,14 +129,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBattleable: 1
   nameOverride: Farmer Groats
-  startingHealth: 1
-  attackSpeed: 20
-  attackDamage: 3
-  isDraconic: 1
+  startingHealth: 55
+  attackOrder:
+    Value:
+    - attackSpeed: 2
+      attackDamage: 4
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
+  isDraconic: 0
   isHorde: 0
   isHoly: 0
-  isDark: 1
+  isDark: 0
   isNearWater: 0
+  canApplyDebuff: 0
   normal: {fileID: 21300000, guid: aa7e5b629c4575340815d815b6a8eda9, type: 3}
   angry: {fileID: 21300000, guid: 65d922fb1640f6a41ab3c5bfa5228ba9, type: 3}
   defeated: {fileID: 21300000, guid: a39e5d223a8a3dc4d92ee1b0170d60e5, type: 3}
@@ -144,40 +150,52 @@ MonoBehaviour:
   questioning: {fileID: 0}
   overworldDialogueSteps:
   - type: 1
+    talker: {fileID: 0}
     emotion: 1
     description: What are ye doin' in this here town??
   - type: 0
+    talker: {fileID: 0}
     emotion: 0
     description: I'm just looking to -
   - type: 1
+    talker: {fileID: 0}
     emotion: 1
     description: Are ye with the gov'nment??
   - type: 0
+    talker: {fileID: 0}
     emotion: 1
     description: I want to cross -
   - type: 1
+    talker: {fileID: 0}
     emotion: 1
     description: You tell that Lich King we done paid our taxes!
   - type: 0
+    talker: {fileID: 0}
     emotion: 5
     description: Well actually the Lich King is -
   - type: 1
+    talker: {fileID: 0}
     emotion: 1
     description: Git gone or I'll send you packing myself!
   victoryDialogueSteps:
   - type: 1
+    talker: {fileID: 0}
     emotion: 2
     description: I never met a gov'nment goon so strong afore...
   - type: 0
+    talker: {fileID: 0}
     emotion: 1
     description: I'm trying to tell you I don't work for the Lich King!!
   - type: 1
+    talker: {fileID: 0}
     emotion: 4
     description: Well why didn't you say so? What can I do ya for?
   - type: 0
+    talker: {fileID: 0}
     emotion: 2
     description: I need to get to the enchanted forest.
   - type: 1
+    talker: {fileID: 0}
     emotion: 0
     description: Well gee I can do that! Let me take you to the other end of town.
       Follow me, miss...

@@ -20,6 +20,7 @@ public class EnemyData : MonoBehaviour{
     [ConditionalField(nameof(isBattleable))]    public bool isHoly = false;
     [ConditionalField(nameof(isBattleable))]    public bool isDark = false;
     [ConditionalField(nameof(isBattleable))]    public bool isNearWater = false;
+    [ConditionalField(nameof(isBattleable))]    public bool canApplyDebuff = false;
 
     [Header("Chatheads")]
     public Sprite normal;

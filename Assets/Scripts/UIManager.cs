@@ -9,10 +9,8 @@ public class UIManager : MonoBehaviour {
     private Color textColorForWord = Color.black;
     private Color backgroundColorForWord = Color.grey;
     private Transform enemyObject;
-    [HideInInspector]
-    public Animator enemyAnimator;
-    [HideInInspector]
-    public List<Animator> enemyHordeAnimators;
+    [HideInInspector] public Animator enemyAnimator;
+    [HideInInspector] public List<Animator> enemyHordeAnimators;
     private float waterDrainDuration;
     private Color waterPowerupStrengthColor;
     private float floodHeight;
@@ -22,6 +20,7 @@ public class UIManager : MonoBehaviour {
     private List<Image> wordStrengthIconImages = new List<Image>();
     private Image enemyTimerBarImage;
     private Color defaultEnemyTimerBarColor;
+    [HideInInspector] public BoulderGroup shownBoulders = null;
 
     [Header("Submit Word Button")]
     public Text wordDisplay;
@@ -118,6 +117,7 @@ public class UIManager : MonoBehaviour {
     public Mask letterMask3Mask;
     public GameObject enemyParentPrefab;
     public DialogueManager dialogueManager;
+    public Transform boulderGroupsParent;
     
 
 
@@ -541,6 +541,38 @@ public class UIManager : MonoBehaviour {
         battleManager.playerAnimatorFunctions.CreateAttackAnimation(BattleManager.PowerupTypes.Pebble, damage, 0);
     }
 
+    public void CoverPageWithBoulders(){
+        //pick a random boulder from the children
+        int r = StaticVariables.rand.Next(boulderGroupsParent.childCount);
+        GameObject selection = boulderGroupsParent.GetChild(r).gameObject;
+
+        //show the boulders on screen
+        shownBoulders = selection.GetComponent<BoulderGroup>();
+        selection.SetActive(true);
+        shownBoulders.ResetBouldersColor();
+        shownBoulders.MoveBouldersIntoPosition();
+        
+        //boulders only persist for X seconds. do the tween on the first child, so that the timer can be paused by other functions
+        shownBoulders.transform.GetChild(0).GetComponent<Image>().DOColor(Color.white, 17f).OnComplete(ClearBouldersOnPage);
+    }
+
+    public void ClearBouldersOnPage(){
+        if (shownBoulders == null)
+            return;
+        foreach(Transform t in shownBoulders.transform){
+            Color c = Color.white;
+            c.a = 0;
+            t.GetComponent<Image>().DOColor(c, 0.5f).OnComplete(FinishClearingBoulders);
+        }
+    }
+
+    private void FinishClearingBoulders(){
+        if (shownBoulders == null)
+            return;
+        shownBoulders.gameObject.SetActive(false);
+        shownBoulders = null;
+    }
+
     public void FillPuzzleAreaWithWater(float totalDuration){
         CancelWaterDrain();
         waterDrainDuration = totalDuration - waterFillDuration - waterFloatDuration;
@@ -670,6 +702,22 @@ public class UIManager : MonoBehaviour {
             DOTween.Play(waterBuffTop);
         }
     }
+    
+    public void PauseBoulderDebuff(){
+        if (shownBoulders != null){
+            foreach(Transform t in shownBoulders.transform)
+                DOTween.Pause(t.GetComponent<Image>());
+        }
+
+    }
+
+    public void ResumeBoulderDebuff(){
+        if (shownBoulders != null){
+            foreach(Transform t in shownBoulders.transform)
+                DOTween.Play(t.GetComponent<Image>());
+        }
+
+    }
 
     private void ChangeAnimationStateIfObjectIsActive(Animator anim, bool state){
         if (anim.gameObject.activeSelf)
@@ -714,6 +762,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowDefeatPage(){
+        ClearBouldersOnPage();
         ShowPageTurn(true);
         defeatPage.SetActive(true);
     }

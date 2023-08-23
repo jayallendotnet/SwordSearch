@@ -247,6 +247,13 @@ public class InteractOverlayManager : MonoBehaviour{
                 details.Add("While the book is flooded by the power of water, attacks do +4 damage.");
             
             }
+        }  
+        if (enemy.canApplyDebuff){
+            if (StaticVariables.healActive){
+                summary.Add("This creature applies a debuff that can be cleansed with healing magic.");
+                details.Add("One of this enemy's attacks can apply a temporary debuff that will clear eventually. Using the power of healing will cause it to clear immediately.");
+            
+            }
         }
 
         summary = TextFormatter.FormatStringList(summary);

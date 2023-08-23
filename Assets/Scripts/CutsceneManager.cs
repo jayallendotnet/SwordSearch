@@ -110,7 +110,7 @@ public class CutsceneManager : MonoBehaviour{
     private void DoHometownIntroStep(){   
         int i = 0;
         if (++i == cutsceneStep){
-            DisplayEnemyTalking("Miss Player! Miss Player!", "Child 1", DialogueStep.Emotion.Excited);
+            DisplayEnemyTalking("Miss " + StaticVariables.playerName + "! Miss " + StaticVariables.playerName + "!", "Child 1", DialogueStep.Emotion.Excited);
             PlayAnimationAndMoveThenIdle("Child 1", "Walk", 26, 605, 2f);
             PlayAnimationAndMoveThenIdle("Child 2", "Walk", 85, 564, 2.3f);
             advanceCondition = Cond.Wait;
@@ -417,7 +417,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Say, Player, we saw what you did to drive off the goblins!", "Blacksmith", DialogueStep.Emotion.Excited);
+            DisplayEnemyTalking("Say, " + StaticVariables.playerName + ", we saw what you did to drive off the goblins!", "Blacksmith", DialogueStep.Emotion.Excited);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -514,7 +514,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Excuse me, Miss Player. I think we have more important things to worry about.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("Excuse me, Miss " + StaticVariables.playerName + ". I think we have more important things to worry about.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -549,7 +549,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Miss Player, do you have the book that contains the legend of the dragon slayer?", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("Miss " + StaticVariables.playerName + ", do you have the book that contains the legend of the dragon slayer?", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){

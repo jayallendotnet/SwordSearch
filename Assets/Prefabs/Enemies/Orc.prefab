@@ -129,17 +129,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBattleable: 1
   nameOverride: 
-  startingHealth: 1
-  attackSpeed: 20
-  attackDamage: 1
+  startingHealth: 60
+  attackOrder:
+    Value:
+    - attackSpeed: 5
+      attackDamage: 2
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
   isDark: 0
   isNearWater: 0
-  normal: {fileID: 0}
-  angry: {fileID: 0}
-  defeated: {fileID: 0}
+  canApplyDebuff: 0
+  normal: {fileID: 21300000, guid: 6c9f6b87459d92b4b9a9ea3eb56f5333, type: 3}
+  angry: {fileID: 21300000, guid: 635801e1242e6ca44b7a6c4b53d5fdc7, type: 3}
+  defeated: {fileID: 21300000, guid: df80b44fde135fb4e89c7cc65509bca3, type: 3}
   excited: {fileID: 0}
   questioning: {fileID: 0}
   overworldDialogueSteps:
@@ -167,7 +173,7 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     emotion: 0
-    description: Okay then , I will kill and eat you, human.
+    description: Okay then, I will kill and eat you, human.
   - type: 0
     talker: {fileID: 0}
     emotion: 1

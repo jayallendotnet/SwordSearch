@@ -82,7 +82,7 @@ public class DialogueManager : MonoBehaviour{
         }
         else
             overlay.anchoredPosition = new Vector2(0, -overlay.rect.height);
-
+        SetStartingValues();
         StartDialogue(ds, bd);
     } 
 
@@ -220,7 +220,7 @@ public class DialogueManager : MonoBehaviour{
     }
 
     public void ShowPlayerTalking(DialogueStep.Emotion emotion){
-        speakerNameTextBox.text = "PLAYER";
+        speakerNameTextBox.text = StaticVariables.playerName.ToUpper();
         speakerNameTextBox.alignment = TextAnchor.UpperLeft;
         playerChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
         playerChathead.DOColor(Color.white, transitionDuration);

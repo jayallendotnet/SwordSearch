@@ -151,6 +151,7 @@ public class BattleManager : MonoBehaviour {
             stopNextAttack = true;
             uiManager.PauseEnemyAttackBar();
             uiManager.PauseWaterDrain();
+            uiManager.PauseBoulderDebuff();
             uiManager.PausePageTurn();
             //uiManager.SetAllAnimationStates(false);
             ClearWord(false);
@@ -212,6 +213,7 @@ public class BattleManager : MonoBehaviour {
         isGamePaused = true;
         uiManager.PauseEnemyAttackBar();
         uiManager.PauseWaterDrain();
+        uiManager.PauseBoulderDebuff();
         uiManager.SetAllAnimationStates(false);
     }
 
@@ -220,6 +222,7 @@ public class BattleManager : MonoBehaviour {
         isGamePaused = false;
         uiManager.ResumeEnemyAttackBar();
         uiManager.ResumeWaterDrain();
+        uiManager.ResumeBoulderDebuff();
         uiManager.SetAllAnimationStates(true);
     }
 
@@ -245,6 +248,7 @@ public class BattleManager : MonoBehaviour {
         switch (type){
             case PowerupTypes.Heal:
                 ApplyHealToSelf(strength, powerupLevel);
+                ClearDebuffs();
                 break;
             default:
                 ApplyAttackToEnemy(type, strength, powerupLevel);
@@ -273,7 +277,8 @@ public class BattleManager : MonoBehaviour {
         if (ea.isSpecial){
             switch (ea.specialType){
                 case EnemyAttack.EnemyAttackTypes.ThrowRocks:
-                    print("rocks should now cover some of the screen.");
+                    uiManager.CoverPageWithBoulders();
+                    //print("rocks should now cover some of the screen.");
                     break;
             }
 
@@ -420,6 +425,11 @@ public class BattleManager : MonoBehaviour {
         HealPlayerHealth(healAmount);
     }
 
+    private void ClearDebuffs(){
+        if (uiManager.shownBoulders != null)
+            uiManager.ClearBouldersOnPage();
+    }
+
     private void HealPlayerHealth(int amount){
         playerHealth += amount;
         if (playerHealth > maxHealth)
@@ -514,6 +524,9 @@ public class BattleManager : MonoBehaviour {
         if (letterSpace.hasBeenUsedInAWordAlready)
             return false;
         if (letterSpacesForWord.Contains(letterSpace))
+            return false;
+        //print(uiManager.shownBoulders);
+        if ((uiManager.shownBoulders != null) && (uiManager.shownBoulders.coveredLetters.Contains(letterSpace)))
             return false;
         if (letterSpacesForWord.Count == 0)
             return true;
