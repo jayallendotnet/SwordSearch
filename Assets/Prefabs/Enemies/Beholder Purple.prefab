@@ -129,11 +129,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBattleable: 1
   nameOverride: 
-  startingHealth: 70
+  startingHealth: 150
   attackOrder:
     Value:
     - attackSpeed: 10
-      attackDamage: 10
+      attackDamage: 5
       isSpecial: 0
       specialType: 0
       specialColor: {r: 0, g: 0, b: 0, a: 0}
@@ -149,4 +149,8 @@ MonoBehaviour:
   excited: {fileID: 0}
   questioning: {fileID: 0}
   overworldDialogueSteps: []
-  victoryDialogueSteps: []
+  victoryDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: Hey GZ you won nice nice

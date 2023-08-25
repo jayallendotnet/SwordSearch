@@ -43,6 +43,8 @@ public static class TextFormatter{
         //water keywords
         HighlightKeyword(ref output, "flooded", waterKeywordColor);
         HighlightKeyword(ref output, "power of water", waterKeywordColor);
+        HighlightKeyword(ref output, "element of water", waterKeywordColor);
+        HighlightKeyword(ref output, "water magic", waterKeywordColor);
         
         //healing keywords
         HighlightKeyword(ref output, "healing magic", healKeywordColor);

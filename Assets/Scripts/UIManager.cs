@@ -749,6 +749,11 @@ public class UIManager : MonoBehaviour {
         //shows up after winning
         dialogueManager.Setup(battleManager.enemyData.victoryDialogueSteps, StaticVariables.battleData);
     }
+    public void PushedDefeatButton(){
+        //sends the player back to the overworld. appears upon defeat
+        StaticVariables.beatCurrentBattle = false;
+        StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
+    }
 
     public void EndDialogue(){
         StaticVariables.beatCurrentBattle = true;

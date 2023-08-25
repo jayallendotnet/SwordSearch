@@ -122,7 +122,7 @@ public class OverworldSceneManager : MonoBehaviour{
             stepsToNextSpace.Reverse();
 
         stepsToNextSpace.RemoveAt(0);
-
+        //if (stepsToNextSpace.Count > 0) //do this part later
         playerAnimator.SetTrigger("WalkStart");
         isPlayerMoving = true;
         currentPlayerSpace.transform.GetChild(2).GetChild(0).gameObject.SetActive(true);

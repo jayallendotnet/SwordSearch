@@ -121,6 +121,7 @@ public class TutorialManager : BattleManager {
         canShowEnemyHealth = true;
         canEnemyDie = false;
         
+        //tutorialStep = 25;
     }
 
     public override void QueueEnemyAttack(){
@@ -510,7 +511,7 @@ public class TutorialManager : BattleManager {
                 advanceCondition = Cond.Click;
                 break;
             case (17):
-                DisplayText("For the next 20 seconds, every attack you make does +2 more damage!");
+                DisplayText("For the next 20 seconds, every attack you make does an extra +2 damage!");
                 advanceCondition = Cond.Click;
                 break;
             case (18):
@@ -536,6 +537,7 @@ public class TutorialManager : BattleManager {
                 canEnemyDie = true;
                 StaticVariables.powerupsPerPuzzle = 3;
                 TurnToSmallerPage();
+                UpdateSubmitVisuals();
                 canQueueAttack = true;
                 QueueEnemyAttack();
                 uiManager.waterFloatDuration = originalFloatDuration;
@@ -663,7 +665,8 @@ public class TutorialManager : BattleManager {
     }
 
     private void DisplayText(string s){
-        print("displaying text: " + s);
+        //print("displaying text: " + s);
+        s = TextFormatter.FormatString(s);
         tutorialTextBox.text = s;
         tutorialTextBox.gameObject.SetActive(true);
         uiManager.dialogueManager.dialogueTextBox.gameObject.SetActive(false);

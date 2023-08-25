@@ -23,10 +23,10 @@ public class StaticVariables
     static public bool swordActive = false;
     static public int powerupsPerPuzzle = 3;
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
-    static public int highestUnlockedWorld = 0; //0 for start of game
+    static public int highestUnlockedWorld = 1; //0 for start of game
     static public int highestUnlockedLevel = 10;
-    static public int currentBattleWorld = 0;
-    static public int currentBattleLevel = 0;
+    static public int currentBattleWorld = 1;
+    static public int currentBattleLevel = 10;
     static public string battleSceneName = "Battle Scene";
     static public string world0Name = "World 0 - Hometown";
     static public string world1Name = "World 1 - Grasslands";
@@ -38,7 +38,7 @@ public class StaticVariables
     static public bool beatCurrentBattle = false;
     static public bool hasTalkedToNewestEnemy = false;
     static public CutsceneManager.Cutscene cutsceneID;
-    static public bool useAutoSubmit = true;
+    static public bool useAutoSubmit = false;
     static public string playerName = "Rebecca";
 
 

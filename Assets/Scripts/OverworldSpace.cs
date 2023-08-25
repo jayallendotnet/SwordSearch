@@ -76,18 +76,31 @@ public class OverworldSpace : MonoBehaviour{
     }
 
     public void FadeInVisuals(){
-        if (battleData.enemyPrefab.GetComponent<EnemyData>().isHorde){
-            foreach (Transform t in transform.GetChild(0))
-                enemyImages.Add(t.GetChild(0).GetComponent<Image>());
+        if ((type == OverworldSpaceType.Battle) || (type == OverworldSpaceType.Tutorial)){
+            if (battleData.enemyPrefab.GetComponent<EnemyData>().isHorde){
+                foreach (Transform t in transform.GetChild(0).GetChild(0))
+                    enemyImages.Add(t.GetChild(0).GetComponent<Image>());
+            }
+            else
+                enemyImages.Add(transform.GetChild(0).GetChild(0).GetComponent<Image>());
+            
+            foreach (Image im in enemyImages){
+                Color enemyImageColor = Color.white;
+                enemyImageColor.a = 0;
+                im.color = enemyImageColor;
+                im.GetComponent<Animator>().enabled = false;
         }
-        else
-            enemyImages.Add(transform.GetChild(0).GetChild(0).GetComponent<Image>());
 
-        foreach (Image im in enemyImages){
-            Color enemyImageColor = Color.white;
-            enemyImageColor.a = 0;
-            im.color = enemyImageColor;
-            im.GetComponent<Animator>().enabled = false;
+        }        
+        if (type == OverworldSpaceType.Cutscene){
+            foreach (Transform t in transform.GetChild(0).GetChild(0))
+                enemyImages.Add(t.GetComponent<Image>());
+                
+            foreach (Image im in enemyImages){
+                Color enemyImageColor = im.color;
+                enemyImageColor.a = 0;
+                im.color = enemyImageColor;
+            }
         }
 
         overworldPlayerSpaceIcon.GetComponent<PathStep>().HideStep(0);
@@ -113,10 +126,11 @@ public class OverworldSpace : MonoBehaviour{
     }
 
     private void FadeInEnemy(){
-        foreach (Image im in enemyImages)
-            im.DOColor(Color.white, timeBetweenPathFadeSteps).OnComplete(TurnEnemyAniamtionsOn);
-
-
+        foreach (Image im in enemyImages){
+            Color c = im.color;
+            c.a = 1;
+            im.DOColor(c, timeBetweenPathFadeSteps).OnComplete(TurnEnemyAniamtionsOn);
+        }
         overworldPlayerSpaceIcon.GetComponent<PathStep>().ShowStep(timeBetweenPathFadeSteps);
     }
 

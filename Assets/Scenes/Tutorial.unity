@@ -2757,6 +2757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyAnimator: {fileID: 0}
   enemyHordeAnimators: []
+  shownBoulders: {fileID: 0}
   wordDisplay: {fileID: 1417210485}
   submitWordButtonImage: {fileID: 480609549}
   countdownNumber: {fileID: 72691678}
@@ -2881,6 +2882,7 @@ MonoBehaviour:
   letterMask3Mask: {fileID: 1793972590}
   enemyParentPrefab: {fileID: 2647165590448159741, guid: e1a568fcc90e27b4c9d144384379401a, type: 3}
   dialogueManager: {fileID: 1980342577}
+  boulderGroupsParent: {fileID: 0}
 --- !u!1 &390297156
 GameObject:
   m_ObjectHideFlags: 0
@@ -12104,7 +12106,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -561, y: 479}
+  m_AnchoredPosition: {x: -540, y: 479}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1324946621
@@ -15574,8 +15576,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1016.3884}
-  m_SizeDelta: {x: -140, y: -2137.3591}
+  m_AnchoredPosition: {x: 0, y: -875.78876}
+  m_SizeDelta: {x: -140, y: -2418.5586}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1679867724
 MonoBehaviour:
@@ -15601,7 +15603,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: f2f6c2a7e990e9d44b6df431908ec54f, type: 3}
     m_FontSize: 120
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 300
     m_Alignment: 1
@@ -15879,7 +15881,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 561, y: 479}
+  m_AnchoredPosition: {x: 540, y: 479}
   m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1730668660

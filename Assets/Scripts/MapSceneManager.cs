@@ -34,13 +34,14 @@ public class MapSceneManager : MonoBehaviour{
                 worldProgressText.text = "Hometown";
                 coverUpGrasslands.SetActive(true);
                 break;
-            case (1):
+            default:
                 worldProgressText.text = "Grasslands";
                 coverUpGrasslands.SetActive(false);
                 break;
-            case (2):
-                worldProgressText.text = "Enchanted Forest";
-                break;
+            //case (2):
+            //    worldProgressText.text = "Enchanted Forest";
+            //    coverUpGrasslands.SetActive(false);
+            //    break;
         }
         levelProgressText.text = StaticVariables.highestUnlockedLevel + "";
 
@@ -49,6 +50,8 @@ public class MapSceneManager : MonoBehaviour{
     public void ClearProgress(){
         StaticVariables.highestUnlockedWorld = 0;
         StaticVariables.highestUnlockedLevel = 1;
+        StaticVariables.currentBattleWorld = 0;
+        StaticVariables.currentBattleLevel = 1;
         DisplayProgress();
     }    
     
@@ -65,11 +68,16 @@ public class MapSceneManager : MonoBehaviour{
     }
 
     public void GoToHometown(){
+        StaticVariables.currentBattleWorld = 0;
+        StaticVariables.currentBattleLevel = 1;
         StaticVariables.FadeOutThenLoadScene(StaticVariables.world0Name);
     }
     public void GoToGrasslands(){
-        if (StaticVariables.highestUnlockedWorld >= 1)
+        if (StaticVariables.highestUnlockedWorld >= 1){ 
+            StaticVariables.currentBattleWorld = 1;
+            StaticVariables.currentBattleLevel = 1;
             StaticVariables.FadeOutThenLoadScene(StaticVariables.world1Name);
+        }
     }
 
     private void DisplayAutoSubmit(){
