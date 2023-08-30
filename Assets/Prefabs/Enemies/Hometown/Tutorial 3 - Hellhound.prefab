@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1107962101534003462}
   - component: {fileID: 1107962101534003463}
   m_Layer: 0
-  m_Name: Hellhound
+  m_Name: Tutorial 3 - Hellhound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,19 +129,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBattleable: 1
   nameOverride: Warg
-  startingHealth: 1
+  startingHealth: 80
   attackOrder:
-    Value: []
+    Value:
+    - attackSpeed: 5
+      attackDamage: 1
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
   isDark: 0
   isNearWater: 0
   canApplyDebuff: 0
-  normal: {fileID: 0}
-  angry: {fileID: 0}
-  defeated: {fileID: 0}
+  normal: {fileID: 21300000, guid: a203cfda3a5b4624ab9615a30bf46e96, type: 3}
+  angry: {fileID: 21300000, guid: da01f707a5efc68408a51bb336ff0558, type: 3}
+  defeated: {fileID: 21300000, guid: 965d0fbd241ef7b49808312d2425376d, type: 3}
   excited: {fileID: 0}
   questioning: {fileID: 0}
-  overworldDialogueSteps: []
+  overworldDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: Woof!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 6
+    description: It's one of the animals that the goblin leaders ride into battle!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: It's owner isn't here right now...
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: Maybe it'll let me through without any trouble?
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: Good doggie...
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: Garooof!!!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 6
+    description: That's not going to work! I guess I'll have to fight it, before
+      its owner comes back...
   victoryDialogueSteps: []

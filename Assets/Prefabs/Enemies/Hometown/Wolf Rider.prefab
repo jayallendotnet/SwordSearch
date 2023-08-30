@@ -1,0 +1,221 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &815226952419649516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 815226952419649519}
+  - component: {fileID: 815226952419649513}
+  - component: {fileID: 815226952419649518}
+  - component: {fileID: 815226952419649512}
+  - component: {fileID: 815226952419649515}
+  - component: {fileID: 815226952419649514}
+  m_Layer: 0
+  m_Name: Wolf Rider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &815226952419649519
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815226952419649516}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 13, y: 13, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 91}
+  m_SizeDelta: {x: 32, y: 32}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &815226952419649513
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815226952419649516}
+  m_CullTransparentMesh: 1
+--- !u!114 &815226952419649518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815226952419649516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 1699231170, guid: 76eb8add81ccf6e4182272c8d57b9c73, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!95 &815226952419649512
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815226952419649516}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cc2e0d976bc79a04aabbb31c9c146946, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &815226952419649515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815226952419649516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af103d27019d02543a0cf828b6cd164a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleManager: {fileID: 0}
+  data: {fileID: 0}
+  burnDamageQueue: 
+--- !u!114 &815226952419649514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815226952419649516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6c71501f9ece54da354ee8431c25ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBattleable: 1
+  nameOverride: Goblin General
+  startingHealth: 70
+  attackOrder:
+    Value:
+    - attackSpeed: 9
+      attackDamage: 3
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
+  isDraconic: 0
+  isHorde: 0
+  isHoly: 0
+  isDark: 0
+  isNearWater: 0
+  canApplyDebuff: 0
+  normal: {fileID: 21300000, guid: b49f52f681ca8704b9065f3f0de87512, type: 3}
+  angry: {fileID: 21300000, guid: 33625fcaa087dba40a24db45a1603313, type: 3}
+  defeated: {fileID: 21300000, guid: 683176d32c9b98648872384ea1a3f732, type: 3}
+  excited: {fileID: 0}
+  questioning: {fileID: 0}
+  overworldDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: What is this... Another one of those goblin generals??
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: It looks like this is one of the last goblins that is still occupying
+      the town...
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: Maybe I can defeat it and chase it out of town!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: Hey goblin!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: A orange-haired human woman... I heard about you!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: You like to attack people with confidence issues, and you try to
+      drown people's pets!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: Unbelievable! That is not what happened!!!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: I'm not going to listen to a cruel human witch!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: We came here to raid your town, but now this is personal. I'm going
+      to take you down myself!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: Whatever, I'm not here to debate ethics! I'm here to send you packing!
+  victoryDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 2
+    description: Human woman... You attack my subordinates, traumatize a dog and
+      its owner, and then defeat me in battle...
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: I'm sick of all of you goblins thinking I am some kind of villain!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: Especially after you came in to attack our village and terrorize
+      our citizens!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 2
+    description: We learned our lesson. We don't stand a chance against you humans...
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: Then get out of my town!!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: Goblins! Retreat! The humans are too powerful!!

@@ -128,10 +128,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBattleable: 1
-  nameOverride: Goblin
+  nameOverride: Brave Goblin
   startingHealth: 40
-  attackSpeed: 7
-  attackDamage: 1
   attackOrder:
     Value:
     - attackSpeed: 7
@@ -144,6 +142,7 @@ MonoBehaviour:
   isHoly: 0
   isDark: 0
   isNearWater: 0
+  canApplyDebuff: 0
   normal: {fileID: 21300000, guid: 4c631392dddfa5747a099a279bdf5479, type: 3}
   angry: {fileID: 21300000, guid: 8654e1b0a98668a44a45cc07c910ebd4, type: 3}
   defeated: {fileID: 21300000, guid: 527c10aa04cb1c64e8e3939c337c952f, type: 3}
@@ -153,13 +152,25 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     emotion: 1
-    description: Human!
+    description: Hey, human! I saw you attack that other goblin while he was looking
+      the other way!
   - type: 0
     talker: {fileID: 0}
-    emotion: 6
-    description: Oh no, I've been spotted by another goblin!
+    emotion: 1
+    description: What else was I supposed to do? You goblins are attacking our village!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: He just needed some time to get mentally prepared! Attacking human
+      settlements is a demanding career!
   - type: 0
     talker: {fileID: 0}
-    emotion: 0
-    description: I hope I can defeat this one too...
+    emotion: 1
+    description: That's not my problem! If he didn't want to get into a fight, he
+      shouldn't have come here in the first place!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: You humans are just a bunch of meanies! I'll have to teach you a
+      lesson!!
   victoryDialogueSteps: []

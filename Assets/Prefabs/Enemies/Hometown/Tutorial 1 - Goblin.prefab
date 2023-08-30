@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1107962101534003462}
   - component: {fileID: 1107962101534003463}
   m_Layer: 0
-  m_Name: Hellhound
+  m_Name: Tutorial 1 - Goblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 1107962101534003457}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 13, y: 13, z: 1}
+  m_LocalScale: {x: -13, y: 13, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -69,7 +69,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1902144319, guid: 48395ff92b288194596bee9d7358e00d, type: 3}
+  m_Sprite: {fileID: -994311753, guid: c7aad93dad2ff0b4ea59a3ce83e238af, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -89,7 +89,7 @@ Animator:
   m_GameObject: {fileID: 1107962101534003457}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fc7e5bb8c9d32a7469f686ad7b780fa2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 811a5e2440f200844ac86083b94164cd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -128,20 +128,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBattleable: 1
-  nameOverride: Warg
-  startingHealth: 1
+  nameOverride: Timid Goblin
+  startingHealth: 3
   attackOrder:
-    Value: []
+    Value:
+    - attackSpeed: 5
+      attackDamage: 1
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
   isDark: 0
   isNearWater: 0
   canApplyDebuff: 0
-  normal: {fileID: 0}
-  angry: {fileID: 0}
-  defeated: {fileID: 0}
+  normal: {fileID: 21300000, guid: 4c631392dddfa5747a099a279bdf5479, type: 3}
+  angry: {fileID: 21300000, guid: 8654e1b0a98668a44a45cc07c910ebd4, type: 3}
+  defeated: {fileID: 21300000, guid: 527c10aa04cb1c64e8e3939c337c952f, type: 3}
   excited: {fileID: 0}
   questioning: {fileID: 0}
-  overworldDialogueSteps: []
+  overworldDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 5
+    description: This book must have some magic in it now?
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: I guess I'll just have to play around with it and see what happens!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: But I'll have to be careful... There's a goblin nearby!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: Grah, I'm a goblin! Humans should fear me!!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: Yeah, that's good! The humans will definitely shake in their human
+      boots if I say stuff like that!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: The goblin still hasn't noticed me...
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 5
+    description: It is giving itself some kind of a pep talk?
   victoryDialogueSteps: []

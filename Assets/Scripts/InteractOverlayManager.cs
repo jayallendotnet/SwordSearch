@@ -87,7 +87,8 @@ public class InteractOverlayManager : MonoBehaviour{
             return;
         DialogueStep[] steps = overworldSceneManager.currentEnemyData.overworldDialogueSteps;
         BattleData bd = overworldSceneManager.currentPlayerSpace.battleData;
-        overworldSceneManager.dialogueManager.Setup(steps, bd, true, (overworldSceneManager.currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial));
+        //overworldSceneManager.dialogueManager.Setup(steps, bd, true, (overworldSceneManager.currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial));
+        overworldSceneManager.dialogueManager.Setup(steps, bd, true, false); 
     }
 
     public void PressedInfoButton(){
@@ -354,12 +355,14 @@ public class InteractOverlayManager : MonoBehaviour{
             cutsceneText.gameObject.SetActive(false);
             fullTalkButton.gameObject.SetActive(true);
             enemyNameText.gameObject.SetActive(true);
-            if (type == OverworldSpace.OverworldSpaceType.Battle)
-                fullTalkButton.gameObject.SetActive(false);
-            if (type == OverworldSpace.OverworldSpaceType.Tutorial){
-                talkButton.gameObject.SetActive(false);
-                infoButton.gameObject.SetActive(false);
-            }
+
+            fullTalkButton.gameObject.SetActive(false);
+            //if (type == OverworldSpace.OverworldSpaceType.Battle)
+            //    fullTalkButton.gameObject.SetActive(false);
+            //if (type == OverworldSpace.OverworldSpaceType.Tutorial){
+            //    talkButton.gameObject.SetActive(false);
+            //    infoButton.gameObject.SetActive(false);
+            //}
 
         }
         else if (type == OverworldSpace.OverworldSpaceType.Cutscene){

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1107962101534003462}
   - component: {fileID: 1107962101534003463}
   m_Layer: 0
-  m_Name: Tutorial 1 - Goblin
+  m_Name: Goblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 1107962101534003457}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -13, y: 13, z: 1}
+  m_LocalScale: {x: 13, y: 13, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -128,13 +128,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBattleable: 1
-  nameOverride: Goblin
-  startingHealth: 3
-  attackSpeed: 5
-  attackDamage: 1
+  nameOverride: Wargless General
+  startingHealth: 60
   attackOrder:
     Value:
-    - attackSpeed: 5
+    - attackSpeed: 4
       attackDamage: 1
       isSpecial: 0
       specialType: 0
@@ -144,22 +142,52 @@ MonoBehaviour:
   isHoly: 0
   isDark: 0
   isNearWater: 0
+  canApplyDebuff: 0
   normal: {fileID: 21300000, guid: 4c631392dddfa5747a099a279bdf5479, type: 3}
   angry: {fileID: 21300000, guid: 8654e1b0a98668a44a45cc07c910ebd4, type: 3}
   defeated: {fileID: 21300000, guid: 527c10aa04cb1c64e8e3939c337c952f, type: 3}
   excited: {fileID: 0}
   questioning: {fileID: 0}
   overworldDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: Human woman, you hurt my dog!
   - type: 0
     talker: {fileID: 0}
-    emotion: 5
-    description: This book must have some magic in it now?
-  - type: 0
-    talker: {fileID: 0}
-    emotion: 3
-    description: I guess I'll just have to play around with it and see what happens!
+    emotion: 6
+    description: Oh no, it's one of the goblin generals!
   - type: 0
     talker: {fileID: 0}
     emotion: 0
-    description: But I'll have to be careful... There's a goblin nearby!
-  victoryDialogueSteps: []
+    description: Look, I can explain!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: Shut up!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: That little cutie is named Fido! He's my pwecious wittle angel...
+      and he's afraid of water!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: And you threw a bunch of water all over him!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: You'll pay for that!
+  victoryDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: Look! Fido is still alive, over there!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 2
+    description: He is??
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: Yes! Now go take care of your little dog, and get out of my way!

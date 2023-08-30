@@ -107,6 +107,7 @@ public class DialogueManager : MonoBehaviour{
         screenDarkener.gameObject.SetActive(false);
         playerChathead.gameObject.SetActive(false);
         enemyChathead.gameObject.SetActive(false);
+        //fakeEnemyName.gameObject.SetActive(false);
 
         if (isInCutscene){
             gameObject.SetActive(true);
@@ -426,6 +427,8 @@ public class DialogueManager : MonoBehaviour{
         fakeButton1.gameObject.SetActive(false);
         fakeButton2.gameObject.SetActive(false);
         fakeButton3.gameObject.SetActive(false);
+        fakeButton4.gameObject.SetActive(false);
+        fakeEnemyName.gameObject.SetActive(false);
     }
 
     private void HideFakeButtonsAndDisableSelf(){
