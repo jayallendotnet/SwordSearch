@@ -203,6 +203,8 @@ public class InteractOverlayManager : MonoBehaviour{
         List<string> summary = new();
         List<string> details = new();
         if (enemy.isHorde){
+            summary.Add("This enemy is a horde.");
+            details.Add("A horde is made up of multiple enemies. As you deal damage, the number of enemies left in the horde will decrease, and the horde will do less damage when it attacks.");
             if (StaticVariables.fireActive){
                 summary.Add("Horde enemies take more burn damage from fire spells.");
                 details.Add("Burn damage from the power of fire is multiplied by the number of enemies in the horde.");
@@ -251,8 +253,8 @@ public class InteractOverlayManager : MonoBehaviour{
         }  
         if (enemy.canApplyDebuff){
             if (StaticVariables.healActive){
-                summary.Add("This creature applies a debuff that can be cleansed with healing magic.");
-                details.Add("One of this enemy's attacks can apply a temporary debuff that will clear eventually. Using the power of healing will cause it to clear immediately.");
+                summary.Add("This enemy can inflict a negative status.");
+                details.Add("Some of this enemy's attacks can apply a debuff that will disappear after a short time. Using the power of healing will clear it immediately.");
             
             }
         }

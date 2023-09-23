@@ -23,6 +23,8 @@ public class AttackAnimatorFunctions : MonoBehaviour{
     }
 
     public void DoAttackEffect(){
+        print("do attack effect, strength " + strength);
+        print("type " + type);
         battleManager.DoAttackEffect(type, strength, powerupLevel);
     }
 

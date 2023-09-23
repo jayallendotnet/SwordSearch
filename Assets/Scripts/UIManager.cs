@@ -762,12 +762,13 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowVictoryPage(){
+        battleManager.ClearDebuffs();
         ShowPageTurn(true);
         victoryPage.SetActive(true);
     }
 
     public void ShowDefeatPage(){
-        ClearBouldersOnPage();
+        battleManager.ClearDebuffs();
         ShowPageTurn(true);
         defeatPage.SetActive(true);
     }

@@ -811,13 +811,13 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("And this one is about beavers!\n'Gnawed with the Wind'", DialogueStep.Emotion.Normal);
+            DisplayPlayerTalking("And here's a book of international recipes!\n'Lord of the Fries'", DialogueStep.Emotion.Normal);
             FlipDirection("Player");
             PlayAnimationAndMoveThenIdle("Player", "Walk", 1281, 1883, 1f);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Here is some kind of science book?\n'Subatomic Habits'", DialogueStep.Emotion.Normal);
+            DisplayPlayerTalking("This is some kind of fishing guide?\n'The Codfather'", DialogueStep.Emotion.Normal);
             FlipDirection("Player");
             PlayAnimationAndMoveThenIdle("Player", "Walk", 1650, 1871, 0.6f);
             advanceCondition = Cond.Click;
@@ -891,11 +891,11 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("'The Aristotelian Elements of Style' \n...\n'The Caster in the Rye'", DialogueStep.Emotion.Normal);
+            DisplayPlayerTalking("'The Wizard of Ooze' \n...\n'The Trusty Argonian Mage'", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("'How to Train Your Magic Book'", DialogueStep.Emotion.Questioning);
+            DisplayPlayerTalking("Wait, why did I pick up 'Tusk Love'?? That doesn't have anything to do with magic!", DialogueStep.Emotion.Worried);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){

@@ -242,6 +242,8 @@ public class BattleManager : MonoBehaviour {
 
     private void SetCurrentAttackData(){
         playerAnimatorFunctions.CreateAttackAnimation(powerupTypeForWord, wordStrength, powerupLevel);
+        if (powerupTypeForWord == PowerupTypes.Heal)
+            playerAnimatorFunctions.CreateAttackAnimation(PowerupTypes.None, wordStrength, 0);
     }
 
     public void DoAttackEffect(PowerupTypes type, int strength, int powerupLevel){
@@ -425,7 +427,7 @@ public class BattleManager : MonoBehaviour {
         HealPlayerHealth(healAmount);
     }
 
-    private void ClearDebuffs(){
+    public void ClearDebuffs(){
         if (uiManager.shownBoulders != null)
             uiManager.ClearBouldersOnPage();
     }
@@ -518,6 +520,8 @@ public class BattleManager : MonoBehaviour {
 
     public virtual bool CanAddLetter(LetterSpace letterSpace){
         if (letterSpace.letter == '=')
+            return false;
+        if (letterSpace.letter == '-')
             return false;
         if ((playerHealth == 0) || (enemyHealth == 0) || (isGamePaused))
             return false;
