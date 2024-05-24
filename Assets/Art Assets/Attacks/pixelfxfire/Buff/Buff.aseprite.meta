@@ -1,7 +1,668 @@
 fileFormatVersion: 2
 guid: 0c9069bc9a6d5364eaed3cd8df95a2ec
-DefaultImporter:
+ScriptedImporter:
+  internalIDToNameTable: []
   externalObjects: {}
+  serializedVersion: 2
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: Buff_Frame_0
+    originalName: 
+    pivot: {x: 0.49999997, y: -1}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 89
+      y: 118
+      width: 26
+      height: 2
+    spriteID: 612bce537fb082e44990eb8f2d9f0bb4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 89, y: 118}
+  - name: Buff_Frame_1
+    originalName: 
+    pivot: {x: 0.50000006, y: -0.25}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 30
+      y: 113
+      width: 28
+      height: 4
+    spriteID: 114b92bdc6e7db04a833b6d9a7a7581b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 30, y: 113}
+  - name: Buff_Frame_2
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 30
+      y: 99
+      width: 30
+      height: 6
+    spriteID: 5d43faaa49888e64d80822bc9392ca40
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 30, y: 99}
+  - name: Buff_Frame_3
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 42
+      y: 70
+      width: 30
+      height: 20
+    spriteID: 35450bd92dbd57b4f968079d39b74f09
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 42, y: 70}
+  - name: Buff_Frame_4
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 80
+      y: 40
+      width: 30
+      height: 21
+    spriteID: f38804829de9b754b8cf8b977d5945c2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 80, y: 40}
+  - name: Buff_Frame_5
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 40
+      width: 30
+      height: 22
+    spriteID: 8d16bd0bfdc84ee4c9c5600eae2b3b28
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 40}
+  - name: Buff_Frame_6
+    originalName: 
+    pivot: {x: 0.5, y: -0.2857143}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 30
+      height: 28
+    spriteID: cdcbdd03c632d3041ad585adf4fbeead
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+  - name: Buff_Frame_7
+    originalName: 
+    pivot: {x: 0.5, y: -0.7619048}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 70
+      width: 30
+      height: 21
+    spriteID: 43e4894e9b705f140b532f7cef00a94d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 70}
+  - name: Buff_Frame_8
+    originalName: 
+    pivot: {x: 0.5, y: -0.5714286}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 42
+      y: 4
+      width: 30
+      height: 28
+    spriteID: 3a5fa8abbe6caeb4a8eef3266108c72e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 42, y: 4}
+  - name: Buff_Frame_9
+    originalName: 
+    pivot: {x: 0.5, y: -0.8148148}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 80
+      y: 4
+      width: 30
+      height: 27
+    spriteID: cf2e6437cc1ec95438eef0962d6a84a4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 80, y: 4}
+  - name: Buff_Frame_10
+    originalName: 
+    pivot: {x: 0.5, y: -1.3181819}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 42
+      y: 40
+      width: 30
+      height: 22
+    spriteID: 10867a8bc849ee940b7a2923312c4a26
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 42, y: 40}
+  - name: Buff_Frame_11
+    originalName: 
+    pivot: {x: 0.5, y: -1.6842105}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 80
+      y: 70
+      width: 30
+      height: 19
+    spriteID: 57be9a0b434a37d4d9a334dc8f89a8b1
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 80, y: 70}
+  - name: Buff_Frame_12
+    originalName: 
+    pivot: {x: 0.5, y: -2.7142859}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 99
+      width: 18
+      height: 14
+    spriteID: 9c84efc3c34fedc4aa611d7b37897455
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 99}
+  - name: Buff_Frame_13
+    originalName: 
+    pivot: {x: 0.46153846, y: -3.0769231}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 68
+      y: 99
+      width: 13
+      height: 13
+    spriteID: 78f131ecb0c31344db6cf4591569a7a9
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 68, y: 99}
+  - name: Buff_Frame_14
+    originalName: 
+    pivot: {x: 0.50000006, y: -3.7272727}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 89
+      y: 99
+      width: 8
+      height: 11
+    spriteID: f23ef7e3051869343a01ea898d863af8
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 89, y: 99}
+  - name: Buff_Frame_15
+    originalName: 
+    pivot: {x: 0.39999992, y: -5.25}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 118
+      y: 70
+      width: 5
+      height: 8
+    spriteID: 5307e047bf4419f44a96c5d3f4f3a498
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 118, y: 70}
+  - name: Buff_Frame_16
+    originalName: 
+    pivot: {x: 0.39999992, y: -5.25}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 118
+      y: 40
+      width: 5
+      height: 8
+    spriteID: 139e670ebd11e904b82e699c08bf9679
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 118, y: 40}
+  - name: Buff_Frame_17
+    originalName: 
+    pivot: {x: 0.39999992, y: -5.25}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 105
+      y: 99
+      width: 5
+      height: 8
+    spriteID: 2416288e85e263e48897bfb87b23f8ec
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 105, y: 99}
+  - name: Buff_Frame_18
+    originalName: 
+    pivot: {x: 0.39999992, y: -5.25}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 118
+      y: 99
+      width: 5
+      height: 8
+    spriteID: c04e3861078dce44884b541a46983f7f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 118, y: 99}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -1650878685
+    name: Buff
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: Buff_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: 11
+        y: 2
+        width: 26
+        height: 2
+      spriteId: 612bce537fb082e44990eb8f2d9f0bb4
+    - name: Buff_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 10
+        y: 1
+        width: 28
+        height: 4
+      spriteId: 114b92bdc6e7db04a833b6d9a7a7581b
+    - name: Buff_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: 9
+        y: 0
+        width: 30
+        height: 6
+      spriteId: 5d43faaa49888e64d80822bc9392ca40
+    - name: Buff_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: 9
+        y: 0
+        width: 30
+        height: 20
+      spriteId: 35450bd92dbd57b4f968079d39b74f09
+    - name: Buff_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: 9
+        y: 0
+        width: 30
+        height: 21
+      spriteId: f38804829de9b754b8cf8b977d5945c2
+    - name: Buff_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: 9
+        y: 0
+        width: 30
+        height: 22
+      spriteId: 8d16bd0bfdc84ee4c9c5600eae2b3b28
+    - name: Buff_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: 9
+        y: 8
+        width: 30
+        height: 28
+      spriteId: cdcbdd03c632d3041ad585adf4fbeead
+    - name: Buff_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: 9
+        y: 16
+        width: 30
+        height: 21
+      spriteId: 43e4894e9b705f140b532f7cef00a94d
+    - name: Buff_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: 9
+        y: 16
+        width: 30
+        height: 28
+      spriteId: 3a5fa8abbe6caeb4a8eef3266108c72e
+    - name: Buff_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: 9
+        y: 22
+        width: 30
+        height: 27
+      spriteId: cf2e6437cc1ec95438eef0962d6a84a4
+    - name: Buff_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: 9
+        y: 29
+        width: 30
+        height: 22
+      spriteId: 10867a8bc849ee940b7a2923312c4a26
+    - name: Buff_Frame_11
+      frameIndex: 11
+      cellRect:
+        x: 9
+        y: 32
+        width: 30
+        height: 19
+      spriteId: 57be9a0b434a37d4d9a334dc8f89a8b1
+    - name: Buff_Frame_12
+      frameIndex: 12
+      cellRect:
+        x: 15
+        y: 38
+        width: 18
+        height: 14
+      spriteId: 9c84efc3c34fedc4aa611d7b37897455
+    - name: Buff_Frame_13
+      frameIndex: 13
+      cellRect:
+        x: 18
+        y: 40
+        width: 13
+        height: 13
+      spriteId: 78f131ecb0c31344db6cf4591569a7a9
+    - name: Buff_Frame_14
+      frameIndex: 14
+      cellRect:
+        x: 20
+        y: 41
+        width: 8
+        height: 11
+      spriteId: f23ef7e3051869343a01ea898d863af8
+    - name: Buff_Frame_15
+      frameIndex: 15
+      cellRect:
+        x: 22
+        y: 42
+        width: 5
+        height: 8
+      spriteId: 5307e047bf4419f44a96c5d3f4f3a498
+    - name: Buff_Frame_16
+      frameIndex: 16
+      cellRect:
+        x: 22
+        y: 42
+        width: 5
+        height: 8
+      spriteId: 139e670ebd11e904b82e699c08bf9679
+    - name: Buff_Frame_17
+      frameIndex: 17
+      cellRect:
+        x: 22
+        y: 42
+        width: 5
+        height: 8
+      spriteId: 2416288e85e263e48897bfb87b23f8ec
+    - name: Buff_Frame_18
+      frameIndex: 18
+      cellRect:
+        x: 22
+        y: 42
+        width: 5
+        height: 8
+      spriteId: c04e3861078dce44884b541a46983f7f
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 48, y: 64}
