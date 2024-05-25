@@ -10,7 +10,7 @@ using Unity.VisualScripting;
 public class HomepageManager : MonoBehaviour{
 
     //continue adventure display
-    public Text currentProgressText;
+    //public Text currentProgressText;
     public GameObject hometownBackground;
     public GameObject grasslandsBackground;
 
@@ -25,7 +25,7 @@ public class HomepageManager : MonoBehaviour{
 
     private List<GameObject> endlessModeEnemyPrefabs;
     private int endlessModeEnemyIndex = 0;
-    private readonly float endlessModeMoveDuration = 12f;
+    private readonly float endlessModeMoveDuration = 9f;
 
     //temp for endless mode display
     public GameObject endlessModeEnemy1;
@@ -111,24 +111,24 @@ public class HomepageManager : MonoBehaviour{
     }
 
     private void DisplayProgress(){
-        string progressString = "";
+        //string progressString = "";
         hometownBackground.SetActive(false);
         grasslandsBackground.SetActive(false);
         switch (StaticVariables.highestUnlockedWorld){
             case 0:
-                progressString = "HOMETOWN";
+                //progressString = "HOMETOWN";
                 hometownBackground.SetActive(true);
                 break;
             case 1:
-                progressString = "GRASSLANDS";
+                //progressString = "GRASSLANDS";
                 grasslandsBackground.SetActive(true);
                 break;
             default:
-                progressString = "";
+                //progressString = "";
                 break;
         }
-        progressString += " - " + StaticVariables.highestUnlockedLevel;
-        currentProgressText.text = progressString;
+        //progressString += " - " + StaticVariables.highestUnlockedLevel;
+        //currentProgressText.text = progressString;
 
     }
 }
