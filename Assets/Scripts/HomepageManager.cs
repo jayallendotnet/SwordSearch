@@ -12,7 +12,9 @@ public class HomepageManager : MonoBehaviour{
     //continue adventure display
     //public Text currentProgressText;
     public GameObject hometownBackground;
+    public Transform hometownEnemySpace;
     public GameObject grasslandsBackground;
+    public Transform grasslandsEnemySpace;
 
     //endless mode display
     public Transform endlessModeEnemiesParent;
@@ -26,6 +28,9 @@ public class HomepageManager : MonoBehaviour{
     private List<GameObject> endlessModeEnemyPrefabs;
     private int endlessModeEnemyIndex = 0;
     private readonly float endlessModeMoveDuration = 9f;
+
+    public List<GameObject> hometownEnemies;
+    public List<GameObject> grasslandsEnemies;
 
     //temp for endless mode display
     public GameObject endlessModeEnemy1;
@@ -103,6 +108,7 @@ public class HomepageManager : MonoBehaviour{
         endlessModeEnemyIndex++;
         if (endlessModeEnemyIndex >= endlessModeEnemyPrefabs.Count)
             endlessModeEnemyIndex = 0;
+        //print(enemyParent.transform.localPosition + "    " + startingPosition.localPosition);
     }
 
     private void ShowNextEndlessModeEnemy(){
@@ -111,24 +117,30 @@ public class HomepageManager : MonoBehaviour{
     }
 
     private void DisplayProgress(){
-        //string progressString = "";
         hometownBackground.SetActive(false);
         grasslandsBackground.SetActive(false);
+        Transform enemySpace = hometownEnemySpace;
+        GameObject enemyPrefab = hometownEnemies[1];
         switch (StaticVariables.highestUnlockedWorld){
             case 0:
-                //progressString = "HOMETOWN";
                 hometownBackground.SetActive(true);
+                enemySpace = hometownEnemySpace;
+                if (StaticVariables.highestUnlockedLevel <= hometownEnemies.Count)
+                    enemyPrefab = hometownEnemies[StaticVariables.highestUnlockedLevel - 1];
                 break;
             case 1:
-                //progressString = "GRASSLANDS";
                 grasslandsBackground.SetActive(true);
+                enemySpace = grasslandsEnemySpace;
+                if (StaticVariables.highestUnlockedLevel <= grasslandsEnemies.Count)
+                    enemyPrefab = grasslandsEnemies[StaticVariables.highestUnlockedLevel - 1];
                 break;
             default:
-                //progressString = "";
                 break;
         }
-        //progressString += " - " + StaticVariables.highestUnlockedLevel;
-        //currentProgressText.text = progressString;
 
+        GameObject enemyParent = GameObject.Instantiate(emptyGameObject, enemySpace.parent);
+        enemyParent.transform.localPosition = enemySpace.localPosition;
+        GameObject enemy = GameObject.Instantiate(enemyPrefab, enemyParent.transform);
+        enemy.transform.localScale = enemySpace.localScale;
     }
 }

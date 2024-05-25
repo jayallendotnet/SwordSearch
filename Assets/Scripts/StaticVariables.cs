@@ -24,7 +24,7 @@ public class StaticVariables
     static public int powerupsPerPuzzle = 3;
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
     static public int highestUnlockedWorld = 0; //0 for start of game
-    static public int highestUnlockedLevel = 6;
+    static public int highestUnlockedLevel = 4;
     static public int currentBattleWorld = 0;
     static public int currentBattleLevel = 1;
     static public string battleSceneName = "Battle Scene";
