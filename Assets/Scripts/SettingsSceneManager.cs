@@ -72,8 +72,8 @@ public class SettingsSceneManager : MonoBehaviour{
         StaticVariables.highestUnlockedLevel ++;
         switch (StaticVariables.highestUnlockedWorld){
             case (0):
-                if(StaticVariables.highestUnlockedLevel > 6)
-                    StaticVariables.highestUnlockedLevel = 6;
+                if(StaticVariables.highestUnlockedLevel > 7)
+                    StaticVariables.highestUnlockedLevel = 7;
                 break;
             case (1):
                 if(StaticVariables.highestUnlockedLevel > 10)

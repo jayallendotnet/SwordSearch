@@ -59,6 +59,9 @@ public class HomepageManager : MonoBehaviour{
     }
 
     public void HitContinueAdventureButton(){
+        //temp cause i dont like the current/highest system
+        StaticVariables.currentBattleWorld = StaticVariables.highestUnlockedWorld;
+        StaticVariables.currentBattleLevel = StaticVariables.highestUnlockedLevel;
         switch (StaticVariables.highestUnlockedWorld){
             case 0:
                 StaticVariables.FadeOutThenLoadScene(StaticVariables.world0Name);
