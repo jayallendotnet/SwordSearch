@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class SettingsSceneManager : MonoBehaviour{
 
-    //Debug Data
-    public Text worldProgressText;
-    public Text levelProgressText;
+    public Text worldNameDisplay;
+    public Text levelNumberDisplay;
+
     public Text autoSubmitText;
     public BattleData JustBattleOpponent;
 
@@ -32,20 +32,59 @@ public class SettingsSceneManager : MonoBehaviour{
     private void DisplayProgress(){
         switch (StaticVariables.highestUnlockedWorld){
             case (0):
-                worldProgressText.text = "Hometown";
+                worldNameDisplay.text = "HOMETOWN";
+                break;
+            case (1):
+                worldNameDisplay.text = "GRASSLANDS";
                 break;
             default:
-                worldProgressText.text = "Grasslands";
+                worldNameDisplay.text = "HOMETOWN";
                 break;
-            //case (2):
-            //    worldProgressText.text = "Enchanted Forest";
-            //    coverUpGrasslands.SetActive(false);
-            //    break;
         }
-        levelProgressText.text = StaticVariables.highestUnlockedLevel + "";
+        levelNumberDisplay.text = StaticVariables.highestUnlockedLevel + "";
 
     }
 
+    public void WorldDown(){
+        StaticVariables.highestUnlockedWorld --;
+        StaticVariables.highestUnlockedLevel = 1;
+        if (StaticVariables.highestUnlockedWorld < 0)
+            StaticVariables.highestUnlockedWorld = 0; 
+        DisplayProgress();
+           
+    }
+
+    public void WorldUp(){
+        StaticVariables.highestUnlockedWorld ++;
+        StaticVariables.highestUnlockedLevel = 1;
+        if (StaticVariables.highestUnlockedWorld > 1)
+            StaticVariables.highestUnlockedWorld = 1;   
+        DisplayProgress(); 
+    }
+    public void LevelDown(){
+        StaticVariables.highestUnlockedLevel --;
+        if (StaticVariables.highestUnlockedLevel < 0)
+            StaticVariables.highestUnlockedLevel = 0; 
+        DisplayProgress();
+
+    }
+    public void LevelUp(){
+        StaticVariables.highestUnlockedLevel ++;
+        switch (StaticVariables.highestUnlockedWorld){
+            case (0):
+                if(StaticVariables.highestUnlockedLevel > 6)
+                    StaticVariables.highestUnlockedLevel = 6;
+                break;
+            case (1):
+                if(StaticVariables.highestUnlockedLevel > 10)
+                    StaticVariables.highestUnlockedLevel = 10;
+                break;
+        }
+        DisplayProgress();
+    }
+
+
+/* 
     public void ClearProgress(){
         StaticVariables.highestUnlockedWorld = 0;
         StaticVariables.highestUnlockedLevel = 1;
@@ -64,7 +103,7 @@ public class SettingsSceneManager : MonoBehaviour{
         StaticVariables.highestUnlockedWorld = 1;
         StaticVariables.highestUnlockedLevel = 10;
         DisplayProgress();
-    }
+    } */
 
     private void DisplayAutoSubmit(){
         if (StaticVariables.useAutoSubmit)
