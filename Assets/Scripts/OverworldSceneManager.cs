@@ -321,11 +321,16 @@ public class OverworldSceneManager : MonoBehaviour{
 
     
     public void HideMapButton(float duration){
-        mapButton.DOAnchorPos((mapButton.anchoredPosition + new Vector2(0, 300)), duration);
+        mapButton.DOAnchorPos((mapButton.anchoredPosition + new Vector2(0, 400)), duration).OnComplete(FinishHidingMapButton);
     }
 
     public void ShowMapButton(float duration){
-        mapButton.DOAnchorPos((mapButton.anchoredPosition + new Vector2(0, -300)), duration);
+        mapButton.gameObject.SetActive(true);
+        mapButton.DOAnchorPos((mapButton.anchoredPosition + new Vector2(0, -400)), duration);
+    }
+
+    private void FinishHidingMapButton(){
+        mapButton.gameObject.SetActive(false);
     }
 
 }
