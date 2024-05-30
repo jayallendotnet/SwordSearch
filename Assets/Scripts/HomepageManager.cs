@@ -32,16 +32,6 @@ public class HomepageManager : MonoBehaviour{
     public List<GameObject> hometownEnemies;
     public List<GameObject> grasslandsEnemies;
 
-    //temp for endless mode display
-    public GameObject endlessModeEnemy1;
-    public GameObject endlessModeEnemy2;
-    public GameObject endlessModeEnemy3;
-    public GameObject endlessModeEnemy4;
-    public GameObject endlessModeEnemy5;
-    public GameObject endlessModeEnemy6;
-    public GameObject endlessModeEnemy7;
-
-
     void Start(){
         Setup();
     }
@@ -80,16 +70,46 @@ public class HomepageManager : MonoBehaviour{
         StaticVariables.FadeOutThenLoadScene("Settings");
     }
 
+    public void HitMapButton(){
+        StaticVariables.FadeOutThenLoadScene("Map Scene");
+    }
+
+    private void AddAllEnemiesToEndlessModeList(List<GameObject> enemies){
+        foreach (GameObject go in enemies){
+            if (go.name != "Overworld Book")
+                endlessModeEnemyPrefabs.Add(go);
+        }
+    }
+
+    private void AddFirstXEnemiesToEndlessModeList(List<GameObject> enemies, int count){
+        print(count);
+        for (int i = 0; i < count; i++){
+            GameObject go = enemies[i];
+            if (go.name != "Overworld Book")
+                endlessModeEnemyPrefabs.Add(go);
+        }
+    }
+
+    private List<GameObject> CreateEndlessModeEnemyList(){
+        endlessModeEnemyPrefabs = new List<GameObject>();
+
+        int maxWorldCount = 2;
+        for (int i = 0; i < maxWorldCount; i++){
+            List<GameObject> enemies = i switch {
+                (0) => hometownEnemies,
+                (1) => grasslandsEnemies,
+                _ => hometownEnemies,
+            };
+            if (StaticVariables.highestUnlockedWorld == i)
+                AddFirstXEnemiesToEndlessModeList(enemies, StaticVariables.highestUnlockedLevel);
+            else if (StaticVariables.highestUnlockedWorld > i)
+                AddAllEnemiesToEndlessModeList(enemies);
+        }
+        return endlessModeEnemyPrefabs;
+    }
 
     private void ShowEndlessModeEnemies(){
-        endlessModeEnemyPrefabs = new List<GameObject>();
-        endlessModeEnemyPrefabs.Add(endlessModeEnemy1);
-        endlessModeEnemyPrefabs.Add(endlessModeEnemy2);
-        endlessModeEnemyPrefabs.Add(endlessModeEnemy3);
-        endlessModeEnemyPrefabs.Add(endlessModeEnemy4);
-        endlessModeEnemyPrefabs.Add(endlessModeEnemy5);
-        endlessModeEnemyPrefabs.Add(endlessModeEnemy6);
-        endlessModeEnemyPrefabs.Add(endlessModeEnemy7);
+        endlessModeEnemyPrefabs = CreateEndlessModeEnemyList();
         endlessModeEnemyPrefabs.Shuffle();
         if (endlessModeEnemyPrefabs.Count == 0)
             return;
