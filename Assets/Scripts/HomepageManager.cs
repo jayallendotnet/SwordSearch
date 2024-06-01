@@ -10,7 +10,6 @@ using Unity.VisualScripting;
 public class HomepageManager : MonoBehaviour{
 
     //continue adventure display
-    //public Text currentProgressText;
     public GameObject hometownBackground;
     public Transform hometownEnemySpace;
     public GameObject grasslandsBackground;
@@ -29,21 +28,13 @@ public class HomepageManager : MonoBehaviour{
     private int endlessModeEnemyIndex = 0;
     private readonly float endlessModeMoveDuration = 9f;
 
-    //public List<GameObject> hometownEnemies;
-    //public List<GameObject> grasslandsEnemies;
-
     void Start(){
         Setup();
     }
 
     public void Setup(){
-        //StaticVariables.highestWorldStageBeaten = new WorldStage(1, 4);
-        //StaticVariables.lowestWorldStageUnbeaten = new WorldStage(1, 5);
-        //StaticVariables.lastWorldStageVisited = StaticVariables.lowestWorldStageUnbeaten;
         DisplayProgress();
         ShowEndlessModeEnemies();
-        //also show which powers have been unlocked so far, maybe a symbol for each power?
-        //also put an info button in the corner of the endless mode pane
     }
 
     public void HitContinueAdventureButton(){
@@ -51,19 +42,6 @@ public class HomepageManager : MonoBehaviour{
         //todo figure out what happens after you beat the last stage in the game
         StaticVariables.lastVisitedStage = StaticVariables.highestBeatenStage.nextStage;
         StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
-
-        /*
-        //temp cause i dont like the current/highest system
-        StaticVariables.lastWorldStageVisited = StaticVariables.lowestWorldStageUnbeaten;
-        switch (StaticVariables.lowestWorldStageUnbeaten.world){
-            case 1:
-                StaticVariables.FadeOutThenLoadScene(StaticVariables.world1Name);
-                break;
-            case 2:
-                StaticVariables.FadeOutThenLoadScene(StaticVariables.world2Name);
-                break;
-        }
-        */
     }
 
     public void HitEndlessModeButton(){
@@ -78,23 +56,6 @@ public class HomepageManager : MonoBehaviour{
         StaticVariables.FadeOutThenLoadScene("Map Scene");
     }
 
-    /*
-    private void AddAllEnemiesToEndlessModeList(List<GameObject> enemies){
-        foreach (GameObject go in enemies){
-            if (go.name != "Overworld Book")
-                endlessModeEnemyPrefabs.Add(go);
-        }
-    }
-
-    private void AddFirstXEnemiesToEndlessModeList(List<GameObject> enemies, int count){
-        //print(count);
-        for (int i = 0; i < count; i++){
-            GameObject go = enemies[i];
-            if (go.name != "Overworld Book")
-                endlessModeEnemyPrefabs.Add(go);
-        }
-    }
-    */
     private List<GameObject> CreateEndlessModeEnemyList(){
         endlessModeEnemyPrefabs = new List<GameObject>();
         if (StaticVariables.highestBeatenStage == StaticVariables.allStages[0])
@@ -109,22 +70,6 @@ public class HomepageManager : MonoBehaviour{
             else
                 stage = stage.nextStage;
         }
-
-        /*
-        //add all enemies from worlds previously beaten
-        if (StaticVariables.highestWorldStageBeaten.world > 1)
-            AddAllEnemiesToEndlessModeList(hometownEnemies);
-        if (StaticVariables.highestWorldStageBeaten.world > 2)
-            AddAllEnemiesToEndlessModeList(grasslandsEnemies);
-        //etc 3-7
-
-        //add some of the enemies from the world currently on
-        if (StaticVariables.highestWorldStageBeaten.world == 1)
-            AddFirstXEnemiesToEndlessModeList(hometownEnemies, StaticVariables.highestWorldStageBeaten.stage);
-        if (StaticVariables.highestWorldStageBeaten.world == 2)
-            AddFirstXEnemiesToEndlessModeList(grasslandsEnemies, StaticVariables.highestWorldStageBeaten.stage);
-        //etc 3-7
-        */
         return endlessModeEnemyPrefabs;
     }
 
@@ -151,7 +96,6 @@ public class HomepageManager : MonoBehaviour{
         endlessModeEnemyIndex++;
         if (endlessModeEnemyIndex >= endlessModeEnemyPrefabs.Count)
             endlessModeEnemyIndex = 0;
-        //print(enemyParent.transform.localPosition + "    " + startingPosition.localPosition);
     }
 
     private void ShowNextEndlessModeEnemy(){
@@ -174,35 +118,5 @@ public class HomepageManager : MonoBehaviour{
         GameObject enemyParent = GameObject.Instantiate(emptyGameObject, enemySpace.parent);
         enemyParent.transform.localPosition = enemySpace.localPosition;
         GameObject enemy = GameObject.Instantiate(enemyPrefab, enemyParent.transform);
-        //enemy.transform.localScale = enemySpace.localScale;
-        //switch (StaticVariables.highestBeatenStage.nextStage.world){
-        //}
-        //Transform enemySpace = hometownEnemySpace;
-        //GameObject enemyPrefab = hometownEnemies[1];
-        //switch (StaticVariables.highestBeatenStage)
-
-
-        /*
-        switch (StaticVariables.lowestWorldStageUnbeaten.world){
-            case 1:
-                hometownBackground.SetActive(true);
-                enemySpace = hometownEnemySpace;
-                if (StaticVariables.lowestWorldStageUnbeaten.stage <= hometownEnemies.Count)
-                    enemyPrefab = hometownEnemies[StaticVariables.lowestWorldStageUnbeaten.stage - 1];
-                break;
-            case 2:
-                grasslandsBackground.SetActive(true);
-                enemySpace = grasslandsEnemySpace;
-                if (StaticVariables.lowestWorldStageUnbeaten.stage <= grasslandsEnemies.Count)
-                    enemyPrefab = grasslandsEnemies[StaticVariables.lowestWorldStageUnbeaten.stage - 1];
-                break;
-            default:
-                break;
-        }
-        GameObject enemyParent = GameObject.Instantiate(emptyGameObject, enemySpace.parent);
-        enemyParent.transform.localPosition = enemySpace.localPosition;
-        GameObject enemy = GameObject.Instantiate(enemyPrefab, enemyParent.transform);
-        enemy.transform.localScale = enemySpace.localScale;
-        */
     }
 }

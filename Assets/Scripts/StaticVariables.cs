@@ -23,24 +23,13 @@ public class StaticVariables
     static public bool swordActive = false;
     static public int powerupsPerPuzzle = 3;
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
-    //static public int highestUnlockedWorld = 1; //0 for start of game
-    //static public int highestUnlockedLevel = 10;
-    //static public int currentBattleWorld = 0;
-    //static public int currentBattleLevel = 1;
-    //static public bool beatCurrentBattle = false;
     static public bool hasTalkedToNewestEnemy = false;
     static public CutsceneManager.Cutscene cutsceneID;
     static public bool useAutoSubmit = false;
     static public string playerName = "Rebecca";
 
-    //static public StageData lastWorldStageVisited = new(2,5);
-    //static public StageData highestWorldStageBeaten = new(2,4);
-    //static public StageData lowestWorldStageUnbeaten = new(2,5);
-
     //stages
     static public List<StageData> allStages;
-    //static public List<StageData> hometownStages;
-    //static public List<StageData> grasslandsStages;
 
     //game progress
     static public StageData highestBeatenStage;
@@ -69,7 +58,6 @@ public class StaticVariables
     static public void WaitTimeThenCallFunction(float delay, TweenCallback<GameObject> function, GameObject param){
         tweenDummy.DOLocalMove(tweenDummy.transform.localPosition, delay, false).OnComplete(()=>function(param));
     }
-
 
     static public void FadeOutThenLoadScene(string name){
         sceneName = name;
@@ -105,66 +93,6 @@ public class StaticVariables
         SceneManager.LoadScene(sceneName);
     }
 
-    /*
-    static public string GetCurrentWorldName(){
-        return lastWorldStageVisited.world switch{
-            -2 => "Map Scene",
-            1 => world1Name,
-            2 => world2Name,
-            //2 => world2Name,
-            //3 => world3Name,
-            //4 => world4Name,
-            //5 => world5Name,
-            _ => world1Name,
-        };
-    }
-    */
-    /*
-    static public bool AdvanceGameIfAppropriate(int worldNum, int spacesInWorld){
-        //returns if the next overworld space should be unlocked
-        if ((worldNum == lastWorldStageVisited.world) && (worldNum == lowestWorldStageUnbeaten.world)){
-            if (lowestWorldStageUnbeaten.stage == lastWorldStageVisited.stage){
-                if (beatCurrentBattle){
-                    hasTalkedToNewestEnemy = false;
-                    AdvanceGameProgress(spacesInWorld);
-                    ClearCurrentBattleStats();
-                    return true;
-                }
-            }
-        }
-        ClearCurrentBattleStats();
-        return false;
-    }
-    */
-    /*
-    static private void AdvanceGameProgress(int spacesInWorld){
-        lowestWorldStageUnbeaten.stage ++;
-        if (lowestWorldStageUnbeaten.stage > spacesInWorld){
-            lowestWorldStageUnbeaten.world ++;
-            lowestWorldStageUnbeaten.stage = 1;
-            if (lowestWorldStageUnbeaten.world > 6)
-                lowestWorldStageUnbeaten.world = 6;
-        }
-
-
-        //highestUnlockedLevel ++;
-        //if (highestUnlockedLevel > spacesInWorld){
-        //    highestUnlockedWorld ++;
-        //    highestUnlockedLevel = 1;
-        //    if (highestUnlockedWorld > 6)
-        //        highestUnlockedWorld = 6;
-        //}
-    }
-    */
-    /*
-    static public void ClearCurrentBattleStats(){
-        lastWorldStageVisited = new(0,0);
-        //currentBattleLevel = 0;
-        //currentBattleWorld = 0;
-        beatCurrentBattle = false;
-
-    }
-    */
     static public StageData GetStage(int worldNum, int stageNum){
         foreach (StageData stageData in allStages){
             if (stageData.world == worldNum && stageData.stage == stageNum)
@@ -189,18 +117,4 @@ public class StageData{
         this.stage = stageNum;
         this.enemyPrefab = enemyPrefab;
     }
-
-    /*
-    public StageData(int worldNum, int stageNum){
-        this.world = worldNum;
-        if (this.world < 1)
-            this.world = 1;
-        if (this.world > 7)
-            this.world = 7;
-        this.stage = stageNum;
-        if (this.stage < 1)
-            this.stage = 1;
-        //no max stageNum yet
-    }
-    */
 }

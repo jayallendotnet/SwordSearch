@@ -46,41 +46,6 @@ public class LaunchGameSetup : MonoBehaviour{
         //dummyStage2.previousStage = previousStage;
         //allStages.Add(dummyStage2);
 
-
-        /*
-        int worldNum = 1;
-        int stageNum = 0;
-        StageData previousStage = null;
-        foreach (GameObject enemyPrefab in hometownEnemies){
-            stageNum ++;
-            StageData newStage = new();
-            newStage.world = worldNum;
-            newStage.stage = stageNum;
-            newStage.enemyPrefab = enemyPrefab;
-            newStage.previousStage = previousStage;
-            if (previousStage !=  null)
-                previousStage.nextStage = newStage;
-            previousStage = newStage;
-            allStages.Add(newStage);
-            //hometownStages.Add(newStage);
-        }
-        worldNum = 2;
-        stageNum = 0;
-        foreach (GameObject enemyPrefab in grasslandsEnemies){
-            stageNum ++;
-            StageData newStage = new();
-            newStage.world = worldNum;
-            newStage.stage = stageNum;
-            newStage.enemyPrefab = enemyPrefab;
-            newStage.previousStage = previousStage;
-            if (previousStage !=  null)
-                previousStage.nextStage = newStage;
-            previousStage = newStage;
-            allStages.Add(newStage);
-            //grasslandsStages.Add(newStage);
-        }
-        */
-
         StaticVariables.allStages = allStages;
         //StaticVariables.hometownStages = hometownStages;
         //StaticVariables.grasslandsStages = grasslandsStages;

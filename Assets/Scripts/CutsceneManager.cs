@@ -410,18 +410,12 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            //StaticVariables.lastWorldStageVisited = new(1,1);
-            //StaticVariables.currentBattleWorld = 0;
-            //StaticVariables.currentBattleLevel = 1;
-            //StaticVariables.beatCurrentBattle = true;
             StaticVariables.hasCompletedStage = true;
             StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
-            //StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
         }
     }
     
     private void DoHometownOutroStep(){
-    
         int i = 0;
         if (++i == cutsceneStep){
             DisplayNarrator("After the invaders were driven off, the town held a celebration in the tavern.");
@@ -664,12 +658,6 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            //StaticVariables.lastWorldStageVisited = new(1,5);
-            //StaticVariables.currentBattleWorld = 0;
-            //StaticVariables.currentBattleLevel = 5;
-            //StaticVariables.beatCurrentBattle = true;
-            //StaticVariables.AdvanceGameIfAppropriate(0, 5);
-            //StaticVariables.FadeOutThenLoadScene("Map Scene");
             StaticVariables.hasCompletedStage = true;
             StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
         }
@@ -740,11 +728,6 @@ public class CutsceneManager : MonoBehaviour{
             PlayAnimationAndMoveThenIdle("Player", "Walk", 500, 2592, 5f);
         }
         else if (++i == cutsceneStep){
-            //StaticVariables.lastWorldStageVisited = new(2,5);
-            //StaticVariables.currentBattleWorld = 1;
-            //StaticVariables.currentBattleLevel = 1;
-            //StaticVariables.beatCurrentBattle = true;
-            //StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
             StaticVariables.hasCompletedStage = true;
             StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
         }
@@ -1037,11 +1020,6 @@ public class CutsceneManager : MonoBehaviour{
         //Your health has also increased!
 
         else if (++i == cutsceneStep){
-            //StaticVariables.lastWorldStageVisited = new(2,10);
-            //StaticVariables.currentBattleWorld = 1;
-            //StaticVariables.currentBattleLevel = 10;
-            //StaticVariables.beatCurrentBattle = true;
-            //StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
             StaticVariables.hasCompletedStage = true;
             StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
         }

@@ -50,12 +50,7 @@ public class OverworldSceneManager : MonoBehaviour{
         SetupOverworldSpaces();
         ShowPartialWorldProgress();
         PlacePlayerAtPosition(StaticVariables.lastVisitedStage.stage);
-        //PlacePlayerAtPosition(StaticVariables.lastWorldStageVisited.stage);
-        //bool shouldUnlockNextEnemy = StaticVariables.AdvanceGameIfAppropriate(thisWorldNum, overworldSpaces.Length);
         CheckIfCompletedStage();
-        //if (shouldUnlockNextEnemy)
-        //    UnlockNextEnemy();
-        //StaticVariables.ClearCurrentBattleStats();
         interactOverlayManager.Setup();
     }
 
@@ -95,20 +90,6 @@ public class OverworldSceneManager : MonoBehaviour{
             space.overworldSceneManager = this;
         }
     }
-
-    /*
-    private void AdvanceGameIfAppropriate(){
-        if ((thisWorldNum == StaticVariables.currentBattleWorld) && (thisWorldNum == StaticVariables.highestUnlockedWorld)){
-            if (StaticVariables.highestUnlockedLevel == StaticVariables.currentBattleLevel){
-                if (StaticVariables.beatCurrentBattle){
-                    StaticVariables.hasTalkedToNewestEnemy = false;
-                    UnlockNextEnemy();
-                    AdvanceGameProgress();
-                }
-            }
-        }
-    }
-    */
 
     public void StartMovingPlayerToSpace(OverworldSpace space){
         bool reverse = false;
@@ -240,11 +221,6 @@ public class OverworldSceneManager : MonoBehaviour{
                 return true;
         }
         return false;
-        //if (thisWorldNum == StaticVariables.lowestWorldStageUnbeaten.world){
-        //    if (StaticVariables.lowestWorldStageUnbeaten.stage == GetStageNumOfSpace(currentPlayerSpace))
-        //        return true;
-        //}
-        //return false;
     }
 
     public void LoadBattleWithData(OverworldSpace space){
@@ -258,11 +234,6 @@ public class OverworldSceneManager : MonoBehaviour{
             return;
         for (int i = StaticVariables.highestBeatenStage.nextStage.stage; i < overworldSpaces.Length; i++)
             overworldSpaces[i].gameObject.SetActive(false);
-        //if (thisWorldNum < StaticVariables.lowestWorldStageUnbeaten.world)
-        //    return; 
-        //for (int i = StaticVariables.lowestWorldStageUnbeaten.stage; i < overworldSpaces.Length; i++){
-        //    overworldSpaces[i].gameObject.SetActive(false);
-        //}
     }
 
     private void UnlockNextEnemy(){
@@ -284,13 +255,6 @@ public class OverworldSceneManager : MonoBehaviour{
 
     private void SetLastWorldStageVisited(OverworldSpace space){
         StaticVariables.lastVisitedStage = StaticVariables.GetStage(thisWorldNum, GetStageNumOfSpace(space));
-        //StaticVariables.hasCompletedStage = false;
-
-        //int worldNum = thisWorldNum;
-        //int stageNum = GetStageNumOfSpace(space);
-        //StaticVariables.lastWorldStageVisited = new (worldNum, stageNum);
-        //StaticVariables.currentBattleLevel = levelNum;
-        //StaticVariables.beatCurrentBattle = false;
     }
 
     private int GetStageNumOfSpace(OverworldSpace space){
@@ -302,28 +266,6 @@ public class OverworldSceneManager : MonoBehaviour{
         }
         return -1;
     }
-
-    /*
-    private void AdvanceGameProgress(){
-        StaticVariables.highestUnlockedLevel ++;
-        if (StaticVariables.highestUnlockedLevel > overworldSpaces.Length){
-            StaticVariables.highestUnlockedWorld ++;
-            StaticVariables.highestUnlockedLevel = 1;
-            if (StaticVariables.highestUnlockedWorld > 6)
-                StaticVariables.highestUnlockedWorld = 6;
-            //play some animation then go back to the map scene
-            //StaticVariables.FadeOutThenLoadScene("Map Scene");
-        }
-    }
-    */
-
-    /*
-    private void ClearCurrentBattleStats(){
-        StaticVariables.currentBattleLevel = 0;
-        StaticVariables.currentBattleWorld = 0;
-        StaticVariables.beatCurrentBattle = false;
-    }
-    */
 
     public void StartBattle(){
         if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Battle)
@@ -351,7 +293,6 @@ public class OverworldSceneManager : MonoBehaviour{
             StaticVariables.hasTalkedToNewestEnemy = true;
     }
 
-    
     public void HideMapButton(float duration){
         mapButton.DOAnchorPos((mapButton.anchoredPosition + new Vector2(0, 400)), duration).OnComplete(FinishHidingMapButton);
     }
@@ -364,6 +305,5 @@ public class OverworldSceneManager : MonoBehaviour{
     private void FinishHidingMapButton(){
         mapButton.gameObject.SetActive(false);
     }
-
 }
 
