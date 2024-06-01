@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class SettingsSceneManager : MonoBehaviour{
 
     public Text worldNameDisplay;
-    public Text levelNumberDisplay;
+    public Text stageNumberDisplay;
 
     public Text autoSubmitText;
     public BattleData JustBattleOpponent;
@@ -17,10 +17,10 @@ public class SettingsSceneManager : MonoBehaviour{
     }
 
     public void Setup(){
-        if (StaticVariables.currentBattleLevel < 0)
-            StaticVariables.currentBattleLevel = 0;
-        if (StaticVariables.currentBattleWorld < 0)
-            StaticVariables.currentBattleWorld = 0;
+        //if (StaticVariables.currentBattleLevel < 0)
+        //    StaticVariables.currentBattleLevel = 0;
+        //if (StaticVariables.currentBattleWorld < 0)
+        //    StaticVariables.currentBattleWorld = 0;
         DisplayProgress();
         DisplayAutoSubmit();
     }
@@ -30,45 +30,101 @@ public class SettingsSceneManager : MonoBehaviour{
     }
 
     private void DisplayProgress(){
-        switch (StaticVariables.highestUnlockedWorld){
-            case (0):
+        /*
+        switch (StaticVariables.lowestWorldStageUnbeaten.world){
+            case (1):
                 worldNameDisplay.text = "HOMETOWN";
                 break;
-            case (1):
+            case (2):
                 worldNameDisplay.text = "GRASSLANDS";
                 break;
             default:
-                worldNameDisplay.text = "HOMETOWN";
                 break;
         }
-        levelNumberDisplay.text = StaticVariables.highestUnlockedLevel + "";
+        
+        levelNumberDisplay.text = StaticVariables.lowestWorldStageUnbeaten.stage + "";
+        */
+
+        worldNameDisplay.text = StaticVariables.highestBeatenStage.nextStage.worldName;
+        stageNumberDisplay.text = StaticVariables.highestBeatenStage.nextStage.stage + "";
 
     }
 
     public void WorldDown(){
-        StaticVariables.highestUnlockedWorld --;
-        StaticVariables.highestUnlockedLevel = 1;
-        if (StaticVariables.highestUnlockedWorld < 0)
-            StaticVariables.highestUnlockedWorld = 0; 
+        int newWorld = StaticVariables.highestBeatenStage.nextStage.world - 1;
+        if (newWorld < 1)
+            newWorld = 1;
+        int newStage = 1;
+        StageData stage = StaticVariables.GetStage(newWorld, newStage);
+        StaticVariables.highestBeatenStage = stage.previousStage;
+
+
+
+        //if (StaticVariables.lowestWorldStageUnbeaten.world <= 1)
+        //    return;
+        //StaticVariables.lowestWorldStageUnbeaten.world --;
+        //StaticVariables.lowestWorldStageUnbeaten.stage = 1;
+        //StaticVariables.highestUnlockedWorld --;
+        //StaticVariables.highestUnlockedLevel = 1;
+        //if (StaticVariables.highestUnlockedWorld < 0)
+        //    StaticVariables.highestUnlockedWorld = 0; 
         DisplayProgress();
-           
+        //SetHighestWorldStageBeaten();
     }
 
-    public void WorldUp(){
-        StaticVariables.highestUnlockedWorld ++;
-        StaticVariables.highestUnlockedLevel = 1;
-        if (StaticVariables.highestUnlockedWorld > 1)
-            StaticVariables.highestUnlockedWorld = 1;   
+    public void WorldUp(){        
+        int newWorld = StaticVariables.highestBeatenStage.nextStage.world + 1;
+        if (newWorld > 2)
+            newWorld = 2;
+        int newStage = 1;
+        StageData stage = StaticVariables.GetStage(newWorld, newStage);
+        StaticVariables.highestBeatenStage = stage.previousStage;
+
+        //if (StaticVariables.lowestWorldStageUnbeaten.world >= 2)
+        //    return;
+        //StaticVariables.lowestWorldStageUnbeaten.world ++;
+        //StaticVariables.lowestWorldStageUnbeaten.stage = 1;
+
+        //StaticVariables.highestUnlockedWorld ++;
+        //StaticVariables.highestUnlockedLevel = 1;
+        //if (StaticVariables.highestUnlockedWorld > 1)
+        //    StaticVariables.highestUnlockedWorld = 1;   
         DisplayProgress(); 
+        //SetHighestWorldStageBeaten();
     }
-    public void LevelDown(){
-        StaticVariables.highestUnlockedLevel --;
-        if (StaticVariables.highestUnlockedLevel < 0)
-            StaticVariables.highestUnlockedLevel = 0; 
-        DisplayProgress();
+    public void StageDown(){
+        if (StaticVariables.highestBeatenStage.previousStage != null)
+            StaticVariables.highestBeatenStage = StaticVariables.highestBeatenStage.previousStage;
 
+
+        //if (StaticVariables.lowestWorldStageUnbeaten.stage <= 1)
+        //    return;
+        //StaticVariables.lowestWorldStageUnbeaten.stage --;
+        //StaticVariables.highestUnlockedLevel --;
+        //if (StaticVariables.highestUnlockedLevel < 0)
+        //    StaticVariables.highestUnlockedLevel = 0; 
+        DisplayProgress();
+        //SetHighestWorldStageBeaten();
     }
-    public void LevelUp(){
+
+    public void StageUp(){
+        //print(StaticVariables.highestBeatenStage.stage);
+        if ((StaticVariables.highestBeatenStage.nextStage != null) && (StaticVariables.highestBeatenStage.nextStage.nextStage != null))
+            StaticVariables.highestBeatenStage = StaticVariables.highestBeatenStage.nextStage;
+
+        //StaticVariables.lowestWorldStageUnbeaten.stage ++;
+        //switch (StaticVariables.lowestWorldStageUnbeaten.world){
+        //    case (1):
+        //        if(StaticVariables.lowestWorldStageUnbeaten.stage > 7)
+        //            StaticVariables.lowestWorldStageUnbeaten.stage = 7;
+        //        break;
+        //    case (2):
+        //        if(StaticVariables.lowestWorldStageUnbeaten.stage > 10)
+        //            StaticVariables.lowestWorldStageUnbeaten.stage = 10;
+        //        break;
+        //}
+
+        /*
         StaticVariables.highestUnlockedLevel ++;
         switch (StaticVariables.highestUnlockedWorld){
             case (0):
@@ -80,9 +136,23 @@ public class SettingsSceneManager : MonoBehaviour{
                     StaticVariables.highestUnlockedLevel = 10;
                 break;
         }
+        */
         DisplayProgress();
+        //SetHighestWorldStageBeaten();
     }
 
+    /*
+    private void SetHighestWorldStageBeaten(){
+        print(StaticVariables.highestWorldStageBeaten.world + ", " + StaticVariables.highestWorldStageBeaten.stage);
+        StaticVariables.highestWorldStageBeaten.world = StaticVariables.lowestWorldStageUnbeaten.world;
+        StaticVariables.highestWorldStageBeaten.stage = StaticVariables.lowestWorldStageUnbeaten.stage - 1;
+        if (StaticVariables.highestWorldStageBeaten.stage <= 0){
+            if (StaticVariables.highestWorldStageBeaten.world == 2)
+                StaticVariables.highestWorldStageBeaten = new(1,7);
+        }
+        print(StaticVariables.highestWorldStageBeaten.world + ", " + StaticVariables.highestWorldStageBeaten.stage);
+    }
+    */
 
 /* 
     public void ClearProgress(){
@@ -118,6 +188,7 @@ public class SettingsSceneManager : MonoBehaviour{
     }
 
 
+    /*
     public void JustBattle(){
         StaticVariables.battleData = JustBattleOpponent;
 
@@ -139,4 +210,5 @@ public class SettingsSceneManager : MonoBehaviour{
 
         StaticVariables.FadeOutThenLoadScene(StaticVariables.battleSceneName);
     }
+    */
 }

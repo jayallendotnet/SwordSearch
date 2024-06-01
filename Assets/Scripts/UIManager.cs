@@ -741,8 +741,10 @@ public class UIManager : MonoBehaviour {
 
     public void PushedQuitButton(){
         //shows up while paused
-        StaticVariables.beatCurrentBattle = false;
-        StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
+        StaticVariables.hasCompletedStage = false;
+        //StaticVariables.beatCurrentBattle = false;
+        StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
+        //StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
     }
 
     public void PushedContinueButton(){
@@ -751,14 +753,18 @@ public class UIManager : MonoBehaviour {
     }
     public void PushedDefeatButton(){
         //sends the player back to the overworld. appears upon defeat
-        StaticVariables.beatCurrentBattle = false;
-        StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
+        StaticVariables.hasCompletedStage = false;
+        StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
+        //StaticVariables.beatCurrentBattle = false;
+        //StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
     }
 
     public void EndDialogue(){
-        StaticVariables.beatCurrentBattle = true;
+        StaticVariables.hasCompletedStage = true;
+        StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
+        //StaticVariables.beatCurrentBattle = true;
         //StaticVariables.hasTalkedToNewestEnemy = false;
-        StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
+        //StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
     }
 
     public void ShowVictoryPage(){

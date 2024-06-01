@@ -502,7 +502,7 @@ GameObject:
   - component: {fileID: 59997048}
   - component: {fileID: 59997049}
   m_Layer: 5
-  m_Name: Level Down
+  m_Name: Stage Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -630,7 +630,7 @@ GameObject:
   - component: {fileID: 95746043}
   - component: {fileID: 95746042}
   m_Layer: 5
-  m_Name: Level Text
+  m_Name: Stage Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -688,7 +688,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LEVEL
+  m_Text: STAGE
 --- !u!222 &95746043
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2394,7 +2394,7 @@ GameObject:
   - component: {fileID: 772290189}
   - component: {fileID: 772290190}
   m_Layer: 5
-  m_Name: Level Up
+  m_Name: Stage Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2930,7 +2930,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1598849428}
         m_TargetAssemblyTypeName: SettingsSceneManager, Assembly-CSharp
-        m_MethodName: LevelDown
+        m_MethodName: StageDown
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5014,7 +5014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldNameDisplay: {fileID: 1279492284}
-  levelNumberDisplay: {fileID: 60668628}
+  stageNumberDisplay: {fileID: 60668628}
   autoSubmitText: {fileID: 1224550741}
   JustBattleOpponent:
     enemyPrefab: {fileID: 815226952419649516, guid: 44cce394d60c8e14ca437f907ce3ce5b, type: 3}
@@ -5259,7 +5259,7 @@ GameObject:
   - component: {fileID: 1804704627}
   - component: {fileID: 1804704628}
   m_Layer: 5
-  m_Name: Level Progress
+  m_Name: Stage Progress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5985,7 +5985,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1598849428}
         m_TargetAssemblyTypeName: SettingsSceneManager, Assembly-CSharp
-        m_MethodName: LevelUp
+        m_MethodName: StageUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class StaticVariables
 {
     static public Transform tweenDummy;
-    static public System.Random rand = new System.Random();
+    static public System.Random rand = new();
     static public BattleData battleData = null;
     static private string sceneName = "";
     static public Image fadeImage;
@@ -23,23 +23,41 @@ public class StaticVariables
     static public bool swordActive = false;
     static public int powerupsPerPuzzle = 3;
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
-    static public int highestUnlockedWorld = 1; //0 for start of game
-    static public int highestUnlockedLevel = 10;
-    static public int currentBattleWorld = 0;
-    static public int currentBattleLevel = 1;
-    static public string battleSceneName = "Battle Scene";
-    static public string world0Name = "World 0 - Hometown";
-    static public string world1Name = "World 1 - Grasslands";
-    static public string world2Name = "World 2 - Magical Forest";
-    static public string world3Name = "World 3 - Desert";
-    static public string world4Name = "World 4 - Darklands";
-    static public string world5Name = "World 5 - Frostlands";
-    static public string world6Name = "World 6 - Dragonlands";
-    static public bool beatCurrentBattle = false;
+    //static public int highestUnlockedWorld = 1; //0 for start of game
+    //static public int highestUnlockedLevel = 10;
+    //static public int currentBattleWorld = 0;
+    //static public int currentBattleLevel = 1;
+    //static public bool beatCurrentBattle = false;
     static public bool hasTalkedToNewestEnemy = false;
     static public CutsceneManager.Cutscene cutsceneID;
     static public bool useAutoSubmit = false;
     static public string playerName = "Rebecca";
+
+    //static public StageData lastWorldStageVisited = new(2,5);
+    //static public StageData highestWorldStageBeaten = new(2,4);
+    //static public StageData lowestWorldStageUnbeaten = new(2,5);
+
+    //stages
+    static public List<StageData> allStages;
+    //static public List<StageData> hometownStages;
+    //static public List<StageData> grasslandsStages;
+
+    //game progress
+    static public StageData highestBeatenStage;
+    static public StageData lastVisitedStage;
+    static public bool hasCompletedStage = false;
+
+    //scene names
+    static public string mainMenuName = "Homepage";
+    static public string battleSceneName = "Battle Scene";
+    static public string world1Name = "World 1 - Hometown";
+    static public string world2Name = "World 2 - Grasslands";
+    //static public string world3Name = "World 3 - Magical Forest";
+    //static public string world4Name = "World 4 - Desert";
+    //static public string world5Name = "World 5 - Darklands";
+    //static public string world6Name = "World 6 - Frostlands";
+    //static public string world7Name = "World 7 - Dragonlands";
+
 
 
     static public void WaitTimeThenCallFunction(float delay, TweenCallback function) {
@@ -87,23 +105,25 @@ public class StaticVariables
         SceneManager.LoadScene(sceneName);
     }
 
+    /*
     static public string GetCurrentWorldName(){
-        return currentBattleWorld switch{
+        return lastWorldStageVisited.world switch{
             -2 => "Map Scene",
-            0 => world0Name,
             1 => world1Name,
             2 => world2Name,
-            3 => world3Name,
-            4 => world4Name,
-            5 => world5Name,
-            _ => world6Name,
+            //2 => world2Name,
+            //3 => world3Name,
+            //4 => world4Name,
+            //5 => world5Name,
+            _ => world1Name,
         };
     }
-
+    */
+    /*
     static public bool AdvanceGameIfAppropriate(int worldNum, int spacesInWorld){
         //returns if the next overworld space should be unlocked
-        if ((worldNum == currentBattleWorld) && (worldNum == highestUnlockedWorld)){
-            if (highestUnlockedLevel == currentBattleLevel){
+        if ((worldNum == lastWorldStageVisited.world) && (worldNum == lowestWorldStageUnbeaten.world)){
+            if (lowestWorldStageUnbeaten.stage == lastWorldStageVisited.stage){
                 if (beatCurrentBattle){
                     hasTalkedToNewestEnemy = false;
                     AdvanceGameProgress(spacesInWorld);
@@ -115,23 +135,72 @@ public class StaticVariables
         ClearCurrentBattleStats();
         return false;
     }
-
-    
+    */
+    /*
     static private void AdvanceGameProgress(int spacesInWorld){
-        highestUnlockedLevel ++;
-        if (highestUnlockedLevel > spacesInWorld){
-            highestUnlockedWorld ++;
-            highestUnlockedLevel = 1;
-            if (highestUnlockedWorld > 6)
-                highestUnlockedWorld = 6;
+        lowestWorldStageUnbeaten.stage ++;
+        if (lowestWorldStageUnbeaten.stage > spacesInWorld){
+            lowestWorldStageUnbeaten.world ++;
+            lowestWorldStageUnbeaten.stage = 1;
+            if (lowestWorldStageUnbeaten.world > 6)
+                lowestWorldStageUnbeaten.world = 6;
         }
-    }
 
+
+        //highestUnlockedLevel ++;
+        //if (highestUnlockedLevel > spacesInWorld){
+        //    highestUnlockedWorld ++;
+        //    highestUnlockedLevel = 1;
+        //    if (highestUnlockedWorld > 6)
+        //        highestUnlockedWorld = 6;
+        //}
+    }
+    */
+    /*
     static public void ClearCurrentBattleStats(){
-        currentBattleLevel = 0;
-        currentBattleWorld = 0;
+        lastWorldStageVisited = new(0,0);
+        //currentBattleLevel = 0;
+        //currentBattleWorld = 0;
         beatCurrentBattle = false;
 
     }
+    */
+    static public StageData GetStage(int worldNum, int stageNum){
+        foreach (StageData stageData in allStages){
+            if (stageData.world == worldNum && stageData.stage == stageNum)
+                return stageData;
+        }
+        return allStages[0];
+    }
 
+}
+
+public class StageData{
+    public int world;
+    public int stage;
+    public GameObject enemyPrefab;
+    public StageData previousStage = null;
+    public StageData nextStage = null;
+    public string worldName;
+
+    public StageData (int worldNum, string worldName, int stageNum, GameObject enemyPrefab){
+        this.world = worldNum;
+        this.worldName = worldName;
+        this.stage = stageNum;
+        this.enemyPrefab = enemyPrefab;
+    }
+
+    /*
+    public StageData(int worldNum, int stageNum){
+        this.world = worldNum;
+        if (this.world < 1)
+            this.world = 1;
+        if (this.world > 7)
+            this.world = 7;
+        this.stage = stageNum;
+        if (this.stage < 1)
+            this.stage = 1;
+        //no max stageNum yet
+    }
+    */
 }

@@ -48,13 +48,34 @@ public class OverworldSceneManager : MonoBehaviour{
         dialogueManager.gameObject.SetActive(true);
         SetPowerupAvailability();
         SetupOverworldSpaces();
-        ShowProgress();
-        PlacePlayerAtPosition(StaticVariables.currentBattleLevel);
-        bool shouldUnlockNextEnemy = StaticVariables.AdvanceGameIfAppropriate(thisWorldNum, overworldSpaces.Length);
-        if (shouldUnlockNextEnemy)
-            UnlockNextEnemy();
+        ShowPartialWorldProgress();
+        PlacePlayerAtPosition(StaticVariables.lastVisitedStage.stage);
+        //PlacePlayerAtPosition(StaticVariables.lastWorldStageVisited.stage);
+        //bool shouldUnlockNextEnemy = StaticVariables.AdvanceGameIfAppropriate(thisWorldNum, overworldSpaces.Length);
+        CheckIfCompletedStage();
+        //if (shouldUnlockNextEnemy)
+        //    UnlockNextEnemy();
         //StaticVariables.ClearCurrentBattleStats();
         interactOverlayManager.Setup();
+    }
+
+    private void CheckIfCompletedStage(){
+        if (StaticVariables.lastVisitedStage == StaticVariables.highestBeatenStage.nextStage){
+            if (StaticVariables.hasCompletedStage){
+                StaticVariables.highestBeatenStage = StaticVariables.highestBeatenStage.nextStage;
+                StaticVariables.hasTalkedToNewestEnemy = false;
+                if (StaticVariables.highestBeatenStage.nextStage.world != thisWorldNum)
+                    ImmediatelyStartNextWorld();
+                else
+                    UnlockNextEnemy();
+            }
+        }
+        StaticVariables.hasCompletedStage = false;
+    }
+
+    private void ImmediatelyStartNextWorld(){
+        StaticVariables.lastVisitedStage = StaticVariables.highestBeatenStage.nextStage;
+        SceneManager.LoadScene(StaticVariables.lastVisitedStage.worldName);
     }
 
     private void SetPowerupAvailability(){
@@ -180,10 +201,10 @@ public class OverworldSceneManager : MonoBehaviour{
     }
 
 
-    private void PlacePlayerAtPosition(int battleNum){
-        if (battleNum == 0)
-            battleNum = 1;
-        int index = battleNum -1;
+    private void PlacePlayerAtPosition(int stageNum){
+        if (stageNum == 0)
+            stageNum = 1;
+        int index = stageNum -1;
         OverworldSpace space = overworldSpaces[index];
         GameObject newSpot = space.playerDestination;
         playerParent.transform.position = newSpot.transform.position;
@@ -214,26 +235,34 @@ public class OverworldSceneManager : MonoBehaviour{
     }
 
     private bool IsCurrentEnemyNewestEnemy(){
-        if (thisWorldNum == StaticVariables.highestUnlockedWorld){
-            if (StaticVariables.highestUnlockedLevel == GetLevelNumOfSpace(currentPlayerSpace)){
+        if (thisWorldNum == StaticVariables.highestBeatenStage.nextStage.world){
+            if (GetStageNumOfSpace(currentPlayerSpace) == StaticVariables.highestBeatenStage.nextStage.stage)
                 return true;
-            }
         }
         return false;
+        //if (thisWorldNum == StaticVariables.lowestWorldStageUnbeaten.world){
+        //    if (StaticVariables.lowestWorldStageUnbeaten.stage == GetStageNumOfSpace(currentPlayerSpace))
+        //        return true;
+        //}
+        //return false;
     }
 
     public void LoadBattleWithData(OverworldSpace space){
         StaticVariables.battleData = space.battleData;
-        SetCurrentBattleData(space);
+        SetLastWorldStageVisited(space);
         StaticVariables.FadeOutThenLoadScene(StaticVariables.battleSceneName);
     }
 
-    private void ShowProgress(){
-        if (thisWorldNum < StaticVariables.highestUnlockedWorld)
-            return; 
-        for (int i = StaticVariables.highestUnlockedLevel; i < overworldSpaces.Length; i++){
+    private void ShowPartialWorldProgress(){
+        if (thisWorldNum < StaticVariables.highestBeatenStage.nextStage.world)
+            return;
+        for (int i = StaticVariables.highestBeatenStage.nextStage.stage; i < overworldSpaces.Length; i++)
             overworldSpaces[i].gameObject.SetActive(false);
-        }
+        //if (thisWorldNum < StaticVariables.lowestWorldStageUnbeaten.world)
+        //    return; 
+        //for (int i = StaticVariables.lowestWorldStageUnbeaten.stage; i < overworldSpaces.Length; i++){
+        //    overworldSpaces[i].gameObject.SetActive(false);
+        //}
     }
 
     private void UnlockNextEnemy(){
@@ -253,15 +282,18 @@ public class OverworldSceneManager : MonoBehaviour{
         return null;
     }
 
-    private void SetCurrentBattleData(OverworldSpace space){
-        int worldNum = thisWorldNum;
-        int levelNum = GetLevelNumOfSpace(space);
-        StaticVariables.currentBattleWorld = worldNum;
-        StaticVariables.currentBattleLevel = levelNum;
-        StaticVariables.beatCurrentBattle = false;
+    private void SetLastWorldStageVisited(OverworldSpace space){
+        StaticVariables.lastVisitedStage = StaticVariables.GetStage(thisWorldNum, GetStageNumOfSpace(space));
+        //StaticVariables.hasCompletedStage = false;
+
+        //int worldNum = thisWorldNum;
+        //int stageNum = GetStageNumOfSpace(space);
+        //StaticVariables.lastWorldStageVisited = new (worldNum, stageNum);
+        //StaticVariables.currentBattleLevel = levelNum;
+        //StaticVariables.beatCurrentBattle = false;
     }
 
-    private int GetLevelNumOfSpace(OverworldSpace space){
+    private int GetStageNumOfSpace(OverworldSpace space){
         int i = 0;
         foreach (OverworldSpace s in overworldSpaces){
             i++;
@@ -297,8 +329,8 @@ public class OverworldSceneManager : MonoBehaviour{
         if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Battle)
             LoadBattleWithData(currentPlayerSpace);
         else if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial){
-        StaticVariables.battleData = currentPlayerSpace.battleData;
-            SetCurrentBattleData(currentPlayerSpace);
+            StaticVariables.battleData = currentPlayerSpace.battleData;
+            SetLastWorldStageVisited(currentPlayerSpace);
             StaticVariables.FadeOutThenLoadScene("Tutorial");
         }
     }
