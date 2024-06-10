@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using Unity.VisualScripting;
+using MyBox;
 
 public class InteractOverlayManager : MonoBehaviour{
 
@@ -28,11 +29,11 @@ public class InteractOverlayManager : MonoBehaviour{
     public RectTransform scrollableInfoParent;
     public GameObject infoTextPrefab;
     public Image infoTextHider;
+    public RectTransform topOfBox;
 
 
     [Header("Configurations")]
     public float transitionDuration = 0.5f;
-    public float minHeightAboveInteractOverlay = 200;
 
 
     [HideInInspector]
@@ -46,6 +47,7 @@ public class InteractOverlayManager : MonoBehaviour{
     private Vector2 interactOverlayStartingSize;
     private Vector2 enemyNameTextStartingPos;
     private Vector2 fullTalkButtonStartingPos;
+    private float topOfBoxStartingPos;
 
     private bool isMovingInteractOverlay = false;
     private readonly string defaultEnemyInfo = "This  enemy  has  no  particular  weaknesses.";
@@ -70,6 +72,7 @@ public class InteractOverlayManager : MonoBehaviour{
         backButtonStartingPos = backButton.localPosition;
         interactOverlayStartingSize = interactOverlay.sizeDelta;
         enemyNameTextStartingPos = enemyNameText.transform.localPosition;
+        topOfBoxStartingPos = topOfBox.anchoredPosition.y;
     }
 
     public void PressedBattleButton(){
@@ -172,13 +175,17 @@ public class InteractOverlayManager : MonoBehaviour{
             overworldSceneManager.overworldView.DOAnchorPosY(temp, transitionDuration);
             
         clickableBackground.SetActive(false);
+
+        topOfBox.anchoredPosition = new(0, topOfBoxStartingPos);
     }
 
     private void MoveOverworldUpIfRequired(){
-        float playerHasToBeAbove = interactOverlay.rect.height + minHeightAboveInteractOverlay;
-        float diff = overworldSceneManager.playerParent.position.y - playerHasToBeAbove;
+        float worldPosOfTopOfBox = topOfBox.position.y;
+        float worldPosOfBottomOfPlayer = overworldSceneManager.playerParent.GetChild(1).position.y;
+        float diff = worldPosOfBottomOfPlayer - worldPosOfTopOfBox;
+        float newWorldPos = overworldSceneManager.overworldView.position.y - diff;
         if (diff < 0)
-            overworldSceneManager.overworldView.DOAnchorPosY(-diff, transitionDuration);
+            overworldSceneManager.overworldView.DOMoveY(newWorldPos, transitionDuration);
     }
 
     private void AdjustHeightsForShowingInfo(){
@@ -193,10 +200,9 @@ public class InteractOverlayManager : MonoBehaviour{
         Vector2 sd = new Vector2(interactOverlay.sizeDelta.x, newHeight);
         interactOverlay.DOSizeDelta(sd, transitionDuration);
 
-        float playerHasToBeAbove = newHeight + minHeightAboveInteractOverlay;
-        float diff = overworldSceneManager.playerParent.position.y - playerHasToBeAbove;
-        if (diff < 0)
-            overworldSceneManager.overworldView.DOAnchorPosY(overworldSceneManager.overworldView.anchoredPosition.y -diff, transitionDuration);
+        //set the "top of box" position to where it will be after the overlay has finished expanding, then move the overworld if necessary
+        topOfBox.anchoredPosition = new(0, newHeight);
+        MoveOverworldUpIfRequired();
     }
 
     private EnemyInfoText GenerateEnemyInfoText(EnemyData enemy){
