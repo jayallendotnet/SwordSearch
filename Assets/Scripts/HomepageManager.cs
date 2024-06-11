@@ -10,9 +10,11 @@ using Unity.VisualScripting;
 public class HomepageManager : MonoBehaviour{
 
     //continue adventure display
-    public GameObject hometownBackground;
+    public GameObject continueHometown;
+    public GameObject continueGrasslands;
+    //public GameObject hometownBackground;
     public Transform hometownEnemySpace;
-    public GameObject grasslandsBackground;
+    //public GameObject grasslandsBackground;
     public Transform grasslandsEnemySpace;
 
     //endless mode display
@@ -105,8 +107,8 @@ public class HomepageManager : MonoBehaviour{
 
     private void DisplayProgress(){
         int nextEnemyWorldNum = StaticVariables.highestBeatenStage.nextStage.world;
-        hometownBackground.SetActive(nextEnemyWorldNum == 1);
-        grasslandsBackground.SetActive(nextEnemyWorldNum == 2);
+        continueHometown.SetActive(nextEnemyWorldNum == 1);
+        continueGrasslands.SetActive(nextEnemyWorldNum == 2);
 
         GameObject enemyPrefab = StaticVariables.highestBeatenStage.nextStage.enemyPrefab;
         Transform enemySpace = nextEnemyWorldNum switch {
