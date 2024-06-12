@@ -11,6 +11,11 @@ public class LaunchGameSetup : MonoBehaviour{
 
     public List<GameObject> hometownEnemies;
     public List<GameObject> grasslandsEnemies;
+    public List<GameObject> enchantedForestEnemies;
+    public List<GameObject> desertEnemies;
+    public List<GameObject> darkEnemies;
+    public List<GameObject> frostlandsEnemies;
+    public List<GameObject> dragonRealmEnemies;
 
     private List<StageData> allStages;
 
@@ -39,6 +44,11 @@ public class LaunchGameSetup : MonoBehaviour{
 
         CreateStagesForEnemiesInWorld(1, hometownEnemies);
         CreateStagesForEnemiesInWorld(2, grasslandsEnemies);
+        CreateStagesForEnemiesInWorld(3, enchantedForestEnemies);
+        CreateStagesForEnemiesInWorld(4, desertEnemies);
+        CreateStagesForEnemiesInWorld(5, darkEnemies);
+        CreateStagesForEnemiesInWorld(6, frostlandsEnemies);
+        CreateStagesForEnemiesInWorld(7, dragonRealmEnemies);
 
         //create another dummy stage to represent "has beaten the game"
         //StageData dummyStage2 = new (99, "beat all stages", 99, null);
@@ -56,6 +66,11 @@ public class LaunchGameSetup : MonoBehaviour{
         string worldName = worldNum switch {
             1 => StaticVariables.world1Name,
             2 => StaticVariables.world2Name,
+            3 => StaticVariables.world3Name,
+            4 => StaticVariables.world4Name,
+            5 => StaticVariables.world5Name,
+            6 => StaticVariables.world6Name,
+            7 => StaticVariables.world7Name,
             _ => StaticVariables.world1Name,
         };
         foreach (GameObject enemyPrefab in enemiesInWorld){

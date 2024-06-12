@@ -7,11 +7,6 @@ using UnityEngine.SceneManagement;
 public class MapSceneManager : MonoBehaviour{
 
     //Debug Data
-    public Text worldProgressText;
-    public Text levelProgressText;
-    public Text autoSubmitText;
-    public BattleData JustBattleOpponent;
-    public GameObject coverUpGrasslands;
 
     void Start(){
     }
@@ -26,10 +21,26 @@ public class MapSceneManager : MonoBehaviour{
     public void GoToGrasslands(){
         PressedAnyworldButton(2);
     }
+    public void GoToForest(){
+        PressedAnyworldButton(3);
+    }
+    public void GoToDesert(){
+        PressedAnyworldButton(4);
+    }
+    public void GoToDark(){
+        PressedAnyworldButton(5);
+    }
+    public void GoToFrostlands(){
+        PressedAnyworldButton(6);
+    }
+    public void GoToDragonRealm(){
+        PressedAnyworldButton(7);
+    }
+
 
     private void PressedAnyworldButton(int worldNum){
-        if (worldNum > StaticVariables.highestBeatenStage.nextStage.world)
-            return;
+        //if (worldNum > StaticVariables.highestBeatenStage.nextStage.world)
+        //    return;
         StaticVariables.lastVisitedStage = StaticVariables.GetStage(worldNum, 1);
         StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
     }

@@ -43,8 +43,8 @@ public class SettingsSceneManager : MonoBehaviour{
 
     public void WorldUp(){        
         int newWorld = StaticVariables.highestBeatenStage.nextStage.world + 1;
-        if (newWorld > 2)
-            newWorld = 2;
+        if (newWorld > 7)
+            newWorld = 7;
         int newStage = 1;
         StageData stage = StaticVariables.GetStage(newWorld, newStage);
         StaticVariables.highestBeatenStage = stage.previousStage;

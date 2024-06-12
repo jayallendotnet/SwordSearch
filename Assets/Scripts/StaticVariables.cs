@@ -41,6 +41,11 @@ public class StaticVariables
     static public string battleSceneName = "Battle Scene";
     static public string world1Name = "World 1 - Hometown";
     static public string world2Name = "World 2 - Grasslands";
+    static public string world3Name = "World 3 - Enchanted Forest";
+    static public string world4Name = "World 4 - X Desert";
+    static public string world5Name = "World 5 - Corrupted City";
+    static public string world6Name = "World 6 - Frostlands";
+    static public string world7Name = "World 7 - Dragon Realm";
     //static public string world3Name = "World 3 - Magical Forest";
     //static public string world4Name = "World 4 - Desert";
     //static public string world5Name = "World 5 - Darklands";

@@ -12,10 +12,18 @@ public class HomepageManager : MonoBehaviour{
     //continue adventure display
     public GameObject continueHometown;
     public GameObject continueGrasslands;
-    //public GameObject hometownBackground;
+    public GameObject continueForest;
+    public GameObject continueDesert;
+    public GameObject continueDark;
+    public GameObject continueFrostlands;
+    public GameObject continueDragonRealm;
     public Transform hometownEnemySpace;
-    //public GameObject grasslandsBackground;
     public Transform grasslandsEnemySpace;
+    public Transform forestEnemySpace;
+    public Transform desertEnemySpace;
+    public Transform darkEnemySpace;
+    public Transform frostlandsEnemySpace;
+    public Transform dragonRealmEnemySpace;
 
     //endless mode display
     public Transform endlessModeEnemiesParent;
@@ -109,11 +117,21 @@ public class HomepageManager : MonoBehaviour{
         int nextEnemyWorldNum = StaticVariables.highestBeatenStage.nextStage.world;
         continueHometown.SetActive(nextEnemyWorldNum == 1);
         continueGrasslands.SetActive(nextEnemyWorldNum == 2);
+        continueForest.SetActive(nextEnemyWorldNum == 3);
+        continueDesert.SetActive(nextEnemyWorldNum == 4);
+        continueDark.SetActive(nextEnemyWorldNum == 5);
+        continueFrostlands.SetActive(nextEnemyWorldNum == 6);
+        continueDragonRealm.SetActive(nextEnemyWorldNum == 7);
 
         GameObject enemyPrefab = StaticVariables.highestBeatenStage.nextStage.enemyPrefab;
         Transform enemySpace = nextEnemyWorldNum switch {
             1 => hometownEnemySpace,
             2 => grasslandsEnemySpace,
+            3 => forestEnemySpace,
+            4 => desertEnemySpace,
+            5 => darkEnemySpace,
+            6 => frostlandsEnemySpace,
+            7 => dragonRealmEnemySpace,
             _ => hometownEnemySpace,
         };
 
