@@ -14,16 +14,18 @@ public class HomepageManager : MonoBehaviour{
     public GameObject continueGrasslands;
     public GameObject continueForest;
     public GameObject continueDesert;
-    public GameObject continueDark;
+    public GameObject continueCity;
     public GameObject continueFrostlands;
-    public GameObject continueDragonRealm;
+    public GameObject continueCaverns;
+    public GameObject continueDragonsDen;
     public Transform hometownEnemySpace;
     public Transform grasslandsEnemySpace;
     public Transform forestEnemySpace;
     public Transform desertEnemySpace;
-    public Transform darkEnemySpace;
+    public Transform cityEnemySpace;
     public Transform frostlandsEnemySpace;
-    public Transform dragonRealmEnemySpace;
+    public Transform cavernsEnemySpace;
+    public Transform dragonsDenEnemySpace;
 
     //endless mode display
     public Transform endlessModeEnemiesParent;
@@ -63,7 +65,7 @@ public class HomepageManager : MonoBehaviour{
     }
 
     public void HitMapButton(){
-        StaticVariables.FadeOutThenLoadScene("Map Scene");
+        StaticVariables.FadeOutThenLoadScene(StaticVariables.mapName);
     }
 
     private List<GameObject> CreateEndlessModeEnemyList(){
@@ -119,9 +121,10 @@ public class HomepageManager : MonoBehaviour{
         continueGrasslands.SetActive(nextEnemyWorldNum == 2);
         continueForest.SetActive(nextEnemyWorldNum == 3);
         continueDesert.SetActive(nextEnemyWorldNum == 4);
-        continueDark.SetActive(nextEnemyWorldNum == 5);
+        continueCity.SetActive(nextEnemyWorldNum == 5);
         continueFrostlands.SetActive(nextEnemyWorldNum == 6);
-        continueDragonRealm.SetActive(nextEnemyWorldNum == 7);
+        continueCaverns.SetActive(nextEnemyWorldNum == 7);
+        continueDragonsDen.SetActive(nextEnemyWorldNum == 8);
 
         GameObject enemyPrefab = StaticVariables.highestBeatenStage.nextStage.enemyPrefab;
         Transform enemySpace = nextEnemyWorldNum switch {
@@ -129,9 +132,10 @@ public class HomepageManager : MonoBehaviour{
             2 => grasslandsEnemySpace,
             3 => forestEnemySpace,
             4 => desertEnemySpace,
-            5 => darkEnemySpace,
+            5 => cityEnemySpace,
             6 => frostlandsEnemySpace,
-            7 => dragonRealmEnemySpace,
+            7 => cavernsEnemySpace,
+            8 => dragonsDenEnemySpace,
             _ => hometownEnemySpace,
         };
 

@@ -21,7 +21,7 @@ public class OverworldSpace : MonoBehaviour{
     
 
 
-    public enum OverworldSpaceType{Battle, Cutscene, Tutorial}
+    public enum OverworldSpaceType{Battle, Cutscene, Tutorial, Atlas}
     [Header("Gameplay Stuff")]
     public OverworldSpaceType type = OverworldSpaceType.Battle;
     [ConditionalField(nameof(type), false, OverworldSpaceType.Battle, OverworldSpaceType.Tutorial)]
@@ -30,6 +30,8 @@ public class OverworldSpace : MonoBehaviour{
     public CutsceneManager.Cutscene cutsceneID;
     [ConditionalField(nameof(type), false, OverworldSpaceType.Cutscene)]
     public string cutsceneDescription = "";
+    [ConditionalField(nameof(type), false, OverworldSpaceType.Atlas)]
+    public int worldNumber = 1;
 
     void Start(){
         //overworldPlayerSpaceIcon = playerDestination.transform.GetChild(1).gameObject;

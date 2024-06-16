@@ -38,19 +38,16 @@ public class StaticVariables
 
     //scene names
     static public string mainMenuName = "Homepage";
+    static public string mapName = "Atlas";
     static public string battleSceneName = "Battle Scene";
     static public string world1Name = "World 1 - Hometown";
     static public string world2Name = "World 2 - Grasslands";
     static public string world3Name = "World 3 - Enchanted Forest";
-    static public string world4Name = "World 4 - X Desert";
-    static public string world5Name = "World 5 - Corrupted City";
+    static public string world4Name = "World 4 - Sunscorched Desert";
+    static public string world5Name = "World 5 - Fallen City";
     static public string world6Name = "World 6 - Frostlands";
-    static public string world7Name = "World 7 - Dragon Realm";
-    //static public string world3Name = "World 3 - Magical Forest";
-    //static public string world4Name = "World 4 - Desert";
-    //static public string world5Name = "World 5 - Darklands";
-    //static public string world6Name = "World 6 - Frostlands";
-    //static public string world7Name = "World 7 - Dragonlands";
+    static public string world7Name = "World 7 - Caverns";
+    static public string world8Name = "World 8 - Dragon's Den";
 
 
 
@@ -105,6 +102,22 @@ public class StaticVariables
         }
         return allStages[0];
     }
+
+    /*
+    static public string GetSceneNameFromWorldNumber(int num){
+        return num switch {
+            1 => world1Name,
+            2 => world2Name,
+            3 => world3Name,
+            4 => world4Name,
+            5 => world5Name,
+            6 => world6Name,
+            7 => world7Name,
+            8 => world8Name,
+            _ => world1Name,
+        };
+    }
+    */
 
 }
 

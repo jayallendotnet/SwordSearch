@@ -20,7 +20,7 @@ public class OverworldSceneManager : MonoBehaviour{
     public float minTimeToMove = 1f;
 
     [Header("Overworld Settings")]
-    public int thisWorldNum;
+    public int thisWorldNum; // 0 means this is the atlas/map scene
     public int powerupsPerPuzzle = 3;
     public bool healActive = false;
     public bool waterActive = false;
@@ -48,9 +48,15 @@ public class OverworldSceneManager : MonoBehaviour{
         dialogueManager.gameObject.SetActive(true);
         SetPowerupAvailability();
         SetupOverworldSpaces();
-        ShowPartialWorldProgress();
-        PlacePlayerAtPosition(StaticVariables.lastVisitedStage.stage);
-        CheckIfCompletedStage();
+        if (thisWorldNum == 0){
+            ShowAllWorldsProgress();
+            PlacePlayerAtPosition(StaticVariables.highestBeatenStage.nextStage.world);
+        }
+        else{
+            ShowPartialWorldProgress();
+            PlacePlayerAtPosition(StaticVariables.lastVisitedStage.stage);
+            CheckIfCompletedStage();
+        }
         interactOverlayManager.Setup();
     }
 
@@ -202,6 +208,16 @@ public class OverworldSceneManager : MonoBehaviour{
         s.x = 1;
         playerParent.localScale = s;
 
+        if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Atlas){
+            StaticVariables.lastVisitedStage = StaticVariables.GetStage(currentPlayerSpace.worldNumber, 1);
+            StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
+            return;
+
+            
+        //StaticVariables.lastVisitedStage = StaticVariables.GetStage(worldNum, 1);
+        //StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
+        }
+
         interactOverlayManager.ShowInteractOverlay();
         if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Cutscene)
             return;    
@@ -234,6 +250,13 @@ public class OverworldSceneManager : MonoBehaviour{
             return;
         for (int i = StaticVariables.highestBeatenStage.nextStage.stage; i < overworldSpaces.Length; i++)
             overworldSpaces[i].gameObject.SetActive(false);
+    }
+
+    private void ShowAllWorldsProgress(){
+        //only used in the atlas/map scene to show full world progress
+        for (int i = StaticVariables.highestBeatenStage.nextStage.world; i < overworldSpaces.Length; i++)
+            overworldSpaces[i].gameObject.SetActive(false);
+
     }
 
     private void UnlockNextEnemy(){
@@ -285,7 +308,11 @@ public class OverworldSceneManager : MonoBehaviour{
     }
 
     public void BackToMap(){
-        StaticVariables.FadeOutThenLoadScene("Map Scene");
+        StaticVariables.FadeOutThenLoadScene(StaticVariables.mapName);
+    }
+
+    public void BackToHomepage(){
+        StaticVariables.FadeOutThenLoadScene(StaticVariables.mainMenuName);
     }
 
     public void FinishedTalking(){

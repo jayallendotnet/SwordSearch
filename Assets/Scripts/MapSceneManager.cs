@@ -27,14 +27,17 @@ public class MapSceneManager : MonoBehaviour{
     public void GoToDesert(){
         PressedAnyworldButton(4);
     }
-    public void GoToDark(){
+    public void GoToCity(){
         PressedAnyworldButton(5);
     }
     public void GoToFrostlands(){
         PressedAnyworldButton(6);
     }
-    public void GoToDragonRealm(){
+    public void GoToCaverns(){
         PressedAnyworldButton(7);
+    }
+    public void GoToDragonsDen(){
+        PressedAnyworldButton(8);
     }
 
 
