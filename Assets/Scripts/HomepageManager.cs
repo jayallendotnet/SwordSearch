@@ -65,6 +65,7 @@ public class HomepageManager : MonoBehaviour{
     }
 
     public void HitMapButton(){
+        StaticVariables.lastVisitedStage = StaticVariables.highestBeatenStage.nextStage;
         StaticVariables.FadeOutThenLoadScene(StaticVariables.mapName);
     }
 

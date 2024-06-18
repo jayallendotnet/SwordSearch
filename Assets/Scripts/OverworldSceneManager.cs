@@ -50,7 +50,7 @@ public class OverworldSceneManager : MonoBehaviour{
         SetupOverworldSpaces();
         if (thisWorldNum == 0){
             ShowAllWorldsProgress();
-            PlacePlayerAtPosition(StaticVariables.highestBeatenStage.nextStage.world);
+            PlacePlayerAtPosition(StaticVariables.lastVisitedStage.world);
         }
         else{
             ShowPartialWorldProgress();

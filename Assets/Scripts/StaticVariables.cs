@@ -103,22 +103,6 @@ public class StaticVariables
         return allStages[0];
     }
 
-    /*
-    static public string GetSceneNameFromWorldNumber(int num){
-        return num switch {
-            1 => world1Name,
-            2 => world2Name,
-            3 => world3Name,
-            4 => world4Name,
-            5 => world5Name,
-            6 => world6Name,
-            7 => world7Name,
-            8 => world8Name,
-            _ => world1Name,
-        };
-    }
-    */
-
 }
 
 public class StageData{
