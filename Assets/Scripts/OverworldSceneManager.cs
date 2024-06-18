@@ -12,7 +12,7 @@ public class OverworldSceneManager : MonoBehaviour{
     public RectTransform playerParent;
     public Animator playerAnimator;
     public OverworldSpace[] overworldSpaces;
-    public RectTransform mapButton;
+    public RectTransform sceneHeader;
 
 
     [Header("Timing Configurations")]
@@ -320,17 +320,17 @@ public class OverworldSceneManager : MonoBehaviour{
             StaticVariables.hasTalkedToNewestEnemy = true;
     }
 
-    public void HideMapButton(float duration){
-        mapButton.DOAnchorPos((mapButton.anchoredPosition + new Vector2(0, 400)), duration).OnComplete(FinishHidingMapButton);
+    public void HideSceneHeader(float duration){
+        sceneHeader.DOAnchorPos((sceneHeader.anchoredPosition + new Vector2(0, 400)), duration).OnComplete(DisableSceneHeader);
     }
 
-    public void ShowMapButton(float duration){
-        mapButton.gameObject.SetActive(true);
-        mapButton.DOAnchorPos((mapButton.anchoredPosition + new Vector2(0, -400)), duration);
+    public void ShowSceneHeader(float duration){
+        sceneHeader.gameObject.SetActive(true);
+        sceneHeader.DOAnchorPos((sceneHeader.anchoredPosition + new Vector2(0, -400)), duration);
     }
 
-    private void FinishHidingMapButton(){
-        mapButton.gameObject.SetActive(false);
+    private void DisableSceneHeader(){
+        sceneHeader.gameObject.SetActive(false);
     }
 }
 

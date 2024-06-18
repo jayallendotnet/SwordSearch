@@ -316,7 +316,7 @@ public class InteractOverlayManager : MonoBehaviour{
         interactOverlay.DOAnchorPosY(-interactOverlay.rect.height, transitionDuration);
         clickableBackground.SetActive(false);
         isMovingInteractOverlay = true;
-        overworldSceneManager.ShowMapButton(transitionDuration);
+        overworldSceneManager.ShowSceneHeader(transitionDuration);
         overworldSceneManager.overworldView.DOAnchorPosY(0, transitionDuration).OnComplete(FinishedHidingInteractOverlay);
     }
 
@@ -330,7 +330,7 @@ public class InteractOverlayManager : MonoBehaviour{
         isInteractOverlayShowing = true;
         isMovingInteractOverlay = true;
         clickableBackground.SetActive(true);
-        overworldSceneManager.HideMapButton(transitionDuration);
+        overworldSceneManager.HideSceneHeader(transitionDuration);
         MoveOverworldUpIfRequired();
 
         SetInteractOptions();
