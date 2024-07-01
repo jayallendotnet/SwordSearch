@@ -45,6 +45,7 @@ public class UIManager : MonoBehaviour {
     public Color invalidWordColor;
     public Color invalidButtonColor;
     public Color canRefreshPuzzleColor;
+    public Color turnPageWordColor;
     public List<PowerupDisplayData> powerupDisplayDataList;
     [Header("Numbers")]
     public Sprite[] numberSprites;
@@ -317,8 +318,8 @@ public class UIManager : MonoBehaviour {
         }
         else if ((countdown == 0) && (word.Length == 0)){
             wordDisplay.text = "TURN PAGE";
-            wordDisplay.color = Color.white;
-            submitWordButtonImage.color = canRefreshPuzzleColor;
+            wordDisplay.color = turnPageWordColor;
+            //submitWordButtonImage.color = canRefreshPuzzleColor;
             wordStrengthDivider.SetActive(true);
             countdownDivider.SetActive(true);
             UpdateWordStrengthDisplay(strength);
@@ -792,6 +793,7 @@ public class UIManager : MonoBehaviour {
         if (pageTurnGameObject.activeSelf)
             pageTurnAnimator.Play("Book Turn", 0, 0);
         pageTurnGameObject.SetActive(true);
+        pageTurnGameObject.GetComponent<PageTurnAnimatorFunctions>().SetUpLetterSpaces();
         pageTurnGameObject.GetComponent<PageTurnAnimatorFunctions>().hidingLetters = hideLetters;
         turningPage = true;
     }

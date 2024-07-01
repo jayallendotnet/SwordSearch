@@ -406,6 +406,11 @@ public class PuzzleGenerator : MonoBehaviour {
         }
     }
 
+    public void UpdateLetterVisual(LetterSpace ls){
+        ls.ApplyNextPuzzleData();
+        ls.ShowAsNotPartOfWord();
+    }
+
     private void GetPuzzleDimensions(){
         int totalCount = transform.childCount;
         int width = Mathf.FloorToInt(GetComponent<GridLayoutGroup>().constraintCount);
