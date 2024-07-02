@@ -616,13 +616,15 @@ public class UIManager : MonoBehaviour {
         if ((movingBook) || (turningPage) || (battleManager.playerHealth == 0) || (battleManager.enemyHealth == 0))
             return;
         movingBook = true;
-        book.DOAnchorPos(new Vector2(-book.anchoredPosition.x, book.anchoredPosition.y), 0.5f).OnComplete(MovingBookEnded);
         if (IsPuzzlePageShowing()){
-            pauseButton.DOAnchorPos((pauseButton.anchoredPosition + new Vector2(0, 300)), 0.5f);
+            book.DOLocalMoveX((book.localPosition.x + book.rect.width), 0.5f).OnComplete(MovingBookEnded);
+            pauseButton.DOAnchorPosY(350f, 0.5f);
             battleManager.PauseEverything();
         }
-        else
-            pauseButton.DOAnchorPos((pauseButton.anchoredPosition + new Vector2(0, -300)), 0.5f);
+        else{
+            book.DOLocalMoveX((book.localPosition.x - book.rect.width), 0.5f).OnComplete(MovingBookEnded);
+            pauseButton.DOAnchorPosY(0, 0.5f);
+        }
     }
 
     private void MovingBookEnded(){
@@ -632,7 +634,7 @@ public class UIManager : MonoBehaviour {
     }
 
     private bool IsPuzzlePageShowing(){
-        return (book.anchoredPosition.x < 0);
+        return (book.localPosition.x < book.rect.width);
     }
 
     public void SetAllAnimationStates(bool state){
