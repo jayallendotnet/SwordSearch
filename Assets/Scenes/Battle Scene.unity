@@ -4965,12 +4965,6 @@ MonoBehaviour:
   pulseAnimatorClock: {fileID: 7909261578799082172}
   pageTurnGameObject: {fileID: 1564386263}
   pageTurnAnimator: {fileID: 1564386266}
-  letterMask1Im: {fileID: 0}
-  letterMask1Mask: {fileID: 0}
-  letterMask2Im: {fileID: 0}
-  letterMask2Mask: {fileID: 0}
-  letterMask3Im: {fileID: 0}
-  letterMask3Mask: {fileID: 0}
   enemyParentPrefab: {fileID: 2647165590448159741, guid: e1a568fcc90e27b4c9d144384379401a, type: 3}
   dialogueManager: {fileID: 1980342577}
   boulderGroupsParent: {fileID: 1863917082}
@@ -8205,7 +8199,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -16.259216, y: 141.3584}
+  m_AnchoredPosition: {x: -16.259277, y: 141.3584}
   m_SizeDelta: {x: -205.7574, y: -172.9637}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &575937013
@@ -10955,7 +10949,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1561713303}
         m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
-        m_MethodName: PressSubmitWordButton
+        m_MethodName: PressWordArea
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15827,6 +15821,10 @@ PrefabInstance:
       value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7877998346528544055, guid: 3899a9cd32b15f34989ebcaad13b2b0b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 61.301758
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877998346528544055, guid: 3899a9cd32b15f34989ebcaad13b2b0b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -18670,7 +18668,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 25.750671, y: 254.29395}
+  m_AnchoredPosition: {x: 25.750732, y: 254.29395}
   m_SizeDelta: {x: 1470.601, y: 2202.542}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1564386265

@@ -200,8 +200,12 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public void ShowPlayerTakingDamage(int amount, bool stillAlive, bool showDamageAnimation = true){
-        if (amount < 1)
+    public void ShowPlayerTakingDamage(int amount, bool stillAlive, bool showDamageAnimation = true, bool showZeroDamage = false){
+        //if (amount < 1)
+        //    return;
+        if (showZeroDamage)
+            amount = 0;
+        else if (amount < 1)
             return;
         ShowNumbersAsChild(playerDamageSingleDigitPrefab, playerDamageDoubleDigitPrefab, playerObject, amount);
         if (!showDamageAnimation)

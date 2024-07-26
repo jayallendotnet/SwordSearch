@@ -8,8 +8,6 @@ public class SettingsSceneManager : MonoBehaviour{
 
     public Text worldNameDisplay;
     public Text stageNumberDisplay;
-
-    public Text autoSubmitText;
     public BattleData JustBattleOpponent;
 
     void Start(){
@@ -18,7 +16,7 @@ public class SettingsSceneManager : MonoBehaviour{
 
     public void Setup(){
         DisplayProgress();
-        DisplayAutoSubmit();
+        //DisplayAutoSubmit();
     }
 
     public void HitBackButton(){
@@ -60,17 +58,5 @@ public class SettingsSceneManager : MonoBehaviour{
         if ((StaticVariables.highestBeatenStage.nextStage != null) && (StaticVariables.highestBeatenStage.nextStage.nextStage != null))
             StaticVariables.highestBeatenStage = StaticVariables.highestBeatenStage.nextStage;
         DisplayProgress();
-    }
-
-    private void DisplayAutoSubmit(){
-        if (StaticVariables.useAutoSubmit)
-            autoSubmitText.text = "ON";
-        else   
-            autoSubmitText.text = "OFF";
-    }
-
-    public void ToggleAutoSubmit(){
-        StaticVariables.useAutoSubmit = !StaticVariables.useAutoSubmit;
-        DisplayAutoSubmit();
     }
 }

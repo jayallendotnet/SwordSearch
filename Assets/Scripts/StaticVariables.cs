@@ -25,7 +25,7 @@ public class StaticVariables
     static public BattleManager.PowerupTypes buffedType = BattleManager.PowerupTypes.None;
     static public bool hasTalkedToNewestEnemy = false;
     static public CutsceneManager.Cutscene cutsceneID;
-    static public bool useAutoSubmit = true;
+    //static public bool useAutoSubmit = true;
     static public string playerName = "Rebecca";
 
     //stages

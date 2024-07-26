@@ -54,6 +54,8 @@ public class TouchManager : MonoBehaviour {
             }
         }
         else if (Input.GetMouseButtonUp(0)){
+            ProcessFingerRelease();
+            /*
             if (StaticVariables.useAutoSubmit){
                 ProcessFingerRelease();
                 return;
@@ -65,6 +67,7 @@ public class TouchManager : MonoBehaviour {
             else{
                 ProcessSwipeReleaseOnLetterSpace(spaceUnderFinger);
             }
+            */
         }
     }
 

@@ -183,6 +183,7 @@ public class BattleManager : MonoBehaviour {
             
     }
 
+    /*
     public virtual void PressSubmitWordButton(){
         if ((playerHealth == 0) || (enemyHealth == 0) || (isGamePaused))
             return;
@@ -208,6 +209,7 @@ public class BattleManager : MonoBehaviour {
             uiManager.ShowPageTurn();         
         }
     }
+    */
 
     public void PauseEverything(){
         isGamePaused = true;
@@ -609,13 +611,52 @@ public class BattleManager : MonoBehaviour {
     }
 
     public virtual void ProcessFingerRelease(){
-        if (StaticVariables.useAutoSubmit){
-            if (isValidWord)
-                PressSubmitWordButton();
+        //if (StaticVariables.useAutoSubmit){
+        if (isValidWord)
+            SubmitWord();
+        else
+            ClearWord(false);
+        //}
+    }
+
+    public void SubmitWord(){
+        if ((playerHealth == 0) || (enemyHealth == 0) || (isGamePaused))
+            return;
+        if (isValidWord){
+            bool startNow = false;
+            if (enemyData.isHorde)
+                startNow = uiManager.enemyHordeAnimators[0].GetCurrentAnimatorStateInfo(0).IsName("Idle");
             else
-                ClearWord(false);
+                startNow = uiManager.enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
+            if (startNow)
+                StartPlayingPlayerAttackAnimation(powerupTypeForWord);
+            else
+                PlayPlayerAttackAnimationAfterEnemyFinishes();
+            SetCurrentAttackData();
+            DecrementRefreshPuzzleCountdown();
+            ClearWord(true);
+        }
+        /*
+        else if ((word.Length == 0) && (countdownToRefresh == 0)){
+            puzzleGenerator.GenerateNewPuzzle();
+            countdownToRefresh = maxPuzzleCountdown;
+            ClearWord(true);  
+            uiManager.ShowPageTurn();         
+        }
+        */
+
+    }
+
+    public virtual void PressWordArea(){
+        if ((word.Length == 0) && (countdownToRefresh == 0)){
+            puzzleGenerator.GenerateNewPuzzle();
+            countdownToRefresh = maxPuzzleCountdown;
+            ClearWord(true);  
+            uiManager.ShowPageTurn();         
         }
     }
+
+    
 
     private void SetLetterSpaceActiveBeforeFingerDown(){
         foreach (LetterSpace ls in puzzleGenerator.letterSpaces){
