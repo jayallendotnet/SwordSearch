@@ -110,12 +110,6 @@ public class UIManager : MonoBehaviour {
     public Animator pulseAnimatorClock;
     public GameObject pageTurnGameObject;
     public Animator pageTurnAnimator;
-    //public Image letterMask1Im;
-    //public Mask letterMask1Mask;
-    //public Image letterMask2Im;
-    //public Mask letterMask2Mask;
-    //public Image letterMask3Im;
-    //public Mask letterMask3Mask;
     public GameObject enemyParentPrefab;
     public DialogueManager dialogueManager;
     public Transform boulderGroupsParent;
@@ -130,12 +124,6 @@ public class UIManager : MonoBehaviour {
         waterPowerupStrengthColor = GetPowerupDisplayDataWithType(BattleManager.PowerupTypes.Water).backgroundColor;
         floodHeight = waterBuffTop.anchoredPosition.y;
         waterBuffTop.anchoredPosition = new Vector2(waterBuffTop.anchoredPosition.x, waterBuffBottom.anchoredPosition.y); 
-        //letterMask1Im.enabled = false;
-        //letterMask1Mask.enabled = false;
-        //letterMask2Im.enabled = false;
-        //letterMask2Mask.enabled = false;
-        //letterMask3Im.enabled = false;
-        //letterMask3Mask.enabled = false;
         enemyTimerBarImage = enemyTimerBar.GetComponent<Image>();
         defaultEnemyTimerBarColor = enemyTimerBarImage.color;
 
@@ -812,40 +800,6 @@ public class UIManager : MonoBehaviour {
         turningPage = false;
         battleManager.TurnPageEnded();
     }
-
-    /*
-    public void HideLetterVisualsForSection(int sectionNum){
-        letterMask1Im.enabled = false;
-        letterMask1Mask.enabled = false;
-        letterMask2Im.enabled = false;
-        letterMask2Mask.enabled = false;
-        letterMask3Im.enabled = false;
-        letterMask3Mask.enabled = false;
-        switch (sectionNum){
-            case 1:
-                letterMask1Im.enabled = true;
-                letterMask1Mask.enabled = true;
-                break;
-            case 2:
-                letterMask1Im.enabled = true;
-                letterMask1Mask.enabled = true;
-                letterMask2Im.enabled = true;
-                letterMask2Mask.enabled = true;
-                break;
-            case 3:
-                letterMask1Im.enabled = true;
-                letterMask1Mask.enabled = true;
-                letterMask2Im.enabled = true;
-                letterMask2Mask.enabled = true;
-                letterMask3Im.enabled = true;
-                letterMask3Mask.enabled = true;
-                break;
-            default:
-                puzzlePage.SetActive(false);
-                break;
-        }
-    }
-    */
     
 }
 

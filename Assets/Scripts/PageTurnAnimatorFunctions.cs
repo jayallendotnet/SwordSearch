@@ -37,17 +37,6 @@ public class PageTurnAnimatorFunctions : MonoBehaviour{
             battleManager.puzzleGenerator.UpdateLetterVisual(ls);
             letterSpacesNotYetChanged.Remove(ls);
         }
-
-        //int lettersChangedThisFrame = unchangedLettersAtStartOfFrame - letterSpacesNotYetChanged.Count;
-        //print(lettersChangedThisFrame + " letters were changed in frame " + num);
-
-        /*
-        if (hidingLetters)
-            battleManager.uiManager.HideLetterVisualsForSection(num);
-            //battleManager.puzzleGenerator.HideLetterVisualsForSection(num);
-        else
-        battleManager.puzzleGenerator.UpdateLetterVisualsForSection(num);
-        */
     }
 
     public void PageTurnAnimationFinished(){

@@ -16,7 +16,6 @@ public class SettingsSceneManager : MonoBehaviour{
 
     public void Setup(){
         DisplayProgress();
-        //DisplayAutoSubmit();
     }
 
     public void HitBackButton(){
