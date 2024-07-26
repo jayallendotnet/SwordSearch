@@ -69,6 +69,7 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
                 o = powerSwordPrefab;
                 break;
             default:
+                //print("no powerup type");
                 o = ChooseAnimationForPowerupTypeNone();
                 break;
         }

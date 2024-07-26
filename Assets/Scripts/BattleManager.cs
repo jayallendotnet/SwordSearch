@@ -608,7 +608,7 @@ public class BattleManager : MonoBehaviour {
             RemoveLetter(space);
     }
 
-    public void ProcessFingerRelease(){
+    public virtual void ProcessFingerRelease(){
         if (StaticVariables.useAutoSubmit){
             if (isValidWord)
                 PressSubmitWordButton();

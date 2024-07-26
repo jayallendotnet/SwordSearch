@@ -52,8 +52,8 @@ public class TutorialManager : BattleManager {
         puzzleGenerator.useSmallerLayout = true;
 
         //temp, remove later
-        wasUsingAutoSubmit = StaticVariables.useAutoSubmit;
-        StaticVariables.useAutoSubmit = false;
+        //wasUsingAutoSubmit = StaticVariables.useAutoSubmit;
+        //StaticVariables.useAutoSubmit = false;
         
         base.Start();
         SetTutorialNumber();
@@ -72,6 +72,8 @@ public class TutorialManager : BattleManager {
         UpdateSubmitVisuals();
         ButtonText("CONTINUE");
         AdvanceTutorialStep();
+
+        uiManager.pauseButton.gameObject.SetActive(false);
     }
 
     private void SetTutorialNumber(){
@@ -139,10 +141,10 @@ public class TutorialManager : BattleManager {
     }
 
     private void AdvanceTutorialStep(){
-        tutorialStep ++;
+        //tutorialStep ++;
         switch (tutorialNumber){
             case (1):
-                DoTutorial1Step();
+                AdvanceTutorial1();
                 break;
             case (2):
                 DoTutorial2Step();
@@ -161,6 +163,97 @@ public class TutorialManager : BattleManager {
         }
     }
 
+
+    private void AdvanceTutorial1(){
+        tutorialStep ++;
+        int i = 0;
+        if (++i == tutorialStep){
+            DisplayText("Swipe some letters to select a word. Start by spelling the word 'DOG'.");//Tap a letter to select it. Start by selecting the letter 'D'.");
+            LoadCustomPuzzle(startingLayout1);
+            highlightWord1.SetActive(true);
+            advanceCondition = Cond.FinishWord;
+            requiredWord = new char[] {'D', 'O', 'G'};
+
+        }
+        else if (++i == tutorialStep){
+            DisplayText("Once you have completed a word, you can let go. Lift your finger to send a magical attack at your opponent!");
+            advanceCondition = Cond.SubmitWord;
+            highlightWord1.SetActive(false);
+        }
+        else if (++i == tutorialStep){                
+            DisplayText("");
+            advanceCondition = Cond.EnemyTakesDamage;
+        }
+        else if (++i == tutorialStep){
+            DisplayPlayerTalking("Whoa! The book shot a blast of water at the goblin!", DialogueStep.Emotion.Happy);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayEnemyTalking("Why am I wet??", enemyData, DialogueStep.Emotion.Angry);
+            uiManager.enemyAnimator.GetComponent<RectTransform>().parent.localScale = new Vector3(-1, 1, 1);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayPlayerTalking("Oh no, the goblin noticed me!", DialogueStep.Emotion.Worried);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("Try to make the word 'BUMPY' and attack the goblin.");
+            advanceCondition = Cond.FinishWord;
+            requiredWord = new char[] {'B', 'U', 'M', 'P', 'Y'};
+            highlightWord2.SetActive(true);
+        }
+        else if (++i == tutorialStep){
+            advanceCondition = Cond.SubmitWord;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("");
+            highlightWord2.SetActive(false);
+            advanceCondition = Cond.EnemyTakesDamage;
+        }        
+        else if (++i == tutorialStep){
+            DisplayText("Letters don't have to be in all in one row to make a word!");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("As long as the letters are connected, you can make a word with them.");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("Try to make the word 'CHALK'.");
+            advanceCondition = Cond.FinishWord;
+            requiredWord = new char[] {'C', 'H', 'A', 'L', 'K'};
+            highlightWord3.SetActive(true);
+        }
+        else if (++i == tutorialStep){
+            advanceCondition = Cond.SubmitWord;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("");
+            highlightWord3.SetActive(false);
+            advanceCondition = Cond.EnemyTakesDamage;
+        }
+        else if (++i == tutorialStep){
+            uiManager.enemyAnimator.Play("Die");
+            advanceCondition = Cond.EnemyDies;
+        }
+        else if (++i == tutorialStep){
+            DisplayPlayerTalking("I managed to defeat one of the invading goblins!", DialogueStep.Emotion.Happy);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayPlayerTalking("This book has some powerful magic...", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            uiManager.EndDialogue();
+        }
+    }
+
+
+
+
+/*
     private void DoTutorial1Step(){        
         switch (tutorialStep){
             case (1):
@@ -264,6 +357,7 @@ public class TutorialManager : BattleManager {
                 break;
         }
     }
+    */
     private void DoTutorial2Step(){
         switch (tutorialStep){
             case (1):
@@ -608,6 +702,7 @@ public class TutorialManager : BattleManager {
     }
 
     private void SetupDialogueManager(){
+        print("setting up dialogue manager");
         uiManager.dialogueManager.tutorialManager = this;
         
         uiManager.dialogueManager.ClearDialogue();
@@ -742,6 +837,11 @@ public class TutorialManager : BattleManager {
         return true;
     }
 
+    //public override void ProcessFingerRelease()
+    //{
+    //    base.ProcessFingerRelease();
+    //}
+
     public override void AddLetter(LetterSpace ls){
         base.AddLetter(ls);
 
@@ -755,6 +855,15 @@ public class TutorialManager : BattleManager {
                     AdvanceTutorialStep();
                 break;
         }
+    }
+
+    public override void ProcessFingerRelease(){
+        if ((advanceCondition == Cond.FinishWord) && (word == new string(requiredWord)))
+            PressSubmitWordButton();
+        else if (advanceCondition == Cond.SubmitWord)
+            PressSubmitWordButton();
+        else
+            ClearWord(false);
     }
 
     public override void PressSubmitWordButton(){        
