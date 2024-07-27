@@ -41,6 +41,7 @@ public class TutorialManager : BattleManager {
     public GameObject highlightPlayerHealth;
     public GameObject highlightCountdown;
     public TextAsset wordLibraryForSmallerPuzzles;
+    private float enemyTimerBarRemainder = 0f;
     
 
     public override void Start() {
@@ -345,6 +346,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
             canQueueAttack = false;
             DOTween.Clear(uiManager.enemyTimerBar);
+            enemyTimerBarRemainder = uiManager.enemyTimerBar.localScale.x;
         }
         else if (++i == tutorialStep){
             DisplayText("You can tap the XXX to turn to another page in the book.");
@@ -386,7 +388,9 @@ public class TutorialManager : BattleManager {
             highlightCountdown.SetActive(false);
             canEnemyDie = true;
             canQueueAttack = true;
-            QueueEnemyAttack();
+            //resume the attack where it was paused
+            float remainingTime = enemyTimerBarRemainder * enemyData.attackOrder.Value[0].attackSpeed;
+            uiManager.enemyTimerBar.DOScale(new Vector3(0,1,1), remainingTime).SetEase(Ease.Linear).OnComplete(TriggerEnemyAttack);
             advanceCondition = Cond.NormalBattle;
         }
         else if (++i == tutorialStep){
