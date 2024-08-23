@@ -1421,15 +1421,15 @@ MonoBehaviour:
   sceneHeader: {fileID: 955829180}
   playerWalkSpeed: 1000
   minTimeToMove: 1
-  thisWorldNum: 2
+  thisWorldNum: 7
   powerupsPerPuzzle: 3
   healActive: 1
   waterActive: 1
-  fireActive: 0
-  earthActive: 0
-  lightningActive: 0
-  darkActive: 0
-  swordActive: 0
+  fireActive: 1
+  earthActive: 1
+  lightningActive: 1
+  darkActive: 1
+  swordActive: 1
   isPlayerMoving: 0
   currentPlayerSpace: {fileID: 0}
   currentEnemyData: {fileID: 0}
@@ -1932,6 +1932,10 @@ PrefabInstance:
     - target: {fileID: 8331165739053312393, guid: 6b52574c2b70ce84e81c748699aa6b72, type: 3}
       propertyPath: m_Name
       value: Enemy 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8331165739053312393, guid: 6b52574c2b70ce84e81c748699aa6b72, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

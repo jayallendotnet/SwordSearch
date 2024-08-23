@@ -196,11 +196,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2708877614081805338, guid: ea1e1256171aace49a8ac3c6a99b1e84, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -39
+      value: -337
       objectReference: {fileID: 0}
     - target: {fileID: 2708877614081805338, guid: ea1e1256171aace49a8ac3c6a99b1e84, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1346
+      value: 1079
       objectReference: {fileID: 0}
     - target: {fileID: 2708877614081805338, guid: ea1e1256171aace49a8ac3c6a99b1e84, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1571,14 +1571,14 @@ MonoBehaviour:
   sceneHeader: {fileID: 968711456}
   playerWalkSpeed: 1000
   minTimeToMove: 1
-  thisWorldNum: 2
+  thisWorldNum: 6
   powerupsPerPuzzle: 3
   healActive: 1
   waterActive: 1
-  fireActive: 0
-  earthActive: 0
-  lightningActive: 0
-  darkActive: 0
+  fireActive: 1
+  earthActive: 1
+  lightningActive: 1
+  darkActive: 1
   swordActive: 0
   isPlayerMoving: 0
   currentPlayerSpace: {fileID: 0}
@@ -1659,11 +1659,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 815226952419649519, guid: c1080e746c978d34c8737b40c6d4541a, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -173
+      value: -85
       objectReference: {fileID: 0}
     - target: {fileID: 815226952419649519, guid: c1080e746c978d34c8737b40c6d4541a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 901
+      value: 883
       objectReference: {fileID: 0}
     - target: {fileID: 815226952419649519, guid: c1080e746c978d34c8737b40c6d4541a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2523,6 +2523,10 @@ PrefabInstance:
     - target: {fileID: 1107962101534003457, guid: 20b845d5413ca3f46b151e5e0d2c2373, type: 3}
       propertyPath: m_Name
       value: Gog
+      objectReference: {fileID: 0}
+    - target: {fileID: 1107962101534003457, guid: 20b845d5413ca3f46b151e5e0d2c2373, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1107962101534003458, guid: 20b845d5413ca3f46b151e5e0d2c2373, type: 3}
       propertyPath: m_Pivot.x
