@@ -94,6 +94,24 @@ public class OverworldSceneManager : MonoBehaviour{
         for (int i = 0; i < overworldSpaces.Length; i++){
             OverworldSpace space = overworldSpaces[i];
             space.overworldSceneManager = this;
+
+            float startTime = (StaticVariables.rand.Next(0, 100)) / 100f;
+            //print(startTime);
+
+            //start the overworld space idle animation at a random time
+            Transform overworldSpaceTransform = space.transform.GetChild(0).GetChild(0);
+
+            if (space.type == OverworldSpace.OverworldSpaceType.Cutscene) //if it's a cutscene do this
+                overworldSpaceTransform.GetComponent<Animator>().Play("Idle", 0, startTime);
+            else if (space.type != OverworldSpace.OverworldSpaceType.Atlas){ //if it's a battle or tutorial do this
+                if (overworldSpaceTransform.GetComponent<EnemyData>().isHorde){
+                    foreach(Transform hordeTransform in overworldSpaceTransform){
+                        hordeTransform.GetChild(0).GetComponent<Animator>().Play("Idle", 0, startTime);
+                    }
+                }
+                else
+                    overworldSpaceTransform.GetComponent<Animator>().Play("Idle", 0, startTime);
+            }
         }
     }
 
