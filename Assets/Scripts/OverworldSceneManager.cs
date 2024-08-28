@@ -152,9 +152,16 @@ public class OverworldSceneManager : MonoBehaviour{
             PointPlayerTowardNextEnemy();
             changePlayerDirectionAtNextStep = false;
         }
-
-        if (space.transform.parent.GetComponent<OverworldSpace>() != null)
+        //when at a new overworld space, move the player in front of it in the hierarchy
+        if (space.transform.parent.GetComponent<OverworldSpace>() == null){
+            int x = space.transform.parent.parent.GetSiblingIndex();
+            playerParent.transform.SetSiblingIndex(x + 1);
+        }
+        //when not at an overworld space, change the player to face toward the next enemy?
+        else
             changePlayerDirectionAtNextStep = true;
+
+        
     }
 
     private void PointPlayerTowardNextEnemy(){
