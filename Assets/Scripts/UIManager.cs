@@ -105,8 +105,11 @@ public class UIManager : MonoBehaviour {
     public RectTransform book;
     public RectTransform pauseButton;
     public GameObject puzzlePage;
-    public GameObject victoryPage;
-    public GameObject defeatPage;
+    //public GameObject victoryPage;
+    //public GameObject defeatPage;
+    public GameObject endGameDisplay;
+    public Text endGameTitleText;
+    public Text endGameButtonText;
     public Animator pulseAnimatorClock;
     public GameObject pageTurnGameObject;
     public Animator pageTurnAnimator;
@@ -118,8 +121,8 @@ public class UIManager : MonoBehaviour {
 
     public void SetStartingValues(){
         puzzlePage.SetActive(true);
-        victoryPage.SetActive(false);
-        defeatPage.SetActive(false);
+        endGameDisplay.SetActive(false);
+        //defeatPage.SetActive(false);
         pageTurnGameObject.SetActive(false);
         waterPowerupStrengthColor = GetPowerupDisplayDataWithType(BattleManager.PowerupTypes.Water).backgroundColor;
         floodHeight = waterBuffTop.anchoredPosition.y;
@@ -742,16 +745,14 @@ public class UIManager : MonoBehaviour {
         //StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
     }
 
-    public void PushedContinueButton(){
-        //shows up after winning
-        dialogueManager.Setup(battleManager.enemyData.victoryDialogueSteps, StaticVariables.battleData);
-    }
-    public void PushedDefeatButton(){
-        //sends the player back to the overworld. appears upon defeat
-        StaticVariables.hasCompletedStage = false;
-        StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
-        //StaticVariables.beatCurrentBattle = false;
-        //StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
+    public void PushedEndGameButton(){
+        //the button that appears after victory or defeat. its function varies depending on if you won or lost
+        if (battleManager.enemyHealth <= 0) //you won, proceed through the victory dialogue
+            dialogueManager.Setup(battleManager.enemyData.victoryDialogueSteps, StaticVariables.battleData);
+        else{ //you lost, quit
+            StaticVariables.hasCompletedStage = false;
+            StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
+        }
     }
 
     public void EndDialogue(){
@@ -765,13 +766,17 @@ public class UIManager : MonoBehaviour {
     public void ShowVictoryPage(){
         battleManager.ClearDebuffs();
         ShowPageTurn(true);
-        victoryPage.SetActive(true);
+        endGameDisplay.SetActive(true);
+        endGameTitleText.text = "VICTORY";
+        endGameButtonText.text = "CONTINUE";
     }
 
     public void ShowDefeatPage(){
         battleManager.ClearDebuffs();
         ShowPageTurn(true);
-        defeatPage.SetActive(true);
+        endGameDisplay.SetActive(true);
+        endGameTitleText.text = "DEFEAT";
+        endGameButtonText.text = "BACK TO MAP";
     }
 
     

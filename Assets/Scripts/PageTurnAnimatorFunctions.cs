@@ -9,6 +9,7 @@ public class PageTurnAnimatorFunctions : MonoBehaviour{
     public BattleManager battleManager;
 
     public BoxCollider2D[] revealAreas; //the area that letters should be changed within during each frame (frames 1-6)
+    public GameObject[] victoryPageRevealAreas; //the objects that should be hidden on each subsequent frame to reveal the victory button
 
     public List<LetterSpace> letterSpacesNotYetChanged;
 
@@ -18,6 +19,10 @@ public class PageTurnAnimatorFunctions : MonoBehaviour{
         letterSpacesNotYetChanged = new();
         foreach (LetterSpace ls in battleManager.puzzleGenerator.letterSpaces)
             letterSpacesNotYetChanged.Add(ls);
+        if (hidingLetters){
+            foreach (GameObject go in victoryPageRevealAreas)
+                go.SetActive(true);
+        }
     }
 
     public void PageTurnFrameBegan(int num){
@@ -34,8 +39,17 @@ public class PageTurnAnimatorFunctions : MonoBehaviour{
         }
 
         foreach (LetterSpace ls in letterSpacesToUpdate){
-            battleManager.puzzleGenerator.UpdateLetterVisual(ls);
+            if (hidingLetters){
+                ls.HideVisuals();
+                ls.DisableTouchDetection();
+            }
+            else
+                battleManager.puzzleGenerator.UpdateLetterVisual(ls);
             letterSpacesNotYetChanged.Remove(ls);
+        }
+
+        if (hidingLetters){
+            victoryPageRevealAreas[num - 1].SetActive(false);
         }
     }
 

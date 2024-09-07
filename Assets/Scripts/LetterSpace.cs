@@ -37,6 +37,9 @@ public class LetterSpace : MonoBehaviour{
     public Animator powerupIconAnimator;
     public Image[] colorableBackgroundImages = new Image[9];
     public GameObject tutorialSelector;
+    public GameObject touchDetection1;
+    public GameObject touchDetection2;
+    public GameObject touchDetection3;
 
     [Header("Connectors")]
     public GameObject topConnector;
@@ -184,6 +187,11 @@ public class LetterSpace : MonoBehaviour{
         text.gameObject.SetActive(false);
         selectedSignifier.SetActive(false);
         HideAllDirectionLines();
+    }
+    public void DisableTouchDetection(){
+        touchDetection1.SetActive(false);
+        touchDetection2.SetActive(false);
+        touchDetection3.SetActive(false);
     }
 
     public void ToggleTutorialSelector(bool value){

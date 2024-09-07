@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1107962101534003462}
   - component: {fileID: 1107962101534003463}
   m_Layer: 0
-  m_Name: Goblin
+  m_Name: TEST ENEMY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,11 +128,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBattleable: 1
   nameOverride: 
-  startingHealth: 35
+  startingHealth: 1
   attackOrder:
     Value:
-    - attackSpeed: 6
-      attackDamage: 2
+    - attackSpeed: 3
+      attackDamage: 200
       isSpecial: 0
       specialType: 0
       specialColor: {r: 0, g: 0, b: 0, a: 0}
@@ -164,4 +164,8 @@ MonoBehaviour:
     talker: {fileID: 0}
     emotion: 2
     description: Test Defeated
-  victoryDialogueSteps: []
+  victoryDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 3
+    description: I beat the generic test enemy hooray!
