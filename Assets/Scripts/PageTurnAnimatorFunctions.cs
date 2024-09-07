@@ -10,6 +10,7 @@ public class PageTurnAnimatorFunctions : MonoBehaviour{
 
     public BoxCollider2D[] revealAreas; //the area that letters should be changed within during each frame (frames 1-6)
     public GameObject[] victoryPageRevealAreas; //the objects that should be hidden on each subsequent frame to reveal the victory button
+    public GameObject[] victoryPageHideAreas; //the objects that should be shown on each subsequent frame to hide the countdown, submit, and strength visuals
 
     public List<LetterSpace> letterSpacesNotYetChanged;
 
@@ -22,6 +23,8 @@ public class PageTurnAnimatorFunctions : MonoBehaviour{
         if (hidingLetters){
             foreach (GameObject go in victoryPageRevealAreas)
                 go.SetActive(true);
+            foreach (GameObject go in victoryPageHideAreas)
+                go.SetActive(false);
         }
     }
 
@@ -48,9 +51,10 @@ public class PageTurnAnimatorFunctions : MonoBehaviour{
             letterSpacesNotYetChanged.Remove(ls);
         }
 
-        if (hidingLetters){
+        if (hidingLetters)
             victoryPageRevealAreas[num - 1].SetActive(false);
-        }
+        if (hidingLetters)
+            victoryPageHideAreas[num - 1].SetActive(true);
     }
 
     public void PageTurnAnimationFinished(){
