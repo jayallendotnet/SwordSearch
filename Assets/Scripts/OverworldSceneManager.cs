@@ -24,8 +24,8 @@ public class OverworldSceneManager : MonoBehaviour{
     public int powerupsPerPuzzle = 3;
     public bool healActive = false;
     public bool waterActive = false;
-    public bool fireActive = false;
     public bool earthActive = false;
+    public bool fireActive = false;
     public bool lightningActive = false;
     public bool darkActive = false;
     public bool swordActive = false;
@@ -248,10 +248,11 @@ public class OverworldSceneManager : MonoBehaviour{
             return;    
         EnemyData ed = currentPlayerSpace.battleData.enemyPrefab.GetComponent<EnemyData>();
         interactOverlayManager.DisplayEnemyName(ed);
-        interactOverlayManager.DisplayInfoHighlightIfAppropriate(ed);
+        interactOverlayManager.ConfigureInfoButton(ed);
+        interactOverlayManager.ConfigureReadButton(ed);
         if ((IsCurrentEnemyNewestEnemy()) && (!StaticVariables.hasTalkedToNewestEnemy)){
             if ((currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Battle) || (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial))
-                dialogueManager.Setup(currentEnemyData.overworldDialogueSteps, currentPlayerSpace.battleData, showFakeTalkButton: (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial));
+                dialogueManager.Setup(currentEnemyData.overworldDialogueSteps, currentPlayerSpace.battleData);
 
         }
     }

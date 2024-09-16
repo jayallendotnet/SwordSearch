@@ -1030,7 +1030,7 @@ public class CutsceneManager : MonoBehaviour{
     }
 
     private void ToggleButton(bool value){
-        dialogueManager.buttonText.transform.parent.gameObject.SetActive(value);
+        dialogueManager.realButton.SetActive(value);
     }
 
     private void SetupDialogueManager(){
@@ -1081,7 +1081,7 @@ public class CutsceneManager : MonoBehaviour{
     
 
     private void ButtonText(string s){
-        dialogueManager.buttonText.text = s;
+        dialogueManager.SetButtonText(s);
     }
 
     public void PressedNextButton(){

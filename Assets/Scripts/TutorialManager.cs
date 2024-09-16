@@ -571,7 +571,7 @@ public class TutorialManager : BattleManager {
     }
     
     private void ToggleButton(bool value){
-        uiManager.dialogueManager.buttonText.transform.parent.gameObject.SetActive(value);
+        uiManager.dialogueManager.realButton.SetActive(value);
     }
 
     private void SetupDialogueManager(){
@@ -659,7 +659,7 @@ public class TutorialManager : BattleManager {
     }
 
     private void ButtonText(string s){
-        uiManager.dialogueManager.buttonText.text = s;
+        uiManager.dialogueManager.SetButtonText(s);
     }
 
     public void PressedNextButton(){

@@ -102,6 +102,38 @@ public class StaticVariables
         return allStages[0];
     }
 
+    static public StageData GetStage(EnemyData enemyData){
+        //gets the stage which has enemyPrefab as its enemy
+        foreach (StageData stageData in allStages){
+            if (stageData.enemyPrefab  != null){
+                EnemyData ed = stageData.enemyPrefab.GetComponent<EnemyData>();
+                if ((ed != null) && (ed == enemyData))
+                    return stageData;
+            }
+        }
+        return allStages[0];
+    }
+
+    static public bool ShouldStageShowInfoButton(StageData stageData){
+        return stageData.world switch {
+            1 => false,
+            2 => stageData.stage >= 4,
+            _ => true,
+        };
+    }
+
+    static public bool ShouldStageShowInfoButton(EnemyData enemyData){
+        return ShouldStageShowInfoButton(GetStage(enemyData));
+    }
+
+    static public bool IsReadingEnabledForStage(StageData stageData){
+        return stageData.world >= 4;
+    }
+
+    static public bool IsReadingEnabledForStage(EnemyData enemyData){
+        return IsReadingEnabledForStage(GetStage(enemyData));
+    }
+
 }
 
 public class StageData{

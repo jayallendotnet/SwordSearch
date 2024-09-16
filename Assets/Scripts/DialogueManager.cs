@@ -14,13 +14,17 @@ public class DialogueManager : MonoBehaviour{
     public Image screenDarkener;
     public Image playerChathead;
     public Image enemyChathead;
+    public GameObject realButton;
     public Text buttonText;
     [HideInInspector]
     public BattleData enemyBattleData;
-    public RectTransform fakeButton1;
-    public RectTransform fakeButton2;
-    public RectTransform fakeButton3;
-    public RectTransform fakeButton4;
+    public RectTransform fakeBattleButton;
+    public RectTransform fakeInfoButton;
+    public RectTransform fakeReadButton;
+    public RectTransform fakeTalkButton;
+    public RectTransform fakeBackButton;
+    public Text fakeBackButtonText;
+    public Animator fakeInfoStar;
     public RectTransform fakeEnemyName;
     public Text fakeEnemyNameText;
 
@@ -49,13 +53,10 @@ public class DialogueManager : MonoBehaviour{
     private float chatheadStartingHeight;
     private RectTransform playerChatheadTransform;
     private RectTransform enemyChatheadTransform;
-    private float fakeButtonStartingHeight;
-    //private float fakeButton1Pos = 920f;
-    private float fakeButton1Pos = 640;
-    private float fakeButton2Pos = 360;
-    private float fakeEnemyNamePos = 950;
-    //private float fakeButton2Pos = 640f;
-    //private float fakeButton3Pos = 360f;
+    private float fakeButtonTopHeight;
+    private float fakeButtonMidHeight;
+    private float fakeButtonBottomHeight;
+    private float fakeEnemyNameHeight;
     private EnemyData enemyData;
     [HideInInspector]
     public CutsceneManager cutsceneManager;
@@ -65,23 +66,27 @@ public class DialogueManager : MonoBehaviour{
     private Color dialogueTextColor;
     private Color nameTextColor;
 
-    private bool showFakeTalkButton;
 
     void Start(){
         SetStartingValues();
     }
 
-    public void Setup(DialogueStep[] ds, BattleData bd, bool startShown = false, bool showFakeTalkButton = false){
+    public void Setup(DialogueStep[] ds, BattleData bd, bool startShown = false){
+        //startshown is true means the interact overlay has already been pulled up before opening the dialoguemanager
         gameObject.SetActive(true);
         fakeEnemyNameText.text = bd.enemyPrefab.GetComponent<EnemyData>().GetDisplayName().ToUpper();
-        this.showFakeTalkButton = showFakeTalkButton;
+        //this.showFakeTalkButton = showFakeTalkButton;
         if (startShown){
             ShowFakeButtonsSlidingOut();
-            SynchronizeInfoIconAnimations();
+            MimicInfoAndReadButtons();
+            //SynchronizeInfoIconAnimations();
             overlay.anchoredPosition = Vector2.zero;
         }
-        else
+        else{
             overlay.anchoredPosition = new Vector2(0, -overlay.rect.height);
+            HideFakeButtons();
+
+        }
         SetStartingValues();
         StartDialogue(ds, bd);
     } 
@@ -100,7 +105,10 @@ public class DialogueManager : MonoBehaviour{
         playerChatheadTransform = playerChathead.GetComponent<RectTransform>();
         enemyChatheadTransform = enemyChathead.GetComponent<RectTransform>();
         chatheadStartingHeight = playerChatheadTransform.anchoredPosition.y;
-        fakeButtonStartingHeight = buttonText.transform.parent.GetComponent<RectTransform>().anchoredPosition.y;
+        fakeEnemyNameHeight = fakeEnemyName.anchoredPosition.y;
+        fakeButtonTopHeight = fakeBattleButton.anchoredPosition.y;
+        fakeButtonMidHeight = fakeInfoButton.anchoredPosition.y;
+        fakeButtonBottomHeight = fakeBackButton.anchoredPosition.y;
 
         dialogueTextBox.gameObject.SetActive(false);
         speakerNameTextBox.gameObject.SetActive(false);
@@ -117,15 +125,30 @@ public class DialogueManager : MonoBehaviour{
             gameObject.SetActive(true);
     }
 
-    public void SynchronizeInfoIconAnimations(){
-        GameObject original = FindObjectOfType<InteractOverlayManager>().infoHighlight;
-        GameObject faker = fakeButton3.GetChild(2).GetChild(0).gameObject;
-        if (original.activeSelf){
-            faker.SetActive(true);
-            faker.GetComponent<Animator>().Play("Info Icon", 0, original.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime);
-        }
-        else
-            faker.SetActive(false);
+    private void MimicInfoAndReadButtons(){
+        InteractOverlayManager iom = FindObjectOfType<InteractOverlayManager>();
+        Transform infoButton = iom.infoButton.transform;
+        Transform readButton = iom.readButton.transform;
+
+        Transform fakeInfo = fakeInfoButton.transform;
+        Transform fakeRead = fakeReadButton.transform;
+
+        fakeInfo.GetChild(1).gameObject.SetActive(infoButton.GetChild(1).gameObject.activeSelf);
+        fakeInfo.GetChild(2).gameObject.SetActive(infoButton.GetChild(2).gameObject.activeSelf);
+        fakeInfo.GetChild(3).gameObject.SetActive(infoButton.GetChild(3).gameObject.activeSelf);
+
+        
+        fakeRead.GetChild(2).GetComponent<Image>().sprite = readButton.GetChild(2).GetComponent<Image>().sprite;
+        fakeRead.GetChild(3).gameObject.SetActive(readButton.GetChild(3).gameObject.activeSelf);
+
+        if (fakeInfo.GetChild(1).gameObject.activeSelf)
+            SynchronizeInfoIconAnimations(iom.infoHighlight);
+    }
+
+    public void SynchronizeInfoIconAnimations(GameObject infoHighlight){
+        fakeInfoStar.gameObject.SetActive(infoHighlight.activeSelf);
+        if (infoHighlight.activeSelf)
+            fakeInfoStar.Play("Info Icon", 0, infoHighlight.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime);
     }
 
     private void StartDialogue(DialogueStep[] dialogueSteps, BattleData battleData){
@@ -149,10 +172,6 @@ public class DialogueManager : MonoBehaviour{
         enemyChathead.gameObject.SetActive(true);
 
         HideChatheads();
-        //float playerChatheadSize = playerChatheadTransform.sizeDelta.y * playerChatheadTransform.localScale.y;
-        //float enemyChatheadSize = enemyChatheadTransform.sizeDelta.y * enemyChatheadTransform.localScale.y;
-        //playerChatheadTransform.anchoredPosition = new Vector2(playerChatheadTransform.anchoredPosition.x, -playerChatheadSize);
-        //enemyChatheadTransform.anchoredPosition = new Vector2(enemyChatheadTransform.anchoredPosition.x, -enemyChatheadSize);
 
         Color c = Color.white;
         c.a = 0;
@@ -208,15 +227,19 @@ public class DialogueManager : MonoBehaviour{
                 ShowEnemyTalking(enemyData, dialogueSteps[currentStep].emotion);
             else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.OtherTalking)
                 ShowEnemyTalking(dialogueSteps[currentStep].talker, dialogueSteps[currentStep].emotion);
+            //else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.Event)
+            //    if (dialogueSteps[currentStep].description == "info button tutorial"){
+                    //info button tutorial
+            //    }
         }
         else{
             dialogueTextBox.text = "No dialogue for this enemy, current talk step is " + currentStep;
             speakerNameTextBox.text = "WARNING";
         }
         if (currentStep == dialogueSteps.Length - 1)
-            buttonText.text = "CONTINUE";
+            SetButtonText("CONTINUE");
         else
-            buttonText.text = "NEXT";
+            SetButtonText("NEXT");
 
     }
 
@@ -238,31 +261,6 @@ public class DialogueManager : MonoBehaviour{
             (DialogueStep.Emotion.Worried) => playerChatheadWorried,
             _ => playerChatheadNormal,
         };
-        /*
-        switch (emotion){
-        case (DialogueStep.Emotion.Angry):
-            sprite = playerChatheadAngry;
-            break;
-        case (DialogueStep.Emotion.Defeated):
-            sprite = playerChatheadDefeated;
-            break;
-        case (DialogueStep.Emotion.Excited):
-            sprite = playerChatheadAngry;
-            break;
-        case (DialogueStep.Emotion.Happy):
-            sprite = playerChatheadHappy;
-            break;
-        case (DialogueStep.Emotion.Questioning):
-            sprite = playerChatheadQuestioning;
-            break;
-        case (DialogueStep.Emotion.Worried):
-            sprite = playerChatheadWorried;
-            break;
-        default:
-            sprite = playerChatheadNormal;
-            break;
-        }
-        */
         playerChathead.sprite = sprite;
     }
 
@@ -345,7 +343,7 @@ public class DialogueManager : MonoBehaviour{
         enemyChatheadTransform.DOAnchorPosY(-enemyChatheadSize, transitionDuration);
 
         if (isInOverworld){
-            buttonText.text = "BACK";
+            SetButtonText("BACK");
             ShowFakeButtonsSlidingIn();
         }
         else
@@ -364,71 +362,78 @@ public class DialogueManager : MonoBehaviour{
     }
 
     private void ShowFakeButtonsSlidingIn(){
-        float pos1 = fakeButton1Pos;
-        float pos2 = fakeButton2Pos;
-        float posE = fakeEnemyNamePos;
-        //float pos3 = fakeButton3Pos;
-        fakeButton1.gameObject.SetActive(true);
-        fakeButton2.gameObject.SetActive(true);
-        fakeButton3.gameObject.SetActive(true);
-        fakeButton4.gameObject.SetActive(false);
-        fakeEnemyName.gameObject.SetActive(true);
-        fakeButton1.anchoredPosition = new Vector2(fakeButton1.anchoredPosition.x, fakeButtonStartingHeight);
-        fakeButton2.anchoredPosition = new Vector2(fakeButton2.anchoredPosition.x, fakeButtonStartingHeight);
-        fakeButton3.anchoredPosition = new Vector2(fakeButton3.anchoredPosition.x, fakeButtonStartingHeight);
-        fakeButton4.anchoredPosition = new Vector2(fakeButton4.anchoredPosition.x, fakeButtonStartingHeight);
-        fakeEnemyName.anchoredPosition = new Vector2(fakeEnemyName.anchoredPosition.x, fakeButtonStartingHeight);
-        fakeButton1.DOAnchorPosY(pos1, transitionDuration);
-        fakeButton2.DOAnchorPosY(pos2, transitionDuration);
-        fakeButton3.DOAnchorPosY(pos2, transitionDuration);
-        fakeButton4.DOAnchorPosY(pos2, transitionDuration);
-        fakeEnemyName.DOAnchorPosY(posE, transitionDuration);
+        realButton.SetActive(false);
 
-        if (showFakeTalkButton){
-            fakeButton2.gameObject.SetActive(false);
-            fakeButton3.gameObject.SetActive(false);
-            fakeButton4.gameObject.SetActive(true);
-        }
-        SynchronizeInfoIconAnimations();
+        fakeBattleButton.gameObject.SetActive(true);
+        fakeInfoButton.gameObject.SetActive(true);
+        fakeReadButton.gameObject.SetActive(true);
+        fakeTalkButton.gameObject.SetActive(true);
+        fakeBackButton.gameObject.SetActive(true);
+        fakeEnemyName.gameObject.SetActive(true);
+        fakeBattleButton.anchoredPosition = new Vector2(fakeBattleButton.anchoredPosition.x, fakeButtonBottomHeight);
+        fakeInfoButton.anchoredPosition = new Vector2(fakeInfoButton.anchoredPosition.x, fakeButtonBottomHeight);
+        fakeReadButton.anchoredPosition = new Vector2(fakeReadButton.anchoredPosition.x, fakeButtonBottomHeight);
+        fakeTalkButton.anchoredPosition = new Vector2(fakeTalkButton.anchoredPosition.x, fakeButtonBottomHeight);
+        fakeBackButton.anchoredPosition = new Vector2(fakeBackButton.anchoredPosition.x, fakeButtonBottomHeight);
+        fakeEnemyName.anchoredPosition = new Vector2(fakeEnemyName.anchoredPosition.x, fakeButtonBottomHeight);
+        fakeBattleButton.DOAnchorPosY(fakeButtonTopHeight, transitionDuration);
+        fakeInfoButton.DOAnchorPosY(fakeButtonMidHeight, transitionDuration);
+        fakeReadButton.DOAnchorPosY(fakeButtonMidHeight, transitionDuration);
+        fakeTalkButton.DOAnchorPosY(fakeButtonBottomHeight, transitionDuration);
+        fakeBackButton.DOAnchorPosY(fakeButtonBottomHeight, transitionDuration);
+        fakeEnemyName.DOAnchorPosY(fakeEnemyNameHeight, transitionDuration);
+
+        //also shrink the back button down to its normal size
+        fakeBackButton.DOAnchorPosX(fakeReadButton.anchoredPosition.x, transitionDuration);
+        fakeBackButton.DOSizeDelta(fakeReadButton.sizeDelta, 0.5f);
+       
+        //SynchronizeInfoIconAnimations();
+        MimicInfoAndReadButtons();
+        StaticVariables.WaitTimeThenCallFunction(transitionDuration, ShowRealButton);
         StaticVariables.WaitTimeThenCallFunction(transitionDuration, HideFakeButtonsAndDisableSelf);
     }
 
     private void ShowFakeButtonsSlidingOut(){
-        float pos1 = fakeButton1Pos;
-        float pos2 = fakeButton2Pos;
-        float posE = fakeEnemyNamePos;
-        //float pos3 = fakeButton3Pos;
-        fakeButton1.gameObject.SetActive(true);
-        fakeButton2.gameObject.SetActive(true);
-        fakeButton3.gameObject.SetActive(true);
-        fakeButton4.gameObject.SetActive(false);
-        fakeEnemyName.gameObject.SetActive(true);
-        fakeButton1.anchoredPosition = new Vector2(fakeButton1.anchoredPosition.x, pos1);
-        fakeButton2.anchoredPosition = new Vector2(fakeButton2.anchoredPosition.x, pos2);
-        fakeButton3.anchoredPosition = new Vector2(fakeButton3.anchoredPosition.x, pos2);
-        fakeButton4.anchoredPosition = new Vector2(fakeButton4.anchoredPosition.x, pos2);
-        fakeEnemyName.anchoredPosition = new Vector2(fakeEnemyName.anchoredPosition.x, posE);
-        fakeButton1.DOAnchorPosY(fakeButtonStartingHeight, transitionDuration);
-        fakeButton2.DOAnchorPosY(fakeButtonStartingHeight, transitionDuration);
-        fakeButton3.DOAnchorPosY(fakeButtonStartingHeight, transitionDuration);
-        fakeButton4.DOAnchorPosY(fakeButtonStartingHeight, transitionDuration);
-        fakeEnemyName.DOAnchorPosY(fakeButtonStartingHeight, transitionDuration);
+        realButton.SetActive(false);
 
-        if (showFakeTalkButton){
-            fakeButton2.gameObject.SetActive(false);
-            fakeButton3.gameObject.SetActive(false);
-            fakeButton4.gameObject.SetActive(true);
-        }
+        fakeBattleButton.gameObject.SetActive(true);
+        fakeInfoButton.gameObject.SetActive(true);
+        fakeReadButton.gameObject.SetActive(true);
+        fakeTalkButton.gameObject.SetActive(true);
+        fakeBackButton.gameObject.SetActive(true);
+        fakeEnemyName.gameObject.SetActive(true);
+        fakeBattleButton.anchoredPosition = new Vector2(fakeBattleButton.anchoredPosition.x, fakeButtonTopHeight);
+        fakeInfoButton.anchoredPosition = new Vector2(fakeInfoButton.anchoredPosition.x, fakeButtonMidHeight);
+        fakeReadButton.anchoredPosition = new Vector2(fakeReadButton.anchoredPosition.x, fakeButtonMidHeight);
+        fakeTalkButton.anchoredPosition = new Vector2(fakeTalkButton.anchoredPosition.x, fakeButtonBottomHeight);
+        fakeBackButton.anchoredPosition = new Vector2(fakeBackButton.anchoredPosition.x, fakeButtonBottomHeight);
+        fakeEnemyName.anchoredPosition = new Vector2(fakeEnemyName.anchoredPosition.x, fakeEnemyNameHeight);
+        fakeBattleButton.DOAnchorPosY(fakeButtonBottomHeight, transitionDuration);
+        fakeInfoButton.DOAnchorPosY(fakeButtonBottomHeight, transitionDuration);
+        fakeReadButton.DOAnchorPosY(fakeButtonBottomHeight, transitionDuration);
+        fakeTalkButton.DOAnchorPosY(fakeButtonBottomHeight, transitionDuration);
+        fakeBackButton.DOAnchorPosY(fakeButtonBottomHeight, transitionDuration);
+        fakeEnemyName.DOAnchorPosY(fakeButtonBottomHeight, transitionDuration);
+
+        //also expand the back button
+        fakeBackButton.DOAnchorPosX(fakeBattleButton.anchoredPosition.x, transitionDuration);
+        fakeBackButton.DOSizeDelta(fakeBattleButton.sizeDelta, 0.5f);
 
         StaticVariables.WaitTimeThenCallFunction(transitionDuration, HideFakeButtons);
+        StaticVariables.WaitTimeThenCallFunction(transitionDuration, ShowRealButton);
     }
 
     private void HideFakeButtons(){
-        fakeButton1.gameObject.SetActive(false);
-        fakeButton2.gameObject.SetActive(false);
-        fakeButton3.gameObject.SetActive(false);
-        fakeButton4.gameObject.SetActive(false);
+        fakeBattleButton.gameObject.SetActive(false);
+        fakeInfoButton.gameObject.SetActive(false);
+        fakeReadButton.gameObject.SetActive(false);
+        fakeTalkButton.gameObject.SetActive(false);
+        fakeBackButton.gameObject.SetActive(false);
         fakeEnemyName.gameObject.SetActive(false);
+    }
+
+    private void ShowRealButton(){
+        realButton.SetActive(true);
     }
 
     private void HideFakeButtonsAndDisableSelf(){
@@ -439,6 +444,12 @@ public class DialogueManager : MonoBehaviour{
     public void ClearDialogue(){
         speakerNameTextBox.text = "";
         dialogueTextBox.text = "";
+    }
+
+    public void SetButtonText(string t){
+        //also sets the fake button text, helping transitions to/from the interact overlay to be more seamless
+        buttonText.text = t;
+        fakeBackButtonText.text = t;
     }
 
 

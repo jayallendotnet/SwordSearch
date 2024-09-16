@@ -17,19 +17,35 @@ public class InteractOverlayManager : MonoBehaviour{
     [Header("Scene References")]
     public RectTransform interactOverlay;
     public RectTransform battleButton;
-    public RectTransform talkButton;
     public RectTransform infoButton;
-    public RectTransform cutsceneButton;
-    public Text cutsceneText;
+    public GameObject infoPresent;
+    public GameObject infoAbsent;
+    public GameObject infoLocked;
+    public RectTransform readButton;
+    public Image readingBook;
+    public GameObject readingLocked;
+    public RectTransform talkButton;
     public RectTransform backButton;
+    public GameObject cutsceneStuff;
+    //public RectTransform cutsceneButton;
+    public Text cutsceneText;
     public Text enemyNameText;
     public GameObject clickableBackground;
     public GameObject infoHighlight;
-    public RectTransform fullTalkButton;
+    //public RectTransform fullTalkButton;
     public RectTransform scrollableInfoParent;
     public GameObject infoTextPrefab;
     public Image infoTextHider;
     public RectTransform topOfBox;
+
+    [Header("Book Sprites")]
+    public Sprite waterBook;
+    public Sprite healingBook;
+    public Sprite earthBook;
+    public Sprite fireBook;
+    public Sprite lightningBook;
+    public Sprite darknessBook;
+    public Sprite swordBook;
 
 
     [Header("Configurations")]
@@ -44,9 +60,9 @@ public class InteractOverlayManager : MonoBehaviour{
     private Vector2 battleButtonStartingPos;
     private Vector2 infoButtonStartingPos;
     private Vector2 backButtonStartingPos;
+    private Vector2 readButtonStartingPos;
     private Vector2 interactOverlayStartingSize;
     private Vector2 enemyNameTextStartingPos;
-    private Vector2 fullTalkButtonStartingPos;
     private float topOfBoxStartingPos;
 
     private bool isMovingInteractOverlay = false;
@@ -66,10 +82,11 @@ public class InteractOverlayManager : MonoBehaviour{
 
     private void SetStartingValues(){
         talkButtonStartingPos = talkButton.localPosition;
-        fullTalkButtonStartingPos = fullTalkButton.localPosition;
+        //fullTalkButtonStartingPos = fullTalkButton.localPosition;
         battleButtonStartingPos = battleButton.localPosition;
         infoButtonStartingPos = infoButton.localPosition;
         backButtonStartingPos = backButton.localPosition;
+        readButtonStartingPos = readButton.localPosition;
         interactOverlayStartingSize = interactOverlay.sizeDelta;
         enemyNameTextStartingPos = enemyNameText.transform.localPosition;
         topOfBoxStartingPos = topOfBox.anchoredPosition.y;
@@ -91,7 +108,7 @@ public class InteractOverlayManager : MonoBehaviour{
         DialogueStep[] steps = overworldSceneManager.currentEnemyData.overworldDialogueSteps;
         BattleData bd = overworldSceneManager.currentPlayerSpace.battleData;
         //overworldSceneManager.dialogueManager.Setup(steps, bd, true, (overworldSceneManager.currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial));
-        overworldSceneManager.dialogueManager.Setup(steps, bd, true, false); 
+        overworldSceneManager.dialogueManager.Setup(steps, bd, true); 
     }
 
     public void PressedInfoButton(){
@@ -275,6 +292,11 @@ public class InteractOverlayManager : MonoBehaviour{
         return eit;
 
     }
+
+    public void PressedReadButton(){
+        //bring up the read overlay interface
+    }
+
     public void PressedBackButton(){
         if (isMovingInteractOverlay)
             return;
@@ -294,17 +316,20 @@ public class InteractOverlayManager : MonoBehaviour{
         talkButton.DOLocalMoveY(backButton.localPosition.y, duration);
         battleButton.DOLocalMoveY(backButton.localPosition.y, duration);
         infoButton.DOLocalMoveY(backButton.localPosition.y, duration);
+        readButton.DOLocalMoveY(backButton.localPosition.y, duration);
+        backButton.DOLocalMoveX(battleButton.localPosition.x, duration);
+        backButton.DOSizeDelta(battleButton.sizeDelta, duration);
         enemyNameText.transform.DOLocalMoveY(backButton.localPosition.y, duration);
-        fullTalkButton.DOLocalMoveY(backButton.localPosition.y, duration);
 
     }
     private void ReturnButtonsToStartingPositions(float duration){
         talkButton.DOLocalMove(talkButtonStartingPos, duration);
         battleButton.DOLocalMove(battleButtonStartingPos, duration);
         infoButton.DOLocalMove(infoButtonStartingPos, duration);
+        readButton.DOLocalMove(readButtonStartingPos, duration);
         backButton.DOLocalMove(backButtonStartingPos, duration);
+        backButton.DOSizeDelta(readButton.sizeDelta, duration);
         enemyNameText.transform.DOLocalMove(enemyNameTextStartingPos, duration);
-        fullTalkButton.DOLocalMove(fullTalkButtonStartingPos, duration);
     }
 
     private void FinishedShowingInfo(){
@@ -344,12 +369,30 @@ public class InteractOverlayManager : MonoBehaviour{
         enemyNameText.text = enemy.GetDisplayName().ToUpper();
     }
 
-    public void DisplayInfoHighlightIfAppropriate(EnemyData enemy){
-        EnemyInfoText infoTextData = GenerateEnemyInfoText(overworldSceneManager.currentEnemyData);
-        if (infoTextData.summary.Count == 0)
-            infoHighlight.SetActive(false);
+    public void ConfigureInfoButton(EnemyData enemy){
+        if (StaticVariables.ShouldStageShowInfoButton(enemy)){
+            infoLocked.SetActive(false);
+            infoPresent.SetActive(false);
+            infoAbsent.SetActive(false);
+            EnemyInfoText infoTextData = GenerateEnemyInfoText(overworldSceneManager.currentEnemyData);
+            if (infoTextData.summary.Count == 0)
+                infoAbsent.SetActive(true);
+            else
+                infoPresent.SetActive(true);
+        }
         else
-            infoHighlight.SetActive(true);
+            infoLocked.SetActive(true);
+
+    }
+
+    public void ConfigureReadButton(EnemyData enemy){
+        if (StaticVariables.IsReadingEnabledForStage(enemy)){
+            readingLocked.SetActive(false);
+            readingBook.sprite = fireBook;
+        }
+        else
+            readingLocked.SetActive(true);
+
     }
 
     private void SetInteractOptions(){
@@ -358,13 +401,15 @@ public class InteractOverlayManager : MonoBehaviour{
             battleButton.gameObject.SetActive(true);
             talkButton.gameObject.SetActive(true);
             infoButton.gameObject.SetActive(true);
-            cutsceneButton.gameObject.SetActive(false);
+            readButton.gameObject.SetActive(true);
+            cutsceneStuff.SetActive(false);
+            //cutsceneButton.gameObject.SetActive(false);
             scrollableInfoParent.parent.parent.gameObject.SetActive(false);
             cutsceneText.gameObject.SetActive(false);
-            fullTalkButton.gameObject.SetActive(true);
+            //fullTalkButton.gameObject.SetActive(true);
             enemyNameText.gameObject.SetActive(true);
 
-            fullTalkButton.gameObject.SetActive(false);
+            //fullTalkButton.gameObject.SetActive(false);
             //if (type == OverworldSpace.OverworldSpaceType.Battle)
             //    fullTalkButton.gameObject.SetActive(false);
             //if (type == OverworldSpace.OverworldSpaceType.Tutorial){
@@ -377,10 +422,12 @@ public class InteractOverlayManager : MonoBehaviour{
             battleButton.gameObject.SetActive(false);
             talkButton.gameObject.SetActive(false);
             infoButton.gameObject.SetActive(false);
-            cutsceneButton.gameObject.SetActive(true);
+            readButton.gameObject.SetActive(false);
+            cutsceneStuff.SetActive(true);
+            //cutsceneButton.gameObject.SetActive(true);
             scrollableInfoParent.parent.parent.gameObject.SetActive(false);
             cutsceneText.gameObject.SetActive(true);
-            fullTalkButton.gameObject.SetActive(false);
+            //fullTalkButton.gameObject.SetActive(false);
             enemyNameText.gameObject.SetActive(false);
 
             cutsceneText.text = TextFormatter.FormatString(overworldSceneManager.currentPlayerSpace.cutsceneDescription);
