@@ -19,6 +19,7 @@ public class PuzzleGenerator : MonoBehaviour {
     [HideInInspector]
     public string[] wordLibraryForGeneration;
     List<BattleManager.PowerupTypes> powerupTypeSelection;
+    private bool hasPickedBuffedTypeYet = false;
 
     [Header("Puzle Generation Rules")]
     public int wordCount = 3;
@@ -457,38 +458,42 @@ public class PuzzleGenerator : MonoBehaviour {
     }
 
     private void PickAllSpacesForPowerups(){
+        hasPickedBuffedTypeYet = false;
         for (int i = 0; i < StaticVariables.powerupsPerPuzzle; i++)
-            PickRandomSpaceForPowerup();
+            PickRandomSpaceForPowerup(i == StaticVariables.powerupsPerPuzzle - 1);
     }
 
-    private void PickRandomSpaceForPowerup(){
+    private void PickRandomSpaceForPowerup(bool finalSpace){
         int t1 = StaticVariables.rand.Next(letters.GetLength(0));
         int t2 = StaticVariables.rand.Next(letters.GetLength(1));
         if (useSmallerLayout)
             t1 = StaticVariables.rand.Next(4);
         if (powerupTypes[t1, t2] != BattleManager.PowerupTypes.None)
-            PickRandomSpaceForPowerup();
+            PickRandomSpaceForPowerup(finalSpace);
         else{
-            powerupTypes[t1, t2] = PickRandomPowerupType();
-        }
-            
+            powerupTypes[t1, t2] = PickRandomPowerupType(finalSpace);
+        }  
     }
     
-    private BattleManager.PowerupTypes PickRandomPowerupType(){
-        //don't select "None" (first element) or "Pebble (last element)
+    private BattleManager.PowerupTypes PickRandomPowerupType(bool finalSpace){
+        //randomly picks a powerup type. also takes buffed type into account!
+        if (StaticVariables.buffedType != BattleManager.PowerupTypes.None){
+            if (finalSpace && !hasPickedBuffedTypeYet) //if last powerup, and the buffed type has not been picked yet, guarantee it is the buffed type
+                return StaticVariables.buffedType;
+            int r = StaticVariables.rand.Next(0,100); //otherwise, pick a random number, with a sizable chance to pick the buffed type
+            if (r <= 40){
+                hasPickedBuffedTypeYet = true;
+                return StaticVariables.buffedType;
+            }
+        }
+        //if the buffed type was not selected, pick a random type from the remaining (non-buffed) types
         int range = powerupTypeSelection.Count;
-
         int i = StaticVariables.rand.Next(0,range);
         return powerupTypeSelection[i];
-        //return (BattleManager.PowerupTypes.Earth);
     }
 
     private void SetPowerupTypeList(){
-        powerupTypeSelection = new List<BattleManager.PowerupTypes>();
-        if (StaticVariables.waterActive)
-            powerupTypeSelection.Add(BattleManager.PowerupTypes.Water);
-        if (StaticVariables.healActive)
-            powerupTypeSelection.Add(BattleManager.PowerupTypes.Heal);
+        powerupTypeSelection = new List<BattleManager.PowerupTypes> {BattleManager.PowerupTypes.Water, BattleManager.PowerupTypes.Heal}; //these are always included
         if (StaticVariables.fireActive)
             powerupTypeSelection.Add(BattleManager.PowerupTypes.Fire);
         if (StaticVariables.earthActive)
@@ -500,23 +505,7 @@ public class PuzzleGenerator : MonoBehaviour {
         if (StaticVariables.swordActive)
             powerupTypeSelection.Add(BattleManager.PowerupTypes.Sword);
         
-        if (powerupTypeSelection.Count > 2){
-            if (StaticVariables.buffedType != BattleManager.PowerupTypes.None){
-                powerupTypeSelection.Remove(StaticVariables.buffedType);
-                int c = powerupTypeSelection.Count;
-                for (int i = 0; i < c; i++)
-                    powerupTypeSelection.Add(StaticVariables.buffedType);
-            }
-        }
-        if (powerupTypeSelection.Count == 0){
-            powerupTypeSelection.Add(BattleManager.PowerupTypes.Water);
-            powerupTypeSelection.Add(BattleManager.PowerupTypes.Heal);
-            powerupTypeSelection.Add(BattleManager.PowerupTypes.Fire);
-            powerupTypeSelection.Add(BattleManager.PowerupTypes.Earth);
-            powerupTypeSelection.Add(BattleManager.PowerupTypes.Lightning);
-            powerupTypeSelection.Add(BattleManager.PowerupTypes.Dark);
-            powerupTypeSelection.Add(BattleManager.PowerupTypes.Sword);
-        }
+        if (StaticVariables.buffedType != BattleManager.PowerupTypes.None)//remove the buffed type from the list, its prescence is determined separately
+            powerupTypeSelection.Remove(StaticVariables.buffedType);
     }
-
 }

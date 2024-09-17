@@ -88,6 +88,22 @@ public class OverworldSceneManager : MonoBehaviour{
         StaticVariables.darkActive = darkActive;
         StaticVariables.swordActive = swordActive;
         StaticVariables.powerupsPerPuzzle = powerupsPerPuzzle;
+
+        //also set the buffed powerup type, if it's not set already
+        if (StaticVariables.buffedType == BattleManager.PowerupTypes.None){//if the buffed type is not selected, pick the most recent unlocked one
+            //the buffed type feature is not available for worlds 1-3
+            if (thisWorldNum == 4)
+                StaticVariables.buffedType = BattleManager.PowerupTypes.Fire;
+            if (thisWorldNum == 5)
+                StaticVariables.buffedType = BattleManager.PowerupTypes.Lightning;
+            if (thisWorldNum == 6)
+                StaticVariables.buffedType = BattleManager.PowerupTypes.Dark;
+            if (thisWorldNum == 7 || thisWorldNum == 8)
+                StaticVariables.buffedType = BattleManager.PowerupTypes.Sword;
+        }
+        //clear the buffed type if on worlds 1-3
+        if (thisWorldNum < 4)
+            StaticVariables.buffedType = BattleManager.PowerupTypes.None;
     }
 
     private void SetupOverworldSpaces(){

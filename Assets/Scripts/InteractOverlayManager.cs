@@ -27,15 +27,16 @@ public class InteractOverlayManager : MonoBehaviour{
     public RectTransform talkButton;
     public RectTransform backButton;
     public GameObject cutsceneStuff;
-    //public RectTransform cutsceneButton;
     public Text cutsceneText;
     public Text enemyNameText;
     public GameObject clickableBackground;
     public GameObject infoHighlight;
-    //public RectTransform fullTalkButton;
     public RectTransform scrollableInfoParent;
     public GameObject infoTextPrefab;
     public Image infoTextHider;
+    public RectTransform readOptionsParent;
+    public GameObject bookOptionPrefab;
+    public Image readTextHider;
     public RectTransform topOfBox;
 
     [Header("Book Sprites")]
@@ -56,6 +57,7 @@ public class InteractOverlayManager : MonoBehaviour{
     public bool isInteractOverlayShowing = false;
     [HideInInspector]
     public bool isInfoShowing = false;
+    public bool isReadShowing = false;
     private Vector2 talkButtonStartingPos;
     private Vector2 battleButtonStartingPos;
     private Vector2 infoButtonStartingPos;
@@ -82,7 +84,6 @@ public class InteractOverlayManager : MonoBehaviour{
 
     private void SetStartingValues(){
         talkButtonStartingPos = talkButton.localPosition;
-        //fullTalkButtonStartingPos = fullTalkButton.localPosition;
         battleButtonStartingPos = battleButton.localPosition;
         infoButtonStartingPos = infoButton.localPosition;
         backButtonStartingPos = backButton.localPosition;
@@ -92,37 +93,29 @@ public class InteractOverlayManager : MonoBehaviour{
         topOfBoxStartingPos = topOfBox.anchoredPosition.y;
     }
 
+    private bool IsInterfaceBusy(){
+        return (isMovingInteractOverlay || isInfoShowing || isReadShowing);
+    }
+
     public void PressedBattleButton(){
-        if (isMovingInteractOverlay)
-            return;
-        if (isInfoShowing)
-            return;
+        if (IsInterfaceBusy()) return;
         overworldSceneManager.StartBattle();
     }
    
     public void PressedTalkButton(){
-        if (isMovingInteractOverlay)
-            return;
-        if (isInfoShowing)
-            return;
+        if (IsInterfaceBusy()) return;
         DialogueStep[] steps = overworldSceneManager.currentEnemyData.overworldDialogueSteps;
         BattleData bd = overworldSceneManager.currentPlayerSpace.battleData;
-        //overworldSceneManager.dialogueManager.Setup(steps, bd, true, (overworldSceneManager.currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial));
         overworldSceneManager.dialogueManager.Setup(steps, bd, true); 
     }
 
     public void PressedInfoButton(){
-        if (isMovingInteractOverlay)
-            return;
-        if (isInfoShowing)
-            return;
+        if (IsInterfaceBusy()) return;
         HideOtherButtonsBehindBack(transitionDuration);
         scrollableInfoParent.parent.parent.gameObject.SetActive(true);
 
         while(scrollableInfoParent.childCount > 0)
             DestroyImmediate(scrollableInfoParent.GetChild(0).gameObject);
-        //foreach (Transform t in scrollableInfoParent)
-        //    Destroy(t.gameObject);
         EnemyInfoText enemyInfoText = GenerateEnemyInfoText(overworldSceneManager.currentEnemyData);
 
         for (int i = 0; i<enemyInfoText.summary.Count; i++){
@@ -140,9 +133,6 @@ public class InteractOverlayManager : MonoBehaviour{
         FadeInInfoText();
         clickableBackground.SetActive(false);
         AdjustHeightsForShowingInfo();
-
-        //StaticVariables.WaitTimeThenCallFunction(0.01f, AdjustHeightsForShowingInfo);
-
         isInfoShowing = true;
     }
 
@@ -153,7 +143,6 @@ public class InteractOverlayManager : MonoBehaviour{
         obj.transform.GetChild(1).gameObject.SetActive(false);
         obj.transform.GetChild(2).gameObject.SetActive(false);
     }
-
 
     private void FadeInInfoText(){
         Color c = infoTextHider.color;
@@ -173,11 +162,27 @@ public class InteractOverlayManager : MonoBehaviour{
         infoTextHider.DOColor(c, transitionDuration);
     }
 
+    private void FadeInReadText(){
+        Color c = readTextHider.color;
+        c.a = 1;
+        Color c2 = c;
+        c2.a = 0;
+        readTextHider.color = c;
+        readTextHider.DOColor(c2, transitionDuration);
+    }
+
+    private void FadeOutReadText(){
+        Color c = readTextHider.color;
+        c.a = 1;
+        Color c2 = c;
+        c2.a = 0;
+        readTextHider.color = c2;
+        readTextHider.DOColor(c, transitionDuration);
+
+    }
+
     public void PressedCutsceneButton(){
-        if (isMovingInteractOverlay)
-            return;
-        if (isInfoShowing)
-            return;
+        if (IsInterfaceBusy()) return;
         overworldSceneManager.StartCutscene();
     }
 
@@ -192,7 +197,6 @@ public class InteractOverlayManager : MonoBehaviour{
             overworldSceneManager.overworldView.DOAnchorPosY(temp, transitionDuration);
             
         clickableBackground.SetActive(false);
-
         topOfBox.anchoredPosition = new(0, topOfBoxStartingPos);
     }
 
@@ -206,12 +210,23 @@ public class InteractOverlayManager : MonoBehaviour{
     }
 
     private void AdjustHeightsForShowingInfo(){
-        //print(scrollableInfoParent.rect.height);
         LayoutRebuilder.ForceRebuildLayoutImmediate(scrollableInfoParent);
-        //print(scrollableInfoParent.rect.height);
         float newHeight = scrollableInfoParent.rect.height + 400;
         if (newHeight > 2400)
             newHeight = 2400;
+        if (newHeight < interactOverlayStartingSize.y)
+            return;
+        Vector2 sd = new Vector2(interactOverlay.sizeDelta.x, newHeight);
+        interactOverlay.DOSizeDelta(sd, transitionDuration);
+
+        //set the "top of box" position to where it will be after the overlay has finished expanding, then move the overworld if necessary
+        topOfBox.anchoredPosition = new(0, newHeight);
+        MoveOverworldUpIfRequired();
+    }
+
+    private void AdjustHeightsForShowingRead(){
+        LayoutRebuilder.ForceRebuildLayoutImmediate(readOptionsParent);
+        float newHeight = readOptionsParent.rect.height + 800;
         if (newHeight < interactOverlayStartingSize.y)
             return;
         Vector2 sd = new Vector2(interactOverlay.sizeDelta.x, newHeight);
@@ -294,7 +309,44 @@ public class InteractOverlayManager : MonoBehaviour{
     }
 
     public void PressedReadButton(){
-        //bring up the read overlay interface
+        if (IsInterfaceBusy()) return;
+
+        HideOtherButtonsBehindBack(transitionDuration);
+        readOptionsParent.parent.gameObject.SetActive(true);
+        while(readOptionsParent.childCount > 0)
+            DestroyImmediate(readOptionsParent.GetChild(0).gameObject);
+        if (overworldSceneManager.waterActive)
+            CreateBookOption(BattleManager.PowerupTypes.Water);
+        if (overworldSceneManager.healActive)
+            CreateBookOption(BattleManager.PowerupTypes.Heal);
+        if (overworldSceneManager.earthActive)
+            CreateBookOption(BattleManager.PowerupTypes.Earth);
+        if (overworldSceneManager.fireActive)
+            CreateBookOption(BattleManager.PowerupTypes.Fire);
+        if (overworldSceneManager.lightningActive)
+            CreateBookOption(BattleManager.PowerupTypes.Lightning);
+        if (overworldSceneManager.darkActive)
+            CreateBookOption(BattleManager.PowerupTypes.Dark);
+        if (overworldSceneManager.swordActive)
+            CreateBookOption(BattleManager.PowerupTypes.Sword);
+        
+        FadeInReadText();
+        clickableBackground.SetActive(false);
+        AdjustHeightsForShowingRead();
+        isReadShowing = true;
+        UpdateBookSelection();
+    }
+
+    private void CreateBookOption(BattleManager.PowerupTypes type){
+        GameObject obj = Instantiate(bookOptionPrefab, readOptionsParent);
+        ReadingOption ro = obj.GetComponent<ReadingOption>();
+        ro.powerupType = type;
+        ro.book.sprite = GetBookSpriteForType(type);
+    }
+
+    public void UpdateBookSelection(){
+        foreach (Transform t in readOptionsParent)
+            t.GetComponent<ReadingOption>().ShowActiveIfMatchingType(StaticVariables.buffedType);
     }
 
     public void PressedBackButton(){
@@ -305,6 +357,14 @@ public class InteractOverlayManager : MonoBehaviour{
             StaticVariables.WaitTimeThenCallFunction(transitionDuration, FinishedShowingInfo);
             FadeOutInfoText();
             MoveOverworldDownIfRequired();
+            return;
+        }
+        if (isReadShowing){
+            ReturnButtonsToStartingPositions(transitionDuration);  
+            StaticVariables.WaitTimeThenCallFunction(transitionDuration, FinishedShowingRead);
+            FadeOutReadText();
+            MoveOverworldDownIfRequired();
+            UpdateReadingButtonBook();
             return;
         }
         if (isInteractOverlayShowing)
@@ -320,7 +380,6 @@ public class InteractOverlayManager : MonoBehaviour{
         backButton.DOLocalMoveX(battleButton.localPosition.x, duration);
         backButton.DOSizeDelta(battleButton.sizeDelta, duration);
         enemyNameText.transform.DOLocalMoveY(backButton.localPosition.y, duration);
-
     }
     private void ReturnButtonsToStartingPositions(float duration){
         talkButton.DOLocalMove(talkButtonStartingPos, duration);
@@ -335,6 +394,11 @@ public class InteractOverlayManager : MonoBehaviour{
     private void FinishedShowingInfo(){
         isInfoShowing = false;
         scrollableInfoParent.parent.parent.gameObject.SetActive(false);
+    }
+
+    private void FinishedShowingRead(){
+        isReadShowing = false;
+        readOptionsParent.parent.gameObject.SetActive(false);
     }
 
     private void HideInteractOverlay(){
@@ -357,7 +421,6 @@ public class InteractOverlayManager : MonoBehaviour{
         clickableBackground.SetActive(true);
         overworldSceneManager.HideSceneHeader(transitionDuration);
         MoveOverworldUpIfRequired();
-
         SetInteractOptions();
     }
 
@@ -382,17 +445,31 @@ public class InteractOverlayManager : MonoBehaviour{
         }
         else
             infoLocked.SetActive(true);
+    }
 
+    private Sprite GetBookSpriteForType(BattleManager.PowerupTypes powerupType){
+        return powerupType switch{
+            BattleManager.PowerupTypes.Water => waterBook,
+            BattleManager.PowerupTypes.Heal => healingBook,
+            BattleManager.PowerupTypes.Earth => earthBook,
+            BattleManager.PowerupTypes.Fire => fireBook,
+            BattleManager.PowerupTypes.Lightning => lightningBook,
+            BattleManager.PowerupTypes.Dark => darknessBook,
+            _ => swordBook,
+        };
     }
 
     public void ConfigureReadButton(EnemyData enemy){
         if (StaticVariables.IsReadingEnabledForStage(enemy)){
             readingLocked.SetActive(false);
-            readingBook.sprite = fireBook;
+            UpdateReadingButtonBook();
         }
         else
             readingLocked.SetActive(true);
+    }
 
+    private void UpdateReadingButtonBook(){
+        readingBook.sprite = GetBookSpriteForType(StaticVariables.buffedType);
     }
 
     private void SetInteractOptions(){
@@ -403,20 +480,9 @@ public class InteractOverlayManager : MonoBehaviour{
             infoButton.gameObject.SetActive(true);
             readButton.gameObject.SetActive(true);
             cutsceneStuff.SetActive(false);
-            //cutsceneButton.gameObject.SetActive(false);
             scrollableInfoParent.parent.parent.gameObject.SetActive(false);
             cutsceneText.gameObject.SetActive(false);
-            //fullTalkButton.gameObject.SetActive(true);
             enemyNameText.gameObject.SetActive(true);
-
-            //fullTalkButton.gameObject.SetActive(false);
-            //if (type == OverworldSpace.OverworldSpaceType.Battle)
-            //    fullTalkButton.gameObject.SetActive(false);
-            //if (type == OverworldSpace.OverworldSpaceType.Tutorial){
-            //    talkButton.gameObject.SetActive(false);
-            //    infoButton.gameObject.SetActive(false);
-            //}
-
         }
         else if (type == OverworldSpace.OverworldSpaceType.Cutscene){
             battleButton.gameObject.SetActive(false);
@@ -424,14 +490,10 @@ public class InteractOverlayManager : MonoBehaviour{
             infoButton.gameObject.SetActive(false);
             readButton.gameObject.SetActive(false);
             cutsceneStuff.SetActive(true);
-            //cutsceneButton.gameObject.SetActive(true);
             scrollableInfoParent.parent.parent.gameObject.SetActive(false);
             cutsceneText.gameObject.SetActive(true);
-            //fullTalkButton.gameObject.SetActive(false);
             enemyNameText.gameObject.SetActive(false);
-
             cutsceneText.text = TextFormatter.FormatString(overworldSceneManager.currentPlayerSpace.cutsceneDescription);
-
         }
     }
 }

@@ -108,6 +108,7 @@ public class BattleManager : MonoBehaviour {
         StaticVariables.FadeIntoScene();
         StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration, QueueEnemyAttack);
         puzzleGenerator.Setup();
+        //print(StaticVariables.buffedType);
     }
     
     public void SetIsValidWord(){
