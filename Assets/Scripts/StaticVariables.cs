@@ -26,6 +26,13 @@ public class StaticVariables
     static public bool hasTalkedToNewestEnemy = false;
     static public CutsceneManager.Cutscene cutsceneID;
     static public string playerName = "Rebecca";
+    static public string[] readingWaterBooks;
+    static public string[] readingHealBooks;
+    static public string[] readingEarthBooks;
+    static public string[] readingFireBooks;
+    static public string[] readingLightningBooks;
+    static public string[] readingDarkBooks;
+    static public string[] readingSwordBooks;
 
     //stages
     static public List<StageData> allStages;

@@ -52,11 +52,27 @@ public class InteractOverlayManager : MonoBehaviour{
     [Header("Configurations")]
     public float transitionDuration = 0.5f;
 
+    [HideInInspector]
+    public string chosenWaterBookName;
+    [HideInInspector]
+    public string chosenHealingBookName;
+    [HideInInspector]
+    public string chosenEarthBookName;
+    [HideInInspector]
+    public string chosenFireBookName;
+    [HideInInspector]
+    public string chosenLightningBookName;
+    [HideInInspector]
+    public string chosenDarknessBookName;
+    [HideInInspector]
+    public string chosenSwordBookName;
+
 
     [HideInInspector]
     public bool isInteractOverlayShowing = false;
     [HideInInspector]
     public bool isInfoShowing = false;
+    [HideInInspector]
     public bool isReadShowing = false;
     private Vector2 talkButtonStartingPos;
     private Vector2 battleButtonStartingPos;
@@ -69,6 +85,7 @@ public class InteractOverlayManager : MonoBehaviour{
 
     private bool isMovingInteractOverlay = false;
     private readonly string defaultEnemyInfo = "This  enemy  has  no  particular  weaknesses.";
+    
 
 
     public void Setup(){
@@ -341,7 +358,22 @@ public class InteractOverlayManager : MonoBehaviour{
         GameObject obj = Instantiate(bookOptionPrefab, readOptionsParent);
         ReadingOption ro = obj.GetComponent<ReadingOption>();
         ro.powerupType = type;
-        ro.book.sprite = GetBookSpriteForType(type);
+        ro.bookImage.sprite = GetBookSpriteForType(type);
+        string[] bookChoices = StaticVariables.readingWaterBooks;
+        if (type == BattleManager.PowerupTypes.Water)
+            ro.bookName.text = chosenWaterBookName.ToUpper();
+        if (type == BattleManager.PowerupTypes.Heal)
+            ro.bookName.text = chosenHealingBookName.ToUpper();
+        if (type == BattleManager.PowerupTypes.Earth)
+            ro.bookName.text = chosenEarthBookName.ToUpper();
+        if (type == BattleManager.PowerupTypes.Fire)
+            ro.bookName.text = chosenFireBookName.ToUpper();
+        if (type == BattleManager.PowerupTypes.Lightning)
+            ro.bookName.text = chosenLightningBookName.ToUpper();
+        if (type == BattleManager.PowerupTypes.Dark)
+            ro.bookName.text = chosenDarknessBookName.ToUpper();
+        if (type == BattleManager.PowerupTypes.Sword)
+            ro.bookName.text = chosenSwordBookName.ToUpper();
     }
 
     public void UpdateBookSelection(){

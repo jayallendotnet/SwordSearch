@@ -48,6 +48,7 @@ public class OverworldSceneManager : MonoBehaviour{
         dialogueManager.gameObject.SetActive(true);
         SetPowerupAvailability();
         SetupOverworldSpaces();
+        PickReadingBookOptions();
         if (thisWorldNum == 0){
             ShowAllWorldsProgress();
             PlacePlayerAtPosition(StaticVariables.lastVisitedStage.world);
@@ -104,6 +105,16 @@ public class OverworldSceneManager : MonoBehaviour{
         //clear the buffed type if on worlds 1-3
         if (thisWorldNum < 4)
             StaticVariables.buffedType = BattleManager.PowerupTypes.None;
+    }
+
+    private void PickReadingBookOptions(){
+        interactOverlayManager.chosenWaterBookName = StaticVariables.readingWaterBooks[StaticVariables.rand.Next(StaticVariables.readingWaterBooks.Length)];
+        interactOverlayManager.chosenHealingBookName = StaticVariables.readingHealBooks[StaticVariables.rand.Next(StaticVariables.readingHealBooks.Length)];
+        interactOverlayManager.chosenEarthBookName = StaticVariables.readingEarthBooks[StaticVariables.rand.Next(StaticVariables.readingEarthBooks.Length)];
+        interactOverlayManager.chosenFireBookName = StaticVariables.readingFireBooks[StaticVariables.rand.Next(StaticVariables.readingFireBooks.Length)];
+        interactOverlayManager.chosenLightningBookName = StaticVariables.readingLightningBooks[StaticVariables.rand.Next(StaticVariables.readingLightningBooks.Length)];
+        interactOverlayManager.chosenDarknessBookName = StaticVariables.readingDarkBooks[StaticVariables.rand.Next(StaticVariables.readingDarkBooks.Length)];
+        interactOverlayManager.chosenSwordBookName = StaticVariables.readingSwordBooks[StaticVariables.rand.Next(StaticVariables.readingSwordBooks.Length)];
     }
 
     private void SetupOverworldSpaces(){

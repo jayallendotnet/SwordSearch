@@ -9,6 +9,8 @@ using Unity.VisualScripting;
 
 public class LaunchGameSetup : MonoBehaviour{
 
+
+    [Header("Enemies")]
     public List<GameObject> hometownEnemies;
     public List<GameObject> grasslandsEnemies;
     public List<GameObject> enchantedForestEnemies;
@@ -17,6 +19,17 @@ public class LaunchGameSetup : MonoBehaviour{
     public List<GameObject> frostlandsEnemies;
     public List<GameObject> cavernsEnemies;
     public List<GameObject> dragonsDenEnemies;
+    
+    [Header("Book Lists")]
+    public TextAsset waterBookList;
+    public TextAsset healingBookList;
+    public TextAsset earthBookList;
+    public TextAsset fireBookList;
+    public TextAsset lightningBookList;
+    public TextAsset darknessBookList;
+    public TextAsset swordBookList;
+    //[Header("Word Lists")]
+    //public TextAsset 
 
     private List<StageData> allStages;
 
@@ -26,13 +39,22 @@ public class LaunchGameSetup : MonoBehaviour{
     //private List<StageData> grasslandsStages;
 
     void Start(){
+        SetupBookLists();
         SetupStageList();
         //this is where we load the player's progress data, in the future from the game save data
         StaticVariables.highestBeatenStage = StaticVariables.GetStage(4, 2);
         SceneManager.LoadScene(StaticVariables.mainMenuName);
     }
 
-
+    private void SetupBookLists(){
+        StaticVariables.readingWaterBooks = waterBookList.text.Split("\r\n");
+        StaticVariables.readingHealBooks = healingBookList.text.Split("\r\n");
+        StaticVariables.readingEarthBooks = earthBookList.text.Split("\r\n");
+        StaticVariables.readingFireBooks = fireBookList.text.Split("\r\n");
+        StaticVariables.readingLightningBooks = lightningBookList.text.Split("\r\n");
+        StaticVariables.readingDarkBooks = darknessBookList.text.Split("\r\n");
+        StaticVariables.readingSwordBooks = swordBookList.text.Split("\r\n");
+    }
 
     private void SetupStageList(){
         allStages = new List<StageData>();

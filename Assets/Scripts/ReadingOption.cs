@@ -11,8 +11,9 @@ public class ReadingOption : MonoBehaviour{
 
     [HideInInspector]
     public BattleManager.PowerupTypes powerupType;
-    public Image book;
+    public Image bookImage;
     public GameObject inactiveBackground;
+    public Text bookName;
 
     public void PressedButton(){
         StaticVariables.buffedType = powerupType;
