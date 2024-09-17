@@ -12,12 +12,9 @@ public class PuzzleGenerator : MonoBehaviour {
     public LetterSpace[,] letterSpaces;
     private char[,] letters;
     private BattleManager.PowerupTypes[,] powerupTypes;
-    private char[] randomLetterPool;
     [HideInInspector]
     public bool useSmallerLayout = false;
     private char[,] smallerLayout = {{'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'=', '=', '=', '=', '='}, {'=', '=', '=', '=', '='}, {'=', '=', '=', '=', '='}};
-    [HideInInspector]
-    public string[] wordLibraryForGeneration;
     List<BattleManager.PowerupTypes> powerupTypeSelection;
     private bool hasPickedBuffedTypeYet = false;
 
@@ -37,8 +34,6 @@ public class PuzzleGenerator : MonoBehaviour {
     public BattleManager battleManager;
 
     public void Setup(){
-        wordLibraryForGeneration = battleManager.wordLibraryForGenerationFile.text.Split("\r\n");
-        randomLetterPool = battleManager.randomLetterPoolFile.text.ToCharArray();
         SetPowerupTypeList();
         GetPuzzleDimensions();
         GenerateNewPuzzle();
@@ -101,9 +96,14 @@ public class PuzzleGenerator : MonoBehaviour {
     }
 
     private string[] GetRandomWordsFromLibrary(){
+        string[] library = StaticVariables.wordLibraryForGeneration;
+        if (useSmallerLayout){
+            print("using smaller layout for generation");
+            library = StaticVariables.wordLibraryForGeneratingSmallerPuzzles;
+        }
         string[] result = new string[wordCount];
         for (int i = 0; i < wordCount; i++)
-            result[i] = wordLibraryForGeneration[StaticVariables.rand.Next(wordLibraryForGeneration.Length)];
+            result[i] = library[StaticVariables.rand.Next(library.Length)];
         return result;
     }
 
@@ -333,8 +333,8 @@ public class PuzzleGenerator : MonoBehaviour {
         for (int i = 0; i < letterSpaces.GetLength(0); i++){
             for (int j = 0; j < letterSpaces.GetLength(1); j++){
                 if (letters[i,j].Equals('-')){
-                    int index = StaticVariables.rand.Next(randomLetterPool.Length);
-                    char l = randomLetterPool[index];
+                    int index = StaticVariables.rand.Next(StaticVariables.randomLetterPool.Length);
+                    char l = StaticVariables.randomLetterPool[index];
                     letters[i,j] = l;
                     if (l.Equals('Q')){
                         Vector2 temp = PlaceLetter('U', new Vector2(i,j), 1);

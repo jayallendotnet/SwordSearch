@@ -30,7 +30,6 @@ public class BattleManager : MonoBehaviour {
     public EnemyData firstEnemyInHorde;
     [HideInInspector]
     public int playerHealth = 0;
-    private string[] wordLibraryForChecking;
     [HideInInspector]
     public int countdownToRefresh;
     public enum PowerupTypes{None, Water, Fire, Heal, Dark, Earth, Lightning, Pebble, Sword};
@@ -55,7 +54,6 @@ public class BattleManager : MonoBehaviour {
     [Header("Game Variables")]
     public int startingPlayerHealth = 30;
     public int maxHealth = 999; //for display purposes
-    //public int powerupsPerPuzzle = 4;
     public int minCheckingWordLength = 3;
     public int maxPuzzleCountdown = 3;
     public int selfDamageFromDarkAttack = 5;
@@ -77,14 +75,10 @@ public class BattleManager : MonoBehaviour {
     public PlayerAnimatorFunctions playerAnimatorFunctions;
     public GeneralSceneManager setup;
 
-    [Header("Libraries")]
-    public TextAsset wordLibraryForGenerationFile; //all words that can be used to generate the puzzle
-    public TextAsset wordLibraryForCheckingFile; //all words that can be considered valid, even if they are not in the generating list
-    public TextAsset randomLetterPoolFile;
+
 
     public virtual void Start(){
         setup.Setup();
-        wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
         countdownToRefresh = maxPuzzleCountdown;
         if (StaticVariables.battleData == null)
             StaticVariables.battleData = defaultBattleData;
@@ -108,7 +102,6 @@ public class BattleManager : MonoBehaviour {
         StaticVariables.FadeIntoScene();
         StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration, QueueEnemyAttack);
         puzzleGenerator.Setup();
-        //print(StaticVariables.buffedType);
     }
     
     public void SetIsValidWord(){
@@ -120,7 +113,7 @@ public class BattleManager : MonoBehaviour {
 
     private bool SearchLibraryForWord(string word){
         //returns true if the library contains the word
-        int result = System.Array.BinarySearch<string>(wordLibraryForChecking, word.ToLower());
+        int result = System.Array.BinarySearch<string>(StaticVariables.wordLibraryForChecking, word.ToLower());
         return (result > -1);
     }
 

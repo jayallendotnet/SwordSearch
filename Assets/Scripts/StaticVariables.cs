@@ -33,6 +33,10 @@ public class StaticVariables
     static public string[] readingLightningBooks;
     static public string[] readingDarkBooks;
     static public string[] readingSwordBooks;
+    static public string[] wordLibraryForChecking;
+    static public string[] wordLibraryForGeneration;
+    static public char[] randomLetterPool;
+    static public string[] wordLibraryForGeneratingSmallerPuzzles;
 
     //stages
     static public List<StageData> allStages;

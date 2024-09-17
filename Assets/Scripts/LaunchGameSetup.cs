@@ -28,22 +28,32 @@ public class LaunchGameSetup : MonoBehaviour{
     public TextAsset lightningBookList;
     public TextAsset darknessBookList;
     public TextAsset swordBookList;
-    //[Header("Word Lists")]
-    //public TextAsset 
+
+    [Header("Libraries")]
+    public TextAsset wordLibraryForGenerationFile; //all words that can be used to generate the puzzle
+    public TextAsset wordLibraryForCheckingFile; //all words that can be considered valid, even if they are not in the generating list
+    public TextAsset randomLetterPoolFile;
+    public TextAsset wordLibraryForGeneratingSmallerPuzzlesFile;
 
     private List<StageData> allStages;
 
     //just used for generating the list of all stages
     private StageData previousStage;
-    //private List<StageData> hometownStages;
-    //private List<StageData> grasslandsStages;
 
     void Start(){
         SetupBookLists();
         SetupStageList();
+        SetupLibraries();
         //this is where we load the player's progress data, in the future from the game save data
         StaticVariables.highestBeatenStage = StaticVariables.GetStage(4, 2);
         SceneManager.LoadScene(StaticVariables.mainMenuName);
+    }
+
+    private void SetupLibraries(){
+        StaticVariables.wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");        
+        StaticVariables.wordLibraryForGeneration = wordLibraryForGenerationFile.text.Split("\r\n");
+        StaticVariables.randomLetterPool = randomLetterPoolFile.text.ToCharArray();  
+        StaticVariables.wordLibraryForGeneratingSmallerPuzzles = wordLibraryForGeneratingSmallerPuzzlesFile.text.Split("\r\n");
     }
 
     private void SetupBookLists(){

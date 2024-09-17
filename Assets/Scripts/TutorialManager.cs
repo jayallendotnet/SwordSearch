@@ -40,12 +40,10 @@ public class TutorialManager : BattleManager {
     public GameObject highlightEnemyTimer;
     public GameObject highlightPlayerHealth;
     public GameObject highlightCountdown;
-    public TextAsset wordLibraryForSmallerPuzzles;
     private float enemyTimerBarRemainder = 0f;
     
 
     public override void Start() {
-        wordLibraryForGenerationFile = wordLibraryForSmallerPuzzles;
         puzzleGenerator.wordCount = 4;
         puzzleGenerator.useSmallerLayout = true;
         
@@ -577,7 +575,7 @@ public class TutorialManager : BattleManager {
     private void SetupDialogueManager(){
         print("setting up dialogue manager");
         uiManager.dialogueManager.tutorialManager = this;
-        
+        uiManager.dialogueManager.HideFakeButtons();
         uiManager.dialogueManager.ClearDialogue();
         uiManager.dialogueManager.SetStartingValues();
         uiManager.dialogueManager.TransitionToShowing();

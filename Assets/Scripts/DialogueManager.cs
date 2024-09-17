@@ -423,7 +423,7 @@ public class DialogueManager : MonoBehaviour{
         StaticVariables.WaitTimeThenCallFunction(transitionDuration, ShowRealButton);
     }
 
-    private void HideFakeButtons(){
+    public void HideFakeButtons(){
         fakeBattleButton.gameObject.SetActive(false);
         fakeInfoButton.gameObject.SetActive(false);
         fakeReadButton.gameObject.SetActive(false);
