@@ -14,10 +14,12 @@ public class ReadingOption : MonoBehaviour{
     public Image bookImage;
     public GameObject inactiveBackground;
     public Text bookName;
+    public BookData bookData;
 
     public void PressedButton(){
         StaticVariables.buffedType = powerupType;
         FindObjectOfType<InteractOverlayManager>().UpdateBookSelection();
+        ShowBookDescription();
     }
 
     private void ShowActive(bool b){
@@ -26,6 +28,21 @@ public class ReadingOption : MonoBehaviour{
 
     public void ShowActiveIfMatchingType(BattleManager.PowerupTypes type){
         ShowActive(type == powerupType);
+    }
+
+    public void ShowBookName(){
+        bookName.text = bookData.name.ToUpper();
+    }
+
+    private void ShowBookDescription(){
+        string s = bookData.description.ToUpper();
+        string powerupName = powerupType + "";
+        if (powerupType == BattleManager.PowerupTypes.Heal)
+            powerupName = "Healing";
+        else if (powerupType == BattleManager.PowerupTypes.Dark)
+            powerupName = "Darkness";
+        s += "\n" + "The power of " + powerupName + " will now appear much more frequently in battle!";
+        print(s);
     }
 
 }

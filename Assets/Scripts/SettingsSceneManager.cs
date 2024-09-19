@@ -8,7 +8,8 @@ public class SettingsSceneManager : MonoBehaviour{
 
     public Text worldNameDisplay;
     public Text stageNumberDisplay;
-    public BattleData JustBattleOpponent;
+    public Text playerNameDisplay;
+    //public BattleData JustBattleOpponent;
 
     void Start(){
         Setup();
@@ -16,6 +17,7 @@ public class SettingsSceneManager : MonoBehaviour{
 
     public void Setup(){
         DisplayProgress();
+        DisplayPlayerName();
     }
 
     public void HitBackButton(){
@@ -57,5 +59,14 @@ public class SettingsSceneManager : MonoBehaviour{
         if ((StaticVariables.highestBeatenStage.nextStage != null) && (StaticVariables.highestBeatenStage.nextStage.nextStage != null))
             StaticVariables.highestBeatenStage = StaticVariables.highestBeatenStage.nextStage;
         DisplayProgress();
+    }
+
+    public void PushedNameChangeButton(){
+        print("changing player name...");
+        DisplayPlayerName();
+    }
+
+    private void DisplayPlayerName(){
+        playerNameDisplay.text = StaticVariables.playerName;
     }
 }

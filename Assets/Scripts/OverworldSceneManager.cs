@@ -108,13 +108,13 @@ public class OverworldSceneManager : MonoBehaviour{
     }
 
     private void PickReadingBookOptions(){
-        interactOverlayManager.chosenWaterBookName = StaticVariables.readingWaterBooks[StaticVariables.rand.Next(StaticVariables.readingWaterBooks.Length)];
-        interactOverlayManager.chosenHealingBookName = StaticVariables.readingHealBooks[StaticVariables.rand.Next(StaticVariables.readingHealBooks.Length)];
-        interactOverlayManager.chosenEarthBookName = StaticVariables.readingEarthBooks[StaticVariables.rand.Next(StaticVariables.readingEarthBooks.Length)];
-        interactOverlayManager.chosenFireBookName = StaticVariables.readingFireBooks[StaticVariables.rand.Next(StaticVariables.readingFireBooks.Length)];
-        interactOverlayManager.chosenLightningBookName = StaticVariables.readingLightningBooks[StaticVariables.rand.Next(StaticVariables.readingLightningBooks.Length)];
-        interactOverlayManager.chosenDarknessBookName = StaticVariables.readingDarkBooks[StaticVariables.rand.Next(StaticVariables.readingDarkBooks.Length)];
-        interactOverlayManager.chosenSwordBookName = StaticVariables.readingSwordBooks[StaticVariables.rand.Next(StaticVariables.readingSwordBooks.Length)];
+        interactOverlayManager.chosenWaterBook = StaticVariables.readingWaterBooks[StaticVariables.rand.Next(StaticVariables.readingWaterBooks.Length)];
+        interactOverlayManager.chosenHealingBook = StaticVariables.readingHealBooks[StaticVariables.rand.Next(StaticVariables.readingHealBooks.Length)];
+        interactOverlayManager.chosenEarthBook = StaticVariables.readingEarthBooks[StaticVariables.rand.Next(StaticVariables.readingEarthBooks.Length)];
+        interactOverlayManager.chosenFireBook = StaticVariables.readingFireBooks[StaticVariables.rand.Next(StaticVariables.readingFireBooks.Length)];
+        interactOverlayManager.chosenLightningBook = StaticVariables.readingLightningBooks[StaticVariables.rand.Next(StaticVariables.readingLightningBooks.Length)];
+        interactOverlayManager.chosenDarknessBook = StaticVariables.readingDarkBooks[StaticVariables.rand.Next(StaticVariables.readingDarkBooks.Length)];
+        interactOverlayManager.chosenSwordBook = StaticVariables.readingSwordBooks[StaticVariables.rand.Next(StaticVariables.readingSwordBooks.Length)];
     }
 
     private void SetupOverworldSpaces(){

@@ -26,13 +26,13 @@ public class StaticVariables
     static public bool hasTalkedToNewestEnemy = false;
     static public CutsceneManager.Cutscene cutsceneID;
     static public string playerName = "Rebecca";
-    static public string[] readingWaterBooks;
-    static public string[] readingHealBooks;
-    static public string[] readingEarthBooks;
-    static public string[] readingFireBooks;
-    static public string[] readingLightningBooks;
-    static public string[] readingDarkBooks;
-    static public string[] readingSwordBooks;
+    static public BookData[] readingWaterBooks;
+    static public BookData[] readingHealBooks;
+    static public BookData[] readingEarthBooks;
+    static public BookData[] readingFireBooks;
+    static public BookData[] readingLightningBooks;
+    static public BookData[] readingDarkBooks;
+    static public BookData[] readingSwordBooks;
     static public string[] wordLibraryForChecking;
     static public string[] wordLibraryForGeneration;
     static public char[] randomLetterPool;
@@ -160,5 +160,18 @@ public class StageData{
         this.worldName = worldName;
         this.stage = stageNum;
         this.enemyPrefab = enemyPrefab;
+    }
+}
+
+public class BookData{
+    public string name;
+    public string description;
+
+    public BookData(string fullData){
+        if (!fullData.Contains('\\'))
+            fullData += "\\lorem ipsum";
+        string[] data = fullData.Split('\\');
+        name = data[0];
+        description = data[1];
     }
 }

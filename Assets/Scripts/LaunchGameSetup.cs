@@ -57,13 +57,21 @@ public class LaunchGameSetup : MonoBehaviour{
     }
 
     private void SetupBookLists(){
-        StaticVariables.readingWaterBooks = waterBookList.text.Split("\r\n");
-        StaticVariables.readingHealBooks = healingBookList.text.Split("\r\n");
-        StaticVariables.readingEarthBooks = earthBookList.text.Split("\r\n");
-        StaticVariables.readingFireBooks = fireBookList.text.Split("\r\n");
-        StaticVariables.readingLightningBooks = lightningBookList.text.Split("\r\n");
-        StaticVariables.readingDarkBooks = darknessBookList.text.Split("\r\n");
-        StaticVariables.readingSwordBooks = swordBookList.text.Split("\r\n");
+        StaticVariables.readingWaterBooks = GenerateBookList(waterBookList);
+        StaticVariables.readingHealBooks = GenerateBookList(healingBookList);
+        StaticVariables.readingEarthBooks = GenerateBookList(earthBookList);
+        StaticVariables.readingFireBooks = GenerateBookList(fireBookList);
+        StaticVariables.readingLightningBooks = GenerateBookList(lightningBookList);
+        StaticVariables.readingDarkBooks = GenerateBookList(darknessBookList);
+        StaticVariables.readingSwordBooks = GenerateBookList(swordBookList);
+    }
+
+    private BookData[] GenerateBookList(TextAsset list){
+        string[] elements = list.text.Split("\r\n");
+        BookData[] bookDatas = new BookData[elements.Length];
+        for (int i = 0; i < elements.Length; i++) 
+            bookDatas[i] = new BookData(elements[i]);
+        return bookDatas;
     }
 
     private void SetupStageList(){
