@@ -36,6 +36,7 @@ public class InteractOverlayManager : MonoBehaviour{
     public Image infoTextHider;
     public RectTransform readOptionsParent;
     public GameObject bookOptionPrefab;
+    //public GameObject bookDescriptionPrefab;
     public Image readTextHider;
     public RectTransform topOfBox;
 
@@ -82,8 +83,9 @@ public class InteractOverlayManager : MonoBehaviour{
     private Vector2 interactOverlayStartingSize;
     private Vector2 enemyNameTextStartingPos;
     private float topOfBoxStartingPos;
-
     private bool isMovingInteractOverlay = false;
+    [HideInInspector]
+    public bool isMovingBookDescriptions = false;
     private readonly string defaultEnemyInfo = "This  enemy  has  no  particular  weaknesses.";
     
 
@@ -110,8 +112,12 @@ public class InteractOverlayManager : MonoBehaviour{
         topOfBoxStartingPos = topOfBox.anchoredPosition.y;
     }
 
+    public bool CanMakeBookSelection(){ //same as isinterfacebusy, except showing the books is not a limiter
+        return (isMovingInteractOverlay || isInfoShowing || isMovingBookDescriptions); 
+    }
+
     private bool IsInterfaceBusy(){
-        return (isMovingInteractOverlay || isInfoShowing || isReadShowing);
+        return (isMovingInteractOverlay || isInfoShowing || isReadShowing || isMovingBookDescriptions);
     }
 
     public void PressedBattleButton(){
@@ -243,7 +249,8 @@ public class InteractOverlayManager : MonoBehaviour{
 
     private void AdjustHeightsForShowingRead(){
         LayoutRebuilder.ForceRebuildLayoutImmediate(readOptionsParent);
-        float newHeight = readOptionsParent.rect.height + 800;
+        float bookDescriptionHeight = bookOptionPrefab.GetComponent<ReadingOption>().bookDescriptionPrefab.GetComponent<RectTransform>().sizeDelta.y;
+        float newHeight = readOptionsParent.rect.height + 630 + bookDescriptionHeight;
         if (newHeight < interactOverlayStartingSize.y)
             return;
         Vector2 sd = new Vector2(interactOverlay.sizeDelta.x, newHeight);
@@ -349,9 +356,10 @@ public class InteractOverlayManager : MonoBehaviour{
         
         FadeInReadText();
         clickableBackground.SetActive(false);
-        AdjustHeightsForShowingRead();
+        //AdjustHeightsForShowingRead();
         isReadShowing = true;
         UpdateBookSelection();
+        AdjustHeightsForShowingRead();
     }
 
     private void CreateBookOption(BattleManager.PowerupTypes type){
@@ -359,6 +367,8 @@ public class InteractOverlayManager : MonoBehaviour{
         ReadingOption ro = obj.GetComponent<ReadingOption>();
         ro.powerupType = type;
         ro.bookImage.sprite = GetBookSpriteForType(type);
+        ro.transitionDuration = transitionDuration;
+        ro.interactOverlayManager = this;
         if (type == BattleManager.PowerupTypes.Water)
             ro.bookData = chosenWaterBook;
         if (type == BattleManager.PowerupTypes.Heal)
@@ -377,12 +387,19 @@ public class InteractOverlayManager : MonoBehaviour{
     }
 
     public void UpdateBookSelection(){
-        foreach (Transform t in readOptionsParent)
-            t.GetComponent<ReadingOption>().ShowActiveIfMatchingType(StaticVariables.buffedType);
+        foreach (Transform t in readOptionsParent){
+            ReadingOption ro = t.GetComponent<ReadingOption>();
+            if (ro != null){
+                ro.ShowActiveIfMatchingType(StaticVariables.buffedType);
+                ro.ShowOrHideDescription();
+            }
+        }
     }
 
     public void PressedBackButton(){
         if (isMovingInteractOverlay)
+            return;
+        if (isMovingBookDescriptions)
             return;
         if (isInfoShowing){   
             ReturnButtonsToStartingPositions(transitionDuration);  

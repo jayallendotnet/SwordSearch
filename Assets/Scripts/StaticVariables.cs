@@ -169,7 +169,7 @@ public class BookData{
 
     public BookData(string fullData){
         if (!fullData.Contains('\\'))
-            fullData += "\\lorem ipsum";
+            fullData += "\\lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua";
         string[] data = fullData.Split('\\');
         name = data[0];
         description = data[1];
