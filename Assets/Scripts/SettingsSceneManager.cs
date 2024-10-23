@@ -9,6 +9,7 @@ public class SettingsSceneManager : MonoBehaviour{
     public Text worldNameDisplay;
     public Text stageNumberDisplay;
     public Text playerNameDisplay;
+    public Text storyModeDisplay;
     //public BattleData JustBattleOpponent;
 
     void Start(){
@@ -68,5 +69,18 @@ public class SettingsSceneManager : MonoBehaviour{
 
     private void DisplayPlayerName(){
         playerNameDisplay.text = StaticVariables.playerName;
+    }
+
+    public void ToggleStoryMode(){
+        StaticVariables.storyMode = !StaticVariables.storyMode;
+        DisplayStoryMode();
+    }
+
+    private void DisplayStoryMode(){
+        if (StaticVariables.storyMode)
+            storyModeDisplay.text = "ENABLED";
+        else
+            storyModeDisplay.text = "DISABLED";
+
     }
 }

@@ -238,7 +238,7 @@ public class TutorialManager : BattleManager {
         tutorialStep ++;
         int i = 0;
         if (++i == tutorialStep){
-            DisplayText("Enemies have varying amounts of health, shown here.");
+            DisplayText("An enemy's health is shown above, in red.");
             LoadCustomPuzzle(startingLayout2);
             highlightEnemyHealth.SetActive(true);
             advanceCondition = Cond.Click;
@@ -257,14 +257,14 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("While you are making a word, you can see the damage the attack will do.");
+            DisplayText("While you are making a word, you can see how much damage the attack will do, shown under the enemy's health.");
             highlightAttackStrength.SetActive(true);
             canShowStrength = true;
             UpdateSubmitVisuals();
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("The longer a word is, the more damage the attack will do!");
+            DisplayText("The longer a word is, the more damage you will deal!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
@@ -284,7 +284,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("Your health is shown over here idk lol.");
+            DisplayText("Your health is also shown above, in blue.");
             highlightPlayerHealth.SetActive(true);
             canShowPlayerHealth = true;
             uiManager.DisplayHealths(playerHealth, enemyHealth);
@@ -296,7 +296,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("This brown bar is a timer.");
+            DisplayText("Between your health and the enemy's health is a brown bar. This bar is a timer.");
             highlightEnemyTimer.SetActive(true);
             advanceCondition = Cond.Click;
         }
@@ -347,7 +347,7 @@ public class TutorialManager : BattleManager {
             enemyTimerBarRemainder = uiManager.enemyTimerBar.localScale.x;
         }
         else if (++i == tutorialStep){
-            DisplayText("You can tap the XXX to turn to another page in the book.");
+            DisplayText("Tapping the big space at the top of the page will turn to another page in the book.");
             highlightWordArea.SetActive(true);
             countdownToRefresh = 0;
             canCountdown = true;
@@ -362,11 +362,15 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.TurnPageEnds;
         }
         else if (++i == tutorialStep){
-            DisplayText("After you turn a page, you can't turn another page again immediately.");
+            DisplayText("This new page has a brand new set of letters, with the potential to make completely different words!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("On the left side of the XXX is a countdown.");
+            DisplayText("After you turn a page, you have to wait before another page becomes available.");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("Up above on the left is a countdown.");
             highlightCountdown.SetActive(true);
             canShowCountdown = true;
             ShowCountdown();
@@ -374,7 +378,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("Every time you make an attack or get attacked, the number will go down.");
+            DisplayText("Every time you make an attack or get attacked, the countdown number will go down.");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
@@ -396,11 +400,11 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.EnemyDies;
         }
         else if (++i == tutorialStep){
-            DisplayEnemyTalking("I can't stand up to your strange magics!!", enemyData, DialogueStep.Emotion.Defeated);
+            DisplayEnemyTalking("Human, I don't like your weird magic!", enemyData, DialogueStep.Emotion.Defeated);
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayPlayerTalking("I beat another one! That was a tough fight!", DialogueStep.Emotion.Happy);
+            DisplayPlayerTalking("I love it! This book is incredible!", DialogueStep.Emotion.Happy);
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
@@ -520,15 +524,15 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.EnemyDies;
         }
         else if (++i == tutorialStep){
-            DisplayPlayerTalking("Take that!!!", DialogueStep.Emotion.Angry);
+            DisplayPlayerTalking("Look, Fido is alive, over there!", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-        DisplayEnemyTalking("We can't win! Not with those guards and this witch too!", enemyData, DialogueStep.Emotion.Angry);
-        advanceCondition = Cond.Click;
+            DisplayEnemyTalking("He is??", enemyData, DialogueStep.Emotion.Defeated);
+            advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayEnemyTalking("Goblins! Retreat!!", enemyData, DialogueStep.Emotion.Angry);
+            DisplayPlayerTalking("Yes! Now go take care of your little dog, and get out of my way!", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){

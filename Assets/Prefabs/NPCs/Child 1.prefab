@@ -33,7 +33,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -112,14 +111,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBattleable: 0
-  nameOverride: Peter
+  nameOverride: Mikey
   startingHealth: 0
-  attackSpeed: 0
-  attackDamage: 0
+  attackOrder:
+    Value: []
   isDraconic: 0
   isHorde: 0
   isHoly: 0
   isDark: 0
+  isNearWater: 0
+  canApplyDebuff: 0
   normal: {fileID: 0}
   angry: {fileID: 0}
   defeated: {fileID: 0}

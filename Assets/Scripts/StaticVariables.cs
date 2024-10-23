@@ -59,6 +59,8 @@ public class StaticVariables
     static public string world7Name = "World 7 - Caverns";
     static public string world8Name = "World 8 - Dragon's Den";
 
+    static public bool storyMode = false;
+
 
 
     static public void WaitTimeThenCallFunction(float delay, TweenCallback function) {

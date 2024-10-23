@@ -93,6 +93,8 @@ public class BattleManager : MonoBehaviour {
         else{
             enemyHealth = enemyData.startingHealth;
         }
+        if (StaticVariables.storyMode)
+            enemyHealth = 1;
         playerHealth = startingPlayerHealth;
         uiManager.ApplyBackground(StaticVariables.battleData.backgroundPrefab);
 

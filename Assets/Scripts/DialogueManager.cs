@@ -266,6 +266,12 @@ public class DialogueManager : MonoBehaviour{
 
     public void ShowNobodyTalking(){
         //might need some stuff here in the future, if we are going to have the narrator speak in between other dialogues
+        enemyChathead.DOColor(Color.grey, transitionDuration);
+        playerChathead.DOColor(Color.grey, transitionDuration);
+        speakerNameTextBox.text = "";
+        dialogueTextBox.text = "";
+        playerChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
+        enemyChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
     }
 
     public void ShowEnemyTalking(EnemyData data, DialogueStep.Emotion emotion){

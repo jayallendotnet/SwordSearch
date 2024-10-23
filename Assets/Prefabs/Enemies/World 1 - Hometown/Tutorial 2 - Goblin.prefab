@@ -34,7 +34,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -152,8 +151,17 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     emotion: 1
-    description: Hey, human! I saw you attack that other goblin while he was looking
-      the other way!
+    description: Hey, human! I saw you attack Tiny while he was looking the other
+      way!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 5
+    description: Tiny?
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: Yes, Tiny! We went to East Goblandia Middle School Together! He
+      has self-confidence issues!
   - type: 0
     talker: {fileID: 0}
     emotion: 1
@@ -171,6 +179,6 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     emotion: 1
-    description: You humans are just a bunch of meanies! I'll have to teach you a
+    description: You humans are just a bunch of bullies! I'll have to teach you a
       lesson!!
   victoryDialogueSteps: []

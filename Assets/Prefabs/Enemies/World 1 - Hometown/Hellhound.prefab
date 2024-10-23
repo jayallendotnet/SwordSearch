@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1107962101534003462}
   - component: {fileID: 1107962101534003463}
   m_Layer: 0
-  m_Name: Tutorial 3 - Hellhound
+  m_Name: Hellhound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -129,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBattleable: 1
   nameOverride: Warg
-  startingHealth: 80
+  startingHealth: 55
   attackOrder:
     Value:
     - attackSpeed: 5
@@ -176,6 +175,33 @@ MonoBehaviour:
   - type: 0
     talker: {fileID: 0}
     emotion: 6
-    description: That's not going to work! I guess I'll have to fight it, before
-      its owner comes back...
-  victoryDialogueSteps: []
+    description: That's not going to work! I'll just back away slowly, okay?
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: GRRR! Arr! Gar! RARRR!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 6
+    description: Ahhh!! No!
+  victoryDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 4
+    description: I beat it!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 6
+    description: Not that I wanted to...
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 6
+    description: Well, the dog is fine... I think? It's just wet?
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 2
+    description: Arf.
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 4
+    description: And still breathing! Great!

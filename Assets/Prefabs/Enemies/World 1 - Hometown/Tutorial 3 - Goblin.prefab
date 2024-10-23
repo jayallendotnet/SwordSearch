@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1107962101534003462}
   - component: {fileID: 1107962101534003463}
   m_Layer: 0
-  m_Name: Goblin
+  m_Name: Tutorial 3 - Goblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -156,38 +155,32 @@ MonoBehaviour:
   - type: 0
     talker: {fileID: 0}
     emotion: 6
-    description: Oh no, it's one of the goblin generals!
-  - type: 0
-    talker: {fileID: 0}
-    emotion: 0
     description: Look, I can explain!
   - type: 1
     talker: {fileID: 0}
     emotion: 1
-    description: Shut up!
+    description: I don't want to hear it!
   - type: 1
     talker: {fileID: 0}
     emotion: 0
-    description: That little cutie is named Fido! He's my pwecious wittle angel...
-      and he's afraid of water!
-  - type: 1
-    talker: {fileID: 0}
-    emotion: 1
-    description: And you threw a bunch of water all over him!
-  - type: 1
-    talker: {fileID: 0}
-    emotion: 1
-    description: You'll pay for that!
-  victoryDialogueSteps:
+    description: That little cutie is Fido! He's my pwecious wittle angel... and
+      he's afraid of water!
   - type: 0
     talker: {fileID: 0}
     emotion: 1
-    description: Look! Fido is still alive, over there!
+    description: Maybe Fido wouldn'y be wet if you didn't bring him into battle in
+      a burning town!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: I have some pet care books that you really should consider reading!
   - type: 1
     talker: {fileID: 0}
-    emotion: 2
-    description: He is??
+    emotion: 1
+    description: I don't need to read your lame human books in order to take good
+      care of Fido!
   - type: 0
     talker: {fileID: 0}
     emotion: 1
-    description: Yes! Now go take care of your little dog, and get out of my way!
+    description: Oh? Then let me show you what our books are really capable of!
+  victoryDialogueSteps: []
