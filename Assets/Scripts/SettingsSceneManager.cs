@@ -8,8 +8,9 @@ public class SettingsSceneManager : MonoBehaviour{
 
     public Text worldNameDisplay;
     public Text stageNumberDisplay;
-    public Text playerNameDisplay;
     public Text storyModeDisplay;
+
+    public InputField playerNameInput;
     //public BattleData JustBattleOpponent;
 
     void Start(){
@@ -62,13 +63,8 @@ public class SettingsSceneManager : MonoBehaviour{
         DisplayProgress();
     }
 
-    public void PushedNameChangeButton(){
-        print("changing player name...");
-        DisplayPlayerName();
-    }
-
     private void DisplayPlayerName(){
-        playerNameDisplay.text = StaticVariables.playerName;
+        playerNameInput.text = StaticVariables.playerName;
     }
 
     public void ToggleStoryMode(){
@@ -82,5 +78,14 @@ public class SettingsSceneManager : MonoBehaviour{
         else
             storyModeDisplay.text = "DISABLED";
 
+    }
+
+    public void UpdatePlayerName(){
+        if (playerNameInput.text == "")
+            DisplayPlayerName();
+        else{
+        StaticVariables.playerName = playerNameInput.text;
+            DisplayPlayerName();
+        }
     }
 }

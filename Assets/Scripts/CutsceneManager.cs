@@ -285,19 +285,6 @@ public class CutsceneManager : MonoBehaviour{
             PlayAnimation("Player", "Put Away Newspaper");
             advanceCondition = Cond.Click;
         }
-        //else if (++i == cutsceneStep){
-        //    DisplayEnemyTalking("Run away!!!!", "Child 1", DialogueStep.Emotion.Excited);
-        //    advanceCondition = Cond.Wait;
-        //    WaitThenAdvance(1f);
-        //}
-        //else if (++i == cutsceneStep){
-        //    PlayAnimationAndMoveThenIdle("Child 1", "Walk", -844, 605, 2f);
-        //    PlayAnimationAndMoveThenIdle("Child 2", "Walk", -1096, 564, 2f);
-        //    FlipDirection("Child 1");
-        //    FlipDirection("Child 2");
-        //    advanceCondition = Cond.Wait;
-        //    WaitThenAdvance(2f);
-        //}
         else if (++i == cutsceneStep){
             DisplayEnemyTalking("Ha ha ha...\nPuny humans, in your puny town...", "Red Dragon", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
@@ -314,30 +301,6 @@ public class CutsceneManager : MonoBehaviour{
             DisplayEnemyTalking("This town now belongs to the mighty Queen of Ash! Bow down to her, me, and all of dragonkind!", "Red Dragon", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
         }
-        //else if (++i == cutsceneStep){
-        //    PlayAnimationAndMoveThenIdle("Blacksmith", "Walk", -172, 64, 1.3f);
-        //    advanceCondition = Cond.Wait;
-        //    WaitThenAdvance(0.2f);
-        //}
-        //else if (++i == cutsceneStep){
-        //    PlayAnimationAndMoveThenIdle("Orange Shirt Black Woman", "Walk", -419, 244, 1.3f);
-        //    advanceCondition = Cond.Wait;
-        //    WaitThenAdvance(0.1f);
-        //}
-        //else if (++i == cutsceneStep){
-        //    PlayAnimationAndMoveThenIdle("Redhead Woman", "Walk", 273, 540, 1.3f);
-        //    advanceCondition = Cond.Wait;
-        //    WaitThenAdvance(1.3f);
-        //}
-        //else if (++i == cutsceneStep){
-        //    FlipDirection("Redhead Woman");
-        //    DisplayEnemyTalking("This town now belongs to the mighty King Dragon! Bow down to him and all of dragonkind!", "Red Dragon", DialogueStep.Emotion.Angry);
-        //    advanceCondition = Cond.Click;
-        //}
-        //else if (++i == cutsceneStep){
-        //    DisplayEnemyTalking("Surrender all of your valuables, or be brought to ruin!", "Red Dragon", DialogueStep.Emotion.Angry);
-        //    advanceCondition = Cond.Click;
-        //}
         else if (++i == cutsceneStep){
             DisplayEnemyTalking("We won't be bossed around by some overgrown lizard!", "Blacksmith", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
@@ -767,7 +730,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Although it has been a long time since we've had anyone magical from around here...", "Redhead Woman", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("It's been a long time since anyone used magic around here.", "Redhead Woman", DialogueStep.Emotion.Normal);
             PlayAnimation("Redhead Woman", "Idle");
             advanceCondition = Cond.Click;
         }
@@ -790,16 +753,11 @@ public class CutsceneManager : MonoBehaviour{
             WaitThenAdvance(2f);
         }   
         else if (++i == cutsceneStep){
-            FlipDirection("Orange Shirt Black Woman No Hat");
-            DisplayEnemyTalking("Is it true you used to be an adventurer?", "Orange Shirt Black Woman No Hat", DialogueStep.Emotion.Excited);
+            DisplayEnemyTalking("You whippersnappers are flappin' yer yappers about my magic?", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Yes, I used to roam around the continent, back when I could still touch my toes.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("In those days, I had control over the wind!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("Well, you're right. Back in the old days, when I could still touch my toes, I had control over the wind!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -811,7 +769,11 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("We had a whole adventuring party, fighting monsters, saving princesses...", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("I was an adventurer! Slaying monsters, saving princesses...", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("One time I got into a fight with a (future enemy)!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -819,7 +781,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("I tried to continue my old life, as a chef. But my hands wouldn't even let me do that.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("I even tried to go back to my old life, just being a simple chef. But I couldn't do that either.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -838,23 +800,6 @@ public class CutsceneManager : MonoBehaviour{
             DisplayEnemyTalking("Gather 'round, everyone!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
-        //else if (++i == cutsceneStep){
-        //    DisplayEnemyTalking("I heard he was an adventurer in his younger years.", "Yellowhead Woman", DialogueStep.Emotion.Normal);
-        //    advanceCondition = Cond.Click;
-        //}
-        
-        //    DisplayEnemyTalking("You were shooting jets of water at them!", "Orange Shirt Black Woman", DialogueStep.Emotion.Excited);
-        //    advanceCondition = Cond.Click;
-        //}
-        //else if (++i == cutsceneStep){
-            //DisplayEnemyTalking("And you brought down rain to put out the dragon's fires!", "Chef", DialogueStep.Emotion.Excited);
-            //PlayAnimationAndMoveThenIdle("Chef", "Walk", -284, 254, 1.6f);
-           // advanceCondition = Cond.Wait;
-            //WaitThenAdvance(1.6f);
-        //}
-        //else if (++i == cutsceneStep){
-        //    advanceCondition = Cond.Click;
-        //}
         else if (++i == cutsceneStep){
             DisplayNobodyTalking();
             advanceCondition = Cond.Wait;
@@ -974,12 +919,24 @@ public class CutsceneManager : MonoBehaviour{
             DisplayEnemyTalking("Oh don't worry about that, Miss " + StaticVariables.playerName + "!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
+        //else if (++i == cutsceneStep){
+        //    DisplayEnemyTalking("There used to be a swordswoman in my little adventuring group. She held the Sword of Dragonslaying, but there weren't many dragons around.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+        //    advanceCondition = Cond.Click;
+        //}
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("There used to be a swordswoman in my little adventuring group. She held the Sword of Dragonslaying, but there weren't many dragons around.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("I knew a swordswoman, who weilded the power of that very sword!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        //else if (++i == cutsceneStep){
+        //    DisplayEnemyTalking("So we sealed away the sword in a temple in the desert. It might even still be there.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+        //    advanceCondition = Cond.Click;
+        //}
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("There weren't many dragons around back then, so we sealed the sword away in a temple in the desert.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("So we sealed away the sword in a temple in the desert. It might even still be there.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("It might just still be there, for all I know!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -1026,191 +983,6 @@ public class CutsceneManager : MonoBehaviour{
             DisplayEnemyTalking("And don't worry about us, we will make sure the town stays safe!", "Blacksmith", DialogueStep.Emotion.Excited);
             advanceCondition = Cond.Click;
         }
-        //we need to do something!
-        //some other civillian concern
-        //player speaks up about newspaper
-
-
-        //else if (++i == cutsceneStep){
-        //    advanceCondition = Cond.Click;
-        //}
-        /*
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Umm, it started when I threw one of the burning books into the sacred well...", DialogueStep.Emotion.Worried);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("The book came out with some kind of water magic in it!", DialogueStep.Emotion.Happy);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("So you can read the book and it lets you control magic??", "Child 2", DialogueStep.Emotion.Excited);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("But that means...", "Yellowhead Woman", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("If the book is the thing that does the magic, and you are the only person that knows how to read...", "Yellowhead Woman", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Then we can't try it out?", "Yellowhead Woman", DialogueStep.Emotion.Angry);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("What a tragedy!", "Blacksmith", DialogueStep.Emotion.Angry);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("That's so unfair!!", "Short Black Man", DialogueStep.Emotion.Angry);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Hang on, I can try to teach you how to read!", DialogueStep.Emotion.Worried);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Excuse me, Miss " + StaticVariables.playerName + ". I think we have more important things to worry about.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Elder Spode!", DialogueStep.Emotion.Questioning);
-            PlayAnimationAndMoveThenIdle("Bald Man Blue Shirt", "Walk", 427, 471, 2f);
-            PlayAnimationAndMoveThenIdle("Child 1", "Walk", 361, 314, 2f);
-            PlayAnimationAndMoveThenIdle("Redhead Woman", "Walk", 348, 604, 2f);
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(2f);
-        }
-        else if (++i == cutsceneStep){
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("If that dragon comes by again, we cannot defend ourselves from it.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("The dragon that attacked us mentioned another dragon it was working for...", "Blacksmith", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Actually, the newspaper says there are several dragons that have taken over the whole kingdom!", DialogueStep.Emotion.Worried);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("They managed to drive the Lich King out as well.", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("That is very bad news indeed. The Lich King was a tyrant, but he was not one for causeless destruction.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Miss " + StaticVariables.playerName + ", do you have the book that contains the legend of the dragon slayer?", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("You know, I thought you might ask about that...", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(2f);
-            PlayAnimation("Player", "Take Out Book (dragon book)");
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("I was able to recover the book from the fire, but some passages are now unreadable.", DialogueStep.Emotion.Defeated);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Well, read what you have left anyway.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("'Long ago, in the Age of Dragons, there lived a brave warrior with a holy sword.'", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("'The sword was forged in dragonfire, and had the great power to kill the winged terrors.'", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Then a few lines are charred... But then it continues later...", DialogueStep.Emotion.Worried);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("'The warrior was able to bring the end of the Age of Dragons, and start the Age of Man!'", DialogueStep.Emotion.Happy);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Some more of the book is burned here...", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Okay, these are the last few words that are still intact.", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("'... old age, and passed on. He was sealed away with his holy blade in a sacred...'", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("And that's it, the rest of the pages are blackened.", DialogueStep.Emotion.Worried);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){ 
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(1.5f);
-            PlayAnimation("Player", "Put Away Book (dragon book)");
-            DisplayPlayerTalking("", DialogueStep.Emotion.Worried);
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Great! The legend is cut off, right before the location of the dragon killing sword is specified.", "Yellowhead Woman", DialogueStep.Emotion.Angry);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Well that settles it! We have to go search for the holy sword, to kill these dragons and save our homes!", "Blacksmith", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("But there are so many sacred places in the land! How will we know where to look?", "Redhead Woman", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("That's the neat part, we don't! Everyone who wants to go search should pick a different sacred location.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Excuse me, can I join the search?", DialogueStep.Emotion.Questioning);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("I know it's bound to be dangerous, but I was able to defeat some of the invaders myself!", DialogueStep.Emotion.Happy);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Your skills will be missed, but you will be more useful in the sword search.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Very well. Then may I suggest you head for the desertlands? There is a holy pyramid within.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Your power over the element of water will surely help you survive in the desert.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("The desertlands lie on the far side of the enchanted forest, beyond the grasslands to the south.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("I will head out at once!", DialogueStep.Emotion.Happy);
-            advanceCondition = Cond.Click;
-        }
-        */
         else if (++i == cutsceneStep){
             StaticVariables.hasCompletedStage = true;
             StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
@@ -1231,11 +1003,15 @@ public class CutsceneManager : MonoBehaviour{
             DisplayPlayerTalking("Going out into the grasslands, just me and my... weird magical book...", DialogueStep.Emotion.Questioning);
             advanceCondition = Cond.Click;
         }
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        }  
         else if (++i == cutsceneStep){            
             advanceCondition = Cond.Wait;
             WaitThenAdvance(2f);
             PlayAnimation("Player", "Take Out Book");
-            DisplayPlayerTalking("", DialogueStep.Emotion.Questioning);
         }
         else if (++i == cutsceneStep){
             DisplayPlayerTalking("You're a magic book. Can you understand me?", DialogueStep.Emotion.Questioning);
@@ -1246,11 +1022,11 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Okay, well your pages fill with letters when I'm in danger. Can you say something to me with them?", DialogueStep.Emotion.Questioning);
+            DisplayPlayerTalking("Okay, well your pages fill with random letters when it's magic time. Can you say something to me with them?", DialogueStep.Emotion.Questioning);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("The book's pages are empty.", "Magic Book", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("The book's pages remain empty.", "Magic Book", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -1265,21 +1041,124 @@ public class CutsceneManager : MonoBehaviour{
             DisplayPlayerTalking("Fine, be that way!" , DialogueStep.Emotion.Angry);   
             advanceCondition = Cond.Click;
         }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("Miss "+ StaticVariables.playerName + "! Wait a moment!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        }      
+        else if (++i == cutsceneStep){
+            PlayAnimationAndMoveThenIdle("Bald Man Blue Shirt", "Walk", -38, 1250, 2f);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(2f);
+        }      
+        else if (++i == cutsceneStep){
+            FlipDirection("Bald Man Blue Shirt");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        }  
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("Are you... arguing with your book?", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        }
         else if (++i == cutsceneStep){ 
             advanceCondition = Cond.Wait;
             WaitThenAdvance(1.5f);
             PlayAnimation("Player", "Put Away Book");
-            dialogueManager.HideEnemyChathead(1.5f);
-            DisplayPlayerTalking("", DialogueStep.Emotion.Angry);
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("We should get going anyway. The dragon-killing sword isn't going to find itself!", DialogueStep.Emotion.Normal);
+            DisplayPlayerTalking("Does it count as arguing if the thing you are talking to might not even be able to hear you?" , DialogueStep.Emotion.Angry);   
             advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("What are you doing out here anyway?" , DialogueStep.Emotion.Questioning);   
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("I wanted to thank you for offering to heal my hands and bring my magic back...", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("But to be honest, I'm an old man now. I don't know if I want to weild that power again.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("Nevertheless, you showed me kindness, and I wanted to give you something in return.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        }
+        else if (++i == cutsceneStep){ 
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1.5f);
+            PlayAnimation("Bald Man Blue Shirt", "Take Out Bag");
+        } 
+        else if (++i == cutsceneStep){
+            PlayAnimation("Bald Man Blue Shirt", "Idle");
+            PlayAnimation("Player", "Idle Holding Bag");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1.6f);
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("This is an enchanted pouch that can carry anything and everything you put inside it!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("I had the children fill it with every single one of your books that survived the flames.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        //else if (++i == cutsceneStep){
+        //    DisplayNobodyTalking();
+        //    advanceCondition = Cond.Wait;
+        //    WaitThenAdvance(0.5f);
+        //}    
+        //else if (++i == cutsceneStep){
+        //    PlayAnimation("Bald Man Blue Shirt", "Idle");
+        //    PlayAnimation("Player", "Idle Holding Bag");
+        //    advanceCondition = Cond.Wait;
+        //    WaitThenAdvance(1.6f);
+        //}
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("This is incredible! Thank you!", DialogueStep.Emotion.Happy);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("You're welcome, Miss " + StaticVariables.playerName + ".", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("You have a long journey ahead of you. Best to not get bored.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("You're right! I'd better get going. Goodbye, (Elder).", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        }    
+        else if (++i == cutsceneStep){
+            PlayAnimation("Player", "Put Away Bag");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1.6f);
         }
         else if (++i == cutsceneStep){
             advanceCondition = Cond.Wait;
             WaitThenAdvance(2f);
-            PlayAnimationAndMoveThenIdle("Player", "Walk", 500, 2592, 5f);
+            PlayAnimationAndMoveThenIdle("Player", "Walk", 500, 2592, 4f);
         }
         else if (++i == cutsceneStep){
             StaticVariables.hasCompletedStage = true;
