@@ -1158,7 +1158,7 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             advanceCondition = Cond.Wait;
             WaitThenAdvance(2f);
-            PlayAnimationAndMoveThenIdle("Player", "Walk", 500, 2592, 4f);
+            PlayAnimationAndMoveThenIdle("Player", "Walk", 500, 2592, 5f);
         }
         else if (++i == cutsceneStep){
             StaticVariables.hasCompletedStage = true;
