@@ -35,6 +35,15 @@ public class DialogueManager : MonoBehaviour{
     public Sprite playerChatheadHappy;
     public Sprite playerChatheadQuestioning;
     public Sprite playerChatheadWorried;
+    public Sprite playerChatheadSurprised;
+
+    [Header("Player Emotion Flairs")]
+    public GameObject playerAngryFlair;
+    public GameObject playerHappyFlair;
+    public GameObject playerSurprisedFlair;
+    public GameObject playerQuestioningFlair;
+    public GameObject playerWorriedFlair;
+    public Image[] playerFlairImages;
 
     [Header("Configurations")]
     public float transitionDuration = 0.5f;
@@ -247,27 +256,60 @@ public class DialogueManager : MonoBehaviour{
         speakerNameTextBox.text = StaticVariables.playerName.ToUpper();
         speakerNameTextBox.alignment = TextAnchor.UpperLeft;
         playerChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
-        playerChathead.DOColor(Color.white, transitionDuration);
+        LightenPlayerChathead();
         enemyChathead.DOColor(Color.grey, transitionDuration);
         playerChatheadTransform.DOScale(new Vector2(40, 40), transitionDuration);
         enemyChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
-        Sprite sprite = emotion switch
-        {
+        Sprite sprite = emotion switch {
             (DialogueStep.Emotion.Angry) => playerChatheadAngry,
             (DialogueStep.Emotion.Defeated) => playerChatheadDefeated,
-            (DialogueStep.Emotion.Excited) => playerChatheadAngry,
+            //(DialogueStep.Emotion.Excited) => playerChatheadAngry, //hopefully we can remove all instances of excited?
             (DialogueStep.Emotion.Happy) => playerChatheadHappy,
             (DialogueStep.Emotion.Questioning) => playerChatheadQuestioning,
             (DialogueStep.Emotion.Worried) => playerChatheadWorried,
+            (DialogueStep.Emotion.Surprised) => playerChatheadSurprised,
             _ => playerChatheadNormal,
         };
         playerChathead.sprite = sprite;
+        ShowPlayerEmotionFlair(emotion);
+    }
+
+    private void ShowPlayerEmotionFlair(DialogueStep.Emotion emotion){
+        playerAngryFlair.SetActive(false);
+        playerHappyFlair.SetActive(false);
+        playerSurprisedFlair.SetActive(false);
+        playerQuestioningFlair.SetActive(false);
+        playerWorriedFlair.SetActive(false);
+
+        GameObject flair = emotion switch {
+            (DialogueStep.Emotion.Angry) => playerAngryFlair,
+            (DialogueStep.Emotion.Happy) => playerHappyFlair,
+            (DialogueStep.Emotion.Questioning) => playerQuestioningFlair,
+            (DialogueStep.Emotion.Worried) => playerWorriedFlair,
+            (DialogueStep.Emotion.Surprised) => playerSurprisedFlair,
+            _ => null,
+        };
+
+        if (flair != null)
+            flair.SetActive(true);
+    }
+
+    private void LightenPlayerChathead(){
+        playerChathead.DOColor(Color.white, transitionDuration);
+        foreach (Image im in playerFlairImages)
+            im.DOColor(Color.white, transitionDuration);
+    }
+
+    private void DarkenPlayerChathead(){
+        playerChathead.DOColor(Color.grey, transitionDuration);
+        foreach (Image im in playerFlairImages)
+            im.DOColor(Color.grey, transitionDuration);
     }
 
     public void ShowNobodyTalking(){
         //might need some stuff here in the future, if we are going to have the narrator speak in between other dialogues
         enemyChathead.DOColor(Color.grey, transitionDuration);
-        playerChathead.DOColor(Color.grey, transitionDuration);
+        DarkenPlayerChathead();
         speakerNameTextBox.text = "";
         dialogueTextBox.text = "";
         playerChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
@@ -282,7 +324,7 @@ public class DialogueManager : MonoBehaviour{
         speakerNameTextBox.alignment = TextAnchor.UpperRight;
         enemyChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
         enemyChathead.DOColor(Color.white, transitionDuration);
-        playerChathead.DOColor(Color.grey, transitionDuration);
+        DarkenPlayerChathead();
         playerChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
         enemyChatheadTransform.DOScale(new Vector2(40, 40), transitionDuration);
 

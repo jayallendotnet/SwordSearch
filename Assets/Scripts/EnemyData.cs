@@ -46,7 +46,7 @@ public class EnemyData : MonoBehaviour{
 public class DialogueStep{
     public enum DialogueType{PlayerTalking, EnemyTalking, OtherTalking, Event};
     
-    public enum Emotion{Normal, Angry, Defeated, Excited, Happy, Questioning, Worried};
+    public enum Emotion{Normal, Angry, Defeated, Excited, Happy, Questioning, Worried, Surprised};
     public DialogueType type;    
     [ConditionalField(nameof(type), false, DialogueType.OtherTalking)] public EnemyData talker;
     public Emotion emotion;
