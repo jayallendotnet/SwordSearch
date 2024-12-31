@@ -136,6 +136,7 @@ public class InteractOverlayManager : MonoBehaviour{
         if (IsInterfaceBusy()) return;
         HideOtherButtonsBehindBack(transitionDuration);
         scrollableInfoParent.parent.parent.gameObject.SetActive(true);
+        readOptionsParent.parent.gameObject.SetActive(false);
 
         while(scrollableInfoParent.childCount > 0)
             DestroyImmediate(scrollableInfoParent.GetChild(0).gameObject);
@@ -266,57 +267,57 @@ public class InteractOverlayManager : MonoBehaviour{
         List<string> details = new();
         if (enemy.isHorde){
             summary.Add("This enemy is a horde.");
-            details.Add("A horde is made up of multiple enemies. As you deal damage, the number of enemies left in the horde will decrease, and the horde will do less damage when it attacks.");
+            details.Add("A horde is made up of multiple enemies. As you deal damage, the number of enemies left in the horde will decrease, and the horde will do less <damage>damage<> when it attacks.");
             if (StaticVariables.fireActive){
-                summary.Add("Horde enemies take more burn damage from fire spells.");
-                details.Add("Burn damage from the power of fire is multiplied by the number of enemies in the horde.");
+                summary.Add("Horde enemies take more <fire>burn damage<> from <fire>fire spells<>.");
+                details.Add("<fire>Burn damage<> from the <fire>power of fire<> is multiplied by the number of enemies in the horde.");
             }
             if (StaticVariables.waterActive){                
-                summary.Add("Horde enemies are hit harder from flooded attacks.");
-                details.Add("While the book is flooded by the power of water, attacks do +2 damage for each enemy in the horde.");
+                summary.Add("Horde enemies are hit harder from <water>flooded attacks<>.");
+                details.Add("While the book is <water>flooded<> by the <water>power of water<>, attacks do <damage>+2 damage<> for each enemy in the horde.");
             }
             if (StaticVariables.lightningActive){
-                summary.Add("Horde enemies are stunned for less time from lightning spells.");
-                details.Add("The duration of the stun applied by the power of lightning is divided by the number of enemies in the horde.");
+                summary.Add("Horde enemies are <lightning>stunned<> for less time from <lightning>lightning spells<>.");
+                details.Add("The duration of the <lightning>stun<> applied by the <lightning>power of lightning<> is divided by the number of enemies in the horde.");
             }
         }
         if (enemy.isDraconic){
             if (StaticVariables.swordActive){
-                summary.Add("This dragon takes more damage from the sword of slaying.");
-                details.Add("Dragons take 5x damage from the power of the sword.");
+                summary.Add("This dragon takes more damage from the <sword>sword of dragonslaying<>.");
+                details.Add("Dragons take <damage>5x damage<> from the <sword>power of the sword<>.");
             }
         }
         if (enemy.isHoly){
             if (StaticVariables.healActive){
-                summary.Add("This creature's holy aura amplifies healing magic.");
-                details.Add("The health gained by the power of healing is doubled.");
+                summary.Add("This creature's holy aura amplifies <healing>healing magic<>.");
+                details.Add("The <healing>health<> gained by the <healing>power of healing<> is <damage>doubled<>.");
             }
             if (StaticVariables.darkActive){
-                summary.Add("This creature's holy aura diminishes the power of darkness.");
-                details.Add("The power of darkness deals double damage.");
+                summary.Add("This creature's holy aura diminishes the <dark>power of darkness<>.");
+                details.Add("The <dark>power of darkness<> deals <damage>half damage<>.");
             }
         }        
         if (enemy.isDark){
             if (StaticVariables.healActive){
-                summary.Add("This creature's dark aura dampens healing magic.");
-                details.Add("The health gained by the power of healing is halved.");
+                summary.Add("This creature's dark aura dampens <healing>healing magic<>.");
+                details.Add("The <healing>health<> gained by the <healing>power of healing<> is <damage>halved<>.");
             }
             if (StaticVariables.darkActive){
-                summary.Add("This creature's dark aura bolsters the power of darkness.");
-                details.Add("The power of darkness deals half damage.");
+                summary.Add("This creature's dark aura bolsters the <dark>power of darkness<>.");
+                details.Add("The <dark>power of darkness<> deals <damage>double damage<>.");
             }
         }     
         if (enemy.isNearWater){
             if (StaticVariables.waterActive){
-                summary.Add("The nearby river empowers flooded attacks.");
-                details.Add("While the book is flooded by the power of water, attacks do +4 damage.");
+                summary.Add("The nearby river empowers <water>flooded attacks<>.");
+                details.Add("While the book is <water>flooded<> by the <water>power of water<>, attacks do <damage>+4 damage<>.");
             
             }
         }  
         if (enemy.canApplyDebuff){
             if (StaticVariables.healActive){
-                summary.Add("This enemy can inflict a negative status.");
-                details.Add("Some of this enemy's attacks can apply a debuff that will disappear after a short time. Using the power of healing will clear it immediately.");
+                summary.Add("This enemy can inflict a <damage>negative status<>.");
+                details.Add("Some of this enemy's attacks can apply a <damage>debuff<> that will disappear after a short time. Using the <healing>power of healing<> will clear it immediately.");
             
             }
         }
@@ -337,6 +338,7 @@ public class InteractOverlayManager : MonoBehaviour{
 
         HideOtherButtonsBehindBack(transitionDuration);
         readOptionsParent.parent.gameObject.SetActive(true);
+        scrollableInfoParent.parent.parent.gameObject.SetActive(false);
         while(readOptionsParent.childCount > 0)
             DestroyImmediate(readOptionsParent.GetChild(0).gameObject);
         if (overworldSceneManager.waterActive)
