@@ -29,6 +29,8 @@ public class OverworldSpace : MonoBehaviour{
     [ConditionalField(nameof(type), false, OverworldSpaceType.Cutscene)]
     public CutsceneManager.Cutscene cutsceneID;
     [ConditionalField(nameof(type), false, OverworldSpaceType.Cutscene)]
+    public string cutsceneTitle = "";
+    [ConditionalField(nameof(type), false, OverworldSpaceType.Cutscene)]
     public string cutsceneDescription = "";
     [ConditionalField(nameof(type), false, OverworldSpaceType.Atlas)]
     public int worldNumber = 1;

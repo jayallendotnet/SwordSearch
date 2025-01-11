@@ -27,6 +27,7 @@ public class InteractOverlayManager : MonoBehaviour{
     public RectTransform talkButton;
     public RectTransform backButton;
     public GameObject cutsceneStuff;
+    public Text cutsceneTitle;
     public Text cutsceneText;
     public Text enemyNameText;
     public GameObject clickableBackground;
@@ -532,6 +533,7 @@ public class InteractOverlayManager : MonoBehaviour{
             readButton.gameObject.SetActive(true);
             cutsceneStuff.SetActive(false);
             scrollableInfoParent.parent.parent.gameObject.SetActive(false);
+            cutsceneTitle.gameObject.SetActive(false);
             cutsceneText.gameObject.SetActive(false);
             enemyNameText.gameObject.SetActive(true);
         }
@@ -542,8 +544,10 @@ public class InteractOverlayManager : MonoBehaviour{
             readButton.gameObject.SetActive(false);
             cutsceneStuff.SetActive(true);
             scrollableInfoParent.parent.parent.gameObject.SetActive(false);
+            cutsceneTitle.gameObject.SetActive(true);
             cutsceneText.gameObject.SetActive(true);
             enemyNameText.gameObject.SetActive(false);
+            cutsceneTitle.text = TextFormatter.FormatString(overworldSceneManager.currentPlayerSpace.cutsceneTitle);
             cutsceneText.text = TextFormatter.FormatString(overworldSceneManager.currentPlayerSpace.cutsceneDescription);
         }
     }
