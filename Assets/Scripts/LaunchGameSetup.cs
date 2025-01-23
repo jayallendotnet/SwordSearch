@@ -45,7 +45,8 @@ public class LaunchGameSetup : MonoBehaviour{
         SetupStageList();
         SetupLibraries();
         //this is where we load the player's progress data, in the future from the game save data
-        StaticVariables.highestBeatenStage = StaticVariables.GetStage(2, 1);
+        StaticVariables.highestBeatenStage = StaticVariables.GetStage(1, 0);
+        StaticVariables.storyMode = true;
         SceneManager.LoadScene(StaticVariables.mainMenuName);
     }
 

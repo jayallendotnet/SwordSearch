@@ -63,7 +63,8 @@ public class CutsceneManager : MonoBehaviour{
 
     private void SetupHometownIntro(){
         SetCutsceneBackground(hometownIntroBackground1);
-        PlayAnimation("Player", "Idle Holding Book Random Brown");
+        ToggleObject("Player", false);
+        //PlayAnimation("Player", "Idle Holding Book Random Brown");
     }
 
     private void SetupHometownOutro(){
@@ -111,12 +112,82 @@ public class CutsceneManager : MonoBehaviour{
     private void DoHometownIntroStep(){   
         int i = 0;
         if (++i == cutsceneStep){
+            //MoveObject("Player", -75, 2137, 0f);
+            //advanceCondition = Cond.Wait;
+            //WaitThenAdvance(1f);
+        //}
+        //else if (++i == cutsceneStep){
+            ToggleObject("Player", true);
+            PlayAnimationAndMoveThenIdle("Player", "Walk", -201, 2025, 1.5f);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1.5f);
+        }
+        else if (++i == cutsceneStep){
+            FlipDirection("Player");
+            DisplayPlayerTalking("What a lovely sunny day! Perfect for reading my new signed copy of Longitude, second edition!", DialogueStep.Emotion.Happy);
+            advanceCondition = Cond.Click;
+        }    
+        else if (++i == cutsceneStep){
+            PlayAnimation("Player", "Take Out Book Random Brown");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(2f);
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Ooh, it even has a foreword from the author!", DialogueStep.Emotion.Happy);
+            advanceCondition = Cond.Click;
+        }    
+        //player pulls out book and starts reading
+        else if (++i == cutsceneStep){
             DisplayEnemyTalking("Miss " + StaticVariables.playerName + "! Miss " + StaticVariables.playerName + "!", "Child 2", DialogueStep.Emotion.Excited);
             PlayAnimationAndMoveThenIdle("Child 1", "Walk", 26, 605, 2f);
             PlayAnimationAndMoveThenIdle("Child 2", "Walk", 85, 564, 2.3f);
             advanceCondition = Cond.Wait;
             WaitThenAdvance(2.3f);
         }
+        else if (++i == cutsceneStep){
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("Put that dumb book down! We need you to read this newspaper!!", "Child 1", DialogueStep.Emotion.Excited);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("Mikey stop! You know how Miss " + StaticVariables.playerName + " feels when you insult her books!", "Child 2", DialogueStep.Emotion.Excited);
+            PlayAnimation("Player", "Put Away Book Random Brown");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("She'll never stop talking about \"the prince's manticore wears shorts\"!", "Child 2", DialogueStep.Emotion.Excited);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("That doesn't sound right, I think it's \"a pig is manlier when it snores\".", "Child 1", DialogueStep.Emotion.Excited);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("I've never said anything that sounds even remotely like that nonsense before!", DialogueStep.Emotion.Angry);
+            advanceCondition = Cond.Click;
+        }  
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Maybe if you had paid better attention in class you'd know it is \"the pen is mightier than the sword\"!", DialogueStep.Emotion.Angry);
+            advanceCondition = Cond.Click;
+        }  
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("And you'd be able to read that newspaper for yourselves!", DialogueStep.Emotion.Angry);
+            advanceCondition = Cond.Click;
+        }  
+        //put that dumb book down! we need you to read this newspaper!
+        //you know how miss rebecca feels when you insult her books!
+        //she'll never stop talking about "the prince's manticore wears shorts"
+        //that's not right, i think she says "a pig is manlier when it snores"
+        //i don't think i've ever said either of those statments before!
+        //maybe if you had paid attention in class, you'd know it's "the pen is mightier than the sword"
+        //and maybe you'd be able to read that newspaper for yourselves!
+
+
+
+
+        /*
         else if (++i == cutsceneStep){
             advanceCondition = Cond.Click;
         }
@@ -143,7 +214,7 @@ public class CutsceneManager : MonoBehaviour{
             WaitThenAdvance(2.1f);
         }   
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("(Book Name) is not dumb! It's a foundational piece of literature for the english language!", DialogueStep.Emotion.Excited);
+            DisplayPlayerTalking("(Book Name) is a foundational piece of literature for the english language!", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -155,13 +226,22 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
+            DisplayEnemyTalking("That's not right! It's supposed to be ---------!", "Child 2", DialogueStep.Emotion.Defeated);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
             DisplayPlayerTalking("I think you mean \"(correct quote)\".", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("That doesn't make any sense! ", "Child 1", DialogueStep.Emotion.Questioning);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
             DisplayPlayerTalking("Maybe if you'd paid more attention, you would be able to read that newspaper for yourselves!", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
         }
+        */
         else if (++i == cutsceneStep){
             DisplayEnemyTalking("Oh yeah! Read it to us! Please???", "Child 2", DialogueStep.Emotion.Excited);
             advanceCondition = Cond.Click;

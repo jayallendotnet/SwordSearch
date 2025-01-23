@@ -252,8 +252,7 @@ public class OverworldSceneManager : MonoBehaviour{
         currentPlayerSpace.transform.GetChild(2).Find("Overworld Player Space Icon").gameObject.SetActive(false);
     }
 
-    private void EndPlayerWalk(){
-        playerAnimator.SetTrigger("WalkEnd");
+    public void PlayerArrivedAtDestination(){
         isPlayerMoving = false;
         currentPlayerSpace.transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
         Vector3 s = playerParent.localScale;
@@ -282,6 +281,41 @@ public class OverworldSceneManager : MonoBehaviour{
                 dialogueManager.Setup(currentEnemyData.overworldDialogueSteps, currentPlayerSpace.battleData);
 
         }
+    }
+
+    private void EndPlayerWalk(){
+        playerAnimator.SetTrigger("WalkEnd");
+        PlayerArrivedAtDestination();
+        /*
+        isPlayerMoving = false;
+        currentPlayerSpace.transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
+        Vector3 s = playerParent.localScale;
+        s.x = 1;
+        playerParent.localScale = s;
+
+        if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Atlas){
+            StaticVariables.lastVisitedStage = StaticVariables.GetStage(currentPlayerSpace.worldNumber, 1);
+            StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
+            return;
+
+            
+        //StaticVariables.lastVisitedStage = StaticVariables.GetStage(worldNum, 1);
+        //StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
+        }
+
+        interactOverlayManager.ShowInteractOverlay();
+        if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Cutscene)
+            return;    
+        EnemyData ed = currentPlayerSpace.battleData.enemyPrefab.GetComponent<EnemyData>();
+        interactOverlayManager.DisplayEnemyName(ed);
+        interactOverlayManager.ConfigureInfoButton(ed);
+        interactOverlayManager.ConfigureReadButton(ed);
+        if ((IsCurrentEnemyNewestEnemy()) && (!StaticVariables.hasTalkedToNewestEnemy)){
+            if ((currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Battle) || (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial))
+                dialogueManager.Setup(currentEnemyData.overworldDialogueSteps, currentPlayerSpace.battleData);
+
+        }
+        */
     }
 
     private bool IsCurrentEnemyNewestEnemy(){

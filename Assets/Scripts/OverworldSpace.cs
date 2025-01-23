@@ -67,6 +67,13 @@ public class OverworldSpace : MonoBehaviour{
         overworldSceneManager.currentEnemyData = battleData.enemyPrefab.GetComponent<EnemyData>();
     }
 
+    public void PlayerIsAlreadyAtThisSpace(){
+        //overworldSceneManager.StartMovingPlayerToSpace(this);
+        overworldSceneManager.currentPlayerSpace = this;
+        overworldSceneManager.currentEnemyData = battleData.enemyPrefab.GetComponent<EnemyData>();
+        overworldSceneManager.PlayerArrivedAtDestination();
+    }
+
     public void ClickedSpace(){
         if (overworldSceneManager.interactOverlayManager.isInteractOverlayShowing)
             return;        
@@ -75,7 +82,7 @@ public class OverworldSpace : MonoBehaviour{
         if (overworldSceneManager.currentPlayerSpace != this)
             MovePlayerToThisSpace();
         else{
-            MovePlayerToThisSpace(); //if the player is already on the space. "moving" them a distance 0 should just start the interact menu popup
+            PlayerIsAlreadyAtThisSpace(); //if the player is already on the space. "moving" them a distance 0 should just start the interact menu popup
         }
     }
 

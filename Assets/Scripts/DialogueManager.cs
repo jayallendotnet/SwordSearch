@@ -283,10 +283,10 @@ public class DialogueManager : MonoBehaviour{
 
         GameObject flair = emotion switch {
             (DialogueStep.Emotion.Angry) => playerAngryFlair,
-            (DialogueStep.Emotion.Happy) => playerHappyFlair,
-            (DialogueStep.Emotion.Questioning) => playerQuestioningFlair,
+            //(DialogueStep.Emotion.Happy) => playerHappyFlair,
+            //(DialogueStep.Emotion.Questioning) => playerQuestioningFlair,
             (DialogueStep.Emotion.Worried) => playerWorriedFlair,
-            (DialogueStep.Emotion.Surprised) => playerSurprisedFlair,
+            //(DialogueStep.Emotion.Surprised) => playerSurprisedFlair,
             _ => null,
         };
 
