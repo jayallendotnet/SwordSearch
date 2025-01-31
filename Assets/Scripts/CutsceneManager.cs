@@ -112,11 +112,6 @@ public class CutsceneManager : MonoBehaviour{
     private void DoHometownIntroStep(){   
         int i = 0;
         if (++i == cutsceneStep){
-            //MoveObject("Player", -75, 2137, 0f);
-            //advanceCondition = Cond.Wait;
-            //WaitThenAdvance(1f);
-        //}
-        //else if (++i == cutsceneStep){
             ToggleObject("Player", true);
             PlayAnimationAndMoveThenIdle("Player", "Walk", -201, 2025, 1.5f);
             advanceCondition = Cond.Wait;
@@ -124,19 +119,23 @@ public class CutsceneManager : MonoBehaviour{
         }
         else if (++i == cutsceneStep){
             FlipDirection("Player");
-            DisplayPlayerTalking("What a lovely sunny day! Perfect for reading my new signed copy of Longitude, second edition!", DialogueStep.Emotion.Happy);
+            DisplayPlayerTalking("Ah, spring! The warm sun always puts me in a reading mood!", DialogueStep.Emotion.Happy);
             advanceCondition = Cond.Click;
         }    
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        }
         else if (++i == cutsceneStep){
             PlayAnimation("Player", "Take Out Book Random Brown");
             advanceCondition = Cond.Wait;
             WaitThenAdvance(2f);
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Ooh, it even has a foreword from the author!", DialogueStep.Emotion.Happy);
+            DisplayPlayerTalking("Oh, who am I kidding... All weather puts me in a reading mood.", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }    
-        //player pulls out book and starts reading
         else if (++i == cutsceneStep){
             DisplayEnemyTalking("Miss " + StaticVariables.playerName + "! Miss " + StaticVariables.playerName + "!", "Child 2", DialogueStep.Emotion.Excited);
             PlayAnimationAndMoveThenIdle("Child 1", "Walk", 26, 605, 2f);
@@ -169,7 +168,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }  
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Maybe if you had paid better attention in class you'd know it is \"the pen is mightier than the sword\"!", DialogueStep.Emotion.Angry);
+            DisplayPlayerTalking("Maybe if you had paid attention in class you'd know it's \"the pen is mightier than the sword\"!", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
         }  
         else if (++i == cutsceneStep){
@@ -270,7 +269,7 @@ public class CutsceneManager : MonoBehaviour{
         //    advanceCondition = Cond.Click;
         //}    
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Ahem!\nThe headline reads,\n\"Lich King Defeated! (Capital City) in Ruins!\"", DialogueStep.Emotion.Normal);
+            DisplayPlayerTalking("Ahem!\nThe headline reads,\n\"Lich King Defeated! Duskvale in Ruins!\"", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }       
         else if (++i == cutsceneStep){
@@ -287,7 +286,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }      
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("My daughter lives in (Capital City)!", "Orange Shirt Black Woman No Hat", DialogueStep.Emotion.Excited);
+            DisplayEnemyTalking("My daughter lives in Duskvale!", "Orange Shirt Black Woman No Hat", DialogueStep.Emotion.Excited);
             advanceCondition = Cond.Wait;
             WaitThenAdvance(0.2f);
         }
@@ -317,7 +316,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("\"Late last night, a great hole appeared in the center of (Captial City).\"", DialogueStep.Emotion.Normal);
+            DisplayPlayerTalking("\"Late last night, a great hole appeared in the center of Duskvale.\"", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }  
         else if (++i == cutsceneStep){
@@ -366,11 +365,11 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Ha ha ha...\nPuny humans, in your puny town...", "Red Dragon", DialogueStep.Emotion.Angry);
+            DisplayEnemyTalking("Ha ha ha...\nPuny humans in your simple town...", "Red Dragon", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("I could eat all of you right now!", "Red Dragon", DialogueStep.Emotion.Angry);
+            DisplayEnemyTalking("I could eat all of you on a whim!", "Red Dragon", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -673,7 +672,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Hey, I remember this book! I figured it was an old empty journal...", DialogueStep.Emotion.Questioning);
+            DisplayPlayerTalking("I always thought this was an old empty journal...", DialogueStep.Emotion.Questioning);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -792,7 +791,8 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             GetAnimatorFromName("Player").transform.parent.GetChild(2).gameObject.SetActive(true);
             advanceCondition = Cond.Wait;
-            WaitThenAdvance(1.25f);
+            //WaitThenAdvance(1.25f);
+            WaitThenAdvance(1.5f);
         }
         //else if (++i == cutsceneStep){
         //    advanceCondition = Cond.Wait;
@@ -805,7 +805,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Yeah, if you want to sling spells, go to (Captial City)!", "Yellowhead Woman", DialogueStep.Emotion.Angry);
+            DisplayEnemyTalking("Yeah, if you want to sling spells, go to the Academy!", "Yellowhead Woman", DialogueStep.Emotion.Angry);
             FlipDirection("Yellowhead Woman");
             advanceCondition = Cond.Click;
         }
@@ -815,7 +815,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Yeah, it's been decades since (Elder) and his magic were here with us...", "Short Black Man", DialogueStep.Emotion.Excited);
+            DisplayEnemyTalking("Yeah, it's been decades since Eldric and his magic were here with us...", "Short Black Man", DialogueStep.Emotion.Excited);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -853,17 +853,17 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("One time I got into a fight with a (future enemy)!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("I even fought an owlbear once!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
             DisplayEnemyTalking("But one day I woke up with a shake in my hands, and that was it. I couldn't use magic after that.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("I even tried to go back to my old life, just being a simple chef. But I couldn't do that either.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
+        //else if (++i == cutsceneStep){
+        //    DisplayEnemyTalking("I even tried to go back to my old life, just being a simple chef. But I couldn't do that either.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+        //    advanceCondition = Cond.Click;
+        //}
         else if (++i == cutsceneStep){
             DisplayPlayerTalking("I've read some of the library's medical textbooks. Maybe there's something in one of them that could heal your hand tremors?", DialogueStep.Emotion.Questioning);
             advanceCondition = Cond.Click;
@@ -898,7 +898,7 @@ public class CutsceneManager : MonoBehaviour{
             WaitThenAdvance(0.8f);
         }        
         else if (++i == cutsceneStep){
-            FlipDirection("Orange Shirt Black Woman No Hat");
+            //FlipDirection("Orange Shirt Black Woman No Hat");
             PlayAnimationAndMoveThenIdle("Orange Shirt Black Woman No Hat", "Walk", -384, 413, 0.8f);
             advanceCondition = Cond.Wait;
             WaitThenAdvance(0.6f);
@@ -932,10 +932,10 @@ public class CutsceneManager : MonoBehaviour{
             DisplayEnemyTalking("Allow me to be blunt here... If that dragon comes by again, we're toast!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("He's right! And I know a thing or two about toast!", "Chef", DialogueStep.Emotion.Excited);
-            advanceCondition = Cond.Click;
-        }
+        //else if (++i == cutsceneStep){
+        //    DisplayEnemyTalking("He's right! And I know a thing or two about toast!", "Chef", DialogueStep.Emotion.Excited);
+        //    advanceCondition = Cond.Click;
+        //}
         else if (++i == cutsceneStep){
             DisplayEnemyTalking("We need to do something!", "Yellowhead Woman", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
@@ -946,7 +946,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("I have a newspaper that I was reading before the dragon attacked!", DialogueStep.Emotion.Happy);
+            DisplayPlayerTalking("I was reading this newspaper before the dragon showed up!", DialogueStep.Emotion.Happy);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -960,7 +960,7 @@ public class CutsceneManager : MonoBehaviour{
             WaitThenAdvance(1f);
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Here's the full article I was reading earlier: \n\"Last night a great hole appeared in the center of (Captial City).\"", DialogueStep.Emotion.Normal);
+            DisplayPlayerTalking("Here's the full article I was reading earlier: \n\"Last night a great hole appeared in the center of Duskvale.\"", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -1004,7 +1004,7 @@ public class CutsceneManager : MonoBehaviour{
         //    advanceCondition = Cond.Click;
         //}
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("I knew a swordswoman, who weilded the power of that very sword!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("I knew a swordswoman who weilded the power of that very sword!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         //else if (++i == cutsceneStep){
@@ -1016,7 +1016,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("It might just still be there, for all I know!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("For all I know, it might just still be there!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -1131,7 +1131,7 @@ public class CutsceneManager : MonoBehaviour{
             WaitThenAdvance(0.5f);
         }      
         else if (++i == cutsceneStep){
-            PlayAnimationAndMoveThenIdle("Bald Man Blue Shirt", "Walk", -38, 1250, 2f);
+            PlayAnimationAndMoveThenIdle("Bald Man Blue Shirt", "Walk", -38, 676, 2f);
             advanceCondition = Cond.Wait;
             WaitThenAdvance(2f);
         }      
@@ -1163,15 +1163,35 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("I wanted to thank you for offering to heal my hands and bring my magic back...", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("I wanted to thank you for offering to heal my hands and bring my magic back!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("But to be honest, I'm an old man now. I don't know if I want to weild that power again.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            DisplayPlayerTalking("Actually, about that..." , DialogueStep.Emotion.Normal);   
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Nevertheless, you showed me kindness, and I wanted to give you something in return.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            DisplayPlayerTalking("I think I should get some more practice with magic before I try it on people!" , DialogueStep.Emotion.Surprised);   
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("That's alright, I'm an old man now. I don't know if I want to weild that power again...", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("I do miss cooking though! Before I started adventuring, I was the head chef for the tavern.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("When you come back from your quest, I'll take you up on your offer. You can fix up my hands and I can cook you a mean nine course meal!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("That sounds lovely!" , DialogueStep.Emotion.Happy);   
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("Oh! But that's not why I came out here! You showed me kindness, and I wanted to give you something in return.", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -1181,7 +1201,8 @@ public class CutsceneManager : MonoBehaviour{
         }
         else if (++i == cutsceneStep){ 
             advanceCondition = Cond.Wait;
-            WaitThenAdvance(1.5f);
+            //WaitThenAdvance(1.5f);
+            WaitThenAdvance(2f);
             PlayAnimation("Bald Man Blue Shirt", "Take Out Bag");
         } 
         else if (++i == cutsceneStep){
@@ -1222,7 +1243,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("You're right! I'd better get going. Goodbye, (Elder).", DialogueStep.Emotion.Normal);
+            DisplayPlayerTalking("You're right! I'd better get going. Goodbye, Eldric.", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -1238,7 +1259,7 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             advanceCondition = Cond.Wait;
             WaitThenAdvance(2f);
-            PlayAnimationAndMoveThenIdle("Player", "Walk", 500, 2592, 5f);
+            PlayAnimationAndMoveThenIdle("Player", "Walk", 500, 2012, 5f);
         }
         else if (++i == cutsceneStep){
             StaticVariables.hasCompletedStage = true;

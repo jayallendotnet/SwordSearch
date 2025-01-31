@@ -34,7 +34,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -149,39 +148,52 @@ MonoBehaviour:
   excited: {fileID: 0}
   questioning: {fileID: 0}
   overworldDialogueSteps:
-  - type: 0
-    talker: {fileID: 0}
-    emotion: 4
-    description: What a cute little slime.
   - type: 1
     talker: {fileID: 0}
     emotion: 0
     description: Gloop.
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 4
+    description: Oh, wow, it's a slime!
   - type: 0
     talker: {fileID: 0}
     emotion: 5
-    description: I've heard these slimes are dangerous, but you don't look like you
-      could hurt a fly!
+    description: It's rare to see one this close to town...
   - type: 1
     talker: {fileID: 0}
     emotion: 0
-    description: Gloop.
-  - type: 0
-    talker: {fileID: 0}
-    emotion: 4
-    description: Come here sweetie, let me give you a big hug!
-  - type: 1
-    talker: {fileID: 0}
-    emotion: 1
     description: Gloop!
   - type: 0
     talker: {fileID: 0}
-    emotion: 1
-    description: Ouch! It bit me!!
+    emotion: 0
+    description: It's a common misconception that their gooey bodies make the "gloop"
+      sound when they move...
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 4
+    description: Apparently, due to their particular vocal cords and mouth shape,
+      it's the only sound they can make!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: Gloop?
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 5
+    description: Can you understand what I'm saying?
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: I hope so, or else I'm just talking to myself again...
   - type: 1
     talker: {fileID: 0}
     emotion: 1
-    description: GLOOOOOOP!!!!
+    description: Gloop!!!
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: Ouch!!
   victoryDialogueSteps:
   - type: 1
     talker: {fileID: 0}
@@ -190,4 +202,8 @@ MonoBehaviour:
   - type: 0
     talker: {fileID: 0}
     emotion: 1
-    description: You are not so cute any more, little slime.
+    description: Get out of here, little slime! Before you bite anyone else!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 2
+    description: Gloop...

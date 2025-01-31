@@ -34,7 +34,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -128,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBattleable: 1
-  nameOverride: Troll
+  nameOverride: Bridge Troll
   startingHealth: 90
   attackOrder:
     Value:
@@ -149,48 +148,85 @@ MonoBehaviour:
   excited: {fileID: 0}
   questioning: {fileID: 0}
   overworldDialogueSteps:
-  - type: 0
-    talker: {fileID: 0}
-    emotion: 0
-    description: I can see some buildings on the other side of this river.
-  - type: 0
-    talker: {fileID: 0}
-    emotion: 5
-    description: I wonder if there's someone there that can give me directions to
-      the Enchanted Forest.
-  - type: 0
-    talker: {fileID: 0}
-    emotion: 0
-    description: There's a bridge here, over this troubled water. I hope there's
-      not a -
   - type: 1
     talker: {fileID: 0}
     emotion: 0
-    description: Buh. Money or Life.
-  - type: 0
-    talker: {fileID: 0}
-    emotion: 2
-    description: Great. A bridge troll. I don't see any other bridges, and it could
-      take days to find another way around...
-  - type: 1
-    talker: {fileID: 0}
-    emotion: 1
-    description: Money! Or! Life!
-  - type: 0
-    talker: {fileID: 0}
-    emotion: 1
-    description: Fine, I choose life!
-  victoryDialogueSteps:
-  - type: 1
-    talker: {fileID: 0}
-    emotion: 2
-    description: Go. Free pass.
+    description: Hello human.
   - type: 0
     talker: {fileID: 0}
     emotion: 4
-    description: Thank you, troll.
+    description: Hello, I'd like to cross your bridge please.
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: I am bridge troll.
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: You not cross until riddles three.
   - type: 0
     talker: {fileID: 0}
     emotion: 0
-    description: Now to see if there are any people at those buildings who can point
-      me in the right direction.
+    description: Oh, I love riddles! Is one of them about the man on the elevator
+      with the umbrella?
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: No. First riddle, who is green and like eat chicken?
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 5
+    description: This doesn't really sound like a riddle...
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: Is it you?
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: Yes! Good! I love chicken!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: Next riddle, who have orange hair and I think taste like chicken?
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 6
+    description: I don't like where this is going at all...
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 0
+    description: Is it me?
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: Yes! Very good human!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: Last riddle, what I having for dinner?
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: It's not going to be me!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 1
+    description: Wrong answer human! Very sad.
+  victoryDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 1
+    description: See, I'm not your dinner after all!
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 2
+    description: Yes, human. You right.
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: You answer riddles. You smartier than me.
+  - type: 1
+    talker: {fileID: 0}
+    emotion: 0
+    description: I let you go bridge.
