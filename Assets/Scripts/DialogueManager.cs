@@ -51,6 +51,9 @@ public class DialogueManager : MonoBehaviour{
     public bool isInBattle = false;
     public bool isInTutorial = false;
 
+    [Header("Prefabs")]
+    public GameObject magicFlashPrefab;
+
     [HideInInspector]
     public bool isInCutscene = false;
     [HideInInspector]
@@ -226,6 +229,11 @@ public class DialogueManager : MonoBehaviour{
             AdvanceTalkStage();
     }
 
+    private void EndDialogueEvent(){
+        realButton.SetActive(true);
+        AdvanceTalkStage();
+    }
+
     private void ShowCurrentTalkStage(){
 
         if (currentStep < dialogueSteps.Length){
@@ -236,10 +244,16 @@ public class DialogueManager : MonoBehaviour{
                 ShowEnemyTalking(enemyData, dialogueSteps[currentStep].emotion);
             else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.OtherTalking)
                 ShowEnemyTalking(dialogueSteps[currentStep].talker, dialogueSteps[currentStep].emotion);
-            //else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.Event)
-            //    if (dialogueSteps[currentStep].description == "info button tutorial"){
-                    //info button tutorial
-            //    }
+            else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.Event)
+                if (dialogueSteps[currentStep].description == "Healing flash"){
+                    ShowNobodyTalking();
+                    dialogueTextBox.text = "";
+                    realButton.SetActive(false);
+                    MagicFlash flash = Instantiate(magicFlashPrefab, enemyChatheadTransform).GetComponent<MagicFlash>();
+                    StaticVariables.WaitTimeThenCallFunction(flash.GetTotalTime(), EndDialogueEvent);
+                    flash.StartProcess(StaticVariables.healingPowerupColor);
+                    return;
+                }
         }
         else{
             dialogueTextBox.text = "No dialogue for this enemy, current talk step is " + currentStep;

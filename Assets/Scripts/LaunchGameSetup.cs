@@ -9,6 +9,14 @@ using Unity.VisualScripting;
 
 public class LaunchGameSetup : MonoBehaviour{
 
+    [Header("Powerup Colors")]
+    public Color waterColor;
+    public Color healingColor;
+    public Color earthColor;
+    public Color fireColor;
+    public Color lightningColor;
+    public Color darknessColor;
+    public Color swordColor;
 
     [Header("Enemies")]
     public List<GameObject> hometownEnemies;
@@ -41,13 +49,24 @@ public class LaunchGameSetup : MonoBehaviour{
     private StageData previousStage;
 
     void Start(){
+        SetupColors();
         SetupBookLists();
         SetupStageList();
         SetupLibraries();
         //this is where we load the player's progress data, in the future from the game save data
-        StaticVariables.highestBeatenStage = StaticVariables.GetStage(1, 7);
+        StaticVariables.highestBeatenStage = StaticVariables.GetStage(2, 9);
         StaticVariables.storyMode = true;
         SceneManager.LoadScene(StaticVariables.mainMenuName);
+    }
+
+    private void SetupColors(){
+        StaticVariables.waterPowerupColor = waterColor;
+        StaticVariables.healingPowerupColor = healingColor;
+        StaticVariables.earthPowerupColor = earthColor;
+        StaticVariables.firePowerupColor = fireColor;
+        StaticVariables.lightningPowerupColor = lightningColor;
+        StaticVariables.darknessPowerupColor = darknessColor;
+        StaticVariables.swordPowerupColor = swordColor;
     }
 
     private void SetupLibraries(){

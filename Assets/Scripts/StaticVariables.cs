@@ -59,6 +59,15 @@ public class StaticVariables
     static public string world7Name = "World 7 - Caverns";
     static public string world8Name = "World 8 - Dragon's Den";
 
+    //powerup colors
+    static public Color waterPowerupColor;
+    static public Color healingPowerupColor;
+    static public Color earthPowerupColor;
+    static public Color firePowerupColor;
+    static public Color lightningPowerupColor;
+    static public Color darknessPowerupColor;
+    static public Color swordPowerupColor;
+
     static public bool storyMode = false;
 
 

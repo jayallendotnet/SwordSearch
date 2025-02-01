@@ -36,7 +36,6 @@ RectTransform:
   - {fileID: 2818598695481683480}
   - {fileID: 7528174877207669716}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -75,8 +74,8 @@ MonoBehaviour:
   isNearWater: 1
   canApplyDebuff: 0
   normal: {fileID: 0}
-  angry: {fileID: 21300000, guid: 8654e1b0a98668a44a45cc07c910ebd4, type: 3}
-  defeated: {fileID: 0}
+  angry: {fileID: 21300000, guid: e6f906443d6b22146ae3395e0a858e88, type: 3}
+  defeated: {fileID: 21300000, guid: 65d5e869ddad2f5429fca689cac84b15, type: 3}
   excited: {fileID: 0}
   questioning: {fileID: 0}
   overworldDialogueSteps:
@@ -86,50 +85,85 @@ MonoBehaviour:
     description: Watch out up ahead, miss. Up that way is a gaggle of goblins.
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    emotion: 0
+    description: Them's a dangerous bunch, always tryin' to nab our gold and livestock
+      and whatnot.
+  - type: 2
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    emotion: 0
+    description: Best to avoid 'em if we can.
+  - type: 0
+    talker: {fileID: 0}
+    emotion: 4
+    description: Nonsense! I took care of some goblins myself a few days ago!
+  - type: 2
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    emotion: 0
+    description: '"Took care of"...? Look miss, wth all due respect I don''t think
+      we should be pamperin'' these green folk.'
+  - type: 0
+    talker: {fileID: 0}
     emotion: 1
-    description: They always steal our crops and kill our livestock!
+    description: No! I mean I slung some spells and chased them out of my town!
   - type: 0
     talker: {fileID: 0}
     emotion: 5
-    description: Do you want to fight them off once and for all? I bet we can beat
-      them together!
+    description: Maybe we can chase them out of your village too?
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
     emotion: 0
-    description: Boy howdy, do I!
+    description: That there is the best idea I've heard since meemaw showed me how
+      to slice bread!
   - type: 0
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
     emotion: 0
-    description: Let's each take half of the group. I'll get those four over there.
-  - type: 0
+    description: There's a group down by the river... I bet I could take them all
+      out at once with some water magic!
+  - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    emotion: 0
+    description: Good thinkin', miss. I'll tussle with the rest!
+  - type: 0
+    talker: {fileID: 1107962101534003463, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
     emotion: 1
-    description: Hey you goblins! Come and get me!!
+    description: 'Hey, you goblins! '
+  - type: 2
+    talker: {fileID: 1107962101534003463, guid: 185dc02c181557a4a8d5f524d9baf82c, type: 3}
+    emotion: 0
+    description: A human woman with orange hair and a blue book!
+  - type: 2
+    talker: {fileID: 1107962101534003463, guid: 185dc02c181557a4a8d5f524d9baf82c, type: 3}
+    emotion: 1
+    description: My cousin Tiny told me about you!
+  - type: 2
+    talker: {fileID: 1107962101534003463, guid: 858761c2be096f94a9eb89abc6ab7c34, type: 3}
+    emotion: 1
+    description: She was the one who attacked Tiny?
+  - type: 2
+    talker: {fileID: 1107962101534003463, guid: 858761c2be096f94a9eb89abc6ab7c34, type: 3}
+    emotion: 1
+    description: Let's teach her a lesson!
   - type: 1
     talker: {fileID: 1107962101534003463, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
     emotion: 1
-    description: Human!!!
+    description: For Tiny!!!
   victoryDialogueSteps:
-  - type: 0
+  - type: 1
     talker: {fileID: 0}
-    emotion: 1
-    description: Take THAT!!
+    emotion: 2
+    description: What were we thinkin?
+  - type: 1
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    emotion: 2
+    description: I don't think even the generals could take her down...
+  - type: 0
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    emotion: 6
+    description: Are there more of you?
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
     emotion: 0
-    description: Looks like we managed to drive off the rest of them!
-  - type: 0
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    emotion: 6
-    description: Uh... no, I don't think we did!
-  - type: 2
-    talker: {fileID: 31044923072073363, guid: 19bba172f03c62d47a37240074409bbf, type: 3}
-    emotion: 1
-    description: Humans!
-  - type: 0
-    talker: {fileID: 31044923072073363, guid: 19bba172f03c62d47a37240074409bbf, type: 3}
-    emotion: 6
-    description: It's a horde of goblin generals!
+    description: Yes, miss! And here they come!
 --- !u!114 &730767153068028742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,7 +211,6 @@ RectTransform:
   m_Children:
   - {fileID: 1273058534540895744}
   m_Father: {fileID: 1107962101534003458}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -214,7 +247,6 @@ RectTransform:
   m_Children:
   - {fileID: 6384984571180015047}
   m_Father: {fileID: 1107962101534003458}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -251,7 +283,6 @@ RectTransform:
   m_Children:
   - {fileID: 5585849252685315326}
   m_Father: {fileID: 1107962101534003458}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -288,7 +319,6 @@ RectTransform:
   m_Children:
   - {fileID: 3699317486550027561}
   m_Father: {fileID: 1107962101534003458}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -300,6 +330,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2736678616533908786}
     m_Modifications:
     - target: {fileID: 1107962101534003457, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
@@ -391,6 +422,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
 --- !u!224 &1273058534540895744 stripped
 RectTransform:
@@ -402,6 +436,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2818598695481683480}
     m_Modifications:
     - target: {fileID: 1107962101534003457, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
@@ -493,6 +528,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
 --- !u!224 &3699317486550027561 stripped
 RectTransform:
@@ -504,6 +542,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 7528174877207669716}
     m_Modifications:
     - target: {fileID: 1107962101534003457, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
@@ -595,6 +634,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
 --- !u!224 &5585849252685315326 stripped
 RectTransform:
@@ -606,6 +648,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2789759064223460961}
     m_Modifications:
     - target: {fileID: 1107962101534003457, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
@@ -697,6 +740,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
 --- !u!224 &6384984571180015047 stripped
 RectTransform:

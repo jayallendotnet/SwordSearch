@@ -137,6 +137,7 @@ public class OverworldSpace : MonoBehaviour{
     }
 
     private void FadeInEnemy(){
+        print("fading in enemy");
         foreach (Image im in enemyImages){
             Color c = im.color;
             c.a = 1;
@@ -146,9 +147,9 @@ public class OverworldSpace : MonoBehaviour{
     }
 
     private void TurnEnemyAniamtionsOn(){
+        button.SetActive(true);
         foreach (Image im in enemyImages)
             im.GetComponent<Animator>().enabled = true;
-        button.SetActive(true);
     }
 }
 

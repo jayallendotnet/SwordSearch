@@ -28,7 +28,8 @@ public class CutsceneManager : MonoBehaviour{
     public GameObject hometownIntroBackground3;
     public GameObject hometownOutroBackground;
     public GameObject grasslandsIntroBackground;
-    public GameObject grasslandsOutroBackground;
+    public GameObject grasslandsOutroBackground1;
+    public GameObject grasslandsOutroBackground2;
     
 
     public void Start() {
@@ -80,7 +81,7 @@ public class CutsceneManager : MonoBehaviour{
     }
 
     private void SetupGrasslandsOutro(){
-        SetCutsceneBackground(grasslandsOutroBackground);
+        SetCutsceneBackground(grasslandsOutroBackground1);
     }
 
     private void AdvanceCutsceneStep(){
@@ -1183,7 +1184,7 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("When you come back from your quest, I'll take you up on your offer. You can fix up my hands and I can cook you a mean nine course meal!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("When you come back from your quest, I'll take you up on your offer. You can fix up my hands and I'll cook you a mean nine-course meal!", "Bald Man Blue Shirt", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){

@@ -55,13 +55,13 @@ public static class TextFormatter{
         //<healing>word<>
         //Replace(ref output, "<water>", "<color=#" + waterKeywordColor + ">")
         output = output.Replace("<damage>", "<color=#" + damageKeywordColor + ">");
-        output = output.Replace("<water>", "<color=#" + waterKeywordColor + ">");
-        output = output.Replace("<healing>", "<color=#" + healKeywordColor + ">");
-        output = output.Replace("<earth>", "<color=#" + earthKeywordColor + ">");
-        output = output.Replace("<fire>", "<color=#" + fireKeywordColor + ">");
-        output = output.Replace("<lightning>", "<color=#" + lightningKeywordColor + ">");
-        output = output.Replace("<dark>", "<color=#" + darkKeywordColor + ">");
-        output = output.Replace("<sword>", "<color=#" + swordKeywordColor + ">");
+        output = output.Replace("<water>", "<color=#" + StaticVariables.waterPowerupColor.ToHexString() + ">");
+        output = output.Replace("<healing>", "<color=#" + StaticVariables.healingPowerupColor.ToHexString() + ">");
+        output = output.Replace("<earth>", "<color=#" + StaticVariables.earthPowerupColor.ToHexString() + ">");
+        output = output.Replace("<fire>", "<color=#" + StaticVariables.firePowerupColor.ToHexString() + ">");
+        output = output.Replace("<lightning>", "<color=#" + StaticVariables.lightningPowerupColor.ToHexString() + ">");
+        output = output.Replace("<dark>", "<color=#" + StaticVariables.darknessPowerupColor.ToHexString() + ">");
+        output = output.Replace("<sword>", "<color=#" + StaticVariables.swordPowerupColor.ToHexString() + ">");
         output = output.Replace("<>", "</color>");
 
         //double spaces for readability
