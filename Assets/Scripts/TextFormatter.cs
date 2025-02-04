@@ -10,13 +10,13 @@ public static class TextFormatter{
 
     private static readonly string damageKeywordColor = "9C2931";
 
-    private static readonly string healKeywordColor = "92E8C0";
-    private static readonly string waterKeywordColor = "0A95D0";
-    private static readonly string earthKeywordColor = "7D5743";
-    private static readonly string fireKeywordColor = "F87820";
-    private static readonly string lightningKeywordColor = "FFCF00";
-    private static readonly string darkKeywordColor = "534F8F";
-    private static readonly string swordKeywordColor = "981F88";
+    //private static readonly string healKeywordColor = "92E8C0";
+    //private static readonly string waterKeywordColor = "0A95D0";
+    //private static readonly string earthKeywordColor = "7D5743";
+    //private static readonly string fireKeywordColor = "F87820";
+    //private static readonly string lightningKeywordColor = "FFCF00";
+    //private static readonly string darkKeywordColor = "534F8F";
+    //private static readonly string swordKeywordColor = "981F88";
 
     public static List<string> FormatStringList(List<string> input){
         List<string> output = new();

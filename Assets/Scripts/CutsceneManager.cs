@@ -13,6 +13,7 @@ public class CutsceneManager : MonoBehaviour{
     public enum Cutscene{HometownIntro, HometownOutro, GrasslandsIntro, GrasslandsOutro};
     private Cutscene cutsceneID;
     private List<Animator> animatedObjectsInCutscene = new List<Animator>();
+    private List<GameObject> searchableObjectsInCutscene = new List<GameObject>();
     private float shakeTimer = 0f;
     private Animator playerAnimator;
     private GameObject nextBackground;
@@ -63,7 +64,7 @@ public class CutsceneManager : MonoBehaviour{
     }
 
     private void SetupHometownIntro(){
-        SetCutsceneBackground(hometownIntroBackground1);
+        SetCutsceneBackground(hometownIntroBackground2);
         ToggleObject("Player", false);
         //PlayAnimation("Player", "Idle Holding Book Random Brown");
     }
@@ -193,17 +194,14 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             PlayAnimation("Child 2", "Show Newspaper");
             advanceCondition = Cond.Wait;
-            WaitThenAdvance(2.3f);
+            WaitThenAdvance(1.3f);
         }        
         else if (++i == cutsceneStep){
             PlayAnimation("Child 2", "Idle");
             PlayAnimation("Player", "Idle Holding Newspaper");
             advanceCondition = Cond.Wait;
-            WaitThenAdvance(1.6f);
+            WaitThenAdvance(0.6f);
         }
-        //else if (++i == cutsceneStep){
-        //    advanceCondition = Cond.Click;
-        //}    
         else if (++i == cutsceneStep){
             DisplayPlayerTalking("Ahem!\nThe headline reads,\n\"Lich King Defeated! Duskvale in Ruins!\"", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
@@ -261,7 +259,6 @@ public class CutsceneManager : MonoBehaviour{
         }     
         else if (++i == cutsceneStep){
             DisplayEnemyTalking("ROOOOOOOAR!!!!", "Mystery Dragon", DialogueStep.Emotion.Angry);
-            //PlayAnimation("Child 2", "Put Away Newspaper");
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
@@ -344,14 +341,40 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             PlayAnimation("Red Dragon", "Prolonged Attack - Start");
             advanceCondition = Cond.Wait;
-            WaitThenAdvance(1.5f);
-        }
-        else if (++i == cutsceneStep){
-            StartCutsceneImageTransition(hometownIntroBackground2);
-            advanceCondition = Cond.BackgroundChange;
+            WaitThenAdvance(1f);
         }
         else if (++i == cutsceneStep){
             PlayAnimation("Red Dragon", "Prolonged Attack - End");
+
+            ToggleObject("Fires", true);
+            //GetObjectFromName("Fires").SetActive(true);
+            ToggleObject("Fire 1", true);
+            ToggleObject("Fire 2", true);
+            ToggleObject("Fire 3", true);
+            ToggleObject("Fire 4", true);
+            //GetAnimatorFromName("Fire 1").transform.parent.gameObject.SetActive(true);
+            //GetAnimatorFromName("Fire 2").transform.parent.gameObject.SetActive(true);
+            //GetAnimatorFromName("Fire 3").transform.parent.gameObject.SetActive(true);
+            //GetAnimatorFromName("Fire 4").transform.parent.gameObject.SetActive(true);
+
+            Image sky1 = GetObjectFromName("Sky 1").GetComponent<Image>();
+            Image sky2 = GetObjectFromName("Sky 2").GetComponent<Image>();
+            Image ground1 = GetObjectFromName("Ground 1").GetComponent<Image>();
+            Image ground2 = GetObjectFromName("Ground 2").GetComponent<Image>();
+            sky1.DOColor(sky2.color, 2f);
+            sky2.color = sky1.color;
+            ground1.DOColor(ground2.color, 2f);
+            ground2.color = ground1.color;
+
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1.5f);
+
+            
+            //StartCutsceneImageTransition(hometownIntroBackground2);
+            //advanceCondition = Cond.BackgroundChange;
+        }
+        else if (++i == cutsceneStep){
+            //PlayAnimation("Red Dragon", "Prolonged Attack - End");
             advanceCondition = Cond.Wait;
             WaitThenAdvance(1.5f);
         }
@@ -371,19 +394,10 @@ public class CutsceneManager : MonoBehaviour{
             DisplayEnemyTalking("But it appears this commotion drew the attention of some local golbins.", "Red Dragon", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
         }
-        //else if (++i == cutsceneStep){
-        //    DisplayEnemyTalking("Just try to protect your homes now... Goblins!", "Red Dragon", DialogueStep.Emotion.Angry);
-        //    advanceCondition = Cond.Click;
-        //}
         else if (++i == cutsceneStep){
             DisplayNobodyTalking();
-            //PlayAnimationAndMoveThenIdle("Wolf Rider", "Walk", 188, 451, 2f);
-            //PlayAnimationAndMoveThenIdle("Goblin 1", "Walk", -47, 348, 2f);
-            //PlayAnimationAndMoveThenIdle("Goblin 2", "Walk", 575, 348, 2f);
-            //PlayAnimationAndMoveThenIdle("Goblin 3", "Walk", 391, 348, 2f);
             PlayAnimationAndMoveThenIdle("Goblin 1", "Walk", 70, -64, 2.2f);
             PlayAnimationAndMoveThenIdle("Goblin 2", "Walk", 514, 310, 2f);
-            //PlayAnimationAndMoveThenIdle("Goblin 3", "Walk", 375, 400, 2f);
             PlayAnimationAndMoveThenIdle("Goblin 3", "Walk", 446, 489, 2f);
             PlayAnimationAndMoveThenIdle("Wolf Rider", "Walk", 240, 183, 1.5f);
             advanceCondition = Cond.Wait;
@@ -394,17 +408,16 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Well, I have other towns to visit. Try not to die!", "Red Dragon", DialogueStep.Emotion.Angry);
+            DisplayEnemyTalking("I'd love to stay and help you peasants, but I have other towns to visit.", "Red Dragon", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayEnemyTalking("The Queen of Ash has no use for weaklings!", "Red Dragon", DialogueStep.Emotion.Angry);
+            DisplayEnemyTalking("Do your best not to die. The Queen of Ash has no use for weaklings!", "Red Dragon", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
             DisplayNobodyTalking();
             dialogueManager.HideEnemyChathead(dialogueManager.transitionDuration);
-            //dialogueManager.HideEnemyChathead(dialogueManager.transitionDuration);
             advanceCondition = Cond.Wait;
             WaitThenAdvance(0.5f);
         }
@@ -413,9 +426,6 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Wait;
             WaitThenAdvance(2f);
         }
-        //else if (++i == cutsceneStep){
-        //    advanceCondition = Cond.Click;
-        //}  
         else if (++i == cutsceneStep){
             DisplayEnemyTalking("Attack the invaders! Defend our homes!", "Everyone - Hometown Intro", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
@@ -429,11 +439,6 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             PlayAnimationAndMoveThenIdle("Blacksmith", "Walk", 29, 130, 0.5f);
             PlayAnimationAndMoveThenIdle("Redhead Woman", "Walk", 274, 535, 1f);
-            //PlayAnimationAndMoveThenIdle("Blacksmith", "Walk", 29, 130, 1.5f);
-            //PlayAnimationAndMoveThenIdle("Wolf Rider", "Walk", 57, 117, 2f);
-            //PlayAnimationAndMoveThenIdle("Goblin 3", "Walk", 446, 489, 2f);
-            //PlayAnimationAndMoveThenIdle("Goblin 2", "Walk", 575, 348, 1f);
-            //FlipDirection("Goblin 2");
             advanceCondition = Cond.Wait;
             WaitThenAdvance(0.3f);
         }          
@@ -444,47 +449,33 @@ public class CutsceneManager : MonoBehaviour{
             advanceCondition = Cond.Wait;
             WaitThenAdvance(1.5f);
         }   
-        //else if (++i == cutsceneStep){
-        //    advanceCondition = Cond.Wait;
-        //    WaitThenAdvance(2f);
-        //}
-        //else if (++i == cutsceneStep){
-        //    advanceCondition = Cond.Click;
-        //}  
         else if (++i == cutsceneStep){
             DisplayPlayerTalking("I don't know anything about fighting...", DialogueStep.Emotion.Worried);
-            //dialogueManager.HideEnemyChathead(dialogueManager.transitionDuration);
             advanceCondition = Cond.Click;
         }        
         else if (++i == cutsceneStep){
             DisplayEnemyTalking("Us neither!", "Child 1", DialogueStep.Emotion.Questioning);
-            //DisplayEnemyTalking("Us neither!", "Child 1", DialogueStep.Emotion.Excited);
             FlipDirection("Child 1");
             FlipDirection("Child 2");
             advanceCondition = Cond.Click;
         }        
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("We should leave the town defense to the professionals.", DialogueStep.Emotion.Worried);
+            DisplayPlayerTalking("We should leave the town defense to the professionals...", DialogueStep.Emotion.Worried);
             advanceCondition = Cond.Click;
         }  
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("AH! The library is on fire!", DialogueStep.Emotion.Angry);
+            DisplayPlayerTalking("Oh no! The library is on fire!", DialogueStep.Emotion.Worried);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
             DisplayPlayerTalking("All of my precious books are burning! I have to save them!", DialogueStep.Emotion.Worried);
             advanceCondition = Cond.Click;
         }
-        //else if (++i == cutsceneStep){
-        //    DisplayPlayerTalking("I'll have to toss some of the books into the sacred town well... I hope the goddess doesn't mind.", DialogueStep.Emotion.Questioning);
-        //    FlipDirection("Player");
-        //    advanceCondition = Cond.Click;
-        //}
         else if (++i == cutsceneStep){
             DisplayNobodyTalking();
+            HideChatheads();
             PlayAnimation("Player", "Walk");
             MoveObject("Player", -75, 2137, 1.5f);
-            //FlipDirection("Player");
             advanceCondition = Cond.Wait;
             WaitThenAdvance(1.5f);
         }
@@ -495,8 +486,6 @@ public class CutsceneManager : MonoBehaviour{
         }
         else if (++i == cutsceneStep){
             GetAnimatorFromName("Tossing Books").GetComponent<CutsceneBookThrow>().StartThrow();
-            //ToggleObject("Tossing Books", true);
-            //advanceCondition = Cond.Click;
             advanceCondition = Cond.Wait;
             WaitThenAdvance(3f);
         }
@@ -546,42 +535,94 @@ public class CutsceneManager : MonoBehaviour{
             ToggleObject("Player", true);
             FlipDirection("Player");
             ToggleObject("Tossing Books", false);
-            //dialogueManager.HideEnemyChathead(dialogueManager.transitionDuration);
         }
         else if (++i == cutsceneStep){
             DisplayNobodyTalking();
+            HideChatheads();
             PlayAnimationAndMoveThenIdle("Player", "Walk", -140, 1860, 1.5f);
             advanceCondition = Cond.Wait;
             WaitThenAdvance(2f);
         }
-        else if (++i == cutsceneStep){             
+        else if (++i == cutsceneStep){  
             ToggleObject("Water Spray", true);
             advanceCondition = Cond.Wait;
-            WaitThenAdvance(3f);
+            WaitThenAdvance(0.5f);
         }
-        else if (++i == cutsceneStep){             
+        else if (++i == cutsceneStep){  
+            StopShakeScreen();           
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(2.5f);
+        }
+        
+        
+        else if (++i == cutsceneStep){
+            MagicFlash flash = GetAnimatorFromName("Water Spray").transform.GetChild(0).GetComponent<MagicFlash>();
+            flash.gameObject.SetActive(true);
+            flash.StartProcess(StaticVariables.waterPowerupColor);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(flash.GetTotalTime() - 1f);
+        }
+        else if (++i == cutsceneStep){
             ToggleObject("Rain", true);
-            MoveObject("Rain", -33, 630, 1.5f);
+            MoveObject("Rain", -33, -1700, 4.5f);
+            //MoveObject("Rain", -33, 630, 1.5f);
+            
+            //GetObjectFromName("Fires").SetActive(false);
+            ToggleObject("Fires", false);
+            ToggleObject("Fire 1", false);
+            ToggleObject("Fire 2", false);
+            ToggleObject("Fire 3", false);
+            ToggleObject("Fire 4", false);
+            //GetAnimatorFromName("Fire 1").transform.parent.gameObject.SetActive(false);
+            //GetAnimatorFromName("Fire 2").transform.parent.gameObject.SetActive(false);
+            //GetAnimatorFromName("Fire 3").transform.parent.gameObject.SetActive(false);
+            //GetAnimatorFromName("Fire 4").transform.parent.gameObject.SetActive(false);
+
+            //ToggleObject("Fires", false);
+            //ToggleObject("Fire 1", false);
+            //ToggleObject("Fire 2", false);
+            //ToggleObject("Fire 3", false);
+            //ToggleObject("Fire 4", false);
+            ToggleObject("Puddles", true);
+            ToggleObject("Sky 1", false);
+            ToggleObject("Sky 2", true);
+            ToggleObject("Ground 1", false);
+            ToggleObject("Ground 2", true);
+            //GetObjectFromName("Sky 1").SetActive(false);
+            //GetObjectFromName("Sky 2").SetActive(true);
+            //GetObjectFromName("Ground 1").SetActive(false);
+            //GetObjectFromName("Ground 2").SetActive(true);
             advanceCondition = Cond.Wait;
             StopShakeScreen();
             WaitThenAdvance(5f);
         }
+        //else if (++i == cutsceneStep){
+            //MoveObject("Rain", -33, -1700, 1.5f);
+        //    advanceCondition = Cond.Wait;
+        //    WaitThenAdvance(2f);
+        //}
+        
+        //else if (++i == cutsceneStep){             
+        //    ToggleObject("Rain", true);
+        //    MoveObject("Rain", -33, 630, 1.5f);
+        //    advanceCondition = Cond.Wait;
+        //    StopShakeScreen();
+        //    WaitThenAdvance(5f);
+        //}
+        //else if (++i == cutsceneStep){
+        //    SetCutsceneBackground(nextBackground);
+            //StartCutsceneImageTransition(hometownIntroBackground3);
+            //advanceCondition = Cond.BackgroundChange;
+        //}
         else if (++i == cutsceneStep){
-            StartCutsceneImageTransition(hometownIntroBackground3);
-            advanceCondition = Cond.BackgroundChange;
-        }
-        else if (++i == cutsceneStep){
-            PlayAnimation("Water Spray", "Sustained Spray");
+            //PlayAnimation("Water Spray", "Sustained Spray");
+            ToggleObject("Rain", false);
+            Transform player = GetObjectFromName("Player").transform.parent;
+            player.SetSiblingIndex(player.parent.childCount -3);
             DisplayPlayerTalking("There's a book coming out of the water!", DialogueStep.Emotion.Happy);
             advanceCondition = Cond.Click;
         }
-        //else if (++i == cutsceneStep){
-        //    DisplayEnemyTalking("Wow!!!!", "Child 1", DialogueStep.Emotion.Questioning);
-        //    advanceCondition = Cond.Click;
-        //}
         else if (++i == cutsceneStep){
-            //DisplayNobodyTalking();
-            //dialogueManager.HideEnemyChathead(dialogueManager.transitionDuration);
             PlayAnimation("Water Spray", "End Spray");
             advanceCondition = Cond.Wait;
             WaitThenAdvance(0.7f);
@@ -1300,7 +1341,8 @@ public class CutsceneManager : MonoBehaviour{
         }
         else if (++i == cutsceneStep){
             DisplayNobodyTalking();
-            dialogueManager.HideChatheads(dialogueManager.transitionDuration);
+            HideChatheads();
+            //dialogueManager.HideChatheads(dialogueManager.transitionDuration);
             advanceCondition = Cond.Wait;
             WaitThenAdvance(0.5f);
         } 
@@ -1569,8 +1611,8 @@ public class CutsceneManager : MonoBehaviour{
         }
         else if (++i == cutsceneStep){
             DisplayNobodyTalking();
-            //dialogueManager.HideEnemyChathead(dialogueManager.transitionDuration);
-            dialogueManager.HideChatheads(dialogueManager.transitionDuration);
+            HideChatheads();
+            //dialogueManager.HideChatheads(dialogueManager.transitionDuration);
             advanceCondition = Cond.Wait;
             WaitThenAdvance(0.5f);
         }  
@@ -1585,10 +1627,8 @@ public class CutsceneManager : MonoBehaviour{
             WaitThenAdvance(0.8f);
         }
         else if (++i == cutsceneStep){
-            //MagicFlash flash = GetAnimatorFromName("Back Table").transform.GetChild(4).GetComponent<MagicFlash>();
             MagicFlash flash = GetAnimatorFromName("Magic Flash").GetComponent<MagicFlash>();
             flash.transform.parent.gameObject.SetActive(true);
-            //flash.StartProcess(flash.GetComponent<Image>().color);
             flash.StartProcess(StaticVariables.earthPowerupColor);
             advanceCondition = Cond.Wait;
             WaitThenAdvance(flash.GetTotalTime() - 1f);
@@ -1621,7 +1661,8 @@ public class CutsceneManager : MonoBehaviour{
         }
         else if (++i == cutsceneStep){
             DisplayNobodyTalking();
-            dialogueManager.HideChatheads(dialogueManager.transitionDuration);
+            HideChatheads();
+            //dialogueManager.HideChatheads(dialogueManager.transitionDuration);
             advanceCondition = Cond.Wait;
             WaitThenAdvance(0.5f);
         }  
@@ -1711,7 +1752,19 @@ public class CutsceneManager : MonoBehaviour{
                     return anim;
             }
         }
-        print("No animator found with the name [" + name + "]");
+        //print("No animator found with the name [" + name + "]");
+        return null;
+    }
+
+    private GameObject GetObjectFromName(string name){
+        if (name == "Player")
+            return playerAnimator.gameObject;
+        foreach (GameObject go in searchableObjectsInCutscene)
+            if (go != null){
+                if (go.name == name)
+                    return go;
+            }
+        //print("No gameObject found with the name [" + name + "]");
         return null;
     }
     
@@ -1727,7 +1780,15 @@ public class CutsceneManager : MonoBehaviour{
 
     private void ToggleObject(string name, bool enabled){
         //every animated object is made the child of an empty gameobject, so we want to toggle the parent of the animator
-        GetAnimatorFromName(name).transform.parent.gameObject.SetActive(enabled);
+        Animator anim = GetAnimatorFromName(name);
+        GameObject go = GetObjectFromName(name);
+        if (anim != null)
+            anim.transform.parent.gameObject.SetActive(enabled);
+        else if (go != null)
+            go.SetActive(enabled);
+        else{
+            print("no object found with name [" + name + "] to toggle");
+        }
     }
     
     private void StartScreenShake(float duration){
@@ -1797,6 +1858,7 @@ public class CutsceneManager : MonoBehaviour{
     private void SetCutsceneBackground(GameObject prefab){
 
         animatedObjectsInCutscene = new List<Animator>();
+        searchableObjectsInCutscene = new List<GameObject>();
         Transform backgroundPrefab = prefab.transform.GetChild(1).transform;
 
         foreach (Transform t in backgroundParent)
@@ -1807,7 +1869,6 @@ public class CutsceneManager : MonoBehaviour{
             if (a != null){
                 GameObject parent = Instantiate(emptyGameObject, backgroundParent);
                 parent.transform.localPosition = t.localPosition;
-                //parent.transform.localRotation = t.localRotation;
                 parent.name = t.name;
                 parent.SetActive(t.gameObject.activeSelf);
                 GameObject go = Instantiate(t.gameObject, parent.transform.position, Quaternion.identity, parent.transform);
@@ -1815,14 +1876,21 @@ public class CutsceneManager : MonoBehaviour{
                 parent.transform.localRotation = t.localRotation;
                 go.SetActive(true);
                 animatedObjectsInCutscene.Add(go.GetComponent<Animator>());
+                AddToSearchableListIfAppropriate(go);
             }
             else{
                 GameObject go = Instantiate(t.gameObject, backgroundParent);
                 go.name = t.gameObject.name;
                 if (t.name.Contains("Player"))
                     playerAnimator = go.transform.GetChild(0).GetComponent<Animator>();
+                AddToSearchableListIfAppropriate(go);
             }
         }
+    }
+
+    private void AddToSearchableListIfAppropriate(GameObject go){
+        if (go.tag == "ScriptSearchable")
+            searchableObjectsInCutscene.Add(go);
     }
 
     private void EndCutsceneImageTransition(){

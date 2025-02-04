@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6190612129172050018}
   - component: {fileID: 1102302034291302994}
   - component: {fileID: 6305965681632316945}
+  - component: {fileID: 8695285768797131312}
   m_Layer: 0
   m_Name: Fire 3
   m_TagString: Untagged
@@ -33,12 +34,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 32, y: 32}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 391.92126}
+  m_SizeDelta: {x: 32, y: 22.7571}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1107962101534003460
 CanvasRenderer:
@@ -109,5 +109,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76a7427ed1e37fc46baf49a8b196a669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateNameOverride: 
+--- !u!114 &8695285768797131312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107962101534003457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94b8c1bfe5c4c754889dd34df8f877da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
