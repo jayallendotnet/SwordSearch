@@ -82,6 +82,7 @@ public class CutsceneManager : MonoBehaviour{
 
     private void SetupGrasslandsOutro(){
         SetCutsceneBackground(grasslandsOutroBackground1);
+        PlayAnimation("Player", "Idle Holding Book");
     }
 
     private void AdvanceCutsceneStep(){
@@ -176,72 +177,6 @@ public class CutsceneManager : MonoBehaviour{
             DisplayPlayerTalking("And you'd be able to read that newspaper for yourselves!", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
         }  
-        //put that dumb book down! we need you to read this newspaper!
-        //you know how miss rebecca feels when you insult her books!
-        //she'll never stop talking about "the prince's manticore wears shorts"
-        //that's not right, i think she says "a pig is manlier when it snores"
-        //i don't think i've ever said either of those statments before!
-        //maybe if you had paid attention in class, you'd know it's "the pen is mightier than the sword"
-        //and maybe you'd be able to read that newspaper for yourselves!
-
-
-
-
-        /*
-        else if (++i == cutsceneStep){
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("What is it, children?", DialogueStep.Emotion.Happy);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Put that dumb book down! This is really important!!", "Child 1", DialogueStep.Emotion.Questioning);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("\"Dumb?\"", DialogueStep.Emotion.Angry);
-            advanceCondition = Cond.Click;
-        }    
-        else if (++i == cutsceneStep){
-            DisplayNobodyTalking();
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(0.5f);
-        }   
-        else if (++i == cutsceneStep){
-            PlayAnimation("Player", "Put Away Book Random Brown");
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(2.1f);
-        }   
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("(Book Name) is a foundational piece of literature for the english language!", DialogueStep.Emotion.Angry);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Yes, Miss " + StaticVariables.playerName + ", we know. You read it to us a million times!", "Child 2", DialogueStep.Emotion.Defeated);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("You never stop talking about \"(some botched quote from the book)\"", "Child 1", DialogueStep.Emotion.Questioning);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("That's not right! It's supposed to be ---------!", "Child 2", DialogueStep.Emotion.Defeated);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("I think you mean \"(correct quote)\".", DialogueStep.Emotion.Questioning);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("That doesn't make any sense! ", "Child 1", DialogueStep.Emotion.Questioning);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Maybe if you'd paid more attention, you would be able to read that newspaper for yourselves!", DialogueStep.Emotion.Angry);
-            advanceCondition = Cond.Click;
-        }
-        */
         else if (++i == cutsceneStep){
             DisplayEnemyTalking("Oh yeah! Read it to us! Please???", "Child 2", DialogueStep.Emotion.Excited);
             advanceCondition = Cond.Click;
@@ -1271,292 +1206,457 @@ public class CutsceneManager : MonoBehaviour{
     private void DoGrasslandsOutroStep(){
         int i = 0;
         if (++i == cutsceneStep){
-            DisplayPlayerTalking("So this is where the cyclops lives?", DialogueStep.Emotion.Questioning);
+            DisplayPlayerTalking("Alright, book.", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("It's so dark... The only light source is that strange brown glow at the back of the cave.", DialogueStep.Emotion.Questioning);
+            DisplayPlayerTalking("After that crazy fight, there's probably a lot of vague magical whatever energy in the air.", DialogueStep.Emotion.Questioning);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(4f);
-            PlayAnimationAndMoveThenIdle("Player", "Walk", 1500, 1851, 4f);
-            //foreach (Transform t in backgroundParent){
-            //   t.DOMoveX(t.position.x - 1700, 4f);
-            //}
-            backgroundParent.DOMoveX(-750, 4f); //this is totally wrong! on pc, -1000 works. on mobile, -750
-            DisplayPlayerTalking("", DialogueStep.Emotion.Questioning);
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("What is this, some kind of weird glowy rock?", DialogueStep.Emotion.Questioning);
+            DisplayPlayerTalking("Maybe you're feeling a little inspired to talk to me?", DialogueStep.Emotion.Questioning);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("It illuminates the rest of the room pretty well.", DialogueStep.Emotion.Normal);
+            DisplayEnemyTalking("For the first time, the book's pages have some clear writing on them.", "Magic Book", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("", DialogueStep.Emotion.Normal);
-            FlipDirection("Player");
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(0.6f);
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("", DialogueStep.Emotion.Normal);
-            FlipDirection("Player");
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(0.6f);
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("", DialogueStep.Emotion.Normal);
-            FlipDirection("Player");
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(0.6f);
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("", DialogueStep.Emotion.Normal);
-            FlipDirection("Player");
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(0.6f);
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("There are so many books here!", DialogueStep.Emotion.Happy);
+            DisplayEnemyTalking("It reads,\n\"ENTER THE CAVE\".", "Magic Book", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("This rivals the collection I have in the library back home!", DialogueStep.Emotion.Happy);
+            DisplayPlayerTalking("No way!", DialogueStep.Emotion.Surprised);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("But what kinds of books does a cyclops read?", DialogueStep.Emotion.Questioning);
+            DisplayPlayerTalking("I knew it! You're a talking book! I have so many questions!!", DialogueStep.Emotion.Surprised);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("This one looks like it's about agriculture...\n'Fantastic Beets and Where to Find Them'", DialogueStep.Emotion.Normal);
-            PlayAnimationAndMoveThenIdle("Player", "Walk", 1800, 1871, 0.6f);
+            DisplayPlayerTalking("How old are you? Who made you? Can you see me?", DialogueStep.Emotion.Surprised);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("And here's a book of international recipes!\n'Lord of the Fries'", DialogueStep.Emotion.Normal);
-            FlipDirection("Player");
-            PlayAnimationAndMoveThenIdle("Player", "Walk", 1281, 1883, 1f);
+            DisplayEnemyTalking("The book's text remains unchanged.", "Magic Book", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("This is some kind of fishing guide?\n'The Codfather'", DialogueStep.Emotion.Normal);
-            FlipDirection("Player");
-            PlayAnimationAndMoveThenIdle("Player", "Walk", 1650, 1871, 0.6f);
+            DisplayPlayerTalking("Great. I get to talk with an actual magical book, and you just want me to go into some dark cave instead.", DialogueStep.Emotion.Questioning);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("There are eleven different thesauruses here, too!", DialogueStep.Emotion.Excited);
+            DisplayPlayerTalking("Ugh, fine. But are you sure we should go in there?", DialogueStep.Emotion.Questioning);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("No wonder he pulled out all of those synonyms when we were talking earlier...", DialogueStep.Emotion.Normal);
+            DisplayPlayerTalking("We need to get through the forest, and there really isn't any time to waste!", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Wait a second!", DialogueStep.Emotion.Angry);
+            DisplayEnemyTalking("The ink shifts around, forming new words.", "Magic Book", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("I'm in a gigantic library curated by a magical cyclops!", DialogueStep.Emotion.Questioning);
+            DisplayEnemyTalking("\"GO NOW, BEFORE THE CYCLOPS AWAKENS.\"", "Magic Book", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("I bet there's something in here that will make the magic book want to talk to me...", DialogueStep.Emotion.Happy);
+            DisplayPlayerTalking("You know what, you're a magic book. You can <water>summon water<>. You can <healing>heal the injured<>.", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(1.2f);
-            PlayAnimationAndMoveThenIdle("Player", "Walk", 1882, 1879, 1f);
-            DisplayPlayerTalking("", DialogueStep.Emotion.Happy);
-        }
-        else if (++i == cutsceneStep){
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(3f);
-            PlayAnimation("Player", "Stacking Books");
-        }
-        else if (++i == cutsceneStep){
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(3.2f);
-            FlipDirection("Player");
-            MoveObject("Player", 1640, 1658, 3f);
-        }
-        else if (++i == cutsceneStep){
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(0.3f);
-            FlipDirection("Player");
-        }
-        else if (++i == cutsceneStep){
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(1f);
-            PlayAnimation("Player", "Idle");
-            ToggleObject("Player's Book Stack Back", true);
-            ToggleObject("Front Table", false);
-            ToggleObject("Back Table", true);
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Alright magic book, you have to see all this.", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){            
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(2f);
-            PlayAnimation("Player", "Take Out Book");
-            DisplayPlayerTalking("", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("The magic book stays silent.", "Magic Book", DialogueStep.Emotion.Normal);
+            DisplayPlayerTalking("And now you can talk!", DialogueStep.Emotion.Surprised);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("I have a few books here that might interest you...", DialogueStep.Emotion.Normal);
+            DisplayPlayerTalking("Maybe I should just take your advice. Let's go!", DialogueStep.Emotion.Normal);
             advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
-            DisplayPlayerTalking("'The Wizard of Ooze' \n...\n'The Trusty Argonian Mage'", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Wait, why did I pick up 'Tusk Love'?? That doesn't have anything to do with magic!", DialogueStep.Emotion.Worried);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Do any of them make you want to talk yet??", DialogueStep.Emotion.Angry);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("Even with no eyes, the book looks at you incredulously.", "Magic Book", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Alright, maybe I can find something else on the shelves that will pique your interest...", DialogueStep.Emotion.Questioning);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){            
+            DisplayNobodyTalking();
+            dialogueManager.HideEnemyChathead(dialogueManager.transitionDuration);
             advanceCondition = Cond.Wait;
             WaitThenAdvance(0.5f);
-            DisplayPlayerTalking("", DialogueStep.Emotion.Questioning);
-            PlayAnimation("Player", "Idle");
-            ToggleObject("Magic Book", true);
-        }
-        else if (++i == cutsceneStep){            
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(1f);
-            PlayAnimation("Player", "Walk");
-            FlipDirection("Player");
-            MoveObject("Player", 1281, 1883, 1f);
-        }
-        else if (++i == cutsceneStep){            
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(2f);
-            FlipDirection("Player");
-            MoveObject("Player", 1850, 1872, 2f);
-            ToggleObject("Player's Book Stack Back", false);
-            ToggleObject("Player's Book Stack Front", true);
-            ToggleObject("Front Table", true);
-            ToggleObject("Back Table", false);
-        }
-        else if (++i == cutsceneStep){            
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(1f);
-            FlipDirection("Player");
-            PlayAnimationAndMoveThenIdle("Player", "Walk", 1281, 1870, 2.5f);
-        }
-        else if (++i == cutsceneStep){
-            StartScreenShake(3000);
-            advanceCondition = Cond.Wait;
-            WaitThenAdvance(1.5f);
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("What's going on now???", DialogueStep.Emotion.Worried);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("", DialogueStep.Emotion.Worried);       
-            FlipDirection("Player");   
-            PlayAnimationAndMoveThenIdle("Player", "Walk", 1640, 1658, 0.8f);
-            WaitThenAdvance(0.8f);
-            ToggleObject("Player's Book Stack Back", true);
-            ToggleObject("Player's Book Stack Front", false);
-            ToggleObject("Front Table", false);
-            ToggleObject("Back Table", true);
-            advanceCondition = Cond.Wait;
-        }
-
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("Oh!! Duh!!", DialogueStep.Emotion.Excited);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("It's the weird rock that lights up the room!", DialogueStep.Emotion.Excited);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("It's magic!!!", DialogueStep.Emotion.Excited);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            HideChatheads();
-            dialogueManager.dialogueTextBox.text = "";
-            dialogueManager.speakerNameTextBox.text = "";
-            GameObject.Find("Expanding Glow Container").GetComponent<RectTransform>().DOScale(10, 3f);
-            Color c = new Color(128f/255, 100f/255, 26f/255, 1);
-            GameObject.Find("the one that changes color").GetComponent<Image>().DOColor(c, 3f);
-            WaitThenAdvance(4f);
-            advanceCondition = Cond.Wait;
-        }
-        else if (++i == cutsceneStep){
-            StopShakeScreen();
-            GameObject.Find("Expanding Glow Container").GetComponent<RectTransform>().DOScale(1, 3f);
-            Color c = new Color(255f/255, 207f/255, 78f/255, 72f/255);
-            GameObject.Find("the one that changes color").GetComponent<Image>().DOColor(c, 3f);
-            WaitThenAdvance(3f);
-            advanceCondition = Cond.Wait;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("The book lies open on the table, with 'EARTH' written on all of the pages.", "Magic Book", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayEnemyTalking("After a moment, the letters fade.", "Magic Book", DialogueStep.Emotion.Normal);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("I have so many questions, but we have to get out of here first!", DialogueStep.Emotion.Worried);
-            advanceCondition = Cond.Click;
-        }
+        }  
         else if (++i == cutsceneStep){ 
             advanceCondition = Cond.Wait;
             WaitThenAdvance(1.5f);
             PlayAnimation("Player", "Put Away Book");
-            DisplayPlayerTalking("", DialogueStep.Emotion.Worried);
-            ToggleObject("Magic Book", false);
-            dialogueManager.HideEnemyChathead(1.5f);
-        }
-        else if (++i == cutsceneStep){
-            DisplayPlayerTalking("That rumbling made quite a lot of noise! We should leave before the cyclops wakes back up!!", DialogueStep.Emotion.Worried);
-            advanceCondition = Cond.Click;
         }
         else if (++i == cutsceneStep){
             advanceCondition = Cond.Wait;
             WaitThenAdvance(2f);
-            FlipDirection("Player");
-            PlayAnimationAndMoveThenIdle("Player", "Walk", 500, 1658, 5f);
+            PlayAnimation("Player", "Walk");
+            MoveObject("Player", 480, 2280, 5f);
         }
-        //have player start walking, and fade the sceen to black
-        //You've unlocked the power of earth! (show image of the earth gem on a letter)
-        //Utilizing the power of earth summons 5 magical gems (show the gems on the player status thingy)
-        //Making an attack sends one of the gems toward the enemy, dealing an extra X% damage
-        //Your health has also increased!
-
+        else if (++i == cutsceneStep){
+            StartCutsceneImageTransition(grasslandsOutroBackground2);
+            advanceCondition = Cond.BackgroundChange;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("I can't see a thing!", DialogueStep.Emotion.Surprised);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            dialogueManager.HideChatheads(dialogueManager.transitionDuration);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        } 
+        else if (++i == cutsceneStep){ 
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(3f);
+            PlayAnimation("Player", "Walk");
+            MoveObject("Entrance", -2770, 412, 3f);
+        } 
+        else if (++i == cutsceneStep){
+            StartScreenShake(.2f);
+            DisplayEnemyTalking("Bump!", "Dark Object", DialogueStep.Emotion.Normal);
+            PlayAnimation("Player", "Idle");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            dialogueManager.HideEnemyChathead(dialogueManager.transitionDuration);
+            DisplayPlayerTalking("Ouch, it looks like I ran into something.", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("I should take a moment and let my eyes adjust...", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(3f);
+            Color c = Color.black;
+            c.a = 0;
+            GameObject.Find("Darkness").GetComponent<Image>().DOColor(c, 10f);
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Ahh!!! A skeleton!!", DialogueStep.Emotion.Worried);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Oh, it's dead.", DialogueStep.Emotion.Normal); //relief?
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Well of course it's dead, it's a skeleton!", DialogueStep.Emotion.Angry);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Come to think of it, I have to be careful. It might come back to life!", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("In every fantasy adventure novel, there's always at least one reanimated skeleton!", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("And my life has certainly been looking like a fantasy adventure lately...", DialogueStep.Emotion.Happy);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("What is a skeleton doing here, anyway? The cyclops talked about ecological conservation, not dead bodies.", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("You don't accidentally leave a skeleton in your house.", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Something isn't adding up. I should take a look around.", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        } 
+        else if (++i == cutsceneStep){
+            FlipDirection("Player");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1f);
+        }
+        else if (++i == cutsceneStep){
+            FlipDirection("Player");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1f);
+        }
+        else if (++i == cutsceneStep){
+            FlipDirection("Player");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1f);
+        }
+        else if (++i == cutsceneStep){
+            PlayAnimationAndMoveThenIdle("Player", "Walk", -441, 1900, 1.5f);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1.5f);
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Let's see what you've been reading lately...", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Book name, book name...", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("These are history books.", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("But they also cover burial practices and enbalming techniques.", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Has he been doing something to these skeletons?", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("It's entirely possible that he could be a necromancer...", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("They say the Lich King used magic to make himself undead. Maybe the cyclops is trying to do the same?", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        } 
+        else if (++i == cutsceneStep){
+            FlipDirection("Player");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        } 
+        else if (++i == cutsceneStep){
+            PlayAnimationAndMoveThenIdle("Player", "Walk", 16, 1675, 2.5f);
+            MoveEverythingExceptPlayer(-300, 0, 2.5f);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(2.5f);
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("There's something in the dirt here...", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Hang on a second, these are Lydian Lion coins! Some of the earliest currency in human history!", DialogueStep.Emotion.Surprised);
+            advanceCondition = Cond.Click;
+        }        
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("This is an incredibly precious archeological digsite!", DialogueStep.Emotion.Surprised);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Maybe the cyclops is just a normal historian.", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Is this what you wanted me to see?", DialogueStep.Emotion.Questioning);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        }  
+        else if (++i == cutsceneStep){ 
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1.5f);
+            PlayAnimation("Player", "Take Out Book");
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("The book reads,\n\"KEEP GOING, AND HURRY UP\".", "Magic Book", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Are you serious? You want me to walk right past these Lydian coins?", DialogueStep.Emotion.Angry);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Herodotus, the father of history, thought Lydia was the first civilization to ever use metal coins!", DialogueStep.Emotion.Surprised);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("This is probably the coolest thing that I've ever seen!", DialogueStep.Emotion.Surprised);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Well, aside from a magical talking book anyway...", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Fine, I'll move on. But we're going to keep talking about this later!", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            dialogueManager.HideEnemyChathead(dialogueManager.transitionDuration);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        }  
+        else if (++i == cutsceneStep){ 
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1.5f);
+            PlayAnimation("Player", "Put Away Book");
+        }
+        else if (++i == cutsceneStep){
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(3f);
+            PlayAnimation("Player", "Walk");
+            MoveEverythingExceptPlayer(-591, 0, 3f);
+            Color c = Color.black;
+            c.a = 0.45f;
+            GameObject.Find("Rock Glow Darkness").GetComponent<Image>().DOColor(c, 6f);
+        }
+        else if (++i == cutsceneStep){
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+            PlayAnimation("Player", "Idle");
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Okay, this glowy rock must be what we're here for!", DialogueStep.Emotion.Happy);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("It looks like there's a book on the table...", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("The...\nNecronomicon???", DialogueStep.Emotion.Worried);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("I didn't know that was real!", DialogueStep.Emotion.Worried);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("That settles it! The cyclops is definitely a necromancer!", DialogueStep.Emotion.Worried);
+            advanceCondition = Cond.Click;
+        }        
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        }  
+        else if (++i == cutsceneStep){ 
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1.5f);
+            PlayAnimation("Player", "Take Out Book");
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Alright, book! Tell me what you want me to do, and then let's get out of here!", DialogueStep.Emotion.Worried);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("Ink forms into new words,\n\"TOUCH THE ROCK\".", "Magic Book", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Touch it, are you crazy?? It'd turn me into a skeleton or something!", DialogueStep.Emotion.Angry);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("Words reshape on the book's pages, \n\"YOU WILL BE FINE\".", "Magic Book", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Alright, if you're sure...  Here goes nothing!", DialogueStep.Emotion.Worried);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            //dialogueManager.HideEnemyChathead(dialogueManager.transitionDuration);
+            dialogueManager.HideChatheads(dialogueManager.transitionDuration);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        }  
+        else if (++i == cutsceneStep){
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1f);
+            PlayAnimation("Player", "Book Catch");
+        }
+        else if (++i == cutsceneStep){
+            StartScreenShake(3000);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.8f);
+        }
+        else if (++i == cutsceneStep){
+            //MagicFlash flash = GetAnimatorFromName("Back Table").transform.GetChild(4).GetComponent<MagicFlash>();
+            MagicFlash flash = GetAnimatorFromName("Magic Flash").GetComponent<MagicFlash>();
+            flash.transform.parent.gameObject.SetActive(true);
+            //flash.StartProcess(flash.GetComponent<Image>().color);
+            flash.StartProcess(StaticVariables.earthPowerupColor);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(flash.GetTotalTime() - 1f);
+        }
+        else if (++i == cutsceneStep){
+            StopShakeScreen();
+            advanceCondition = Cond.Wait;
+            PlayAnimation("Player", "Idle Holding Book");
+            WaitThenAdvance(1f);
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Somehow, I'm still alive!", DialogueStep.Emotion.Surprised);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("The book's pages are empty aside from a single word,\n\"EARTH\".", "Magic Book", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayEnemyTalking("After a moment, the letters reform to say,\n\"YOU SHOULD PROBABLY LEAVE NOW\".", "Magic Book", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("Uhh, yep! That's a great idea.", DialogueStep.Emotion.Worried);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayPlayerTalking("That cyclops could wake up any minute! Let's get out of here!", DialogueStep.Emotion.Worried);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == cutsceneStep){
+            DisplayNobodyTalking();
+            dialogueManager.HideChatheads(dialogueManager.transitionDuration);
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        }  
+        else if (++i == cutsceneStep){ 
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(1.5f);
+            PlayAnimation("Player", "Put Away Book");
+        }
+        else if (++i == cutsceneStep){
+            FlipDirection("Player");
+            advanceCondition = Cond.Wait;
+            WaitThenAdvance(0.5f);
+        }  
+        else if (++i == cutsceneStep){
+            //advanceCondition = Cond.Wait;
+            //WaitThenAdvance(2f);
+            PlayAnimationAndMoveThenIdle("Player", "Walk", -536, 1675, 5f);
+            MoveEverythingExceptPlayer(1000, 0, 5f);
+            //Color c = Color.black;
+            //c.a = 0f;
+            //GameObject.Find("Rock Glow Darkness").GetComponent<Image>().DOColor(c, 5f);
+            StaticVariables.hasCompletedStage = true;
+            StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
+        }
         else if (++i == cutsceneStep){
             StaticVariables.hasCompletedStage = true;
             StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
+        }   
+    }
+
+    private void MoveEverythingExceptPlayer(float xDistance, float yDistance, float duration){
+        foreach (Transform t in backgroundParent){
+            if (t.name != "Player (Overworld)"){
+                t.DOLocalMove(new Vector2(t.localPosition.x + xDistance, t.localPosition.y + yDistance), duration);
+            }
         }
     }
 
@@ -1602,17 +1702,14 @@ public class CutsceneManager : MonoBehaviour{
         dialogueManager.ShowNobodyTalking();
     }
 
-    //private void DisplayNarrator(string s){
-    //    dialogueManager.ShowNobodyTalking();
-    //    dialogueManager.dialogueTextBox.text = s;
-    //}
-
     private Animator GetAnimatorFromName(string name){
         if (name == "Player")
             return playerAnimator;
         foreach (Animator anim in animatedObjectsInCutscene){
-            if (anim.gameObject.name == name)
-                return anim;
+            if (anim != null){
+                if (anim.gameObject.name == name)
+                    return anim;
+            }
         }
         print("No animator found with the name [" + name + "]");
         return null;
