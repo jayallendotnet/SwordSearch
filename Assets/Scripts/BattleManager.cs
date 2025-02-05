@@ -492,6 +492,8 @@ public class BattleManager : MonoBehaviour {
             return false;
         if (letterSpace.letter == '-')
             return false;
+        if (letterSpace.letter == ' ')
+            return false;
         if ((playerHealth == 0) || (enemyHealth == 0) || (isGamePaused))
             return false;
         if (letterSpace.hasBeenUsedInAWordAlready)

@@ -7,10 +7,10 @@ using DG.Tweening;
 public class TutorialManager : BattleManager {
 
     private int tutorialStep = 0;
-    private char[,] startingLayout1 = {{'W', 'K', 'B', 'U', 'M'}, {'L', 'I', 'V', 'Y', 'P'}, {'A', 'D', 'O', 'G', 'E'}, {'C', 'H', 'I', 'R', 'Z'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
-    private char[,] startingLayout2 = {{'S', 'P', 'U', 'N', 'K'}, {'N', 'E', 'W', 'Y', 'S'}, {'T', 'E', 'A', 'G', 'S'}, {'L', 'O', 'M', 'I', 'T'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
-    private char[,] startingLayout3 = {{'O', 'G', 'E', 'N', 'N'}, {'F', 'R', 'I', 'L', 'U'}, {'E', 'A', 'O', 'Z', 'P'}, {'T', 'N', 'E', 'I', 'M'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
-    private char[,] startingLayout4 = {{'C', 'A', 'L', 'D', 'E'}, {'E', 'S', 'I', 'N', 'M'}, {'T', 'A', 'E', 'B', 'R'}, {'T', 'K', 'C', 'O', 'L'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
+    private char[,] startingLayout1 = {{'W', 'K', 'B', 'U', 'M'}, {'L', 'I', 'V', 'Y', 'P'}, {'A', 'D', 'O', 'G', 'E'}, {'C', 'H', 'I', 'R', 'Z'}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}};
+    private char[,] startingLayout2 = {{'S', 'P', 'U', 'N', 'K'}, {'N', 'E', 'W', 'Y', 'S'}, {'T', 'E', 'A', 'G', 'S'}, {'L', 'O', 'M', 'I', 'T'}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}};
+    private char[,] startingLayout3 = {{'O', 'G', 'E', 'N', 'N'}, {'F', 'R', 'I', 'L', 'U'}, {'E', 'A', 'O', 'Z', 'P'}, {'T', 'N', 'E', 'I', 'M'}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}};
+    private char[,] startingLayout4 = {{'C', 'A', 'L', 'D', 'E'}, {'E', 'S', 'I', 'N', 'M'}, {'T', 'A', 'E', 'B', 'R'}, {'T', 'K', 'C', 'O', 'L'}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}};
     private char[,] startingPowerups1 = {{'-', '-', '-', '-', '-'}, {'-', 'H', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', 'W', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
 
     private enum Cond{Click, CompleteWord, ReleaseFinger, SubmitWord, EnemyTakesDamage, EnemyDies, SubmitAnyWord, EnemyAttacks, PlayerTakesDamage, TurnPage, TurnPageEnds, NormalBattle, SubmitHealingWord, PlayerGetsHealed, SubmitWaterWord, WaterFillsPage, WaterDrains};
@@ -417,7 +417,7 @@ public class TutorialManager : BattleManager {
         tutorialStep ++;
         int i = 0;
         if (++i == tutorialStep){
-            DisplayText("The true powers of the element of water have awakened!");
+            DisplayText("The true magic within the book had awakened!");
             LoadCustomPuzzle(startingLayout4);
             puzzleGenerator.SetCustomPowerups(startingPowerups1);
             advanceCondition = Cond.Click;
@@ -429,12 +429,12 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("First is the power of healing, which has a light green color.");
+            DisplayText("First is the <healing>power of healing<>, which has a light green color.");
             puzzleGenerator.letterSpaces[3,3].ToggleTutorialSelector(false);
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("If you make a word with the power of healing, your health will be restored.");
+            DisplayText("If you make a word with the <healing>power of healing<>, your health will be restored.");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
@@ -442,7 +442,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("Try making a word that includes the power of healing.");
+            DisplayText("Try making a word that includes the <healing>power of healing<>.");
             advanceCondition = Cond.SubmitHealingWord;
         }
         else if (++i == tutorialStep){
@@ -455,24 +455,24 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("The power of healing heals you for 3 times the strength of the attack.");
+            DisplayText("The <healing>power of healing<> heals you for 3 times the strength of the attack.");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("This means the power of healing is more effective with longer words!");
+            DisplayText("This means the <healing>power of healing<> is more effective with longer words!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("The power of water is better for dealing more damage.");
+            DisplayText("The <water>power of water<> is better for dealing more damage.");
             puzzleGenerator.letterSpaces[3,3].ToggleTutorialSelector(true);
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("The power of water has a blue coloration.");
+            DisplayText("The <water>power of water<> is blue.");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("Try making a word that includes the power of water.");
+            DisplayText("Try making a word that includes the <water>power of water<>.");
             advanceCondition = Cond.SubmitWaterWord;
         }
         else if (++i == tutorialStep){
@@ -483,11 +483,11 @@ public class TutorialManager : BattleManager {
             uiManager.waterFloatDuration = -1;
         }
         else if (++i == tutorialStep){
-            DisplayText("After making an attack with the power of water, the book's pages are flooded!");
+            DisplayText("After making an attack with the <water>power of water<>, the book's pages are <water>flooded<>!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("For the next 20 seconds, every attack you make does an extra +2 damage!");
+            DisplayText("For the next 20 seconds, every attack you make does an extra <damage>+2 damage<>!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
@@ -501,12 +501,12 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.WaterDrains;
         }
         else if (++i == tutorialStep){
-            DisplayText("From now on, both healing and water powerups will appear on letters!");
+            DisplayText("From now on, both <healing>healing<> and <water>water<> powerups will appear!");
             ButtonText("CONTINUE");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("Keep using normal attacks and powerups to defeat the goblin general!");
+            DisplayText("Keep using powerups to defeat the goblin general!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
@@ -760,7 +760,8 @@ public class TutorialManager : BattleManager {
                     AdvanceTutorialStep();
                 }
                 else
-                    base.ProcessFingerRelease();
+                    ClearWord(false);
+                    //base.ProcessFingerRelease();
                 break;   
             case (Cond.SubmitWaterWord):
                 if((isValidWord) && (powerupTypeForWord == BattleManager.PowerupTypes.Water)){
@@ -768,7 +769,8 @@ public class TutorialManager : BattleManager {
                     AdvanceTutorialStep();
                 }
                 else
-                    base.ProcessFingerRelease();
+                    ClearWord(false);
+                    //base.ProcessFingerRelease();
                 break;      
             default:
                 base.ProcessFingerRelease();
