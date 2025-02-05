@@ -378,8 +378,11 @@ public class OverworldSceneManager : MonoBehaviour{
     }
 
     public void StartBattle(){
-        if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Battle)
+        if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Battle){
+            if (currentPlayerSpace.name == "Enemy 3 - No Powerups")
+                StaticVariables.powerupsPerPuzzle = 0;
             LoadBattleWithData(currentPlayerSpace);
+        }
         else if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Tutorial){
             StaticVariables.battleData = currentPlayerSpace.battleData;
             SetLastWorldStageVisited(currentPlayerSpace);
