@@ -1300,11 +1300,95 @@ public class CutsceneManager : MonoBehaviour{
     }
 
     private void DoForest1Step(){   
+        //-78, 1935
         int i = 0;
         if (++i == cutsceneStep){
+            PlayAnimationAndMoveThenIdle("Player", "Walk", -78, 1935, 3f);
+            AdvanceConditionWait(3f);
         }
         else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Huff... Huff... Phew!", DialogueStep.Emotion.Surprised);
         } 
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I really need to get in better shape!", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Especially if you keep putting me in dangerous situations!", DialogueStep.Emotion.Angry);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_NobodyTalking();
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionWait(1.5f);
+            PlayAnimation("Player", "Take Out Book");
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Can you tell me what the heck happened in that cave??", DialogueStep.Emotion.Angry);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("At first, the pages are blank.", "Magic Book", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("After a moment, ink slowly forms on the paper.", "Magic Book", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("\"YOU NOW WIELD THE POWER OF THE <earth>ELEMENT OF EARTH<>\"", "Magic Book", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Earth?? That's incredible!", DialogueStep.Emotion.Happy);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Just from touching that glowing cave rock?", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("The book quickly responds, \"YES\".", "Magic Book", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("First <water>water<> and that <healing>healing<>, and now <earth>earth<>!", DialogueStep.Emotion.Happy);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I've never heard of someone commanding three elements before.", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I wonder what would happen if we got Eldric to touch that rock too...", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("There's no point in worrying about that just yet, we have to save the world first!", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("The next goal is making it through the forest!", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_NobodyTalking();
+            HideEnemyChathead();
+        }  
+        else if (++i == cutsceneStep){ 
+            AdvanceConditionWait(1.5f);
+            PlayAnimation("Player", "Put Away Book");
+        }   
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("It really is beautiful here...", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Even if that cyclops was a crazy necromancer, he still cared about protecting the undisturbed state of the forest.", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I should try to get through quickly and leave no trace.", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I'll have to just pick a direction and move carefully and quietly.", DialogueStep.Emotion.Normal);
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_NobodyTalking(true);
+        }  
+        else if (++i == cutsceneStep){
+            PlayAnimationAndMoveThenIdle("Player", "Walk", -178, 1435, 5f);
+            AdvanceConditionWait(2f);
+        }     
+        else if (++i == cutsceneStep){
+            StaticVariables.hasCompletedStage = true;
+            StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
+        }
     }
 
     private void DoForest2Step(){   
@@ -1395,7 +1479,6 @@ public class CutsceneManager : MonoBehaviour{
             HideChatheads();
         DisplayNobodyTalking();
         AdvanceConditionWait(0.5f);
-
     }
 
     private void DisplayPlayerTalking(string s, DialogueStep.Emotion emotion){

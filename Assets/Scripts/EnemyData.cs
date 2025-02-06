@@ -44,11 +44,12 @@ public class EnemyData : MonoBehaviour{
 
 [System.Serializable]
 public class DialogueStep{
-    public enum DialogueType{PlayerTalking, EnemyTalking, OtherTalking, Event};
+    public enum DialogueType{PlayerTalking, EnemyTalking, OtherTalking, Event, EnemyTalkingNameOverride};
     
     public enum Emotion{Normal, Angry, Defeated, Excited, Happy, Questioning, Worried, Surprised};
     public DialogueType type;    
     [ConditionalField(nameof(type), false, DialogueType.OtherTalking)] public EnemyData talker;
+    [ConditionalField(nameof(type), false, DialogueType.EnemyTalkingNameOverride)] public string name;
     public Emotion emotion;
     [TextArea(2,5)]
     public string description;

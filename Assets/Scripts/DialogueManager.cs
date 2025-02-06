@@ -242,6 +242,10 @@ public class DialogueManager : MonoBehaviour{
                 ShowPlayerTalking(dialogueSteps[currentStep].emotion);
             else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.EnemyTalking)
                 ShowEnemyTalking(enemyData, dialogueSteps[currentStep].emotion);
+            else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.EnemyTalkingNameOverride){
+                ShowEnemyTalking(enemyData, dialogueSteps[currentStep].emotion);
+                speakerNameTextBox.text = dialogueSteps[currentStep].name.ToUpper();
+            }
             else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.OtherTalking)
                 ShowEnemyTalking(dialogueSteps[currentStep].talker, dialogueSteps[currentStep].emotion);
             else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.Event)
