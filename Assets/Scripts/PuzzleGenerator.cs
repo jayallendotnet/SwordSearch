@@ -492,7 +492,7 @@ public class PuzzleGenerator : MonoBehaviour {
         return powerupTypeSelection[i];
     }
 
-    private void SetPowerupTypeList(){
+    public void SetPowerupTypeList(){
         powerupTypeSelection = new List<BattleManager.PowerupTypes> {BattleManager.PowerupTypes.Water, BattleManager.PowerupTypes.Heal}; //these are always included
         if (StaticVariables.fireActive)
             powerupTypeSelection.Add(BattleManager.PowerupTypes.Fire);
@@ -504,6 +504,14 @@ public class PuzzleGenerator : MonoBehaviour {
             powerupTypeSelection.Add(BattleManager.PowerupTypes.Dark);
         if (StaticVariables.swordActive)
             powerupTypeSelection.Add(BattleManager.PowerupTypes.Sword);
+
+        //if we are in a tutorial where another powerup type should be exclusively used, then disable water and heal
+        if (powerupTypeSelection.Count > 2){
+            if (!StaticVariables.waterActive)
+                powerupTypeSelection.Remove(BattleManager.PowerupTypes.Water);
+            if (!StaticVariables.healActive)
+                powerupTypeSelection.Remove(BattleManager.PowerupTypes.Heal);
+        }
         
         if (StaticVariables.buffedType != BattleManager.PowerupTypes.None)//remove the buffed type from the list, its prescence is determined separately
             powerupTypeSelection.Remove(StaticVariables.buffedType);

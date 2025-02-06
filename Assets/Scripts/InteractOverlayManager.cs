@@ -273,7 +273,7 @@ public class InteractOverlayManager : MonoBehaviour{
                 summary.Add("Horde enemies take more <fire>burn damage<> from <fire>fire spells<>.");
                 details.Add("<fire>Burn damage<> from the <fire>power of fire<> is multiplied by the number of enemies in the horde.");
             }
-            if (StaticVariables.waterActive){                
+            if ((StaticVariables.waterActive) && (!enemy.isWaterDangerous)){                
                 summary.Add("Horde enemies are hit harder from <water>flooded attacks<>.");
                 details.Add("While the book is <water>flooded<> by the <water>power of water<>, attacks do <damage>+2 damage<> for each enemy in the horde.");
             }
@@ -309,7 +309,7 @@ public class InteractOverlayManager : MonoBehaviour{
             }
         }     
         if (enemy.isNearWater){
-            if (StaticVariables.waterActive){
+            if ((StaticVariables.waterActive) && (!enemy.isWaterDangerous)){
                 summary.Add("The nearby river empowers <water>flooded attacks<>.");
                 details.Add("While the book is <water>flooded<> by the <water>power of water<>, attacks do <damage>+4 damage<>.");
             
@@ -321,7 +321,14 @@ public class InteractOverlayManager : MonoBehaviour{
                 details.Add("Some of this enemy's attacks can apply a <damage>debuff<> that will disappear after a short time. Using the <healing>power of healing<> will clear it immediately.");
             
             }
-        }
+        }  
+        if (enemy.isWaterDangerous){
+            if (StaticVariables.waterActive){
+                summary.Add("It wouldn't be safe to use <water>water spells<> here.");
+                details.Add("The <water>power of water<> is not available for this battle.");
+            
+            }
+        }  
 
         summary = TextFormatter.FormatStringList(summary);
         details = TextFormatter.FormatStringList(details);

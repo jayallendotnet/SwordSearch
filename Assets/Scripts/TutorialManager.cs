@@ -11,9 +11,13 @@ public class TutorialManager : BattleManager {
     private char[,] startingLayout2 = {{'S', 'P', 'U', 'N', 'K'}, {'N', 'E', 'W', 'Y', 'S'}, {'T', 'E', 'A', 'G', 'S'}, {'L', 'O', 'M', 'I', 'T'}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}};
     private char[,] startingLayout3 = {{'O', 'G', 'E', 'N', 'N'}, {'F', 'R', 'I', 'L', 'U'}, {'E', 'A', 'O', 'Z', 'P'}, {'T', 'N', 'E', 'I', 'M'}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}};
     private char[,] startingLayout4 = {{'C', 'A', 'L', 'D', 'E'}, {'E', 'S', 'I', 'N', 'M'}, {'T', 'A', 'E', 'B', 'R'}, {'T', 'K', 'C', 'O', 'L'}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}};
-    private char[,] startingPowerups1 = {{'-', '-', '-', '-', '-'}, {'-', 'H', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', 'W', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
+    private char[,] startingLayout5 = {{'C', 'A', 'L', 'D', 'E'}, {'E', 'S', 'I', 'N', 'M'}, {'T', 'A', 'E', 'B', 'R'}, {'T', 'K', 'C', 'O', 'L'}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}};
 
-    private enum Cond{Click, CompleteWord, ReleaseFinger, SubmitWord, EnemyTakesDamage, EnemyDies, SubmitAnyWord, EnemyAttacks, PlayerTakesDamage, TurnPage, TurnPageEnds, NormalBattle, SubmitHealingWord, PlayerGetsHealed, SubmitWaterWord, WaterFillsPage, WaterDrains};
+    private char[,] startingPowerups1 = {{'-', '-', '-', '-', '-'}, {'-', 'H', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', 'W', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
+    private char[,] startingPowerups2 = {{'-', '-', '-', '-', '-'}, {'-', 'E', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', 'E', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
+
+
+    private enum Cond{Click, CompleteWord, ReleaseFinger, SubmitWord, EnemyTakesDamage, EnemyDies, SubmitAnyWord, EnemyAttacks, PlayerTakesDamage, TurnPage, TurnPageEnds, NormalBattle, SubmitHealingWord, PlayerGetsHealed, SubmitWaterWord, WaterFillsPage, WaterDrains, SubmitEarthWord};
     private Cond advanceCondition;
     private char[] requiredWord;
     private bool canEnemyTakeDamage = false;
@@ -59,6 +63,9 @@ public class TutorialManager : BattleManager {
             case (3):
                 SetupTutorial3();
                 break;
+            case (4):
+                SetupTutorial4();
+                break;
         }
         SetupDialogueManager();
         UpdateSubmitVisuals();
@@ -74,7 +81,7 @@ public class TutorialManager : BattleManager {
         string n = split[1];
         tutorialNumber = int.Parse(n);
         //print(tutorialNumber);
-        if ((tutorialNumber > 3) || (tutorialNumber < 1))
+        if ((tutorialNumber > 4) || (tutorialNumber < 1))
             print("tutorial number is wrong! number is " + tutorialNumber + ", retrieved from enemy name " + name);
     }
 
@@ -116,6 +123,21 @@ public class TutorialManager : BattleManager {
         canEnemyDie = false;
     }
 
+    private void SetupTutorial4(){
+        StaticVariables.powerupsPerPuzzle = 0;
+        StaticVariables.waterActive = false;
+        StaticVariables.healActive = false;
+        puzzleGenerator.SetPowerupTypeList();
+        canEnemyTakeDamage = true;
+        canCountdown = true;
+        canQueueAttack = false;
+        canShowStrength = true;
+        canShowCountdown = true;
+        canShowPlayerHealth = true;
+        canShowEnemyHealth = true;
+        canEnemyDie = false;
+    }
+
     public override void QueueEnemyAttack(){
         if (canQueueAttack)
             base.QueueEnemyAttack();
@@ -140,6 +162,9 @@ public class TutorialManager : BattleManager {
                 break;
             case (3):
                 AdvanceTutorial3();
+                break;
+            case (4):
+                AdvanceTutorial4();
                 break;
         }
         switch (advanceCondition){
@@ -417,7 +442,7 @@ public class TutorialManager : BattleManager {
         tutorialStep ++;
         int i = 0;
         if (++i == tutorialStep){
-            DisplayText("The true magic within the book had awakened!");
+            DisplayText("The true magic within the book has awakened!");
             LoadCustomPuzzle(startingLayout4);
             puzzleGenerator.SetCustomPowerups(startingPowerups1);
             advanceCondition = Cond.Click;
@@ -540,6 +565,106 @@ public class TutorialManager : BattleManager {
         }
     }
 
+
+    private void AdvanceTutorial4(){
+        tutorialStep ++;
+        int i = 0;
+        if (++i == tutorialStep){
+            DisplayPlayerTalking("I really shouldn't use the <water>power of water<> here.", DialogueStep.Emotion.Normal);
+            LoadCustomPuzzle(startingLayout5);
+            puzzleGenerator.SetCustomPowerups(startingPowerups2);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayPlayerTalking("Who knows what would happen if I flooded all of these burrows!", DialogueStep.Emotion.Worried);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayPlayerTalking("Okay, book. Let's see what this <earth>power of earth<> is all about!", DialogueStep.Emotion.Normal);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("From now on, <earth>earth powerups<> will appear!.");
+            puzzleGenerator.letterSpaces[1,1].ToggleTutorialSelector(true);
+            puzzleGenerator.letterSpaces[3,3].ToggleTutorialSelector(true);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("Try making an attack with one of the <earth>earth powerups<>!");
+            puzzleGenerator.letterSpaces[1,1].ToggleTutorialSelector(false);
+            puzzleGenerator.letterSpaces[3,3].ToggleTutorialSelector(false);
+            advanceCondition = Cond.SubmitEarthWord;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("");
+            advanceCondition = Cond.EnemyTakesDamage;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("After using the <earth>power of earth<>, magic crystals surround you.");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("These magical crystals glow purple and appear above your health.");
+            highlightPlayerHealth.SetActive(true);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("Currently, there are 3 crystals around you.");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("When you make another attack, a crystal will strike the enemy and deal <damage>extra damage<>!");
+            highlightPlayerHealth.SetActive(false);
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            //DisplayText("The crystal damage is a fixed portion of your attack's damage.");
+            DisplayText("The crystal's damage is one third of your attack's damage.");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("This means you should make longer words to get the most damage from each crystal!");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("Use the <earth>power of earth<> and the magical crystals to defeat the rabbits!");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            canEnemyDie = true;
+            StaticVariables.powerupsPerPuzzle = 3;
+            TurnToSmallerPage();
+            UpdateSubmitVisuals();
+            canQueueAttack = true;
+            QueueEnemyAttack();
+            advanceCondition = Cond.NormalBattle;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("");
+            advanceCondition = Cond.EnemyDies;
+        }
+        else if (++i == tutorialStep){
+            DisplayEnemyTalking("Is she using <earth>earth magic<>?", enemyData, DialogueStep.Emotion.Normal, "Hopsy");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayEnemyTalking("Oh, no! What will <earth>earth magic<> do to my carrots??", enemyData, DialogueStep.Emotion.Normal, "Fopsy");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayEnemyTalking("Don't you mean OUR carrots?", enemyData, DialogueStep.Emotion.Normal, "Hopsy");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayEnemyTalking("Oh, get over yourself, Hopsy!", enemyData, DialogueStep.Emotion.Normal, "Fopsy");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            uiManager.EndDialogue();
+        }
+    }
+
+
     public override void TurnPageEnded(){
         switch(advanceCondition){
             case (Cond.TurnPageEnds):
@@ -644,6 +769,7 @@ public class TutorialManager : BattleManager {
     }
 
     private void DisplayPlayerTalking(string s, DialogueStep.Emotion emotion){
+        s = TextFormatter.FormatString(s);
         uiManager.dialogueManager.dialogueTextBox.text = s;
         uiManager.dialogueManager.ShowPlayerTalking(emotion);
         tutorialTextBox.gameObject.SetActive(false);
@@ -651,9 +777,10 @@ public class TutorialManager : BattleManager {
         uiManager.dialogueManager.speakerNameTextBox.gameObject.SetActive(true);
     }
 
-    private void DisplayEnemyTalking(string s, EnemyData enemyData, DialogueStep.Emotion emotion){
+    private void DisplayEnemyTalking(string s, EnemyData enemyData, DialogueStep.Emotion emotion, string alternateName = ""){
+        s = TextFormatter.FormatString(s);
         uiManager.dialogueManager.dialogueTextBox.text = s;
-        uiManager.dialogueManager.ShowEnemyTalking(enemyData, emotion);
+        uiManager.dialogueManager.ShowEnemyTalking(enemyData, emotion, alternateName);
         tutorialTextBox.gameObject.SetActive(false);
         uiManager.dialogueManager.dialogueTextBox.gameObject.SetActive(true);
         uiManager.dialogueManager.speakerNameTextBox.gameObject.SetActive(true);
@@ -694,7 +821,9 @@ public class TutorialManager : BattleManager {
             case (Cond.SubmitHealingWord):
                 return true;          
             case (Cond.SubmitWaterWord):
-                return true;         
+                return true;            
+            case (Cond.SubmitEarthWord):
+                return true;        
             case (Cond.WaterDrains):
                 return true;              
         }
@@ -761,7 +890,6 @@ public class TutorialManager : BattleManager {
                 }
                 else
                     ClearWord(false);
-                    //base.ProcessFingerRelease();
                 break;   
             case (Cond.SubmitWaterWord):
                 if((isValidWord) && (powerupTypeForWord == BattleManager.PowerupTypes.Water)){
@@ -770,7 +898,14 @@ public class TutorialManager : BattleManager {
                 }
                 else
                     ClearWord(false);
-                    //base.ProcessFingerRelease();
+                break;  
+            case (Cond.SubmitEarthWord):
+                if((isValidWord) && (powerupTypeForWord == BattleManager.PowerupTypes.Earth)){
+                    base.ProcessFingerRelease();
+                    AdvanceTutorialStep();
+                }
+                else
+                    ClearWord(false);
                 break;      
             default:
                 base.ProcessFingerRelease();

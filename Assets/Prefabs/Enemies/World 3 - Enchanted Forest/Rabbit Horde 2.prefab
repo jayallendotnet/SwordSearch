@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBattleable: 1
-  nameOverride: 
-  startingHealth: 0
+  nameOverride: EFPD  Squad
+  startingHealth: 50
   attackOrder:
     Value: []
   isDraconic: 0
@@ -110,60 +110,73 @@ MonoBehaviour:
   isDark: 0
   isNearWater: 0
   canApplyDebuff: 0
-  normal: {fileID: 0}
-  angry: {fileID: 21300000, guid: 8654e1b0a98668a44a45cc07c910ebd4, type: 3}
+  isWaterDangerous: 0
+  normal: {fileID: 21300000, guid: 43545c9e272292747bd50d07b2fa52cd, type: 3}
+  angry: {fileID: 0}
   defeated: {fileID: 0}
   excited: {fileID: 0}
   questioning: {fileID: 0}
   overworldDialogueSteps:
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 0
     description: Watch out up ahead, miss. Up that way is a gaggle of goblins.
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 1
     description: They always steal our crops and kill our livestock!
   - type: 0
     talker: {fileID: 0}
+    name: 
     emotion: 5
     description: Do you want to fight them off once and for all? I bet we can beat
       them together!
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 0
     description: Boy howdy, do I!
   - type: 0
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 0
     description: Let's each take half of the group. I'll get those four over there.
   - type: 0
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 1
     description: Hey you goblins! Come and get me!!
   - type: 1
     talker: {fileID: 1107962101534003463, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
+    name: 
     emotion: 1
     description: Human!!!
   victoryDialogueSteps:
   - type: 0
     talker: {fileID: 0}
+    name: 
     emotion: 1
     description: Take THAT!!
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 0
     description: Looks like we managed to drive off the rest of them!
   - type: 0
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 6
     description: Uh... no, I don't think we did!
   - type: 2
     talker: {fileID: 31044923072073363, guid: 19bba172f03c62d47a37240074409bbf, type: 3}
+    name: 
     emotion: 1
     description: Humans!
   - type: 0
     talker: {fileID: 31044923072073363, guid: 19bba172f03c62d47a37240074409bbf, type: 3}
+    name: 
     emotion: 6
     description: It's a horde of goblin generals!
 --- !u!114 &730767153068028742

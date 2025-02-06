@@ -243,8 +243,7 @@ public class DialogueManager : MonoBehaviour{
             else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.EnemyTalking)
                 ShowEnemyTalking(enemyData, dialogueSteps[currentStep].emotion);
             else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.EnemyTalkingNameOverride){
-                ShowEnemyTalking(enemyData, dialogueSteps[currentStep].emotion);
-                speakerNameTextBox.text = dialogueSteps[currentStep].name.ToUpper();
+                ShowEnemyTalking(enemyData, dialogueSteps[currentStep].emotion, dialogueSteps[currentStep].name);
             }
             else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.OtherTalking)
                 ShowEnemyTalking(dialogueSteps[currentStep].talker, dialogueSteps[currentStep].emotion);
@@ -334,8 +333,10 @@ public class DialogueManager : MonoBehaviour{
         enemyChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
     }
 
-    public void ShowEnemyTalking(EnemyData data, DialogueStep.Emotion emotion){
-        if (data.nameOverride == "")
+    public void ShowEnemyTalking(EnemyData data, DialogueStep.Emotion emotion, string alternateName = ""){
+        if (alternateName != "")
+            speakerNameTextBox.text = alternateName.ToUpper();
+        else if (data.nameOverride == "")
             speakerNameTextBox.text = data.name.ToUpper();
         else
             speakerNameTextBox.text = data.nameOverride.ToUpper();
