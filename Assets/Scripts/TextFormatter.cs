@@ -63,6 +63,8 @@ public static class TextFormatter{
         output = output.Replace("<dark>", "<color=#" + StaticVariables.darknessPowerupColor.ToHexString() + ">");
         output = output.Replace("<sword>", "<color=#" + StaticVariables.swordPowerupColor.ToHexString() + ">");
         output = output.Replace("<>", "</color>");
+        
+        output = output.Replace("<playername>", StaticVariables.playerName);
 
         //double spaces for readability
         output = output.Replace(" ", "  ");

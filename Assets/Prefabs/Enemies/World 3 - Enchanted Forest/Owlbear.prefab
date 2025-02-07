@@ -34,7 +34,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -113,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
+  data: {fileID: 0}
   burnDamageQueue: 
 --- !u!114 &1107962101534003463
 MonoBehaviour:
@@ -126,7 +126,130 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6c71501f9ece54da354ee8431c25ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBattleable: 1
+  nameOverride: 
   startingHealth: 100
-  attackSpeed: 5
-  attackDamage: 11
+  attackOrder:
+    Value: []
   isDraconic: 0
+  isHorde: 0
+  isHoly: 0
+  isDark: 0
+  isNearWater: 0
+  canApplyDebuff: 0
+  isWaterDangerous: 0
+  normal: {fileID: 21300000, guid: e00e53945f502f74abf2f30ab30891ef, type: 3}
+  angry: {fileID: 0}
+  defeated: {fileID: 0}
+  excited: {fileID: 0}
+  questioning: {fileID: 0}
+  overworldDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: This part of the forest doesn't look good...
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 7
+    description: That's the biggest tree I've seen yet, but it looks so sickly.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: All of the smaller trees around are dead, too.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 7
+    description: Oh!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 4
+    description: Greetings, fluffy creature! I'm wondering if you can tell me what's
+      going on with this big tree.
+  - type: 4
+    talker: {fileID: 0}
+    name: Wild  Beast
+    emotion: 0
+    description: Skwaaaaaah!!!
+  - type: 0
+    talker: {fileID: 0}
+    name: Wild  Beast
+    emotion: 5
+    description: I'm sorry, I don't understand.
+  - type: 4
+    talker: {fileID: 0}
+    name: Wild  Beast
+    emotion: 0
+    description: Gwoaoh!!!
+  victoryDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Squmph...
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: Every other creature I've come across has been able to speak.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: There's no way a normal creature could survive around here until
+      adulthood!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: And this definitely doesn't look like a normal creature anyway...
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 1
+    description: Agh! This doesn't make any sense!
+  - type: 0
+    talker: {fileID: 815226952419649514, guid: b944e642511f012438deca64e05536a3, type: 3}
+    name: 
+    emotion: 5
+    description: Whaat do you think, book? Any ideas what's going on here?
+  - type: 2
+    talker: {fileID: 815226952419649514, guid: b944e642511f012438deca64e05536a3, type: 3}
+    name: 
+    emotion: 0
+    description: Scrawled across the pages reads, "THAT LARGE TREE IS IMPORTANT".
+  - type: 2
+    talker: {fileID: 815226952419649514, guid: b944e642511f012438deca64e05536a3, type: 3}
+    name: 
+    emotion: 0
+    description: After a moment, new words form, "IT RADIATES MAGIC".
+  - type: 0
+    talker: {fileID: 815226952419649514, guid: b944e642511f012438deca64e05536a3, type: 3}
+    name: 
+    emotion: 0
+    description: Fascinating!
+  - type: 0
+    talker: {fileID: 815226952419649514, guid: b944e642511f012438deca64e05536a3, type: 3}
+    name: 
+    emotion: 0
+    description: Spell slinger, travel companion, and now a magic radar.
+  - type: 0
+    talker: {fileID: 815226952419649514, guid: b944e642511f012438deca64e05536a3, type: 3}
+    name: 
+    emotion: 0
+    description: You really are the complete package!
+  - type: 2
+    talker: {fileID: 815226952419649514, guid: b944e642511f012438deca64e05536a3, type: 3}
+    name: 
+    emotion: 0
+    description: If books could blush, this one would be. Unfortunately they can't,
+      so this one isn't.
+  - type: 0
+    talker: {fileID: 815226952419649514, guid: b944e642511f012438deca64e05536a3, type: 3}
+    name: 
+    emotion: 0
+    description: We'd better find someone to ask about the tree and this big animal.

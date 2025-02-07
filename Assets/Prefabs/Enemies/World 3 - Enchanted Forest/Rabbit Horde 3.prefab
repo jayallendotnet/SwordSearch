@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBattleable: 1
-  nameOverride: 
+  nameOverride: EFPD  Horde
   startingHealth: 0
   attackOrder:
     Value: []
@@ -115,62 +115,148 @@ MonoBehaviour:
   isDark: 0
   isNearWater: 0
   canApplyDebuff: 0
-  normal: {fileID: 0}
-  angry: {fileID: 21300000, guid: 8654e1b0a98668a44a45cc07c910ebd4, type: 3}
+  isWaterDangerous: 0
+  normal: {fileID: 21300000, guid: 43545c9e272292747bd50d07b2fa52cd, type: 3}
+  angry: {fileID: 21300000, guid: 9994b9c896afad043a67626c4c138549, type: 3}
   defeated: {fileID: 0}
   excited: {fileID: 0}
   questioning: {fileID: 0}
   overworldDialogueSteps:
-  - type: 2
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    emotion: 0
-    description: Watch out up ahead, miss. Up that way is a gaggle of goblins.
-  - type: 2
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    emotion: 1
-    description: They always steal our crops and kill our livestock!
   - type: 0
     talker: {fileID: 0}
-    emotion: 5
-    description: Do you want to fight them off once and for all? I bet we can beat
-      them together!
-  - type: 2
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 0
-    description: Boy howdy, do I!
+    description: This place looks familiar...
   - type: 0
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    talker: {fileID: 0}
+    name: 
+    emotion: 7
+    description: This is where the rabbits live! How did I end up back here?
+  - type: 0
+    talker: {fileID: 0}
+    name: 
     emotion: 0
-    description: Let's each take half of the group. I'll get those four over there.
+    description: I'll be fine as long as I move slowly and stay quiet.
+  - type: 4
+    talker: {fileID: 0}
+    name: Jalopsy
+    emotion: 0
+    description: Hey, you! Why are you walking so suspiciously?
   - type: 0
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    talker: {fileID: 0}
+    name: Jalopsy
     emotion: 1
-    description: Hey you goblins! Come and get me!!
-  - type: 1
-    talker: {fileID: 1107962101534003463, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
+    description: Are you kidding me? What's a girl have to do to be left alone around
+      here??
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 0
+    description: What's all this commotion?
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 0
+    description: Oh, it's you, human!
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 0
+    description: Finally decided to face justice, eh?
+  - type: 0
+    talker: {fileID: 0}
+    name: Officer  Copsy
+    emotion: 6
+    description: Not again!
+  - type: 0
+    talker: {fileID: 0}
+    name: Officer  Copsy
     emotion: 1
-    description: Human!!!
+    description: I'm trying to save the world here!
+  - type: 0
+    talker: {fileID: 0}
+    name: Officer  Copsy
+    emotion: 1
+    description: I'm even trying to fix this forest where all you jerks live!
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 0
+    description: Yeah, save it for the judge!
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 1
+    description: '*Kstch* Attention all units, this is Chief Copsy from EFPD district
+      823.'
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 1
+    description: I have a rogue human female, orange hair, green eyes here in sector
+      37, with a history of resisting arrest.
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 1
+    description: Requesting immediate backup. I repeat, requesting immediate backup
+      in sector 37.
+  - type: 0
+    talker: {fileID: 0}
+    name: Officer  Copsy
+    emotion: 1
+    description: You can't be serious
+  - type: 4
+    talker: {fileID: 0}
+    name: Officer  Mopsy
+    emotion: 0
+    description: Officer Mopsy, reporting for duty.
+  - type: 0
+    talker: {fileID: 0}
+    name: Officer  Mopsy
+    emotion: 1
+    description: You have to let me through!
+  - type: 4
+    talker: {fileID: 0}
+    name: Sergeant  Dopsy
+    emotion: 0
+    description: Sergeant  Dopsy, present.
+  - type: 0
+    talker: {fileID: 0}
+    name: Sargeant  Dopsy
+    emotion: 1
+    description: I'm not kidding around here!
+  - type: 4
+    talker: {fileID: 0}
+    name: Captain  Quopsy
+    emotion: 0
+    description: Captain Quopsy, reporting in with squad 9.
+  - type: 0
+    talker: {fileID: 0}
+    name: Captain  Quopsy
+    emotion: 1
+    description: Alright, that's enough! I'm fighting my way out of here!
   victoryDialogueSteps:
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 0
+    description: Hah, you think you've won?
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 0
+    description: I already put out the call. More reinforcements will keep coming.
   - type: 0
     talker: {fileID: 0}
-    emotion: 1
-    description: Take THAT!!
-  - type: 2
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: Chief  Copsy
+    emotion: 6
+    description: I have to run!
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
     emotion: 0
-    description: Looks like we managed to drive off the rest of them!
-  - type: 0
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    emotion: 6
-    description: Uh... no, I don't think we did!
-  - type: 2
-    talker: {fileID: 31044923072073363, guid: 19bba172f03c62d47a37240074409bbf, type: 3}
-    emotion: 1
-    description: Humans!
-  - type: 0
-    talker: {fileID: 31044923072073363, guid: 19bba172f03c62d47a37240074409bbf, type: 3}
-    emotion: 6
-    description: It's a horde of goblin generals!
+    description: All units, after that human!
 --- !u!114 &730767153068028742
 MonoBehaviour:
   m_ObjectHideFlags: 0

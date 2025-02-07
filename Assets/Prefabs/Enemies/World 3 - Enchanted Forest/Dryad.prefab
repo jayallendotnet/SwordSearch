@@ -35,7 +35,6 @@ RectTransform:
   m_Children:
   - {fileID: 7025450340366852962}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -114,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
+  data: {fileID: 0}
   burnDamageQueue: 
 --- !u!114 &815226952419649514
 MonoBehaviour:
@@ -127,10 +127,98 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6c71501f9ece54da354ee8431c25ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBattleable: 1
+  nameOverride: 
   startingHealth: 110
-  attackSpeed: 6
-  attackDamage: 14
-  isDraconic: 1
+  attackOrder:
+    Value: []
+  isDraconic: 0
+  isHorde: 0
+  isHoly: 0
+  isDark: 0
+  isNearWater: 0
+  canApplyDebuff: 0
+  isWaterDangerous: 0
+  normal: {fileID: 21300000, guid: 68bf0648bebe99d4180e2cc8e3e3a47c, type: 3}
+  angry: {fileID: 0}
+  defeated: {fileID: 0}
+  excited: {fileID: 0}
+  questioning: {fileID: 0}
+  overworldDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: What are you doing here, human?
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 1
+    description: Ugh, I'm tired of this nonsense! "Human" this, "human" that!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 2
+    description: I'm going to have to start wearing a name tag!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: I'm looking for any information about the other human that lives
+      in the forest.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: I can't help you.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: You need to leave.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Please, you must know something! I've heard he comes this way from
+      time to time.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Yes, for whatever reason, this dying area is so interesting to him.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: But I can't allow you to stay here any longer!
+  victoryDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: Can you at least tell me which way the other human comes from?
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: I'll tell you if you leave.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 1
+    description: I'll leave if you tell me!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Fair enough, he comes from the healthy part of the forest. I'm not
+      sure where exactly.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: I guess I'll just have to keep going along this path.
 --- !u!1 &9039942117280077413
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +250,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 815226952419649519}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

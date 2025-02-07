@@ -34,7 +34,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -113,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
+  data: {fileID: 0}
   burnDamageQueue: 
 --- !u!114 &1107962101534003463
 MonoBehaviour:
@@ -126,7 +126,208 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6c71501f9ece54da354ee8431c25ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBattleable: 1
+  nameOverride: Fairy
   startingHealth: 20
-  attackSpeed: 4
-  attackDamage: 2
+  attackOrder:
+    Value: []
   isDraconic: 0
+  isHorde: 0
+  isHoly: 0
+  isDark: 0
+  isNearWater: 0
+  canApplyDebuff: 0
+  isWaterDangerous: 0
+  normal: {fileID: 21300000, guid: b1199bf17761be34fac4b2bc1bdb2e5c, type: 3}
+  angry: {fileID: 0}
+  defeated: {fileID: 0}
+  excited: {fileID: 0}
+  questioning: {fileID: 0}
+  overworldDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Hello, human woman.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Hello, little fairy.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 7
+    description: You look like a little version of me!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 7
+    description: Orange hair, green eyes, even the same skin tone!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: Are you like my doppelganger or something?
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Tee-hee... Very observant!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Every time an outsider enters the forest, a new fairy appears to
+      mimic them!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 7
+    description: Say what??
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Your movements, your thoughts, your aspirations...
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Eventually, they will all become mine, and you will fade!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Some say I'm a part of your subconscious brought to life!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Some say I'm your truest, darkest desires manifested!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: And only one of us can leave this forest alive!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 6
+    description: Agh!! Get away from me!!
+  victoryDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Alright, let's see... How do I stop this evil bodysnatching magic...
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: Am I supposed to kill you or something?
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: I don't really want to do that...
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Tee-hee... You should have seen the look on your face!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: '"Agh!! Get away from me!!"
+
+      Hilarious!'
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Naive little human girl.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: I don't understand, is this some kind of trick?
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 1
+    description: Is all of this just a prank??
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Tee-hee, that about sums it up!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: You're not some kind of magic mimic of me?
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Not at all! I'm a pretty standard forest fairy.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: How do you look exactly like a miniature version of me?
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Purely a coincidence.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 1
+    description: That's so rude! You scared me half to death!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: How could I resist? The first human to enter the forest in a century,
+      and I'm in the perfect position for some fun!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 1
+    description: I wouldn't call that fun!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Oh, don't make me feel bad!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Alright, I'm sorry. Let me give you a little advice, you might need
+      it.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: There's one other human in the entire forest, but be wary of him.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: He comes around here from time to time, and I can't ever tell what
+      he's up to.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: I hope you don't ever cross paths!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: Uh... Thanks, I guess?

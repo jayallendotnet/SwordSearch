@@ -34,7 +34,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -113,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
+  data: {fileID: 0}
   burnDamageQueue: 
 --- !u!114 &1107962101534003463
 MonoBehaviour:
@@ -126,7 +126,133 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6c71501f9ece54da354ee8431c25ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBattleable: 1
+  nameOverride: 
   startingHealth: 20
-  attackSpeed: 4
-  attackDamage: 2
+  attackOrder:
+    Value: []
   isDraconic: 0
+  isHorde: 0
+  isHoly: 0
+  isDark: 0
+  isNearWater: 0
+  canApplyDebuff: 0
+  isWaterDangerous: 0
+  normal: {fileID: 21300000, guid: eb8019b60f3ba894fbb92fe0dad572d4, type: 3}
+  angry: {fileID: 0}
+  defeated: {fileID: 0}
+  excited: {fileID: 0}
+  questioning: {fileID: 0}
+  overworldDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 7
+    description: I recognize you! You're a redcap!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: I am. I recognize you, too. You're a hu-
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: No, that's not right. You have a label there on your shirt.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: You're a <playername>.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: What is that? I've never heard of one before.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 4
+    description: It's similar to a human, but a lot cooler and way more beautiful.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: You're some kind of endangered species?
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: There are certainly few like me.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: I'm looking for a human who lives around here. Have you seen him?
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: I have, and recently too. But I won't help you find him.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: He would burn you alive!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: I can't be responsible for the death of an endangered animal!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: Hmmm...
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 4
+    description: You make a very good point! Thank you for looking out for me!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: Then just to be safe, where should I not go?
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Do not, under any circumstances, continue on this path and take
+      the next right.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 4
+    description: Thanks! I'll be going there now.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Ah, no! Stop!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Or I'll make you stop!
+  victoryDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: You <playername>s are stupid, running straight into trouble.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: No wonder you're an endangered species.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 1
+    description: Rude!

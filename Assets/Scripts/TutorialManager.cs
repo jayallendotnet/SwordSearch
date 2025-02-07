@@ -11,10 +11,10 @@ public class TutorialManager : BattleManager {
     private char[,] startingLayout2 = {{'S', 'P', 'U', 'N', 'K'}, {'N', 'E', 'W', 'Y', 'S'}, {'T', 'E', 'A', 'G', 'S'}, {'L', 'O', 'M', 'I', 'T'}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}};
     private char[,] startingLayout3 = {{'O', 'G', 'E', 'N', 'N'}, {'F', 'R', 'I', 'L', 'U'}, {'E', 'A', 'O', 'Z', 'P'}, {'T', 'N', 'E', 'I', 'M'}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}};
     private char[,] startingLayout4 = {{'C', 'A', 'L', 'D', 'E'}, {'E', 'S', 'I', 'N', 'M'}, {'T', 'A', 'E', 'B', 'R'}, {'T', 'K', 'C', 'O', 'L'}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}};
-    private char[,] startingLayout5 = {{'C', 'A', 'L', 'D', 'E'}, {'E', 'S', 'I', 'N', 'M'}, {'T', 'A', 'E', 'B', 'R'}, {'T', 'K', 'C', 'O', 'L'}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}};
+    private char[,] startingLayout5 = {{'B', 'R', 'X', 'A', 'F'}, {'A', 'N', 'E', 'D', 'U'}, {'L', 'I', 'A', 'L', 'T'}, {'G', 'O', 'W', 'E', 'I'}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}, {' ', ' ', ' ', ' ', ' '}};
 
     private char[,] startingPowerups1 = {{'-', '-', '-', '-', '-'}, {'-', 'H', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', 'W', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
-    private char[,] startingPowerups2 = {{'-', '-', '-', '-', '-'}, {'-', 'E', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', 'E', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
+    private char[,] startingPowerups2 = {{'-', 'E', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', 'E', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}};
 
 
     private enum Cond{Click, CompleteWord, ReleaseFinger, SubmitWord, EnemyTakesDamage, EnemyDies, SubmitAnyWord, EnemyAttacks, PlayerTakesDamage, TurnPage, TurnPageEnds, NormalBattle, SubmitHealingWord, PlayerGetsHealed, SubmitWaterWord, WaterFillsPage, WaterDrains, SubmitEarthWord};
@@ -585,13 +585,13 @@ public class TutorialManager : BattleManager {
         }
         else if (++i == tutorialStep){
             DisplayText("From now on, <earth>earth powerups<> will appear!.");
-            puzzleGenerator.letterSpaces[1,1].ToggleTutorialSelector(true);
+            puzzleGenerator.letterSpaces[0,1].ToggleTutorialSelector(true);
             puzzleGenerator.letterSpaces[3,3].ToggleTutorialSelector(true);
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
             DisplayText("Try making an attack with one of the <earth>earth powerups<>!");
-            puzzleGenerator.letterSpaces[1,1].ToggleTutorialSelector(false);
+            puzzleGenerator.letterSpaces[0,1].ToggleTutorialSelector(false);
             puzzleGenerator.letterSpaces[3,3].ToggleTutorialSelector(false);
             advanceCondition = Cond.SubmitEarthWord;
         }

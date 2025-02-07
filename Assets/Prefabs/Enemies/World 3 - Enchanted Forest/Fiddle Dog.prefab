@@ -34,7 +34,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -113,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
+  data: {fileID: 0}
   burnDamageQueue: 
 --- !u!114 &1107962101534003463
 MonoBehaviour:
@@ -126,7 +126,155 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6c71501f9ece54da354ee8431c25ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBattleable: 1
+  nameOverride: 
   startingHealth: 20
-  attackSpeed: 2
-  attackDamage: 1
-  isDraconic: 1
+  attackOrder:
+    Value: []
+  isDraconic: 0
+  isHorde: 0
+  isHoly: 0
+  isDark: 0
+  isNearWater: 0
+  canApplyDebuff: 0
+  isWaterDangerous: 0
+  normal: {fileID: 21300000, guid: 9de1da53bc8a4e941ad62333eccc8a9f, type: 3}
+  angry: {fileID: 0}
+  defeated: {fileID: 0}
+  excited: {fileID: 0}
+  questioning: {fileID: 0}
+  overworldDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Looks like the rabbit squad stopped following me...
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: Maybe it's out of their jurisdiction?
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 7
+    description: The forest is so much more welcoming out here! I can even hear music!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: You have me to thank for that.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Oh, hello...
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: Are you a... dog?
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: A fidlle dog to be precise.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 7
+    description: I've read about you! A long time ago, a pack of dogs was let loose
+      in the forest.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 7
+    description: Over the generations, the magic seeped in and gave you the ability
+      to speak!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: And an exceptional way with music!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: Do all of the forest creatures have a similar history?
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Not all of us. A few are truly natives.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Some tales tell of the forest not becoming magical until after the
+      strange creatures started living here.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 7
+    description: That's fascinating!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: 'You smell a little like magic yourself... '
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Care to give a demonstration?
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Sure, but it might be dangerous!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Oh, you know what they say, "Curiousity killed the dog."
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: I've never heard anyone say that in my entire life.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: It's a common phrase in my family. Let's battle!
+  victoryDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: ...
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 6
+    description: Oh, no! I hope that curiosity didn't actually kill the dog!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: No, I'm fine. It's probably just time for a little dognap.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: There's no way you aren't descended from some kind of cat...
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: What makes you say that?
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Just a hunch. I'll be going now, enjoy your... "dognap".

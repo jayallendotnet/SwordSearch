@@ -34,7 +34,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -113,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
+  data: {fileID: 0}
   burnDamageQueue: 
 --- !u!114 &815226952419649514
 MonoBehaviour:
@@ -126,7 +126,85 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6c71501f9ece54da354ee8431c25ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBattleable: 1
+  nameOverride: 
   startingHealth: 50
-  attackSpeed: 2
-  attackDamage: 1
+  attackOrder:
+    Value: []
   isDraconic: 0
+  isHorde: 0
+  isHoly: 0
+  isDark: 0
+  isNearWater: 0
+  canApplyDebuff: 0
+  isWaterDangerous: 0
+  normal: {fileID: 21300000, guid: eb0a01c48b93b7848b89009abb3bc94c, type: 3}
+  angry: {fileID: 0}
+  defeated: {fileID: 0}
+  excited: {fileID: 0}
+  questioning: {fileID: 0}
+  overworldDialogueSteps:
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 2
+    description: There's nothing else around here, just more dying plants.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 2
+    description: And some flora just barely hanging on.
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Human! Get your filthy hands out of my soil!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Oh, my apologies!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 4
+    description: I'm hoping you'd be able to answer some questions about that big
+      orange tree!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: I'm not telling you anything!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: That other human sent you here after we chansed him off!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: And I'll chase you off just the same!
+  victoryDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: I don't care what you do to me, I'm not telling you anything about
+      that tree!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 1
+    description: You want me out of here?
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Fine, I'll go.
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: I'm starting to think my best way to get answers is to talk to the
+      other human anyway.

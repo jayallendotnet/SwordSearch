@@ -110,75 +110,151 @@ MonoBehaviour:
   isDark: 0
   isNearWater: 0
   canApplyDebuff: 0
-  isWaterDangerous: 0
+  isWaterDangerous: 1
   normal: {fileID: 21300000, guid: 43545c9e272292747bd50d07b2fa52cd, type: 3}
-  angry: {fileID: 0}
+  angry: {fileID: 21300000, guid: 4e0f7aa5b6a88ff42bc1528b3a4600ce, type: 3}
   defeated: {fileID: 0}
   excited: {fileID: 0}
   questioning: {fileID: 0}
   overworldDialogueSteps:
-  - type: 2
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    name: 
-    emotion: 0
-    description: Watch out up ahead, miss. Up that way is a gaggle of goblins.
-  - type: 2
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    name: 
-    emotion: 1
-    description: They always steal our crops and kill our livestock!
   - type: 0
     talker: {fileID: 0}
     name: 
+    emotion: 0
+    description: That was close! I almost caused a commotion with those two rabbits!
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 0
+    description: Excuse me, I heard there was some sort of a commotion around here.
+  - type: 0
+    talker: {fileID: 0}
+    name: Officer Copsy
+    emotion: 6
+    description: Oh, no...
+  - type: 0
+    talker: {fileID: 0}
+    name: Officer Copsy
     emotion: 5
-    description: Do you want to fight them off once and for all? I bet we can beat
-      them together!
-  - type: 2
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    name: 
+    description: Uh... good day? What can I do for you?
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
     emotion: 0
-    description: Boy howdy, do I!
+    description: The name's Copsy, Chief of Police from EFPD. I'm going to have ask
+      you to step aside.
   - type: 0
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    name: 
+    talker: {fileID: 0}
+    name: Officer Copsy
     emotion: 0
-    description: Let's each take half of the group. I'll get those four over there.
+    description: At least there's only one. Maybe I can make a break for it!
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 0
+    description: Listen up, recruits!
+  - type: 4
+    talker: {fileID: 0}
+    name: EFPD  Recruits
+    emotion: 1
+    description: Sir, yes, sir!
   - type: 0
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    name: 
+    talker: {fileID: 0}
+    name: Officer Copsy
+    emotion: 6
+    description: Oh great, here we go...
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 0
+    description: When questioning a suspicious civilian, it's important to be careful.
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 0
+    description: Ask clear, basic questions, and don't let your biases take over.
+  - type: 4
+    talker: {fileID: 0}
+    name: EFPD  Recruits
     emotion: 1
-    description: Hey you goblins! Come and get me!!
-  - type: 1
-    talker: {fileID: 1107962101534003463, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
-    name: 
+    description: Yes, sir!!
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 0
+    description: Could you tell me what you're doing around here today?
+  - type: 0
+    talker: {fileID: 0}
+    name: Officer Copsy
+    emotion: 6
+    description: I'm just trying to travel throught the forest in a timely manner,
+      without causing any trouble!
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 0
+    description: Now, recruits, what can we conclude from her response?
+  - type: 4
+    talker: {fileID: 0}
+    name: Recruit  Bopsy
+    emotion: 0
+    description: She's not from the forest!
+  - type: 4
+    talker: {fileID: 0}
+    name: Recruit  Topsy
+    emotion: 0
+    description: An outsider!
+  - type: 4
+    talker: {fileID: 0}
+    name: Recruit  Popsy
+    emotion: 0
+    description: Is she a human?
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 0
+    description: Ma'am, we're going to have to take you in for questioning!
+  - type: 4
+    talker: {fileID: 0}
+    name: Recruit  Zopsy
+    emotion: 0
+    description: And paperwork!
+  - type: 0
+    talker: {fileID: 0}
+    name: Officer Copsy
     emotion: 1
-    description: Human!!!
+    description: I don't have time for questioning! Or paperwork!
+  - type: 4
+    talker: {fileID: 0}
+    name: Chief  Copsy
+    emotion: 0
+    description: She's resisting arrest! Get her!
+  - type: 4
+    talker: {fileID: 0}
+    name: EFPD  Recruits
+    emotion: 1
+    description: Sir, yes, sir!!
   victoryDialogueSteps:
   - type: 0
     talker: {fileID: 0}
     name: 
-    emotion: 1
-    description: Take THAT!!
-  - type: 2
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    name: 
-    emotion: 0
-    description: Looks like we managed to drive off the rest of them!
+    emotion: 6
+    description: Okay...
   - type: 0
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    talker: {fileID: 0}
     name: 
     emotion: 6
-    description: Uh... no, I don't think we did!
-  - type: 2
-    talker: {fileID: 31044923072073363, guid: 19bba172f03c62d47a37240074409bbf, type: 3}
-    name: 
-    emotion: 1
-    description: Humans!
+    description: I've assaulted a police officer, and four recruits.
   - type: 0
-    talker: {fileID: 31044923072073363, guid: 19bba172f03c62d47a37240074409bbf, type: 3}
+    talker: {fileID: 0}
     name: 
     emotion: 6
-    description: It's a horde of goblin generals!
+    description: So much for leaving no trace!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 6
+    description: Now I really need to get out of here!
 --- !u!114 &730767153068028742
 MonoBehaviour:
   m_ObjectHideFlags: 0
