@@ -260,7 +260,7 @@ public class DialogueManager : MonoBehaviour{
         }
         else{
             dialogueTextBox.text = "No dialogue for this enemy, current talk step is " + currentStep;
-            speakerNameTextBox.text = "WARNING";
+            DisplaySpeakerName("WARNING");
         }
         if (currentStep == dialogueSteps.Length - 1)
             SetButtonText("CONTINUE");
@@ -270,7 +270,7 @@ public class DialogueManager : MonoBehaviour{
     }
 
     public void ShowPlayerTalking(DialogueStep.Emotion emotion){
-        speakerNameTextBox.text = StaticVariables.playerName.ToUpper();
+        DisplaySpeakerName(StaticVariables.playerName.ToUpper());
         speakerNameTextBox.alignment = TextAnchor.UpperLeft;
         playerChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
         LightenPlayerChathead();
@@ -311,6 +311,10 @@ public class DialogueManager : MonoBehaviour{
             flair.SetActive(true);
     }
 
+    public void DisplaySpeakerName(string name){
+        speakerNameTextBox.text = TextFormatter.FormatString(name);
+    }
+
     private void LightenPlayerChathead(){
         playerChathead.DOColor(Color.white, transitionDuration);
         foreach (Image im in playerFlairImages)
@@ -327,7 +331,7 @@ public class DialogueManager : MonoBehaviour{
         //might need some stuff here in the future, if we are going to have the narrator speak in between other dialogues
         enemyChathead.DOColor(Color.grey, transitionDuration);
         DarkenPlayerChathead();
-        speakerNameTextBox.text = "";
+        DisplaySpeakerName("");
         dialogueTextBox.text = "";
         playerChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
         enemyChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
@@ -335,11 +339,11 @@ public class DialogueManager : MonoBehaviour{
 
     public void ShowEnemyTalking(EnemyData data, DialogueStep.Emotion emotion, string alternateName = ""){
         if (alternateName != "")
-            speakerNameTextBox.text = alternateName.ToUpper();
+            DisplaySpeakerName(alternateName.ToUpper());
         else if (data.nameOverride == "")
-            speakerNameTextBox.text = data.name.ToUpper();
+            DisplaySpeakerName(data.name.ToUpper());
         else
-            speakerNameTextBox.text = data.nameOverride.ToUpper();
+            DisplaySpeakerName(data.nameOverride.ToUpper());
         speakerNameTextBox.alignment = TextAnchor.UpperRight;
         enemyChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
         enemyChathead.DOColor(Color.white, transitionDuration);
@@ -509,7 +513,7 @@ public class DialogueManager : MonoBehaviour{
     }
 
     public void ClearDialogue(){
-        speakerNameTextBox.text = "";
+        DisplaySpeakerName("");
         dialogueTextBox.text = "";
     }
 

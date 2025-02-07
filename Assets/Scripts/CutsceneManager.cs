@@ -109,6 +109,7 @@ public class CutsceneManager : MonoBehaviour{
 
     private void SetupForest2(){
         SetCutsceneBackground(forest2);
+        PlayAnimation("Player", "Walk");
     }
 
     private void SetupForest3(){
@@ -1300,7 +1301,6 @@ public class CutsceneManager : MonoBehaviour{
     }
 
     private void DoForest1Step(){   
-        //-78, 1935
         int i = 0;
         if (++i == cutsceneStep){
             PlayAnimationAndMoveThenIdle("Player", "Walk", -78, 1935, 3f);
@@ -1394,9 +1394,57 @@ public class CutsceneManager : MonoBehaviour{
     private void DoForest2Step(){   
         int i = 0;
         if (++i == cutsceneStep){
+            MoveEverythingExceptPlayer(-591, 0, 20f);
+            AdvanceConditionDialogue_PlayerTalking("Huff... Huff...", DialogueStep.Emotion.Surprised);
         }
         else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("We need to find that other human, and fast!", DialogueStep.Emotion.Surprised);
         }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("If I were a magical human in a magical forest, where would I live?", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Huff...", DialogueStep.Emotion.Surprised);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Wait a second, I am a magical human in a magical forest!", DialogueStep.Emotion.Surprised);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("That's not exactly helpful; I don't live here!", DialogueStep.Emotion.Defeated);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Okay, book...", DialogueStep.Emotion.Surprised);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_NobodyTalking();
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionWait(1.5f);
+            PlayAnimation("Player", "Take Out Book While Walking");
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Do you feel anything with your magic radar?", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Immediately, the book responds, \"THERE IS A STRONG MAGICAL AURA RADIATING FROM BELOW\".", "Magic Book", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Okay...", DialogueStep.Emotion.Surprised);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("So I'm looking for some kind of tunnel entrance, or big tree stump, or...", DialogueStep.Emotion.Surprised);
+        }
+        //player runs behind a tree
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("A trapdoor!", DialogueStep.Emotion.Happy);
+        }
+        //screen shakes, a ton of rabbits run by, on repeat until the scene transitions
+        //AdvanceConditionDialogue_PlayerTalking("Phew, that was close!", DialogueStep.Emotion.Surprised);
+        //AdvanceConditionDialogue_PlayerTalking("Well, this must be it.", DialogueStep.Emotion.Normal);
+        //AdvanceConditionDialogue_PlayerTalking("Nothing says \"possibly-evil lair of a possibly-evil forest wizard like a trapdoor\".", DialogueStep.Emotion.Normal);
+        //AdvanceConditionDialogue_PlayerTalking("Nothing to do but go down...", DialogueStep.Emotion.Questioning);
+        //transition to scene 2
+
     }
 
     private void DoForest3Step(){   
