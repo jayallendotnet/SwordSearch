@@ -110,6 +110,8 @@ public class CutsceneManager : MonoBehaviour{
     private void SetupForest2(){
         SetCutsceneBackground(forest2);
         PlayAnimation("Player", "Walk");
+        Transform rabbitArea = GetObjectFromName("Starting area").transform;
+        rabbitArea.DOLocalMoveX(rabbitArea.localPosition.x -3000, 2.5f).SetEase(Ease.Linear);
     }
 
     private void SetupForest3(){
@@ -1394,7 +1396,9 @@ public class CutsceneManager : MonoBehaviour{
     private void DoForest2Step(){   
         int i = 0;
         if (++i == cutsceneStep){
-            MoveEverythingExceptPlayer(-591, 0, 20f);
+            //MoveEverythingExceptPlayer(-591, 0, 20f);
+            //Transform rabbitArea = GetObjectFromName("Rabbit Area Dirt").transform;
+            //rabbitArea.DOLocalMoveX(rabbitArea.localPosition.x -3000, 4f).SetEase(Ease.Linear);
             AdvanceConditionDialogue_PlayerTalking("Huff... Huff...", DialogueStep.Emotion.Surprised);
         }
         else if (++i == cutsceneStep){
