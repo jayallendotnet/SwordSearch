@@ -8,7 +8,7 @@ using DG.Tweening;
 public class CutsceneManager : MonoBehaviour{
 
     private int cutsceneStep = 0;
-    private enum Cond{Click, Wait, BackgroundChange};
+    private enum Cond{Click, Wait, BackgroundChange, externalTrigger};
     private Cond advanceCondition;
     public enum Cutscene{Hometown1, Hometown2, Grasslands1, Grasslands2, Forest1, Forest2, Forest3, Desert1, Desert2};
     private Cutscene cutsceneID;
@@ -35,6 +35,8 @@ public class CutsceneManager : MonoBehaviour{
     public GameObject forest3;
     public GameObject desert1;
     public GameObject desert2;
+
+    private float externalTriggerParameter = 0f;
 
     
 
@@ -111,7 +113,9 @@ public class CutsceneManager : MonoBehaviour{
         SetCutsceneBackground(forest2);
         PlayAnimation("Player", "Walk");
         Transform rabbitArea = GetObjectFromName("Starting area").transform;
-        rabbitArea.DOLocalMoveX(rabbitArea.localPosition.x -3000, 2.5f).SetEase(Ease.Linear);
+        rabbitArea.DOLocalMoveX(rabbitArea.localPosition.x -3000, 2.5f).SetEase(Ease.Linear);            
+        //CutsceneTreeFinalSynchronizer synchronizer = GetObjectFromName("Tree Synchronizer").GetComponent<CutsceneTreeFinalSynchronizer>();
+        //synchronizer.cutsceneManager = this;
     }
 
     private void SetupForest3(){
@@ -1400,6 +1404,7 @@ public class CutsceneManager : MonoBehaviour{
             //Transform rabbitArea = GetObjectFromName("Rabbit Area Dirt").transform;
             //rabbitArea.DOLocalMoveX(rabbitArea.localPosition.x -3000, 4f).SetEase(Ease.Linear);
             AdvanceConditionDialogue_PlayerTalking("Huff... Huff...", DialogueStep.Emotion.Surprised);
+            StaticVariables.WaitTimeThenCallFunction(2f, GameObject.Destroy, GetObjectFromName("Starting area"));
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("We need to find that other human, and fast!", DialogueStep.Emotion.Surprised);
@@ -1438,6 +1443,46 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("So I'm looking for some kind of tunnel entrance, or big tree stump, or...", DialogueStep.Emotion.Surprised);
         }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_NobodyTalking(true);
+        }  
+        else if (++i == cutsceneStep){
+            //CutsceneTreeFinalSynchronizer synchronizer = GetObjectFromName("Tree Synchronizer").GetComponent<CutsceneTreeFinalSynchronizer>();
+            //synchronizer.cutsceneManager = this;
+            //ExternalTrigger();
+            //synchronizer.cutsceneManager.ExternalTrigger();
+            advanceCondition = Cond.externalTrigger;
+
+            List<CutsceneTreeGenerator> treeGenerators = new List<CutsceneTreeGenerator>();
+            treeGenerators.Add(GetObjectFromName("Tree Spawner 1").GetComponent<CutsceneTreeGenerator>());
+            treeGenerators.Add(GetObjectFromName("Tree Spawner 2").GetComponent<CutsceneTreeGenerator>());
+            treeGenerators.Add(GetObjectFromName("Tree Spawner 3").GetComponent<CutsceneTreeGenerator>());
+            treeGenerators.Add(GetObjectFromName("Tree Spawner 4").GetComponent<CutsceneTreeGenerator>());
+            treeGenerators.Add(GetObjectFromName("Tree Spawner 5").GetComponent<CutsceneTreeGenerator>());
+            treeGenerators.Add(GetObjectFromName("Tree Spawner 6").GetComponent<CutsceneTreeGenerator>());
+            foreach(CutsceneTreeGenerator treeGenerator in treeGenerators)
+                treeGenerator.BeginSlowdown();
+
+            //CutsceneTreeFinalSynchronizer synchronizer = GetObjectFromName("Tree Synchronizer").GetComponent<CutsceneTreeFinalSynchronizer>();
+            //synchronizer.cutsceneManager = this;
+            //advanceCondition = Cond.externalTrigger; //advance when cutscene synchronizer has all of the tree movements in sync 
+        } 
+        
+        else if (++i == cutsceneStep){
+            print(externalTriggerParameter);
+            AdvanceConditionWait(externalTriggerParameter - 1f);
+            //only reach this step once the cutscene tree synchronizer has all final trees moving as one
+            //externalTriggerParameter's value is the time remaining until the trees are stopped
+            //start "slowing down" the trees by moving the entire scene slowly
+            
+            //MoveEverythingExceptPlayer(1000, 0, externalTriggerParameter);
+            //GetObjectFromName("Final Tree Cluster").transform.DOLocalMoveX(1629, 2.5f).SetEase(Ease.Linear);
+        } 
+        else if (++i == cutsceneStep){
+            MoveObject("Player", -27, 2282, 1f);
+            //GetObjectFromName("Final Tree Cluster").transform.DOLocalMoveX(1629, 2.5f).SetEase(Ease.Linear);
+        } 
+
         //player runs behind a tree
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("A trapdoor!", DialogueStep.Emotion.Happy);
@@ -1580,7 +1625,7 @@ public class CutsceneManager : MonoBehaviour{
                 if (go.name == name)
                     return go;
             }
-        //print("No gameObject found with the name [" + name + "]");
+        print("No gameObject found with the name [" + name + "]");
         return null;
     }
     
@@ -1721,6 +1766,15 @@ public class CutsceneManager : MonoBehaviour{
     }
 
     private void EndCutsceneImageTransition(){
+    }
+
+    public void ExternalTrigger(float optionalParameter = -999){
+        if (advanceCondition == Cond.externalTrigger){
+            if (optionalParameter != -999)
+                externalTriggerParameter = optionalParameter;
+            AdvanceCutsceneStep();
+        }
+
     }
 
 }
