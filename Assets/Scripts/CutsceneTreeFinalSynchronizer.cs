@@ -8,9 +8,10 @@ public class CutsceneTreeFinalSynchronizer : MonoBehaviour{
     private float treeMoveDistance = -3000;
     private float treeMoveTime = 2.5f;
     private List<Transform> clusters = new();
-    public Transform standaloneTree;
+    private Transform standaloneTree;
     private float standaloneTreeDestination = -1500;
-    //public CutsceneManager cutsceneManager;
+
+    public GameObject mimicTreeScript;
 
 
     public void AnotherClusterStartedMoving(Transform cluster){
@@ -20,9 +21,9 @@ public class CutsceneTreeFinalSynchronizer : MonoBehaviour{
         }
     }
 
-    //public void StandaloneTreeStartedMoving(Transform tree){
-    //    standaloneTree = tree;
-    //}
+    public void StandaloneTreeStartedMoving(Transform tree){
+        standaloneTree = tree;
+    }
 
     private void SynchronizeClusters(){
         //sync clusters so the standalone tree is in the middle of the screen by the end of it,
@@ -38,20 +39,11 @@ public class CutsceneTreeFinalSynchronizer : MonoBehaviour{
             DOTween.Kill(cluster);
             cluster.DOLocalMoveX(cluster.localPosition.x -standaloneTreeDistanceRemaining, timeToMove).SetEase(Ease.Linear);
         }
-        //print("about to tell cutscene manager");
-        //cutsceneManager.ExternalTrigger(timeToMove);
-        //print(cutsceneManager.gameObject.name);
-        FindObjectOfType<CutsceneManager>().ExternalTrigger(treeMoveTime);
-        //print("just told cutscene manager");
+        
+        FindObjectOfType<CutsceneManager>().ExternalTrigger(timeToMove);
     }
 
-    public void StartMovingTree(){
-        print("telling syncer to start moving tree");
-        print("current tree position: " + standaloneTree.localPosition.x);
-        print("new position: " + (standaloneTree.localPosition.x + treeMoveDistance));
-        print("move time: " + treeMoveTime);
-        DOTween.Kill(standaloneTree);
-        standaloneTree.transform.DOLocalMoveX(standaloneTree.transform.localPosition.x + treeMoveDistance, treeMoveTime).SetEase(Ease.Linear);
-        print("tween started");
+    private void DeleteMimicTreeScript(){
+        Destroy(mimicTreeScript);
     }
 }

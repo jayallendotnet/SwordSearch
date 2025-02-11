@@ -17,7 +17,7 @@ public class CutsceneTreeGenerator : MonoBehaviour{
     private bool slowDown = false;
     public Transform finalTreeCluster;
     public bool isFirstFinalTreeBig = true;
-    //public Transform otherStuffForFinalMove;
+    public Transform trapdoorTreeForFinalMove;
     public bool tellSynchronizerToStartMovingTree = false;
     public CutsceneTreeFinalSynchronizer synchronizer;
 
@@ -66,10 +66,8 @@ public class CutsceneTreeGenerator : MonoBehaviour{
 
     private void StartFinalClusterMoving(){
         if (tellSynchronizerToStartMovingTree){
-            synchronizer.StartMovingTree();
-            //print(otherStuffForFinalMove.localPosition.x);
-            //otherStuffForFinalMove.DOLocalMoveX(otherStuffForFinalMove.localPosition.x + treeMoveDistance, treeMoveTime).SetEase(Ease.Linear);
-            //synchronizer.StandaloneTreeStartedMoving(otherStuffForFinalMove);
+            trapdoorTreeForFinalMove.DOLocalMoveX(trapdoorTreeForFinalMove.localPosition.x + treeMoveDistance, treeMoveTime).SetEase(Ease.Linear);
+            synchronizer.StandaloneTreeStartedMoving(trapdoorTreeForFinalMove);
         }
         finalTreeCluster.DOLocalMoveX(finalTreeCluster.localPosition.x + treeMoveDistance, treeMoveTime).SetEase(Ease.Linear);
         synchronizer.AnotherClusterStartedMoving(finalTreeCluster);

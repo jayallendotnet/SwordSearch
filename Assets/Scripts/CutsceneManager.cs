@@ -31,7 +31,8 @@ public class CutsceneManager : MonoBehaviour{
     public GameObject grasslands2_pt1;
     public GameObject grasslands2_pt2;
     public GameObject forest1;
-    public GameObject forest2;
+    public GameObject forest2_pt1;
+    public GameObject forest2_pt2;
     public GameObject forest3;
     public GameObject desert1;
     public GameObject desert2;
@@ -110,10 +111,10 @@ public class CutsceneManager : MonoBehaviour{
     }
 
     private void SetupForest2(){
-        SetCutsceneBackground(forest2);
+        SetCutsceneBackground(forest2_pt1);
         PlayAnimation("Player", "Walk");
         Transform rabbitArea = GetObjectFromName("Starting area").transform;
-        rabbitArea.DOLocalMoveX(rabbitArea.localPosition.x -3000, 2.5f).SetEase(Ease.Linear);            
+        rabbitArea.DOLocalMoveX(rabbitArea.localPosition.x -3000, 2.5f).SetEase(Ease.Linear);       
         //CutsceneTreeFinalSynchronizer synchronizer = GetObjectFromName("Tree Synchronizer").GetComponent<CutsceneTreeFinalSynchronizer>();
         //synchronizer.cutsceneManager = this;
     }
@@ -476,7 +477,7 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             DisplayNobodyTalking();
             HideEnemyChathead();
-            StartScreenShake(3000);
+            StartScreenShake();
             AdvanceConditionWait(1f);
         }
         else if (++i == cutsceneStep){
@@ -1255,7 +1256,7 @@ public class CutsceneManager : MonoBehaviour{
             PlayAnimation("Player", "Book Catch");
         }
         else if (++i == cutsceneStep){
-            StartScreenShake(3000);
+            StartScreenShake();
             AdvanceConditionWait(0.8f);
         }
         else if (++i == cutsceneStep){
@@ -1400,11 +1401,15 @@ public class CutsceneManager : MonoBehaviour{
     private void DoForest2Step(){   
         int i = 0;
         if (++i == cutsceneStep){
-            //MoveEverythingExceptPlayer(-591, 0, 20f);
-            //Transform rabbitArea = GetObjectFromName("Rabbit Area Dirt").transform;
-            //rabbitArea.DOLocalMoveX(rabbitArea.localPosition.x -3000, 4f).SetEase(Ease.Linear);
+            AdvanceConditionWait(2f);
+        }        
+        else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("Huff... Huff...", DialogueStep.Emotion.Surprised);
-            StaticVariables.WaitTimeThenCallFunction(2f, GameObject.Destroy, GetObjectFromName("Starting area"));
+            GameObject.Destroy(GetObjectFromName("Starting area"));
+            //StaticVariables.WaitTimeThenCallFunction(2f, GameObject.Destroy, GetObjectFromName("Starting area"));
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I can't outrun rabbits forever!", DialogueStep.Emotion.Surprised);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("We need to find that other human, and fast!", DialogueStep.Emotion.Surprised);
@@ -1447,12 +1452,7 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_NobodyTalking(true);
         }  
         else if (++i == cutsceneStep){
-            //CutsceneTreeFinalSynchronizer synchronizer = GetObjectFromName("Tree Synchronizer").GetComponent<CutsceneTreeFinalSynchronizer>();
-            //synchronizer.cutsceneManager = this;
-            //ExternalTrigger();
-            //synchronizer.cutsceneManager.ExternalTrigger();
             advanceCondition = Cond.externalTrigger;
-
             List<CutsceneTreeGenerator> treeGenerators = new List<CutsceneTreeGenerator>();
             treeGenerators.Add(GetObjectFromName("Tree Spawner 1").GetComponent<CutsceneTreeGenerator>());
             treeGenerators.Add(GetObjectFromName("Tree Spawner 2").GetComponent<CutsceneTreeGenerator>());
@@ -1462,38 +1462,57 @@ public class CutsceneManager : MonoBehaviour{
             treeGenerators.Add(GetObjectFromName("Tree Spawner 6").GetComponent<CutsceneTreeGenerator>());
             foreach(CutsceneTreeGenerator treeGenerator in treeGenerators)
                 treeGenerator.BeginSlowdown();
-
-            //CutsceneTreeFinalSynchronizer synchronizer = GetObjectFromName("Tree Synchronizer").GetComponent<CutsceneTreeFinalSynchronizer>();
-            //synchronizer.cutsceneManager = this;
-            //advanceCondition = Cond.externalTrigger; //advance when cutscene synchronizer has all of the tree movements in sync 
         } 
-        
         else if (++i == cutsceneStep){
+            CutsceneTreeMimic mimic = GetObjectFromName("Tree Synchronizer").transform.GetChild(0).GetComponent<CutsceneTreeMimic>();
+            mimic.gameObject.SetActive(true);
+            mimic.originalTree = GetObjectFromName("Tree Spawner 3").transform.GetChild(1);
+            StaticVariables.WaitTimeThenCallFunction(externalTriggerParameter, mimic.DestroyScript);
+
             print(externalTriggerParameter);
-            AdvanceConditionWait(externalTriggerParameter - 1f);
-            //only reach this step once the cutscene tree synchronizer has all final trees moving as one
-            //externalTriggerParameter's value is the time remaining until the trees are stopped
-            //start "slowing down" the trees by moving the entire scene slowly
-            
-            //MoveEverythingExceptPlayer(1000, 0, externalTriggerParameter);
-            //GetObjectFromName("Final Tree Cluster").transform.DOLocalMoveX(1629, 2.5f).SetEase(Ease.Linear);
+            AdvanceConditionWait(externalTriggerParameter - 0.5f);
         } 
         else if (++i == cutsceneStep){
-            MoveObject("Player", -27, 2282, 1f);
-            //GetObjectFromName("Final Tree Cluster").transform.DOLocalMoveX(1629, 2.5f).SetEase(Ease.Linear);
+            MoveObject("Player", -96, 2213, 0.5f);
+            AdvanceConditionWait(.5f);
         } 
-
-        //player runs behind a tree
+        else if (++i == cutsceneStep){
+            PlayAnimation("Player", "Idle Holding Book");
+            AdvanceConditionWait(0.5f);
+        } 
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("A trapdoor!", DialogueStep.Emotion.Happy);
         }
-        //screen shakes, a ton of rabbits run by, on repeat until the scene transitions
-        //AdvanceConditionDialogue_PlayerTalking("Phew, that was close!", DialogueStep.Emotion.Surprised);
-        //AdvanceConditionDialogue_PlayerTalking("Well, this must be it.", DialogueStep.Emotion.Normal);
-        //AdvanceConditionDialogue_PlayerTalking("Nothing says \"possibly-evil lair of a possibly-evil forest wizard like a trapdoor\".", DialogueStep.Emotion.Normal);
-        //AdvanceConditionDialogue_PlayerTalking("Nothing to do but go down...", DialogueStep.Emotion.Questioning);
-        //transition to scene 2
-
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_NobodyTalking();
+        }  
+        else if (++i == cutsceneStep){
+            StartScreenShake();
+            AdvanceConditionWait(0.8f);
+        }
+        else if (++i == cutsceneStep){
+            //start rabbit running
+            AdvanceConditionWait(5f);
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Phew, that was close!", DialogueStep.Emotion.Surprised);
+        } 
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Well, this must be it.", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Nothing says \"possibly-evil lair of a possibly-evil forest wizard\" like a trapdoor.", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Let's see what's inside...", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            //StartCutsceneImageTransition(forest2_pt2);
+            //advanceCondition = Cond.BackgroundChange;
+        }
+        else if (++i == cutsceneStep){
+            StopShakeScreen();
+        }
     }
 
     private void DoForest3Step(){   
@@ -1653,15 +1672,16 @@ public class CutsceneManager : MonoBehaviour{
         }
     }
     
-    private void StartScreenShake(float duration){
+    private void StartScreenShake(float duration = -9999){
         shakeTimer = duration;
         ShakeScreen();
     }
 
     private void ShakeScreen(){
         float singleShakeDuration = 0.15f;
-        shakeTimer -= singleShakeDuration;
-        if (shakeTimer <= 0){
+        if (shakeTimer != -9999)
+            shakeTimer -= singleShakeDuration;
+        if ((shakeTimer != -9999) && (shakeTimer <= 0)){
             screenshakeTransform.DOAnchorPos(Vector2.zero, singleShakeDuration);
             return;
         }
@@ -1774,7 +1794,6 @@ public class CutsceneManager : MonoBehaviour{
                 externalTriggerParameter = optionalParameter;
             AdvanceCutsceneStep();
         }
-
     }
 
 }
