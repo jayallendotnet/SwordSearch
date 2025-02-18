@@ -619,7 +619,7 @@ public class TutorialManager : BattleManager {
         }
         else if (++i == tutorialStep){
             //DisplayText("The crystal damage is a fixed portion of your attack's damage.");
-            DisplayText("The crystal's damage is one third of your attack's damage.");
+            DisplayText("The crystal's damage is <damage>one third<> of your attack's damage.");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){

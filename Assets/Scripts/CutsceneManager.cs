@@ -1221,8 +1221,28 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_PlayerTalking("The...\nNecronomicon???", DialogueStep.Emotion.Worried);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("I didn't know that was real!", DialogueStep.Emotion.Worried);
+            AdvanceConditionDialogue_PlayerTalking("I don't understand, this shouldn't be possible.", DialogueStep.Emotion.Worried);
         }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("The Necronomicon was just a storytelling device that H. P. Lovecraft made up for his horror stories.", DialogueStep.Emotion.Worried);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Its legend became so notorious that many libraries received check-out requests for it!", DialogueStep.Emotion.Worried);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("But no actual copies exist, and certainly not with any forbidden eldritch secrets.", DialogueStep.Emotion.Worried);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("But here one is, right in front of me. As real as I am.", DialogueStep.Emotion.Worried);
+        }
+        //i don't understand, this shouldn't be possible.
+        //the necronomicon was just a storytelling device H. P. Lovecraft used in his horror stories
+        //its legend became so notorious that many libraries received actual requests for it
+        //but no actual copies exist, and certainly not with eldritch secrets within!
+        //but here it is, right in front of me. as real as i am.
+        //else if (++i == cutsceneStep){
+        //    AdvanceConditionDialogue_PlayerTalking("I didn't know that was real!", DialogueStep.Emotion.Worried);
+        //}
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("That settles it! The cyclops is definitely a necromancer!", DialogueStep.Emotion.Worried);
         }        
@@ -1409,7 +1429,7 @@ public class CutsceneManager : MonoBehaviour{
             //StaticVariables.WaitTimeThenCallFunction(2f, GameObject.Destroy, GetObjectFromName("Starting area"));
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("I can't outrun rabbits forever!", DialogueStep.Emotion.Surprised);
+            AdvanceConditionDialogue_PlayerTalking("I can't outrun these rabbits forever!", DialogueStep.Emotion.Surprised);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("We need to find that other human, and fast!", DialogueStep.Emotion.Surprised);
@@ -1437,10 +1457,13 @@ public class CutsceneManager : MonoBehaviour{
             PlayAnimation("Player", "Take Out Book While Walking");
         }
         else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I really need a miracle right about now...", DialogueStep.Emotion.Surprised);
+        }
+        else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("Do you feel anything with your magic radar?", DialogueStep.Emotion.Questioning);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("Immediately, the book responds, \"THERE IS A STRONG MAGICAL AURA RADIATING FROM BELOW\".", "Magic Book", DialogueStep.Emotion.Normal);
+            AdvanceConditionDialogue_EnemyTalking("The book immediately responds, \"THERE IS A STRONG MAGICAL AURA RADIATING FROM BELOW\".", "Magic Book", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("Okay...", DialogueStep.Emotion.Surprised);
@@ -1474,7 +1497,7 @@ public class CutsceneManager : MonoBehaviour{
         } 
         else if (++i == cutsceneStep){
             MoveObject("Player", -96, 2213, 0.5f);
-            AdvanceConditionWait(.5f);
+            AdvanceConditionWait(0.5f);
         } 
         else if (++i == cutsceneStep){
             PlayAnimation("Player", "Idle Holding Book");
@@ -1491,8 +1514,9 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionWait(0.8f);
         }
         else if (++i == cutsceneStep){
+            GetObjectFromName("Rabbit Cycles").SetActive(true);
             //start rabbit running
-            AdvanceConditionWait(5f);
+            AdvanceConditionWait(3.5f);
         }  
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("Phew, that was close!", DialogueStep.Emotion.Surprised);
@@ -1507,12 +1531,103 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_PlayerTalking("Let's see what's inside...", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
-            //StartCutsceneImageTransition(forest2_pt2);
-            //advanceCondition = Cond.BackgroundChange;
+            StartCutsceneImageTransition(forest2_pt2);
+            advanceCondition = Cond.BackgroundChange;
         }
         else if (++i == cutsceneStep){
             StopShakeScreen();
+            AdvanceConditionDialogue_PlayerTalking("What is this place?", DialogueStep.Emotion.Questioning);
         }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Everything is so... chrome!", DialogueStep.Emotion.Surprised);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("It looks like some kind of high-tech laboratory.", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("There's so much bubbling.", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("What is he doing in this place?", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_NobodyTalking();
+        }  
+        else if (++i == cutsceneStep){
+            PlayAnimation("Player", "Walk");
+            MoveEverythingExceptPlayer(-300, 0, 2.5f);
+            AdvanceConditionWait(2.5f);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("What is he doing TO this place??", DialogueStep.Emotion.Angry);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Why, hello there.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Oh!!", DialogueStep.Emotion.Worried);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_NobodyTalking();
+        } 
+        else if (++i == cutsceneStep){
+            PlayAnimationAndMoveThenIdle("Wizard", "Walk", 0, 0, 1.5f);
+            //MoveEverythingExceptPlayer(-300, 0, 2.5f);
+            AdvanceConditionWait(1.5f);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I've heard whispers of another human in the forest.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("It's wonderful to finally meet you, Miss...", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Rebecca? I'm sorry, are you wearing a name tag?", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("That's not important right now!", DialogueStep.Emotion.Angry);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("You need to tell me what's going on here!", DialogueStep.Emotion.Angry);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("All of the creatures here are suspicous of me just because I'm a human!", DialogueStep.Emotion.Angry);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Plus, that old cyclops necromancer said you were tampering with the forest!", DialogueStep.Emotion.Angry);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Cyclops? Are you referring to the so-called \"Guardian of the Forest\"?", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I don't know where you got it in your head that he's a necromancer.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("He was studying the Necronomicon!", DialogueStep.Emotion.Angry);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("You must be mistaken. The Necronomicon isn't real.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I saw it with my own eyes!", DialogueStep.Emotion.Angry);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I assure you, that cyclops is no necromancer. Merely a humble historian.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+
+        
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("He did seem to care quite a lot about the s", DialogueStep.Emotion.Angry);
+        }
+        //he was studying the necronomicon!
+        //you must be mistaken. the necronomicon isn't real
+        //i saw it with my own eyes!
+
+        //it was a fictitious book, made up by H. P. Lovecraft for his horror stories
+        //the necronomicon's legend became so notorious that many libraries received check-out requests for it
+        //alas, no such book exists, and certainly not with eldritch secrets within
+
+        //i assume you, he is no necromancer. merely a humble historian
     }
 
     private void DoForest3Step(){   

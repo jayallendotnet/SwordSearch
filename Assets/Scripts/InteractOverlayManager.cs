@@ -268,7 +268,7 @@ public class InteractOverlayManager : MonoBehaviour{
         List<string> details = new();
         if (enemy.isHorde){
             summary.Add("This enemy is a horde.");
-            details.Add("A horde is made up of multiple enemies. As you deal damage, the number of enemies left in the horde will decrease, and the horde will do less <damage>damage<> when it attacks.");
+            details.Add("A horde is made up of <damage>multiple enemies<>. As you deal damage, the number of enemies left in the horde will decrease, and the horde will do <damage>less damage<> when it attacks.");
             if (StaticVariables.fireActive){
                 summary.Add("Horde enemies take more <fire>burn damage<> from <fire>fire spells<>.");
                 details.Add("<fire>Burn damage<> from the <fire>power of fire<> is multiplied by the number of enemies in the horde.");
