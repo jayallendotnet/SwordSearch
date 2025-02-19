@@ -3,7 +3,7 @@ guid: f0b8a13241e0fcc43a835d7133101c4d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -20,11 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -63,6 +64,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
@@ -75,6 +77,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -87,6 +90,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -99,6 +103,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -111,6 +116,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -1445,7 +1451,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 214
-        width: 96
+        width: 32
         height: 23
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -2699,6 +2705,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Fantasy RPG Interior Pack (16x16 grid)_123
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 214
+        width: 32
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db824b5afb87d0e44a91e0360b0e634c
+      internalID: -428414734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fantasy RPG Interior Pack (16x16 grid)_124
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 214
+        width: 32
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 068a3ab62ba1175459b149e003f43452
+      internalID: -1698150141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -2738,6 +2786,8 @@ TextureImporter:
       Fantasy RPG Interior Pack (16x16 grid)_120: -270387185
       Fantasy RPG Interior Pack (16x16 grid)_121: -1969361818
       Fantasy RPG Interior Pack (16x16 grid)_122: -1762530119
+      Fantasy RPG Interior Pack (16x16 grid)_123: -428414734
+      Fantasy RPG Interior Pack (16x16 grid)_124: -1698150141
       Fantasy RPG Interior Pack (16x16 grid)_13: -1555842889
       Fantasy RPG Interior Pack (16x16 grid)_14: -2044881556
       Fantasy RPG Interior Pack (16x16 grid)_15: 1006539543
@@ -2833,9 +2883,8 @@ TextureImporter:
       Fantasy RPG Interior Pack (16x16 grid)_97: 1277600820
       Fantasy RPG Interior Pack (16x16 grid)_98: 1214455007
       Fantasy RPG Interior Pack (16x16 grid)_99: -930405492
-  spritePackingTag: 
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

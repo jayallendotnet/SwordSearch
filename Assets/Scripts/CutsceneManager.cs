@@ -1471,10 +1471,12 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("So I'm looking for some kind of tunnel entrance, or big tree stump, or...", DialogueStep.Emotion.Surprised);
         }
+        //else if (++i == cutsceneStep){
+        //    AdvanceConditionDialogue_NobodyTalking(true);
+        //}  
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_NobodyTalking(true);
-        }  
-        else if (++i == cutsceneStep){
+            HideChatheads();
+            DisplayNobodyTalking();
             advanceCondition = Cond.externalTrigger;
             List<CutsceneTreeGenerator> treeGenerators = new List<CutsceneTreeGenerator>();
             treeGenerators.Add(GetObjectFromName("Tree Spawner 1").GetComponent<CutsceneTreeGenerator>());
@@ -1555,10 +1557,11 @@ public class CutsceneManager : MonoBehaviour{
         }  
         else if (++i == cutsceneStep){
             PlayAnimation("Player", "Walk");
-            MoveEverythingExceptPlayer(-300, 0, 2.5f);
+            MoveEverythingExceptPlayer(-800, 0, 2.5f);
             AdvanceConditionWait(2.5f);
         }
         else if (++i == cutsceneStep){
+            PlayAnimation("Player", "Idle");
             AdvanceConditionDialogue_PlayerTalking("What is he doing TO this place??", DialogueStep.Emotion.Angry);
         }
         else if (++i == cutsceneStep){
@@ -1609,13 +1612,13 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_EnemyTalking("You must be mistaken. The Necronomicon isn't real.", "Wizard", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("I saw it with my own eyes!", DialogueStep.Emotion.Angry);
+            AdvanceConditionDialogue_PlayerTalking("I thought so too, but then I saw it with my own eyes!", DialogueStep.Emotion.Angry);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("I assure you, that cyclops is no necromancer. Merely a humble historian.", "Wizard", DialogueStep.Emotion.Normal);
         }
 
-        
+
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("He did seem to care quite a lot about the s", DialogueStep.Emotion.Angry);
         }

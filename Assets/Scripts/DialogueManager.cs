@@ -288,6 +288,7 @@ public class DialogueManager : MonoBehaviour{
             _ => playerChatheadNormal,
         };
         playerChathead.sprite = sprite;
+        print(sprite.rect.height);
         ShowPlayerEmotionFlair(emotion);
     }
 
@@ -379,6 +380,8 @@ public class DialogueManager : MonoBehaviour{
         int scaleFactor = 100;
         if ((sprite.bounds.size.x * 100) >= 20)
             scaleFactor = 75;
+            
+        print(sprite.rect.height);
         enemyChatheadTransform.sizeDelta = (new Vector2(sprite.bounds.size.x, sprite.bounds.size.y) * scaleFactor);
     }
 
