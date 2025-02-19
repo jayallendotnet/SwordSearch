@@ -50,6 +50,7 @@ public class DialogueManager : MonoBehaviour{
     public bool isInOverworld = false;
     public bool isInBattle = false;
     public bool isInTutorial = false;
+    private float chatdeadSizePerPixel = 28f;
 
     [Header("Prefabs")]
     public GameObject magicFlashPrefab;
@@ -275,8 +276,8 @@ public class DialogueManager : MonoBehaviour{
         playerChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
         LightenPlayerChathead();
         enemyChathead.DOColor(Color.grey, transitionDuration);
-        playerChatheadTransform.DOScale(new Vector2(40, 40), transitionDuration);
-        enemyChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
+        playerChatheadTransform.DOScale(new Vector2(1, 1), transitionDuration);
+        enemyChatheadTransform.DOScale(new Vector2(0.875f, 0.875f), transitionDuration);
         Sprite sprite = emotion switch {
             (DialogueStep.Emotion.Angry) => playerChatheadAngry,
             (DialogueStep.Emotion.Defeated) => playerChatheadDefeated,
@@ -288,7 +289,8 @@ public class DialogueManager : MonoBehaviour{
             _ => playerChatheadNormal,
         };
         playerChathead.sprite = sprite;
-        print(sprite.rect.height);
+        //print(sprite.rect.height);
+        playerChatheadTransform.sizeDelta =new Vector2 (sprite.rect.width * chatdeadSizePerPixel, sprite.rect.height * chatdeadSizePerPixel);
         ShowPlayerEmotionFlair(emotion);
     }
 
@@ -334,8 +336,8 @@ public class DialogueManager : MonoBehaviour{
         DarkenPlayerChathead();
         DisplaySpeakerName("");
         dialogueTextBox.text = "";
-        playerChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
-        enemyChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
+        playerChatheadTransform.DOScale(new Vector2(0.875f, 0.875f), transitionDuration);
+        enemyChatheadTransform.DOScale(new Vector2(0.875f, 0.875f), transitionDuration);
     }
 
     public void ShowEnemyTalking(EnemyData data, DialogueStep.Emotion emotion, string alternateName = ""){
@@ -349,8 +351,8 @@ public class DialogueManager : MonoBehaviour{
         enemyChatheadTransform.DOAnchorPosY(chatheadStartingHeight, transitionDuration);
         enemyChathead.DOColor(Color.white, transitionDuration);
         DarkenPlayerChathead();
-        playerChatheadTransform.DOScale(new Vector2(35, 35), transitionDuration);
-        enemyChatheadTransform.DOScale(new Vector2(40, 40), transitionDuration);
+        playerChatheadTransform.DOScale(new Vector2(0.875f, 0.875f), transitionDuration);
+        enemyChatheadTransform.DOScale(new Vector2(1, 1), transitionDuration);
 
         Sprite sprite;
         switch (emotion){
@@ -377,12 +379,13 @@ public class DialogueManager : MonoBehaviour{
                 break;
         }
         enemyChathead.sprite = sprite;
-        int scaleFactor = 100;
-        if ((sprite.bounds.size.x * 100) >= 20)
-            scaleFactor = 75;
+        //int scaleFactor = 100;
+        //if ((sprite.bounds.size.x * 100) >= 20)
+        //    scaleFactor = 75;
             
-        print(sprite.rect.height);
-        enemyChatheadTransform.sizeDelta = (new Vector2(sprite.bounds.size.x, sprite.bounds.size.y) * scaleFactor);
+        //print(sprite.rect.height);
+        enemyChatheadTransform.sizeDelta = new Vector2 (sprite.rect.width * chatdeadSizePerPixel, sprite.rect.height * chatdeadSizePerPixel);
+        //enemyChatheadTransform.sizeDelta = (new Vector2(sprite.bounds.size.x, sprite.bounds.size.y) * scaleFactor);
     }
 
     private void AdvanceTalkStage(){

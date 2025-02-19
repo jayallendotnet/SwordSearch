@@ -1577,6 +1577,7 @@ public class CutsceneManager : MonoBehaviour{
             PlayAnimationAndMoveThenIdle("Wizard", "Walk", 0, 0, 1.5f);
             //MoveEverythingExceptPlayer(-300, 0, 2.5f);
             AdvanceConditionWait(1.5f);
+            //print()
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("I've heard whispers of another human in the forest.", "Wizard", DialogueStep.Emotion.Normal);
