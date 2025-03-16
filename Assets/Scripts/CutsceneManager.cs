@@ -114,7 +114,8 @@ public class CutsceneManager : MonoBehaviour{
         SetCutsceneBackground(forest2_pt1);
         PlayAnimation("Player", "Walk");
         Transform rabbitArea = GetObjectFromName("Starting area").transform;
-        rabbitArea.DOLocalMoveX(rabbitArea.localPosition.x -3000, 2.5f).SetEase(Ease.Linear);       
+        rabbitArea.DOLocalMoveX(rabbitArea.localPosition.x -3000, 2.5f).SetEase(Ease.Linear);     
+        cutsceneStep = 28;  
         //CutsceneTreeFinalSynchronizer synchronizer = GetObjectFromName("Tree Synchronizer").GetComponent<CutsceneTreeFinalSynchronizer>();
         //synchronizer.cutsceneManager = this;
     }
@@ -1478,13 +1479,14 @@ public class CutsceneManager : MonoBehaviour{
             HideChatheads();
             DisplayNobodyTalking();
             advanceCondition = Cond.externalTrigger;
-            List<CutsceneTreeGenerator> treeGenerators = new List<CutsceneTreeGenerator>();
-            treeGenerators.Add(GetObjectFromName("Tree Spawner 1").GetComponent<CutsceneTreeGenerator>());
-            treeGenerators.Add(GetObjectFromName("Tree Spawner 2").GetComponent<CutsceneTreeGenerator>());
-            treeGenerators.Add(GetObjectFromName("Tree Spawner 3").GetComponent<CutsceneTreeGenerator>());
-            treeGenerators.Add(GetObjectFromName("Tree Spawner 4").GetComponent<CutsceneTreeGenerator>());
-            treeGenerators.Add(GetObjectFromName("Tree Spawner 5").GetComponent<CutsceneTreeGenerator>());
-            treeGenerators.Add(GetObjectFromName("Tree Spawner 6").GetComponent<CutsceneTreeGenerator>());
+            List<CutsceneTreeGenerator> treeGenerators = new() {
+                GetObjectFromName("Tree Spawner 1").GetComponent<CutsceneTreeGenerator>(),
+                GetObjectFromName("Tree Spawner 2").GetComponent<CutsceneTreeGenerator>(),
+                GetObjectFromName("Tree Spawner 3").GetComponent<CutsceneTreeGenerator>(),
+                GetObjectFromName("Tree Spawner 4").GetComponent<CutsceneTreeGenerator>(),
+                GetObjectFromName("Tree Spawner 5").GetComponent<CutsceneTreeGenerator>(),
+                GetObjectFromName("Tree Spawner 6").GetComponent<CutsceneTreeGenerator>()
+            };
             foreach(CutsceneTreeGenerator treeGenerator in treeGenerators)
                 treeGenerator.BeginSlowdown();
         } 
@@ -1494,7 +1496,7 @@ public class CutsceneManager : MonoBehaviour{
             mimic.originalTree = GetObjectFromName("Tree Spawner 3").transform.GetChild(1);
             StaticVariables.WaitTimeThenCallFunction(externalTriggerParameter, mimic.DestroyScript);
 
-            print(externalTriggerParameter);
+            //print(externalTriggerParameter);
             AdvanceConditionWait(externalTriggerParameter - 0.5f);
         } 
         else if (++i == cutsceneStep){
@@ -1556,25 +1558,28 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_NobodyTalking();
         }  
         else if (++i == cutsceneStep){
-            PlayAnimation("Player", "Walk");
-            MoveEverythingExceptPlayer(-800, 0, 2.5f);
-            AdvanceConditionWait(2.5f);
+            PlayAnimationAndMoveThenIdle("Player", "Walk", -213, 1785, 3.5f);
+            MoveEverythingExceptPlayer(-1200, 0, 3.5f);
+            AdvanceConditionWait(3.5f);
         }
         else if (++i == cutsceneStep){
             PlayAnimation("Player", "Idle");
             AdvanceConditionDialogue_PlayerTalking("What is he doing TO this place??", DialogueStep.Emotion.Angry);
+            //PlayAnimationAndMoveThenIdle("Wizard", "Walk", -474, 343, 3f);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("Why, hello there.", "Wizard", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("Oh!!", DialogueStep.Emotion.Worried);
+            FlipDirection("Player");
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_NobodyTalking();
         } 
         else if (++i == cutsceneStep){
-            PlayAnimationAndMoveThenIdle("Wizard", "Walk", 0, 0, 1.5f);
+            GetAnimatorFromName("Wizard").transform.parent.GetComponent<RectTransform>().anchoredPosition = (new Vector2(-800, 343));
+            PlayAnimationAndMoveThenIdle("Wizard", "Walk", -474, 343, 1.5f);
             //MoveEverythingExceptPlayer(-300, 0, 2.5f);
             AdvanceConditionWait(1.5f);
             //print()
@@ -1595,7 +1600,7 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_PlayerTalking("You need to tell me what's going on here!", DialogueStep.Emotion.Angry);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("All of the creatures here are suspicous of me just because I'm a human!", DialogueStep.Emotion.Angry);
+            AdvanceConditionDialogue_PlayerTalking("Everyone is suspicous of me just because I'm a human!", DialogueStep.Emotion.Angry);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("Plus, that old cyclops necromancer said you were tampering with the forest!", DialogueStep.Emotion.Angry);
@@ -1751,7 +1756,7 @@ public class CutsceneManager : MonoBehaviour{
                     return anim;
             }
         }
-        //print("No animator found with the name [" + name + "]");
+        print("No animator found with the name [" + name + "]");
         return null;
     }
 
@@ -1763,7 +1768,7 @@ public class CutsceneManager : MonoBehaviour{
                 if (go.name == name)
                     return go;
             }
-        print("No gameObject found with the name [" + name + "]");
+        //print("No gameObject found with the name [" + name + "]");
         return null;
     }
     
