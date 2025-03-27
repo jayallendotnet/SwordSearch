@@ -1772,15 +1772,36 @@ public class CutsceneManager : MonoBehaviour{
         }         
         else if (++i == cutsceneStep){
             StartScreenShake(.2f);
-            AdvanceConditionWait(2f);
+            RectTransform cluster = GetObjectFromName("Root Cluster").GetComponent<RectTransform>();
+            //GameObject cluster = GetObjectFromName("Root Cluster");
+            //print(cluster.name);
+            cluster.DORotate(new Vector3(0,0,-6), 0.2f);
+            cluster.DOLocalMoveY(-609, 0.2f);
+            foreach (Transform t in cluster){
+                t.GetChild(0).gameObject.SetActive(false);
+                t.GetChild(1).gameObject.SetActive(true);
+            }
+            AdvanceConditionWait(0.5f);
         }   
         else if (++i == cutsceneStep){
             StartScreenShake();
-            AdvanceConditionWait(5f);
-            //tree root fall animation
+            AdvanceConditionWait(0.5f);
+        }        
+        else if (++i == cutsceneStep){
+            Transform cluster = GetObjectFromName("Root Cluster").transform;
+            foreach (Transform root in cluster){
+                Transform brokenRootParent = root.GetChild(1);
+                foreach (Transform t in brokenRootParent){
+                    CutsceneBranchFall branch = t.GetComponent<CutsceneBranchFall>();
+                    if (branch != null)
+                        branch.QueueFall();
+                }
+            }
+            AdvanceConditionWait(4.5f);
         }
         else if (++i == cutsceneStep){
             StopShakeScreen();
+            //GetObjectFromName("Root Cluster").transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<CutsceneBranchFall>().QueueFall();
             AdvanceConditionDialogue_EnemyTalking("Oh, dear...", "Wizard", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
@@ -1967,7 +1988,7 @@ public class CutsceneManager : MonoBehaviour{
                 if (go.name == name)
                     return go;
             }
-        //print("No gameObject found with the name [" + name + "]");
+        print("No gameObject found with the name [" + name + "]");
         return null;
     }
     
