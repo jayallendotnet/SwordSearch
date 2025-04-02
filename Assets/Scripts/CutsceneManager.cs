@@ -1542,8 +1542,8 @@ public class CutsceneManager : MonoBehaviour{
             StopShakeScreen();
             AdvanceConditionDialogue_PlayerTalking("Wow!", DialogueStep.Emotion.Surprised);
         }
+        /*
         else if (++i == cutsceneStep){
-            //AdvanceConditionDialogue_PlayerTalking("This looks like some kind of high-tech laboratory.", DialogueStep.Emotion.Questioning);
             AdvanceConditionDialogue_PlayerTalking("I was not expecting a high-tech laboratory!", DialogueStep.Emotion.Surprised);
         }
         else if (++i == cutsceneStep){
@@ -1564,26 +1564,10 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("Once again, I find myself snooping around a dubious secret cave...", DialogueStep.Emotion.Normal);
         }
-
-
-        /*
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("Everything is so... chrome!", DialogueStep.Emotion.Surprised);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("It looks like some kind of high-tech laboratory.", DialogueStep.Emotion.Questioning);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("There's so much bubbling.", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("What is he doing in this place?", DialogueStep.Emotion.Normal);
-        }
-        */
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_NobodyTalking(true);
         }  
-        
+        */
         else if (++i == cutsceneStep){
             PlayAnimationAndMoveThenIdle("Player", "Walk", -198, 2004, 1f);
             //MoveEverythingExceptPlayer(-15, 0, 1f);
@@ -1602,12 +1586,7 @@ public class CutsceneManager : MonoBehaviour{
             MoveEverythingExceptPlayer(-205, 0, 1.5f);
             AdvanceConditionWait(1.7f);
         }
-        //else if (++i == cutsceneStep){
-        //    FlipDirection("Player");
-        //    AdvanceConditionWait(0.8f);
-        //}
         else if (++i == cutsceneStep){
-            //FlipDirection("Player");
             AdvanceConditionWait(0.3f);
         }
         else if (++i == cutsceneStep){
@@ -1617,7 +1596,6 @@ public class CutsceneManager : MonoBehaviour{
         }
         else if (++i == cutsceneStep){
             PlayAnimationAndMoveThenIdle("Player", "Walk", 100, 1914, 1f);
-            //MoveEverythingExceptPlayer(-360, 0, 2.5f);
             AdvanceConditionWait(1.2f);
         }
         else if (++i == cutsceneStep){
@@ -1626,7 +1604,6 @@ public class CutsceneManager : MonoBehaviour{
         }
         else if (++i == cutsceneStep){
             PlayAnimationAndMoveThenIdle("Player", "Walk", -213, 1914, 1f);
-            //MoveEverythingExceptPlayer(-360, 0, 2f);
             AdvanceConditionWait(1.2f);
         }
         else if (++i == cutsceneStep){
@@ -1641,8 +1618,8 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             PlayAnimation("Player", "Idle");
             AdvanceConditionDialogue_PlayerTalking("This doesn't look good...", DialogueStep.Emotion.Worried);
-            //PlayAnimationAndMoveThenIdle("Wizard", "Walk", -474, 343, 3f);
         }
+        /*
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("Greetings!", "Wizard", DialogueStep.Emotion.Excited, "???");
         }
@@ -1656,9 +1633,7 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             GetAnimatorFromName("Wizard").transform.parent.GetComponent<RectTransform>().anchoredPosition = (new Vector2(-800, 343));
             PlayAnimationAndMoveThenIdle("Wizard", "Walk", -474, 343, 1.5f);
-            //MoveEverythingExceptPlayer(-300, 0, 2.5f);
             AdvanceConditionWait(1.5f);
-            //print()
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("I didn't realize I would have a guest today!", "Wizard", DialogueStep.Emotion.Normal, "Wizard");
@@ -1763,25 +1738,86 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("What are you doing to the whole forest??", DialogueStep.Emotion.Angry);
         }
+        */
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("Please keep your voice down! Strong vibrations may damage the --", "Wizard", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_NobodyTalking(true);
-            //mysterious sound: crack? (dialogue box, or just a sound effect)
+        }  
+        else if (++i == cutsceneStep){
+            Transform cluster = GetObjectFromName("Roots and Vat").transform.GetChild(0);
+            cluster.DORotate(new Vector3(0,0,-6), 0.3f);
+            //cluster.DOLocalMoveY(-609, 0.3f);
+            cluster.DOLocalMoveY(-61, 0.3f);
+            AdvanceConditionWait(0.2f);
         }         
         else if (++i == cutsceneStep){
-            StartScreenShake(.2f);
-            RectTransform cluster = GetObjectFromName("Root Cluster").GetComponent<RectTransform>();
-            //GameObject cluster = GetObjectFromName("Root Cluster");
-            //print(cluster.name);
-            cluster.DORotate(new Vector3(0,0,-6), 0.2f);
-            cluster.DOLocalMoveY(-609, 0.2f);
+            StartScreenShake();            
+            Transform cluster = GetObjectFromName("Roots and Vat").transform.GetChild(0);
             foreach (Transform t in cluster){
                 t.GetChild(0).gameObject.SetActive(false);
                 t.GetChild(1).gameObject.SetActive(true);
             }
-            AdvanceConditionWait(0.5f);
+            cluster.parent.GetComponent<CutsceneBranchOrganizer>().StartDrops();
+            /*
+            foreach (Transform root in cluster){
+                Transform brokenRootParent = root.GetChild(1);
+                foreach (Transform t in brokenRootParent){
+                    CutsceneBranchFall branch = t.GetComponent<CutsceneBranchFall>();
+                    if (branch != null)
+                        branch.QueueFall();
+                }
+            }            
+            Transform littleRoots = GetObjectFromName("tiny roots").transform;
+            foreach (Transform root in littleRoots){
+                CutsceneBranchFall branch = root.GetComponent<CutsceneBranchFall>();
+                if (branch != null)
+                    branch.QueueFall();
+            }
+            */
+            AdvanceConditionWait(4.5f);
+        }   
+        //else if (++i == cutsceneStep){
+        //    StartScreenShake();
+        //    AdvanceConditionWait(0.5f);
+        //}   
+        /*     
+        else if (++i == cutsceneStep){
+            Transform cluster = GetObjectFromName("Root Cluster").transform;
+            foreach (Transform root in cluster){
+                Transform brokenRootParent = root.GetChild(1);
+                foreach (Transform t in brokenRootParent){
+                    CutsceneBranchFall branch = t.GetComponent<CutsceneBranchFall>();
+                    if (branch != null)
+                        branch.QueueFall();
+                }
+            }
+            AdvanceConditionWait(4.5f);
+        }
+        */
+        /* 
+        else if (++i == cutsceneStep){
+            //StartScreenShake(.2f);
+            Transform cluster = GetObjectFromName("Root Cluster").transform;
+            cluster.DORotate(new Vector3(0,0,-6), 0.3f);
+            cluster.DOLocalMoveY(-609, 0.3f);
+            //foreach (Transform t in cluster){
+            //    t.GetChild(0).gameObject.SetActive(false);
+            //    t.GetChild(1).gameObject.SetActive(true);
+            //}
+            AdvanceConditionWait(0.2f);
+        }         
+        else if (++i == cutsceneStep){
+            StartScreenShake(.2f);            
+            Transform cluster = GetObjectFromName("Root Cluster").transform;
+            //cluster.DORotate(new Vector3(0,0,-6), 0.3f);
+            //cluster.DOLocalMoveY(-609, 0.3f);
+            foreach (Transform t in cluster){
+                t.GetChild(0).gameObject.SetActive(false);
+                t.GetChild(1).gameObject.SetActive(true);
+            }
+            AdvanceConditionWait(1f);
         }   
         else if (++i == cutsceneStep){
             StartScreenShake();
@@ -1799,6 +1835,7 @@ public class CutsceneManager : MonoBehaviour{
             }
             AdvanceConditionWait(4.5f);
         }
+        */
         else if (++i == cutsceneStep){
             StopShakeScreen();
             //GetObjectFromName("Root Cluster").transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<CutsceneBranchFall>().QueueFall();
