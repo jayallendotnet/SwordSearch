@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class CutsceneBranchOrganizer : MonoBehaviour{
 
-    private float dropSpeed = 1200f;
-    private float timeBetweenFalls = 0.2f;
+    public float dropSpeed = 1200f;
+    public float timeBetweenFalls = 0.2f;
     public List<CutsceneBranchData> branches;
     private int index = 0;
 
