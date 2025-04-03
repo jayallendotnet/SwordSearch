@@ -1502,6 +1502,7 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionWait(0.5f);
         } 
         else if (++i == cutsceneStep){
+            DOTween.KillAll();
             PlayAnimation("Player", "Idle Holding Book");
             AdvanceConditionWait(0.5f);
         } 
@@ -1538,6 +1539,9 @@ public class CutsceneManager : MonoBehaviour{
         }
         else if (++i == cutsceneStep){
             StopShakeScreen();
+            AdvanceConditionWait(0.5f);
+        }
+        else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("Wow!", DialogueStep.Emotion.Surprised);
         }
         else if (++i == cutsceneStep){
@@ -1789,17 +1793,22 @@ public class CutsceneManager : MonoBehaviour{
         }
         else if (++i == cutsceneStep){
             GetAnimatorFromName("Player").transform.parent.GetChild(2).gameObject.SetActive(true);
-            AdvanceConditionWait(1.25f);
+            AdvanceConditionWait(0.5f);
+        }
+        else if (++i == cutsceneStep){
+            StaticVariables.hasCompletedStage = true;
+            StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
+            AdvanceConditionWait(0.75f);
         }
         //something breaks on the rock impact
         else if (++i == cutsceneStep){
             GetAnimatorFromName("Player").transform.parent.GetChild(2).gameObject.SetActive(false);
             AdvanceConditionWait(0.1f);
         }        
-        else if (++i == cutsceneStep){
-            StaticVariables.hasCompletedStage = true;
-            StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
-        }
+        //else if (++i == cutsceneStep){
+        //    StaticVariables.hasCompletedStage = true;
+        //    StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
+        //}
 
         /*
 

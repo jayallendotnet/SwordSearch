@@ -140,12 +140,84 @@ MonoBehaviour:
   canApplyDebuff: 0
   isWaterDangerous: 0
   normal: {fileID: 21300000, guid: 37ebcb6893211894789f3196b10346be, type: 3}
-  angry: {fileID: 0}
-  defeated: {fileID: 0}
+  angry: {fileID: 21300000, guid: 09cf3bfbc9383e7449b7b4a30d4b83c8, type: 3}
+  defeated: {fileID: 21300000, guid: 78dc9d13672af4f4db8120a955ee3075, type: 3}
   excited: {fileID: 21300000, guid: b8fd529acddc3fb46824a8dd7539d863, type: 3}
-  questioning: {fileID: 0}
-  overworldDialogueSteps: []
-  victoryDialogueSteps: []
+  questioning: {fileID: 21300000, guid: 61a543caf63d34a44b317e1659268fca, type: 3}
+  overworldDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 1
+    description: Stop! I can explain!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 1
+    description: I don't want to hear it!
+  - type: 4
+    talker: {fileID: 0}
+    name: Expensive-Looking Equipment
+    emotion: 2
+    description: Crash!!
+  - type: 1
+    talker: {fileID: 0}
+    name: Expensive-Looking Equipment
+    emotion: 0
+    description: If you understood the situation, you'd be much more sympathetic!
+  - type: 1
+    talker: {fileID: 0}
+    name: Expensive-Looking Equipment
+    emotion: 0
+    description: You could help me!
+  - type: 0
+    talker: {fileID: 0}
+    name: Expensive-Looking Equipment
+    emotion: 1
+    description: Help you?? Do you think I'm stupid?
+  - type: 4
+    talker: {fileID: 0}
+    name: Some Kind of Microscope
+    emotion: 5
+    description: Bang!!!
+  - type: 1
+    talker: {fileID: 0}
+    name: Some Kind of Microscope
+    emotion: 1
+    description: Okay, Rebecca! You want a fight, you've got one!
+  victoryDialogueSteps:
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Have you calmed down yet?
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 1
+    description: No! I'm still going to destroy this stupid lab!
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 2
+    description: I just need to... catch my... breath...
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: Can we put your destruction on hold and speak like adults?
+  - type: 0
+    talker: {fileID: 0}
+    name: 
+    emotion: 5
+    description: What is there to talk about? You're clearly trying to steal the
+      forest's magic for yourself!
+  - type: 1
+    talker: {fileID: 0}
+    name: 
+    emotion: 0
+    description: On the contrary, I have nothing but good intentions, and I can prove
+      it!
 --- !u!1 &9039942117280077413
 GameObject:
   m_ObjectHideFlags: 0
