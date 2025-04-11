@@ -1456,19 +1456,19 @@ public class CutsceneManager : MonoBehaviour{
             PlayAnimation("Player", "Take Out Book While Walking");
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("I really need a miracle right about now...", DialogueStep.Emotion.Surprised);
+            AdvanceConditionDialogue_PlayerTalking("Please help me out here!", DialogueStep.Emotion.Surprised);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("Do you feel anything with your magic radar?", DialogueStep.Emotion.Questioning);
+            AdvanceConditionDialogue_PlayerTalking("Do you feel anything with your magic radar thing?", DialogueStep.Emotion.Questioning);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("The book immediately responds, \"THERE IS A STRONG MAGICAL AURA RADIATING FROM BELOW\".", "Magic Book", DialogueStep.Emotion.Normal);
+            AdvanceConditionDialogue_EnemyTalking("The book immediately responds,\n\"THERE IS A STRONG MAGICAL AURA RADIATING FROM BELOW\".", "Magic Book", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("Okay...", DialogueStep.Emotion.Surprised);
+            AdvanceConditionDialogue_PlayerTalking("Great!", DialogueStep.Emotion.Happy);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("So I'm looking for some kind of tunnel entrance, or big tree stump, or...", DialogueStep.Emotion.Surprised);
+            AdvanceConditionDialogue_PlayerTalking("I should look for some kind of tunnel entrance, or big tree stump, or...", DialogueStep.Emotion.Surprised);
         }
         //else if (++i == cutsceneStep){
         //    AdvanceConditionDialogue_NobodyTalking(true);
@@ -1534,6 +1534,9 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_PlayerTalking("Let's see what's inside...", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_NobodyTalking();
+        }  
+        else if (++i == cutsceneStep){
             StartCutsceneImageTransition(forest2_pt2);
             advanceCondition = Cond.BackgroundChange;
         }
@@ -1545,11 +1548,18 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_PlayerTalking("Wow!", DialogueStep.Emotion.Surprised);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("I was not expecting a high-tech laboratory!", DialogueStep.Emotion.Surprised);
+            AdvanceConditionDialogue_PlayerTalking("I wasn't expecting a high-tech laboratory!", DialogueStep.Emotion.Surprised);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("There's so much bubbling and buzzing.", DialogueStep.Emotion.Normal);
         }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("That magical object must be around here somewhere...", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("If I can find it, I might be able to figure out what's really going on in this forest!", DialogueStep.Emotion.Normal);
+        }
+        /*
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("Is this where the human wizard lives?", DialogueStep.Emotion.Questioning);
         }
@@ -1565,6 +1575,7 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("Once again, I find myself snooping around a dubious secret cave...", DialogueStep.Emotion.Normal);
         }
+        */
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_NobodyTalking(true);
         }  
@@ -1618,10 +1629,10 @@ public class CutsceneManager : MonoBehaviour{
         }
         else if (++i == cutsceneStep){
             PlayAnimation("Player", "Idle");
-            AdvanceConditionDialogue_PlayerTalking("This doesn't look good...", DialogueStep.Emotion.Worried);
+            AdvanceConditionDialogue_PlayerTalking("This looks pretty important!\nI wonder if -", DialogueStep.Emotion.Questioning);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("Greetings!", "Wizard", DialogueStep.Emotion.Excited, "???");
+            AdvanceConditionDialogue_EnemyTalking("A surprise visitor! How exciting!", "Wizard", DialogueStep.Emotion.Excited, "???");
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("Oh!!", DialogueStep.Emotion.Worried);
@@ -1635,6 +1646,116 @@ public class CutsceneManager : MonoBehaviour{
             PlayAnimationAndMoveThenIdle("Wizard", "Walk", -474, 343, 1.5f);
             AdvanceConditionWait(1.5f);
         }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Welcome to my laboratory!", "Wizard", DialogueStep.Emotion.Normal, "Wizard");
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I'd offer you something to drink, but I'm afraid everything here is quite toxic to humans.", "Wizard", DialogueStep.Emotion.Normal, "Wizard");
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Is that a threat??", DialogueStep.Emotion.Angry);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("No, but please do keep your voice down.", "Wizard", DialogueStep.Emotion.Normal, "Wizard");
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I am delighted to finally meet you!", "Wizard", DialogueStep.Emotion.Normal, "Wizard");
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I've heard whispers of your movements around the forest in recent days.", "Wizard", DialogueStep.Emotion.Normal, "Wizard");
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I've spent a considerable amount of my time here looking for you, actually.", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I'm hoping you could tell me what's really going on here...", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I'd be happy to answer any questions!", "Wizard", DialogueStep.Emotion.Normal, "Wizard");
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("But first, allow me to introduce myself.\nMy name is Mustrum, I'm 138 years old, and I'm...", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I'm...", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I'm sorry, Miss... " + StaticVariables.playerName + "? Are you wearing a name tag?", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Oh yeah, it's a funny story!", DialogueStep.Emotion.Surprised);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Here in the forest, everyone sees me as just another human.", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("They're all suspicious of you, so they're suspicious of me too.", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I thought a name tag might make me a little more personable.", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Come to think of it, that's not a funny story. It's been a little dehumanizing.", DialogueStep.Emotion.Defeated);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Oh, that is unfortunate! You have my apologies.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Acutally, that brings me to my first question!", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Why is everyone in the forest suspicious of you, anyway?", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Since I've come to the forest, my magical prowess has been steadily growing.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Meanwhile, the strength of the forest wanes.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Some creatures have even lost their magical intelligence altogether!", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Oh, like that owlbear, by the big tree!", DialogueStep.Emotion.Surprised);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Precisely! That tree, the Quercus giganteum, lies at the heart of the forest.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I've come to discover that it's tied to the very essence of wild magic in these lands.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Its roots spread throughout the forest, intertwining with nearly every living thing.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("One such root is right above you, steeping in that cauldron.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Interesting...", DialogueStep.Emotion.Questioning);
+            FlipDirection("Player");
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Although I doubt it will survive much longer. I may have to find a new root to work with soon...", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("What??", DialogueStep.Emotion.Surprised);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("What are you doing to the roots??", DialogueStep.Emotion.Angry);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Please, don't raise your voice!", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("What are you doing to the tree??", DialogueStep.Emotion.Angry);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Rebecca!", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("What are you doing to the whole forest??", DialogueStep.Emotion.Angry);
+        }
+        /*
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("I didn't realize I would have a guest today!", "Wizard", DialogueStep.Emotion.Normal, "Wizard");
         }
@@ -1741,6 +1862,7 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("Please keep your voice down! Strong vibrations may damage the --", "Wizard", DialogueStep.Emotion.Normal);
         }
+        */
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_NobodyTalking(true);
             StartScreenShake();          

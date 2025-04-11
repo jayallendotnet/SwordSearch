@@ -258,6 +258,13 @@ public class DialogueManager : MonoBehaviour{
                     flash.StartProcess(StaticVariables.healingPowerupColor);
                     return;
                 }
+                /*
+                else if (dialogueSteps[currentStep].description == "Screen Shake"){
+                    
+                    AdvanceTalkStage();
+                    return;
+                }
+                */
         }
         else{
             dialogueTextBox.text = "No dialogue for this enemy, current talk step is " + currentStep;
