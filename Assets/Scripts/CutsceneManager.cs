@@ -1559,29 +1559,11 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("If I can find it, I might be able to figure out what's really going on in this forest!", DialogueStep.Emotion.Normal);
         }
-        /*
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("Is this where the human wizard lives?", DialogueStep.Emotion.Questioning);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("I can see why everyone in the forest treats him like an outsider.", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("And who can blame them, with all of this beneath their feet!", DialogueStep.Emotion.Surprised);
-        }     
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("I wonder what's actually going on down here anyway...", DialogueStep.Emotion.Questioning);
-        }    
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("Once again, I find myself snooping around a dubious secret cave...", DialogueStep.Emotion.Normal);
-        }
-        */
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_NobodyTalking(true);
         }  
         else if (++i == cutsceneStep){
             PlayAnimationAndMoveThenIdle("Player", "Walk", -198, 2004, 1f);
-            //MoveEverythingExceptPlayer(-15, 0, 1f);
             AdvanceConditionWait(1.3f);
         }
         else if (++i == cutsceneStep){
@@ -1622,7 +1604,6 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionWait(0.3f);
         }
         else if (++i == cutsceneStep){
-            //PlayAnimationAndMoveThenIdle("Player", "Walk", -213, 1785, 2f);
             PlayAnimationAndMoveThenIdle("Player", "Walk", -173, 1756, 2f);
             MoveEverythingExceptPlayer(-635, 0, 2f);
             AdvanceConditionWait(2.5f);
@@ -1707,7 +1688,7 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_PlayerTalking("Why is everyone in the forest suspicious of you, anyway?", DialogueStep.Emotion.Questioning);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("Since I've come to the forest, my magical prowess has been steadily growing.", "Wizard", DialogueStep.Emotion.Normal);
+            AdvanceConditionDialogue_EnemyTalking("Since I've come here, my magical prowess has been steadily growing.", "Wizard", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("Meanwhile, the strength of the forest wanes.", "Wizard", DialogueStep.Emotion.Normal);
@@ -1722,21 +1703,33 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_EnemyTalking("Precisely! That tree, the Quercus giganteum, lies at the heart of the forest.", "Wizard", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("It is what I call a \"catalyst\", a sentient object that contains the powers of a school of magic.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("I've come to discover that it's tied to the very essence of wild magic in these lands.", "Wizard", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("Its roots spread throughout the forest, intertwining with nearly every living thing.", "Wizard", DialogueStep.Emotion.Normal);
         }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("One such root is right above you, steeping in that cauldron.", "Wizard", DialogueStep.Emotion.Normal);
-        }
+        //else if (++i == cutsceneStep){
+        //    AdvanceConditionDialogue_EnemyTalking("One such root is right above you, steeping in that cauldron.", "Wizard", DialogueStep.Emotion.Normal);
+        //}
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("Interesting...", DialogueStep.Emotion.Questioning);
             FlipDirection("Player");
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("Although I doubt it will survive much longer. I may have to find a new root to work with soon...", "Wizard", DialogueStep.Emotion.Normal);
+            AdvanceConditionDialogue_PlayerTalking("A magical tree that gives consciousness to all of these forest critters...", DialogueStep.Emotion.Surprised);
         }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("That's amazing! Are these overhead roots part of this \"catalyst\" too?", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Yes! Although I may have to find a new root to work with soon. I doubt this sample will survive much longer.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        //else if (++i == cutsceneStep){
+        //    AdvanceConditionDialogue_EnemyTalking("Although I doubt it will survive much longer. I may have to find a new root to work with soon...", "Wizard", DialogueStep.Emotion.Normal);
+        //}
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("What??", DialogueStep.Emotion.Surprised);
         }
@@ -1750,123 +1743,14 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_PlayerTalking("What are you doing to the tree??", DialogueStep.Emotion.Angry);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("Rebecca!", "Wizard", DialogueStep.Emotion.Normal);
+            AdvanceConditionDialogue_EnemyTalking(StaticVariables.playerName + "!", "Wizard", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("What are you doing to the whole forest??", DialogueStep.Emotion.Angry);
         }
-        /*
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("I didn't realize I would have a guest today!", "Wizard", DialogueStep.Emotion.Normal, "Wizard");
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("I'd offer you something to drink, but I doubt you'd want to ingest any liquids I might scrounge up.", "Wizard", DialogueStep.Emotion.Normal, "Wizard");
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("Is that a threat??", DialogueStep.Emotion.Angry);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("Ha! Far from it! I'm delighted to finally meet you.", "Wizard", DialogueStep.Emotion.Normal, "Wizard");
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("I've heard whispers of your movements around the forest in recent days.", "Wizard", DialogueStep.Emotion.Normal, "Wizard");
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("I've spent a considerable amount of my time here looking for you, actually.", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("I have some questions about what really is going on here...", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("By all means, ask away!", "Wizard", DialogueStep.Emotion.Normal, "Wizard");
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("Oh but first, allow me to introduce myself.\nMy name is Mustrum, and I...", "Wizard", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("I'm sorry, Miss... " + StaticVariables.playerName + "? Are you wearing a name tag?", "Wizard", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("Oh, funny story about that!", DialogueStep.Emotion.Surprised);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("The creatures of the forest only saw me as a vaguely-threatening human!", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("I thought a name tag might help me stand out as an individual.", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("Actually, that's not a funny story. It was a little dehumanizing.", DialogueStep.Emotion.Defeated);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("Yes, I could see that being the case.", "Wizard", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("But that does bring me to my first question!", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("Why is everyone who lives in the forest suspicious of you?", DialogueStep.Emotion.Questioning);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("I suspect they see my magical prowess growing, meanwhile the strength of the forest wanes.", "Wizard", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("My actions naturally draw the ire of the locals.", "Wizard", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("I go to visit the Quercus giganteum so often.", "Wizard", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("Is that latin? For, uh... big... oak tree?", DialogueStep.Emotion.Questioning);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("Close enough, yes.", "Wizard", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("That's the dying orange tree in the middle of the forest?", DialogueStep.Emotion.Questioning);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("Oh! Not that it bears orange citrus fruit. I mean, the tree's leaves are colored orange?", DialogueStep.Emotion.Worried);
-        }
-        //else if (++i == cutsceneStep){
-        //    AdvanceConditionDialogue_PlayerTalking("Oh! Pardon my ambiguity. The tree has an orange coloration, and does not bear citrus fruit.", DialogueStep.Emotion.Worried);
-        //}
-        //else if (++i == cutsceneStep){
-        //    AdvanceConditionDialogue_EnemyTalking("Erm, yes. Its leaves have an orange coloration, and does not bear any orange citrus fruits.", "Wizard", DialogueStep.Emotion.Normal);
-        //}        
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("Ha! Precisely. The Quercus giganteum is tied to the very essence of wild magic in these parts.", "Wizard", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("Its roots spread throughout the entire forest, intertwining with nearly every living thing.", "Wizard", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("One such root is right above you, steeping in that cauldron.", "Wizard", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("Hmm...", DialogueStep.Emotion.Questioning);
-            FlipDirection("Player");
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("Although I doubt it will survive much longer. I may have to find a new root to work with soon...", "Wizard", DialogueStep.Emotion.Normal);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("What??", DialogueStep.Emotion.Surprised);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("What are you doing to the tree?", DialogueStep.Emotion.Angry);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("What are you doing to the whole forest??", DialogueStep.Emotion.Angry);
-        }
-        else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("Please keep your voice down! Strong vibrations may damage the --", "Wizard", DialogueStep.Emotion.Normal);
-        }
-        */
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_NobodyTalking(true);
-            StartScreenShake();          
-            //StartScreenShake(0.2f);
+            StartScreenShake();        
         }  
         else if (++i == cutsceneStep){
             GetObjectFromName("tiny roots").GetComponent<CutsceneBranchOrganizer>().StartDrops();
@@ -1876,11 +1760,9 @@ public class CutsceneManager : MonoBehaviour{
             Transform cluster = GetObjectFromName("Root Cluster").transform;
             cluster.DORotate(new Vector3(0,0,-6), 1.3f);
             cluster.DOLocalMoveY(-609, 1.3f);
-            //cluster.DOLocalMoveY(-61, 0.8f);
             AdvanceConditionWait(1.3f);
         }         
-        else if (++i == cutsceneStep){
-            //StartScreenShake();            
+        else if (++i == cutsceneStep){      
             Transform cluster = GetObjectFromName("Root Cluster").transform;
             foreach (Transform t in cluster){
                 t.GetChild(0).gameObject.SetActive(false);
@@ -1961,10 +1843,444 @@ public class CutsceneManager : MonoBehaviour{
 
     private void DoForest3Step(){   
         int i = 0;
+        //player should be to the left, wizard to the right in front of cauldron
         if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("You want to tell me the truth? Fine, out with it!!", DialogueStep.Emotion.Angry);
         }
         else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("And if you try anything funny, I'll knock you out again!", DialogueStep.Emotion.Angry);
         }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_NobodyTalking(true);
+            AdvanceConditionDialogue_EnemyTalking("Sigh...\nAs you wish.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Ninety-nine years ago, I graduated from The Academy in Duskvale with a degree in biochemistry.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Shortly thereafter, I came to the Enchanted Forest to research the nature of magic.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Year after year, hypothesis after hypothesis...", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I became a better practitioner of the sciences, and a much more powerful pyromancer!", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("But I also came to discover that the forest was slowly dying.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("And you weren't just stealing the magic of the tree?", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking(StaticVariables.playerName +", it's impossible to \"steal\" magic.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Where do you think magic comes from?", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I can't say I've ever given it much thought...", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("My magic comes from this talking book here!", DialogueStep.Emotion.Normal);
+        }
+        //player takes out book
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Is my spellbook one of those catalysts you mentioned earlier?", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Precisely! I'd guess it's the catalyst for the element of water.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("When someone comes into contact with such a catalyst, they may gain control over a elemental power.", "Wizard", DialogueStep.Emotion.Normal);
+            //when someone comes into contact with such a catalyst, they gain control over the associated elemental power
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("But... I'm the only one that can use the powers of the book!", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I let some friends give it a test, with no results.", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I've come across a few other magical people, and none of them had a spellbook either.", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Would you mind telling me a bit about them?", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Well most recently, there's you. You live in a forest and control fire magic. You studied at the Academy, and you experiment on a sentient tree.", DialogueStep.Emotion.Normal);        
+            //well most recently, there's you. you live in a forest and control fire magic. you studied at the academy, and you perform scientific experiments on sentient trees.
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Then before you, there was the cyclops in the grasslands. He threw magical rocks, spoke very slowly, and is probably a necromancer.", DialogueStep.Emotion.Normal);        
+            //then before you, there's the cyclops in the grasslands. he threw magical rocks, spoke very slowly, and is probably a necromancer
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I have reason to believe he isn't a necromancer, but please continue.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("The cyclops had an apprentice who had his own face on his torso. He was good at throwing rocks, but not much else.", DialogueStep.Emotion.Normal);        
+            //well the cyclops had an apprentice, a blemmyae, who had his face attached to his torso. he was good at throwing rocks, but not much else.
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Before him, there was this retired adventure in my hometown who used to have control over the wind.", DialogueStep.Emotion.Normal);        
+            //then there was a retired adventurer in my hometown who used to have control over the wind.
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Plus there's me! I have a magical book that lets me make waves, heal the injured, and toss rocks at people.", DialogueStep.Emotion.Happy);        
+            //plus there's me! i have a magical book that lets me make waves, heal the injured, and toss rocks about.
+        }
+        //i've also heard the lich king uses magic, although i'm not sure what kind.
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Why does this matter anyway?", DialogueStep.Emotion.Questioning);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Magic is magic, the people just use it.", DialogueStep.Emotion.Normal);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("After a century of research in the field, I can assure you that is not the case.", "Wizard", DialogueStep.Emotion.Normal);
+           //from a century of research in the field, i can assure you that is not the case.          
+        }        
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Is there something that makes these people special or worthy somehow?", DialogueStep.Emotion.Questioning);        
+            //there's something about all of these people that makes them special or worthy somehow?
+        }   
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Eldric went on epic adventures! You and the cyclops have lived a long time; I bet you've done some pretty cool stuff.?", DialogueStep.Emotion.Questioning);        
+            //old man eldric went on epic adventures. you and the cyclops have lived a long time; i bet you've done some pretty cool stuff.
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("But that doesn't make sense! I'm just a librarian, and I can use magic too!", DialogueStep.Emotion.Surprised);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("And I've never heard of anyone else who can control three different elements!", DialogueStep.Emotion.Surprised);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("What's special about me? I just like to read books...", DialogueStep.Emotion.Defeated);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("...", DialogueStep.Emotion.Questioning);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("That's it! I like to read books!", DialogueStep.Emotion.Happy);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Does magic come from reading?", DialogueStep.Emotion.Questioning);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Ah! Not just reading. We have arrived at the crux of the matter.", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Each branch of magic is tied to a unique field of study.", "Wizard", DialogueStep.Emotion.Normal);    
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("For example, fire is the element of science and discovery.", "Wizard", DialogueStep.Emotion.Normal);    
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Great pyromancers are biologists, chemists, and physicists, seeking to understand the fundamentals of our universe.", "Wizard", DialogueStep.Emotion.Normal);    
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Earth is the element of history. Historians and archeologists uncover, record, and preserve the past from the sands of time.", "Wizard", DialogueStep.Emotion.Normal);    
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Language is dynamic. It flows and changes as the generations pass, much like the element of water you carry.", "Wizard", DialogueStep.Emotion.Normal);    
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I'm sure you can guess what your power of healing is tied to.", "Wizard", DialogueStep.Emotion.Normal);    
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I did serve as our town's doctor, but that was mainly because I was the only one who could read medical textbooks.", DialogueStep.Emotion.Normal);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Or maybe I was the only one who cared to try.", DialogueStep.Emotion.Defeated);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking(StaticVariables.playerName + ", I think that is exactly why you are capable of weilding so many elements.", "Wizard", DialogueStep.Emotion.Normal);    
+            //rebecca, i think that is exactly why you are capable of weilding the power of so many elements.
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Magic doesn't come from having knowledge, but from the pursuit of it.", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("And you have a passion for every discipline.", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("So that explains why there are so few magical people in the world!", DialogueStep.Emotion.Surprised);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("You need to find a catalyst and have the right interests for its magic too!", DialogueStep.Emotion.Surprised);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I'm willing to be you are also capable of harnessing fire!", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Would you like to try?", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I have the catalyst of fire here with me!", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("What do you think, spellbook? Is it worth a try?", DialogueStep.Emotion.Normal);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("The book quickly spells out \"YES\". After a moment, an exclamation point forms.", "Magic Book", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Okay, okay! I get it, you're excited.", DialogueStep.Emotion.Happy);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I'll give it a go, Mustrum", DialogueStep.Emotion.Happy);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Spectacular!", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Oh, um...", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Would you mind if I attach some sensors to you first?", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I've never witnessed someone acquiring the power of a new element before.", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("The data would certainly help with my studies.", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Oh, alright.", DialogueStep.Emotion.Normal);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking(StaticVariables.playerName + ", are you ready to become a pyromancer?", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Here goes nothing!", DialogueStep.Emotion.Normal);        
+        }
+        //touch the lens, screen flash, maybe shake, fade
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("That was incredible! Back up, I want to give this fire a test!", DialogueStep.Emotion.Happy);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Consider waiting to practice until you're well clear of the forest. It is already struggling for survival as-is.", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Fair enough.", DialogueStep.Emotion.Normal);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("I'm sorry for attacking you and destroying your lab.", DialogueStep.Emotion.Worried);        
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("That's quite alright. You just provided me with some truly invaluable data!", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("It might help me finally figure out how to communicate with the Quercus giganteum!", "Wizard", DialogueStep.Emotion.Normal);    
+        }  
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Safe travels, " + StaticVariables.playerName, "Wizard", DialogueStep.Emotion.Normal);    
+        }    
+        else if (++i == cutsceneStep){
+            StaticVariables.hasCompletedStage = true;
+            StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
+        }
+
+
+
+
+        //stuff i thought of including:
+        //wizard says he has been trying to figure out how to communicate with the tree
+        //wizard says he isnt 100p sure what type of magic the tree is a catalyst for, but its probably some kind of knowledge/wisdom magic
+        //wizard says he isnt 100p sure what field of study the tree is a catalyst for
+
+
+
+        //do other magic users have something they interact with to use magic?
+        //you're on the right track!
+        //in my century of research, i have come to believe that magical powers are contained within objects spread throughout the world.
+        //i call these objects \"catalysts\"
+        //your spellbook is likely the catalyst for the element of water!
+
+        //a necromancer?
+        //yes, i saw he had the necronomicon in his study
+        //you must be mistaken, the necronomicon isnt real
+        //that's what i thought too, but then i saw it with my own eyes!
+        //i can assure you, that cyclops in no necromancer.
+        //please continue telling me about these other magical people!
+
+
+        /*
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Tell me, what do you know of the scientific method?", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("What? Um...", DialogueStep.Emotion.Worried);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("In Posterior Analytics, Aristotle describes it as \"something\".", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("One time I tested how different factors affected the growth of tomato plants.", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("The children liked that lesson!", DialogueStep.Emotion.Happy);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Much more than the time we cataloged the library books, anyway...", DialogueStep.Emotion.Defeated);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("I see.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("You and I are not so different, Rebecca.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Ugh, you really shouldn't say things like that if you're trying not to sound like a villain.", DialogueStep.Emotion.Defeated);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("You doubt my intentions still?", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("If you'd care to take a look in that broken cabinet behind you...", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("You should find all the proof you need.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        //player goes over to cabinet
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("\"Year 96. Day 118.\nExperiments with a 7kg bark sample submerged in compound yielded no results.\"", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("\"It is statistically unlikely that the corruption inhabits the organelle. The compound is five parts water to one part...\"", DialogueStep.Emotion.Questioning);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("Are these your research notes?", DialogueStep.Emotion.Surprised);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("There are dozens of pages in here!", DialogueStep.Emotion.Surprised);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Thousands, actually. I've been here for a lifetime.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        */
+
+        //do you have any proof you weren't just stealing the magic of the tree?
+
+        //else if (++i == cutsceneStep){
+        //    AdvanceConditionDialogue_PlayerTalking("But that doesn't exactly prove you aren't trying to steal the magic of the forest.", DialogueStep.Emotion.Normal);
+        //}
+        /*
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Rebecca, it's impossible to \"steal\" magic.", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Where do you think magic comes from?", "Wizard", DialogueStep.Emotion.Normal);
+        }
+        */
+        //i cant say ive ever given it much thought...
+        //my magic comes from this talking book here...
+        //player takes out book
+        //do other magic users have something they interact with to use magic?
+        //you're on the right track!
+        //in my century of research, i have come to believe that magical powers are contained within objects spread throughout the world.
+        //i call these objects \"catalysts\"
+        //your spellbook is likely the catalyst for the element of water!
+        //when someone comes into contact with such a catalyst, they gain control over the associated elemental power
+        //but... i'm the only one that is able to use the powers of the book!
+        //i've let some friends give it a test, with no results!
+        //and i've come across a few other magical people, and none of them had a spellbook either.
+        //would you mind telling me a bit about them?
+        //well most recently, there's you. you live in a forest and control fire magic. you studied at the academy, and you perform scientific experiments on trees.
+        //then before you, there's the cyclops in the grasslands. he threw magical rocks, spoke very slowly, and is probably a necromancer
+
+        //a necromancer?
+        //yes, i saw he had the necronomicon in his study
+        //you must be mistaken, the necronomicon isnt real
+        //that's what i thought too, but then i saw it with my own eyes!
+        //i can assure you, that cyclops in no necromancer.
+
+        //please continue telling me about these other magical people!
+        //the cyclops had an apprentice, a blemmyae, who had his face attached to his torso. he was good at throwing rocks, but not much else.
+        //then there was a retired adventurer in my hometown, by the name of Eldric. he used to have control over the wind.
+        //plus there's me! i have a magical book that lets me make waves, heal the injured, and toss rocks about.
+        //i've also heard the lich king uses magic, although i'm not sure what kind.
+        //why does this matter anyway?
+        //magic is magic, the people just use it.
+        //from a century of research in the field, i can assure you that is not the case.     
+        //there's something about all of these people that makes them special or worthy somehow?
+        //old man eldric went on epic adventures. the cyclops and the wizard have lived a long time; i bet they've done some pretty cool stuff.
+        //but that doesnt make sense! im just a librarian, and i can use magic too!
+        //plus i can control three different elements, which is pretty unheard of!
+        //what's special about me? i just like to read books.
+        //...
+        //that's it! i like to read books!
+        //does magic come from reading? (player) 
+        //ah! not just reading. each branch of magic is tied to a unique field of study.
+        //for example, fire is the element of science and discovery. (hide player chathead)
+        //great pyromancers are biologists, chemists, and physicists, who seek to understand the fundamentals of our universe.
+        //earth is the element of history. Historians and archeologists uncover, record, and preserve the past from the sands of time.
+        //language is dynamic. it flows and changes as the generations pass, much like the element of water you carry.
+        //i'm sure you can guess what your power of healing is tied to.
+        //i did serve as our town's doctor, but that was mainly because i was the only one who could read medical textbooks.
+        //or maybe i was the only one who cared to try.
+        //rebecca, i think that is exactly why you are capable of weilding the power of so many elements.
+        //magic doesn't come from having knowledge, but from the pursuit of it.
+        //and you have a passion for every discipline.
+        //i'm willing to bet you are already capable of harnessing the power of fire.
+        //would you like to try?
+        //i have the catalyst of fire here with me!
+
+
+
+        //if you'll allow me to go fetch it...
+        //sure, sure. just remember i'll blast you if y
+
+        //take a minute to think on it. if you'll allow me to go fetch something for a moment?
+        //sure, sure. just remember i'll blast you if you're up to something
+        //wizard exits stage right
+        //people don't just use magic?
+
+
+        //wizard returns, holding a box
+
+        
+
+
+        //wizard offers player to touch object
+        //explains the objects can convey the elemental power to a person if they are sufficiently ("worthy")
+        //magical objects have a kind of sentience, too. like this (fire thing).
+        //and my book!
+        //and also the big forest tree?
+        //precisely. i haven't been able to communicate with the quercus giganteum yet, but i suspect its magic is related to (botany, agriculture?)
+
+        //thats why magical abilities are so rare. you have to be (worthy) of the magic, and then also come into contact with the (related object)
+
+        //not just reading. each branch of magic is tied to an academnic pursuit
+
+        //you have a thirst for knowledge. a passion for every discipline.
+
+
+        //as i pursued my scientific education, i began to develop control over fire.
+
+
+
+
+
+        //cooperative or semi cooperative mechanics
+        //luck based gameplay
+        //party games
+        //replayability
+
+
+        //take a minute to think on it. if you'll allow me to go fetch something for a moment?
+        //sure, sure. just remember i'll blast you if you're up to something
+        //wizard exits stage right
+        //let me think about the magical people i know...
+        //well there's me, this wizard, eldric, the cyclops...
+        //that torso guy is still in training, plus i've heard the lich king uses magic
+        
+
+        //magical objects have a kind of sentience, too. like this (fire thing).
+        //and my book!
+        //and also the big forest tree?
+        //precisely. i haven't been able to communicate with the quercus giganteum yet, but i suspect its magic is related to (botany?)
     }
     
     private void DoDesert1Step(){   
