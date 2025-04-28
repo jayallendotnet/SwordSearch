@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 815226952419649515}
   - component: {fileID: 815226952419649514}
   m_Layer: 0
-  m_Name: Anubis Warrior
+  m_Name: Anubis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -113,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
+  data: {fileID: 0}
   burnDamageQueue: 
 --- !u!114 &815226952419649514
 MonoBehaviour:
@@ -126,7 +126,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6c71501f9ece54da354ee8431c25ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBattleable: 1
+  nameOverride: 
   startingHealth: 50
-  attackSpeed: 2
-  attackDamage: 1
+  attackOrder:
+    Value: []
   isDraconic: 0
+  isHorde: 0
+  isHoly: 0
+  isDark: 0
+  isNearWater: 0
+  canApplyDebuff: 0
+  isWaterDangerous: 0
+  normal: {fileID: -459845517, guid: 9fb1f96006afb74469d4723d17da60e8, type: 3}
+  angry: {fileID: -414696302, guid: 9fb1f96006afb74469d4723d17da60e8, type: 3}
+  defeated: {fileID: 199904343, guid: 9fb1f96006afb74469d4723d17da60e8, type: 3}
+  excited: {fileID: 0}
+  happy: {fileID: 0}
+  questioning: {fileID: -332142754, guid: 9fb1f96006afb74469d4723d17da60e8, type: 3}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
+  custom3: {fileID: 0}
+  overworldDialogueSteps: []
+  victoryDialogueSteps: []

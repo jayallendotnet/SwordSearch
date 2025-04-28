@@ -373,13 +373,28 @@ public class DialogueManager : MonoBehaviour{
                 sprite = data.excited;
                 break;
             case (DialogueStep.Emotion.Happy):
-                sprite = data.angry;
+                sprite = data.happy;
                 break;
             case (DialogueStep.Emotion.Questioning):
                 sprite = data.questioning;
                 break;
             case (DialogueStep.Emotion.Worried):
-                sprite = data.angry;
+                sprite = data.worried;
+                break;
+            case (DialogueStep.Emotion.Surprised):
+                sprite = data.surprised;
+                break;
+            case (DialogueStep.Emotion.Mystery):
+                sprite = data.mystery;
+                break;
+            case (DialogueStep.Emotion.Custom1):
+                sprite = data.custom1;
+                break;
+            case (DialogueStep.Emotion.Custom2):
+                sprite = data.custom2;
+                break;
+            case (DialogueStep.Emotion.Custom3):
+                sprite = data.custom3;
                 break;
             default:
                 sprite = data.normal;

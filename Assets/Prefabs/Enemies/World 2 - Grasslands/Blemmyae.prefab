@@ -144,11 +144,17 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
-  normal: {fileID: -640230544, guid: 89b24c5f612943145a7f419e8b26da3f, type: 3}
-  angry: {fileID: 1239045184, guid: 89b24c5f612943145a7f419e8b26da3f, type: 3}
-  defeated: {fileID: -77729261, guid: 89b24c5f612943145a7f419e8b26da3f, type: 3}
-  excited: {fileID: -1545546393, guid: 89b24c5f612943145a7f419e8b26da3f, type: 3}
-  questioning: {fileID: 0}
+  normal: {fileID: 475084949, guid: e0bdee59067b33d428c246a85be81f9a, type: 3}
+  angry: {fileID: 1654252610, guid: e0bdee59067b33d428c246a85be81f9a, type: 3}
+  defeated: {fileID: -1747255910, guid: e0bdee59067b33d428c246a85be81f9a, type: 3}
+  excited: {fileID: 0}
+  happy: {fileID: 1640786065, guid: e0bdee59067b33d428c246a85be81f9a, type: 3}
+  questioning: {fileID: -2019282415, guid: e0bdee59067b33d428c246a85be81f9a, type: 3}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
   overworldDialogueSteps:
   - type: 0
     talker: {fileID: 0}
@@ -178,7 +184,7 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 3
+    emotion: 4
     description: Hello!
   - type: 1
     talker: {fileID: 0}
@@ -188,7 +194,7 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 5
     description: Honestly, I'm not sure why it's so weird for you humans.
   - type: 1
     talker: {fileID: 0}
@@ -259,7 +265,7 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 5
     description: Do you have control over magic by any chance?
   - type: 0
     talker: {fileID: 0}
@@ -274,7 +280,7 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 4
     description: Say, would you like to have a friendly spar?
   - type: 1
     talker: {fileID: 0}
@@ -302,13 +308,13 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 5
     description: I've been trying to learn magic for a while now, but I'm starting
       to think there's something more to it...
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 5
     description: Some kind of breakthrough I'm missing?
   - type: 0
     talker: {fileID: 815226952419649514}
@@ -341,7 +347,7 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 815226952419649514}
     name: 
-    emotion: 0
+    emotion: 4
     description: But he's not a monster. He might look scary, but he is a gentle
       person, and a good teacher.
   - type: 1
@@ -357,7 +363,7 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 815226952419649514}
     name: 
-    emotion: 0
+    emotion: 4
     description: Yes! You should go ahead and meet him. I'm sure there is much you
       both could learn from each other.
 --- !u!1 &9039942117280077413

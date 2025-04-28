@@ -139,16 +139,23 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
-  normal: {fileID: 21300000, guid: 37ebcb6893211894789f3196b10346be, type: 3}
-  angry: {fileID: 21300000, guid: 09cf3bfbc9383e7449b7b4a30d4b83c8, type: 3}
-  defeated: {fileID: 21300000, guid: 78dc9d13672af4f4db8120a955ee3075, type: 3}
-  excited: {fileID: 21300000, guid: b8fd529acddc3fb46824a8dd7539d863, type: 3}
-  questioning: {fileID: 21300000, guid: 61a543caf63d34a44b317e1659268fca, type: 3}
+  normal: {fileID: 1533119839, guid: 7b59be55b5f032247834f7751b972971, type: 3}
+  angry: {fileID: -992699603, guid: 7b59be55b5f032247834f7751b972971, type: 3}
+  defeated: {fileID: 921222851, guid: 7b59be55b5f032247834f7751b972971, type: 3}
+  excited: {fileID: 0}
+  happy: {fileID: -452708509, guid: 7b59be55b5f032247834f7751b972971, type: 3}
+  questioning: {fileID: -1927249122, guid: 7b59be55b5f032247834f7751b972971, type: 3}
+  worried: {fileID: 731866683, guid: 7b59be55b5f032247834f7751b972971, type: 3}
+  surprised: {fileID: 0}
+  mystery: {fileID: -1930171580, guid: 7b59be55b5f032247834f7751b972971, type: 3}
+  custom1: {fileID: 21300000, guid: 61a543caf63d34a44b317e1659268fca, type: 3}
+  custom2: {fileID: 21300000, guid: 78dc9d13672af4f4db8120a955ee3075, type: 3}
+  custom3: {fileID: 0}
   overworldDialogueSteps:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 1
+    emotion: 6
     description: Stop! I can explain!
   - type: 0
     talker: {fileID: 0}
@@ -158,17 +165,17 @@ MonoBehaviour:
   - type: 4
     talker: {fileID: 0}
     name: Expensive-Looking Equipment
-    emotion: 2
+    emotion: 9
     description: Crash!!
   - type: 1
     talker: {fileID: 0}
     name: Expensive-Looking Equipment
-    emotion: 0
+    emotion: 1
     description: If you understood the situation, you'd be much more sympathetic!
   - type: 1
     talker: {fileID: 0}
     name: Expensive-Looking Equipment
-    emotion: 0
+    emotion: 1
     description: You could help me!
   - type: 0
     talker: {fileID: 0}
@@ -178,7 +185,7 @@ MonoBehaviour:
   - type: 4
     talker: {fileID: 0}
     name: Some Kind of Microscope
-    emotion: 5
+    emotion: 10
     description: Bang!!!
   - type: 1
     talker: {fileID: 0}
@@ -189,7 +196,7 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 5
     description: Have you calmed down yet?
   - type: 0
     talker: {fileID: 0}
@@ -204,7 +211,7 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 1
     description: Can we put your destruction on hold and speak like adults?
   - type: 0
     talker: {fileID: 0}

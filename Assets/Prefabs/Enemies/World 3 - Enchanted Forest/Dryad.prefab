@@ -139,16 +139,22 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
-  normal: {fileID: 21300000, guid: 68bf0648bebe99d4180e2cc8e3e3a47c, type: 3}
-  angry: {fileID: 0}
-  defeated: {fileID: 0}
+  normal: {fileID: 2017393597, guid: 9a58c55c356e6924095bbcb28bff80d9, type: 3}
+  angry: {fileID: 13977396, guid: 9a58c55c356e6924095bbcb28bff80d9, type: 3}
+  defeated: {fileID: 1032791035, guid: 9a58c55c356e6924095bbcb28bff80d9, type: 3}
   excited: {fileID: 0}
-  questioning: {fileID: 0}
+  happy: {fileID: 0}
+  questioning: {fileID: 880190045, guid: 9a58c55c356e6924095bbcb28bff80d9, type: 3}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
   overworldDialogueSteps:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 5
     description: What are you doing here, human?
   - type: 0
     talker: {fileID: 0}
@@ -174,7 +180,7 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 1
     description: You need to leave.
   - type: 0
     talker: {fileID: 0}
@@ -185,12 +191,12 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 5
     description: Yes, for whatever reason, this dying area is so interesting to him.
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 1
     description: But I can't allow you to stay here any longer!
   victoryDialogueSteps:
   - type: 0
@@ -201,7 +207,7 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 2
     description: I'll tell you if you leave.
   - type: 0
     talker: {fileID: 0}

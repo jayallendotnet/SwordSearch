@@ -35,6 +35,7 @@ public class EnemyData : MonoBehaviour{
     public Sprite mystery;
     public Sprite custom1;
     public Sprite custom2;
+    public Sprite custom3;
 
     [Header("Dialogue Steps")]
     public DialogueStep[] overworldDialogueSteps;
@@ -51,12 +52,12 @@ public class EnemyData : MonoBehaviour{
 
 [System.Serializable]
 public class DialogueStep{
-    public enum DialogueType{PlayerTalking, EnemyTalking, OtherTalking, Event, EnemyTalkingNameOverride};
+    public enum DialogueType{PlayerTalking, EnemyTalking, OtherTalking, Event, EnemyTalkingNameOverride, OtherTalkingNameOverride};
     
-    public enum Emotion{Normal, Angry, Defeated, Excited, Happy, Questioning, Worried, Surprised, Mystery, Custom1, Custom2};
+    public enum Emotion{Normal, Angry, Defeated, Excited, Happy, Questioning, Worried, Surprised, Mystery, Custom1, Custom2, Custom3};
     public DialogueType type;    
-    [ConditionalField(nameof(type), false, DialogueType.OtherTalking)] public EnemyData talker;
-    [ConditionalField(nameof(type), false, DialogueType.EnemyTalkingNameOverride)] public string name;
+    [ConditionalField(nameof(type), false, DialogueType.OtherTalking, DialogueType.OtherTalkingNameOverride)] public EnemyData talker;
+    [ConditionalField(nameof(type), false, DialogueType.EnemyTalkingNameOverride, DialogueType.OtherTalkingNameOverride)] public string name;
     public Emotion emotion;
     [TextArea(2,5)]
     public string description;

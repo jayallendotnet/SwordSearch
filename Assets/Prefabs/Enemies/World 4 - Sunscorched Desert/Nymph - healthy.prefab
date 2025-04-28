@@ -35,7 +35,6 @@ RectTransform:
   m_Children:
   - {fileID: 7025450340366852962}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -90,7 +89,7 @@ Animator:
   m_GameObject: {fileID: 815226952419649516}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e5dd7fcb2fed47640884c0c396bbbc7c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2b4d0a8089e7ab648bad643cf1d122d1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -114,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleManager: {fileID: 0}
+  data: {fileID: 0}
   burnDamageQueue: 
 --- !u!114 &815226952419649514
 MonoBehaviour:
@@ -127,10 +127,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6c71501f9ece54da354ee8431c25ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBattleable: 1
+  nameOverride: 
   startingHealth: 110
-  attackSpeed: 2
-  attackDamage: 1
+  attackOrder:
+    Value: []
   isDraconic: 0
+  isHorde: 0
+  isHoly: 0
+  isDark: 0
+  isNearWater: 0
+  canApplyDebuff: 0
+  isWaterDangerous: 0
+  normal: {fileID: 0}
+  angry: {fileID: 0}
+  defeated: {fileID: 0}
+  excited: {fileID: 0}
+  happy: {fileID: 0}
+  questioning: {fileID: 0}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
+  custom3: {fileID: 0}
+  overworldDialogueSteps: []
+  victoryDialogueSteps: []
 --- !u!1 &9039942117280077413
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +184,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 815226952419649519}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

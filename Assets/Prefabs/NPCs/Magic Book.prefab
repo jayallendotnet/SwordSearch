@@ -32,7 +32,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -60,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBattleable: 0
-  nameOverride: 
+  nameOverride: Spellbook
   startingHealth: 110
   attackOrder:
     Value: []
@@ -70,11 +69,18 @@ MonoBehaviour:
   isDark: 0
   isNearWater: 0
   canApplyDebuff: 0
+  isWaterDangerous: 0
   normal: {fileID: 21300000, guid: fc0446f5dbb266a4a910a0d6712fd31e, type: 3}
   angry: {fileID: 21300000, guid: fc0446f5dbb266a4a910a0d6712fd31e, type: 3}
   defeated: {fileID: 21300000, guid: fc0446f5dbb266a4a910a0d6712fd31e, type: 3}
   excited: {fileID: 21300000, guid: fc0446f5dbb266a4a910a0d6712fd31e, type: 3}
+  happy: {fileID: 0}
   questioning: {fileID: 21300000, guid: fc0446f5dbb266a4a910a0d6712fd31e, type: 3}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
   overworldDialogueSteps: []
   victoryDialogueSteps: []
 --- !u!114 &7238624228324858318

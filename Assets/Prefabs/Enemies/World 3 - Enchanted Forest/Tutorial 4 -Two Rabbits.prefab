@@ -72,11 +72,18 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 1
-  normal: {fileID: 21300000, guid: 43545c9e272292747bd50d07b2fa52cd, type: 3}
-  angry: {fileID: 21300000, guid: 3f8b072e389b2984f89b1c3df553d9da, type: 3}
+  normal: {fileID: 0}
+  angry: {fileID: -1176699407, guid: c813dd0f7eb3db34e97dba98fba35e38, type: 3}
   defeated: {fileID: 0}
   excited: {fileID: 0}
+  happy: {fileID: 0}
   questioning: {fileID: 0}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: -1436755530, guid: cd937398b081a104cb87d4107872a0d0, type: 3}
+  custom2: {fileID: 315923437, guid: 1de31f7406356ed4ebc3147118d9062b, type: 3}
+  custom3: {fileID: -434207866, guid: cd937398b081a104cb87d4107872a0d0, type: 3}
   overworldDialogueSteps:
   - type: 0
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
@@ -93,36 +100,36 @@ MonoBehaviour:
     name: 
     emotion: 0
     description: Hopefully I can get through before something-
-  - type: 4
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+  - type: 5
+    talker: {fileID: 1107962101534003463, guid: 73ca018c31976124291030ed588180f8, type: 3}
     name: Hopsy
-    emotion: 0
+    emotion: 1
     description: Who is walking on my house??
-  - type: 4
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+  - type: 5
+    talker: {fileID: 1107962101534003463, guid: 186334c8b38f99e4e92c2ca172cec126, type: 3}
     name: Flopsy
     emotion: 0
     description: Excuse me, it's OUR house!
-  - type: 4
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+  - type: 5
+    talker: {fileID: 1107962101534003463, guid: 73ca018c31976124291030ed588180f8, type: 3}
     name: Hopsy
-    emotion: 0
+    emotion: 5
     description: Our house? Maybe if you paid your share of the mortgage!
-  - type: 4
-    talker: {fileID: 1107962101534003463, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
+  - type: 5
+    talker: {fileID: 1107962101534003463, guid: 186334c8b38f99e4e92c2ca172cec126, type: 3}
     name: Flopsy
-    emotion: 0
+    emotion: 1
     description: I do plenty of work around here! I plant the carrots, I tend to
       the carrots, I pick the carrots, I cook the carrots...
-  - type: 4
-    talker: {fileID: 1107962101534003463, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
+  - type: 5
+    talker: {fileID: 1107962101534003463, guid: 73ca018c31976124291030ed588180f8, type: 3}
     name: Hopsy
-    emotion: 0
+    emotion: 1
     description: There's more to life than carrots!
-  - type: 4
-    talker: {fileID: 1107962101534003463, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
+  - type: 5
+    talker: {fileID: 1107962101534003463, guid: 186334c8b38f99e4e92c2ca172cec126, type: 3}
     name: Flopsy
-    emotion: 0
+    emotion: 1
     description: There's more to life than working!
   - type: 0
     talker: {fileID: 1107962101534003463, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
@@ -134,13 +141,13 @@ MonoBehaviour:
     name: Hopsy & Flopsy
     emotion: 1
     description: Where are you going??
-  - type: 4
-    talker: {fileID: 1107962101534003463, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
+  - type: 5
+    talker: {fileID: 1107962101534003463, guid: 186334c8b38f99e4e92c2ca172cec126, type: 3}
     name: Flopsy
     emotion: 0
     description: You're tresspassing on private property!
-  - type: 4
-    talker: {fileID: 1107962101534003463, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
+  - type: 5
+    talker: {fileID: 1107962101534003463, guid: 73ca018c31976124291030ed588180f8, type: 3}
     name: Hopsy
     emotion: 0
     description: Get the tresspasser!

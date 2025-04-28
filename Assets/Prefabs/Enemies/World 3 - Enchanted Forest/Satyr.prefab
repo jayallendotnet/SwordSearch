@@ -138,11 +138,17 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
-  normal: {fileID: 21300000, guid: eb0a01c48b93b7848b89009abb3bc94c, type: 3}
-  angry: {fileID: 0}
-  defeated: {fileID: 0}
+  normal: {fileID: -1263339810, guid: 46136d168396fa94d9458afb067582fb, type: 3}
+  angry: {fileID: 1557689056, guid: 46136d168396fa94d9458afb067582fb, type: 3}
+  defeated: {fileID: 1954471166, guid: 46136d168396fa94d9458afb067582fb, type: 3}
   excited: {fileID: 0}
+  happy: {fileID: 0}
   questioning: {fileID: 0}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
   overworldDialogueSteps:
   - type: 0
     talker: {fileID: 0}
@@ -157,7 +163,7 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 1
     description: Human! Get your filthy hands out of my soil!
   - type: 0
     talker: {fileID: 0}
@@ -173,7 +179,7 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 1
     description: I'm not telling you anything!
   - type: 1
     talker: {fileID: 0}
@@ -183,13 +189,13 @@ MonoBehaviour:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 1
     description: And I'll chase you off just the same!
   victoryDialogueSteps:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 1
     description: I don't care what you do to me, I'm not telling you anything about
       that tree!
   - type: 0

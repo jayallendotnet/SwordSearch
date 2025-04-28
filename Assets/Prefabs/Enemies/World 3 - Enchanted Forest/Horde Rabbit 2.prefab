@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1107962101534003462}
   - component: {fileID: 1107962101534003463}
   m_Layer: 0
-  m_Name: Goblin Horde Chathead 2
+  m_Name: Horde Rabbit 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 1107962101534003457}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -13, y: 13, z: 1}
+  m_LocalScale: {x: 13, y: 13, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -994311753, guid: c7aad93dad2ff0b4ea59a3ce83e238af, type: 3}
+  m_Sprite: {fileID: -104585651, guid: 514e276be05596a439d03ac166c0377a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -88,7 +88,7 @@ Animator:
   m_GameObject: {fileID: 1107962101534003457}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 811a5e2440f200844ac86083b94164cd, type: 2}
+  m_Controller: {fileID: 9100000, guid: ffec5c7cc41e842499b911a9e9f3700c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -127,12 +127,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBattleable: 1
-  nameOverride: Other Goblin
-  startingHealth: 3
+  nameOverride: 
+  startingHealth: 20
   attackOrder:
     Value:
-    - attackSpeed: 5
-      attackDamage: 1
+    - attackSpeed: 6
+      attackDamage: 15
       isSpecial: 0
       specialType: 0
       specialColor: {r: 0, g: 0, b: 0, a: 0}
@@ -142,10 +142,17 @@ MonoBehaviour:
   isDark: 0
   isNearWater: 0
   canApplyDebuff: 0
-  normal: {fileID: 21300000, guid: 4c631392dddfa5747a099a279bdf5479, type: 3}
-  angry: {fileID: 21300000, guid: 8654e1b0a98668a44a45cc07c910ebd4, type: 3}
-  defeated: {fileID: 21300000, guid: 527c10aa04cb1c64e8e3939c337c952f, type: 3}
+  isWaterDangerous: 0
+  normal: {fileID: 1751269425, guid: 1de31f7406356ed4ebc3147118d9062b, type: 3}
+  angry: {fileID: 315923437, guid: 1de31f7406356ed4ebc3147118d9062b, type: 3}
+  defeated: {fileID: -1002468104, guid: 1de31f7406356ed4ebc3147118d9062b, type: 3}
   excited: {fileID: 0}
-  questioning: {fileID: 0}
+  happy: {fileID: 0}
+  questioning: {fileID: -1302573965, guid: 1de31f7406356ed4ebc3147118d9062b, type: 3}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
   overworldDialogueSteps: []
   victoryDialogueSteps: []

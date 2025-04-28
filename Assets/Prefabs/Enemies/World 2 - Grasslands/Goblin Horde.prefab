@@ -75,20 +75,26 @@ MonoBehaviour:
   canApplyDebuff: 0
   isWaterDangerous: 0
   normal: {fileID: 0}
-  angry: {fileID: 21300000, guid: e6f906443d6b22146ae3395e0a858e88, type: 3}
-  defeated: {fileID: 21300000, guid: 65d5e869ddad2f5429fca689cac84b15, type: 3}
+  angry: {fileID: 1315009254, guid: d72b36726b890bb469dba2c359f3e798, type: 3}
+  defeated: {fileID: 1336123436, guid: d72b36726b890bb469dba2c359f3e798, type: 3}
   excited: {fileID: 0}
+  happy: {fileID: 0}
   questioning: {fileID: 0}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
   overworldDialogueSteps:
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
     name: 
-    emotion: 0
+    emotion: 6
     description: Watch out up ahead, miss. Up that way is a gaggle of goblins.
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
     name: 
-    emotion: 0
+    emotion: 1
     description: Them's a dangerous bunch, always tryin' to nab our gold and livestock
       and whatnot.
   - type: 2
@@ -104,7 +110,7 @@ MonoBehaviour:
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
     name: 
-    emotion: 0
+    emotion: 5
     description: '"Took care of"...? Look miss, wth all due respect I don''t think
       we should be pamperin'' these green folk.'
   - type: 0
@@ -120,7 +126,7 @@ MonoBehaviour:
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
     name: 
-    emotion: 0
+    emotion: 4
     description: That there is the best idea I've heard since meemaw showed me how
       to slice bread!
   - type: 0
@@ -132,7 +138,7 @@ MonoBehaviour:
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
     name: 
-    emotion: 0
+    emotion: 4
     description: Good thinkin', miss. I'll tussle with the rest!
   - type: 0
     talker: {fileID: 1107962101534003463, guid: 0ba5b6c16cd2aa840984644a4ebdf3ee, type: 3}
@@ -140,22 +146,22 @@ MonoBehaviour:
     emotion: 1
     description: 'Hey, you goblins! '
   - type: 2
-    talker: {fileID: 1107962101534003463, guid: 185dc02c181557a4a8d5f524d9baf82c, type: 3}
+    talker: {fileID: 1107962101534003463, guid: 1e9e6b465a55cb541b9fa0e29084fe3d, type: 3}
     name: 
-    emotion: 0
+    emotion: 7
     description: A human woman with orange hair and a blue book!
   - type: 2
-    talker: {fileID: 1107962101534003463, guid: 185dc02c181557a4a8d5f524d9baf82c, type: 3}
+    talker: {fileID: 1107962101534003463, guid: 1e9e6b465a55cb541b9fa0e29084fe3d, type: 3}
     name: 
     emotion: 1
     description: My cousin Tiny told me about you!
   - type: 2
-    talker: {fileID: 1107962101534003463, guid: 858761c2be096f94a9eb89abc6ab7c34, type: 3}
+    talker: {fileID: 1107962101534003463, guid: cbb422c842c4c2b4db606430bd823250, type: 3}
     name: 
-    emotion: 1
+    emotion: 5
     description: She was the one who attacked Tiny?
   - type: 2
-    talker: {fileID: 1107962101534003463, guid: 858761c2be096f94a9eb89abc6ab7c34, type: 3}
+    talker: {fileID: 1107962101534003463, guid: 185dc02c181557a4a8d5f524d9baf82c, type: 3}
     name: 
     emotion: 1
     description: Let's teach her a lesson!
@@ -166,12 +172,17 @@ MonoBehaviour:
     description: For Tiny!!!
   victoryDialogueSteps:
   - type: 1
-    talker: {fileID: 0}
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
+    emotion: 2
+    description: Ugh!
+  - type: 2
+    talker: {fileID: 1107962101534003463, guid: b1529bb07243d6a489c309f2e32b06cd, type: 3}
     name: 
     emotion: 2
     description: What were we thinkin?
-  - type: 1
-    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+  - type: 2
+    talker: {fileID: 1107962101534003463, guid: 185dc02c181557a4a8d5f524d9baf82c, type: 3}
     name: 
     emotion: 2
     description: I don't think even the generals could take her down...
@@ -183,7 +194,7 @@ MonoBehaviour:
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
     name: 
-    emotion: 0
+    emotion: 6
     description: Yes, miss! And here they come!
 --- !u!114 &730767153068028742
 MonoBehaviour:

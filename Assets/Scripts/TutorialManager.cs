@@ -644,19 +644,19 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.EnemyDies;
         }
         else if (++i == tutorialStep){
-            DisplayEnemyTalking("Is she using <earth>earth magic<>?", enemyData, DialogueStep.Emotion.Normal, "Hopsy");
+            DisplayEnemyTalking("Is she using <earth>earth magic<>?", enemyData, DialogueStep.Emotion.Custom1, "Hopsy");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayEnemyTalking("Oh, no! What will <earth>earth magic<> do to my carrots??", enemyData, DialogueStep.Emotion.Normal, "Fopsy");
+            DisplayEnemyTalking("Oh, no! What will <earth>earth magic<> do to my carrots??", enemyData, DialogueStep.Emotion.Custom2, "Fopsy");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayEnemyTalking("Don't you mean OUR carrots?", enemyData, DialogueStep.Emotion.Normal, "Hopsy");
+            DisplayEnemyTalking("Don't you mean OUR carrots?", enemyData, DialogueStep.Emotion.Custom3, "Hopsy");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayEnemyTalking("Oh, get over yourself, Hopsy!", enemyData, DialogueStep.Emotion.Normal, "Fopsy");
+            DisplayEnemyTalking("Oh, get over yourself, Hopsy!", enemyData, DialogueStep.Emotion.Custom2, "Fopsy");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){

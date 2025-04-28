@@ -36,7 +36,6 @@ RectTransform:
   - {fileID: 7025450340366852962}
   - {fileID: 827215576962094390}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -130,18 +129,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBattleable: 1
+  nameOverride: 
   startingHealth: 110
-  attackSpeed: 6
-  attackDamage: 14
+  attackOrder:
+    Value: []
   isDraconic: 1
   isHorde: 0
   isHoly: 0
   isDark: 0
-  normal: {fileID: 0}
-  angry: {fileID: 21300000, guid: 90ebe2ee0be194a4299356d36b5454c1, type: 3}
+  isNearWater: 0
+  canApplyDebuff: 0
+  isWaterDangerous: 0
+  normal: {fileID: -850278168, guid: f95ea50a09117cf44882fbc1ae68d892, type: 3}
+  angry: {fileID: -1180039006, guid: f95ea50a09117cf44882fbc1ae68d892, type: 3}
   defeated: {fileID: 0}
   excited: {fileID: 0}
+  happy: {fileID: 1664898846, guid: f95ea50a09117cf44882fbc1ae68d892, type: 3}
   questioning: {fileID: 0}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 2118581006, guid: f95ea50a09117cf44882fbc1ae68d892, type: 3}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
   overworldDialogueSteps: []
   victoryDialogueSteps: []
 --- !u!1 &8399174970997809565
@@ -175,7 +184,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 815226952419649519}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -251,7 +259,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 815226952419649519}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

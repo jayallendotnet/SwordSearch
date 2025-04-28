@@ -138,11 +138,17 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
-  normal: {fileID: 21300000, guid: e00e53945f502f74abf2f30ab30891ef, type: 3}
-  angry: {fileID: 0}
-  defeated: {fileID: 0}
+  normal: {fileID: -1520053554, guid: aca850570a9ec8f47bca487609dca46b, type: 3}
+  angry: {fileID: -948306812, guid: aca850570a9ec8f47bca487609dca46b, type: 3}
+  defeated: {fileID: -387346830, guid: aca850570a9ec8f47bca487609dca46b, type: 3}
   excited: {fileID: 0}
+  happy: {fileID: 0}
   questioning: {fileID: 0}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
   overworldDialogueSteps:
   - type: 0
     talker: {fileID: 0}
@@ -159,6 +165,11 @@ MonoBehaviour:
     name: 
     emotion: 0
     description: All of the smaller trees around are dead, too.
+  - type: 4
+    talker: {fileID: 0}
+    name: Wild  Beast
+    emotion: 0
+    description: ...
   - type: 0
     talker: {fileID: 0}
     name: 
@@ -173,7 +184,7 @@ MonoBehaviour:
   - type: 4
     talker: {fileID: 0}
     name: Wild  Beast
-    emotion: 0
+    emotion: 1
     description: Skwaaaaaah!!!
   - type: 0
     talker: {fileID: 0}
@@ -183,13 +194,13 @@ MonoBehaviour:
   - type: 4
     talker: {fileID: 0}
     name: Wild  Beast
-    emotion: 0
+    emotion: 1
     description: Gwoaoh!!!
   victoryDialogueSteps:
   - type: 1
     talker: {fileID: 0}
     name: 
-    emotion: 0
+    emotion: 2
     description: Squmph...
   - type: 0
     talker: {fileID: 0}

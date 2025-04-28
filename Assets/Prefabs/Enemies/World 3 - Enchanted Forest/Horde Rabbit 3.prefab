@@ -10,11 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1107962101534003458}
   - component: {fileID: 1107962101534003460}
-  - component: {fileID: 4310678709938351438}
-  - component: {fileID: 6190612129172050018}
+  - component: {fileID: 1107962101534003459}
+  - component: {fileID: 1107962101534003461}
+  - component: {fileID: 1107962101534003462}
   - component: {fileID: 1107962101534003463}
   m_Layer: 0
-  m_Name: Bluehead Woman
+  m_Name: Horde Rabbit 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,12 +34,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -13}
-  m_SizeDelta: {x: 16, y: 24}
+  m_SizeDelta: {x: 16, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1107962101534003460
 CanvasRenderer:
@@ -48,7 +48,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1107962101534003457}
   m_CullTransparentMesh: 1
---- !u!114 &4310678709938351438
+--- !u!114 &1107962101534003459
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1583396517, guid: 3f360f08e5af51744b5198ad7f69da1d, type: 3}
+  m_Sprite: {fileID: -104585651, guid: 514e276be05596a439d03ac166c0377a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &6190612129172050018
+--- !u!95 &1107962101534003461
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -88,7 +88,7 @@ Animator:
   m_GameObject: {fileID: 1107962101534003457}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 04b82128d9179cd48977377714617554, type: 2}
+  m_Controller: {fileID: 9100000, guid: ffec5c7cc41e842499b911a9e9f3700c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -99,6 +99,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1107962101534003462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107962101534003457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af103d27019d02543a0cf828b6cd164a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleManager: {fileID: 0}
+  data: {fileID: 0}
+  burnDamageQueue: 
 --- !u!114 &1107962101534003463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,21 +126,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6c71501f9ece54da354ee8431c25ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBattleable: 0
-  nameOverride: Blucey
-  startingHealth: 0
+  isBattleable: 1
+  nameOverride: 
+  startingHealth: 20
   attackOrder:
-    Value: []
+    Value:
+    - attackSpeed: 6
+      attackDamage: 15
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
   isDark: 0
   isNearWater: 0
   canApplyDebuff: 0
-  normal: {fileID: 0}
-  angry: {fileID: 21300000, guid: 15192228e6c0c164a9ace6c44953dc5f, type: 3}
-  defeated: {fileID: 0}
+  isWaterDangerous: 0
+  normal: {fileID: -306587726, guid: a8344bf5fcecc2248bd1898f351f579d, type: 3}
+  angry: {fileID: 160845970, guid: a8344bf5fcecc2248bd1898f351f579d, type: 3}
+  defeated: {fileID: 1621811010, guid: a8344bf5fcecc2248bd1898f351f579d, type: 3}
   excited: {fileID: 0}
-  questioning: {fileID: 0}
+  happy: {fileID: 0}
+  questioning: {fileID: 1856397980, guid: a8344bf5fcecc2248bd1898f351f579d, type: 3}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
   overworldDialogueSteps: []
   victoryDialogueSteps: []

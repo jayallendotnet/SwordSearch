@@ -71,124 +71,162 @@ MonoBehaviour:
   isDark: 0
   isNearWater: 0
   canApplyDebuff: 0
+  isWaterDangerous: 0
   normal: {fileID: 21300000, guid: b49f52f681ca8704b9065f3f0de87512, type: 3}
   angry: {fileID: 21300000, guid: 33625fcaa087dba40a24db45a1603313, type: 3}
   defeated: {fileID: 21300000, guid: 683176d32c9b98648872384ea1a3f732, type: 3}
   excited: {fileID: 0}
+  happy: {fileID: 0}
   questioning: {fileID: 0}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
   overworldDialogueSteps:
   - type: 2
     talker: {fileID: 815226952419649514, guid: 65024957d3965e547afdd0ea1f131c86, type: 3}
-    emotion: 0
+    name: 
+    emotion: 6
     description: Hey Hoblin! These humans just beat up our underlings!
   - type: 2
-    talker: {fileID: 815226952419649514, guid: c2adebe730b1d5441a43611f5c2fa4fd, type: 3}
-    emotion: 0
+    talker: {fileID: 815226952419649514, guid: d888e4057c1cc054599b3b2eccaf2bb8, type: 3}
+    name: 
+    emotion: 1
     description: Yeah Boblin! They won't get away with it!
   - type: 2
     talker: {fileID: 815226952419649514, guid: 65024957d3965e547afdd0ea1f131c86, type: 3}
+    name: 
     emotion: 1
     description: You're right, Hoblin! We'll make them pay! With their gold but also
       their lives!
   - type: 0
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 0
     description: Alright Groats, you take the left one and I'll take the right one!
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    emotion: 0
+    name: 
+    emotion: 6
     description: Actually, miss, I took quite the whalloppin' in that last fight!
-      Ye'll have to "take care of" 'em both on yer own!
   - type: 2
-    talker: {fileID: 815226952419649514, guid: c2adebe730b1d5441a43611f5c2fa4fd, type: 3}
+    talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
+    emotion: 0
+    description: Ye'll have to "take care of" 'em both on yer own!
+  - type: 2
+    talker: {fileID: 815226952419649514, guid: d888e4057c1cc054599b3b2eccaf2bb8, type: 3}
+    name: 
     emotion: 0
     description: You hear that, Boblin? This one human is going to fight us both
       at the same time!
   - type: 2
     talker: {fileID: 815226952419649514, guid: 65024957d3965e547afdd0ea1f131c86, type: 3}
+    name: 
     emotion: 0
     description: She doesn't stand a chance, Hoblin!
   - type: 0
     talker: {fileID: 815226952419649514, guid: 65024957d3965e547afdd0ea1f131c86, type: 3}
+    name: 
     emotion: 6
     description: This isn't looking good!
   victoryDialogueSteps:
   - type: 2
     talker: {fileID: 815226952419649514, guid: 65024957d3965e547afdd0ea1f131c86, type: 3}
+    name: 
     emotion: 2
     description: Hey, Hoblin...
   - type: 2
-    talker: {fileID: 815226952419649514, guid: c2adebe730b1d5441a43611f5c2fa4fd, type: 3}
+    talker: {fileID: 815226952419649514, guid: d888e4057c1cc054599b3b2eccaf2bb8, type: 3}
+    name: 
     emotion: 2
     description: Yes, Boblin...
   - type: 2
     talker: {fileID: 815226952419649514, guid: 65024957d3965e547afdd0ea1f131c86, type: 3}
+    name: 
     emotion: 2
     description: I think we lost, Hoblin.
   - type: 2
-    talker: {fileID: 815226952419649514, guid: c2adebe730b1d5441a43611f5c2fa4fd, type: 3}
+    talker: {fileID: 815226952419649514, guid: d888e4057c1cc054599b3b2eccaf2bb8, type: 3}
+    name: 
     emotion: 2
     description: I think you're right, Boblin.
   - type: 0
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 6
     description: Groats! Are you alright?
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 2
     description: I've been better...
   - type: 0
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 0
     description: Let me help you! I could try some healing magic!
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 2
     description: Go fer it, ye seem to know what yer doin'.
   - type: 0
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 6
     description: Here goes nothing!
   - type: 3
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 6
     description: Healing flash
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    emotion: 0
+    name: 
+    emotion: 4
     description: Well I'll be!
   - type: 0
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 4
     description: Good as new?
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    emotion: 0
+    name: 
+    emotion: 5
     description: Not quite yet, but thank ye kindly. A good night's sleep should
       set me right.
   - type: 0
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 5
     description: I'll need to put in a lot more work before I'm ready to tackle anything
       serious like Eldric's hands...
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 0
     description: I'm afraid I can't take ye any further now, miss.
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    emotion: 0
+    name: 
+    emotion: 4
     description: But the forest is just at the bottom of this here hill!
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 0
     description: Ye best be careful! There's a monster who guards the forest entrance!
   - type: 2
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
-    emotion: 0
+    name: 
+    emotion: 5
     description: It uses some <earth>strange magic<>!
   - type: 0
     talker: {fileID: 815226952419649514, guid: b3a9ed065174b564f91fd5311aa05d86, type: 3}
+    name: 
     emotion: 0
     description: There's nothing to worry about. I use some <water>strange magic<>
       of my own!
