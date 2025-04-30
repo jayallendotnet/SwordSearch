@@ -91,7 +91,7 @@ public class CutsceneManager : MonoBehaviour{
 
     private void SetupHometown2(){
         SetCutsceneBackground(hometown2);
-        PlayAnimation("Redhead Woman", "Idle Back");
+        PlayAnimation("Redhead Lady", "Idle Back");
         PlayAnimation("Bartender", "Idle Front");
         PlayAnimation("Child 1", "Idle Front");
         PlayAnimation("Child 2", "Idle Front");
@@ -273,6 +273,7 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_EnemyTalking("Keep Reading!!!", "Everyone - Hometown Intro", DialogueStep.Emotion.Custom1); //trio of adults, angry
         }
         else if (++i == cutsceneStep){
+            HideEnemyChathead();
             AdvanceConditionDialogue_PlayerTalking("\"Late last night, a great hole appeared in the center of Duskvale.\"", DialogueStep.Emotion.Normal);
         }  
         else if (++i == cutsceneStep){
@@ -339,7 +340,7 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_EnemyTalking("Allow me to give you a little taste of fear!", "Red Dragon", DialogueStep.Emotion.Angry);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_NobodyTalking();
+            AdvanceConditionDialogue_NobodyTalking(true);
         }
         else if (++i == cutsceneStep){
             PlayAnimation("Red Dragon", "Prolonged Attack - Start");
@@ -432,7 +433,7 @@ public class CutsceneManager : MonoBehaviour{
             FlipDirection("Child 2");
         }        
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("We should leave the town defense to the professionals...", DialogueStep.Emotion.Worried);
+            AdvanceConditionDialogue_PlayerTalking("We should leave the town defense to the professionals...", DialogueStep.Emotion.Normal);
         }  
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("Oh no! The library is on fire!", DialogueStep.Emotion.Worried);
@@ -535,6 +536,7 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_PlayerTalking("There's a book coming out of the water!", DialogueStep.Emotion.Happy);
         }
         else if (++i == cutsceneStep){
+            HideChatheads();
             PlayAnimation("Water Spray", "End Spray");
             AdvanceConditionWait(0.7f);
         }
@@ -614,16 +616,43 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             PlayAnimation("Player", "Take Out Book");
             AdvanceConditionWait(2f);
+        }        
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("The paper has a bunch of strange symbols on it...", "Brown Hair Lady No Hat", DialogueStep.Emotion.Questioning);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("Do you see all those jumbled random letters?", DialogueStep.Emotion.Questioning);
+            AdvanceConditionDialogue_PlayerTalking("Those are letters. You know, the kind people use for reading and writing?", DialogueStep.Emotion.Questioning);
+        } 
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Wow! Magic is crazy!", "Brown Hair Lady No Hat", DialogueStep.Emotion.Happy);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("Yeah?", "Brown Hair Lady No Hat", DialogueStep.Emotion.Questioning);
-        }
+            AdvanceConditionDialogue_PlayerTalking("Um, we haven't really arrived at the interesting part yet...", DialogueStep.Emotion.Worried);
+        } 
+        //else if (++i == cutsceneStep){
+        //    AdvanceConditionDialogue_EnemyTalking("There's more?", "Brown Hair Lady No Hat", DialogueStep.Emotion.Happy);
+        //}
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("Try touching them!", DialogueStep.Emotion.Happy);
-        }
+            AdvanceConditionDialogue_PlayerTalking("Try touching the letters!", DialogueStep.Emotion.Happy);
+        } 
+        //the paper has a bunch of strange symbols on it...
+        //those are letters. you know, the kind people use for reading and writing?
+        //wow! magic is crazy!
+        //well we haven't exactly gotten to the interesting part yet...
+        //try touching the letters!
+
+        //else if (++i == cutsceneStep){
+        //    AdvanceConditionDialogue_EnemyTalking("T", "Brown Hair Lady No Hat", DialogueStep.Emotion.Questioning);
+        //}
+        //else if (++i == cutsceneStep){
+        //    AdvanceConditionDialogue_PlayerTalking("Do you see all those jumbled random letters?", DialogueStep.Emotion.Questioning);
+        //}
+        //else if (++i == cutsceneStep){
+        //    AdvanceConditionDialogue_EnemyTalking("Yeah?", "Brown Hair Lady No Hat", DialogueStep.Emotion.Questioning);
+        //}
+        //else if (++i == cutsceneStep){
+        //    AdvanceConditionDialogue_PlayerTalking("Try touching them!", DialogueStep.Emotion.Happy);
+        //}
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_NobodyTalking();
         }        
@@ -642,7 +671,7 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_EnemyTalking("Nothing interesting happens...", "Brown Hair Lady No Hat", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("That's weird, it still works for me. Watch!", DialogueStep.Emotion.Questioning);
+            AdvanceConditionDialogue_PlayerTalking("That's weird, it works for me. Watch!", DialogueStep.Emotion.Questioning);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_NobodyTalking();
@@ -668,6 +697,9 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_EnemyTalking("It's been a long time since anyone used magic around here.", "Redhead Lady", DialogueStep.Emotion.Normal);
             PlayAnimation("Redhead Woman", "Idle");
         }
+        //else if (++i == cutsceneStep){
+        //    AdvanceConditionDialogue_EnemyTalking("The last person was who, old man Eldric? ", "Redhead Guy", DialogueStep.Emotion.Normal);
+        //}
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("Yeah, it's been decades since Eldric and his magic were here with us...", "Redhead Guy", DialogueStep.Emotion.Normal);
         }
@@ -971,11 +1003,24 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("You're welcome, Miss " + StaticVariables.playerName + ".", "Elder", DialogueStep.Emotion.Normal);
         }
+        //else if (++i == cutsceneStep){
+        //    AdvanceConditionDialogue_EnemyTalking("You have a long journey ahead of you. Best to not get bored.", "Elder", DialogueStep.Emotion.Normal);
+        //}
+        
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("You have a long journey ahead of you. Best to not get bored.", "Elder", DialogueStep.Emotion.Normal);
+            AdvanceConditionDialogue_EnemyTalking("It'd be best not to get bored on your journey.", "Elder", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("You're right! I'd better get going. Goodbye, Eldric.", DialogueStep.Emotion.Normal);
+            AdvanceConditionDialogue_EnemyTalking("And it will be quite the long journey indeed! I shouldn't keep you any longer.", "Elder", DialogueStep.Emotion.Normal);
+        }
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_EnemyTalking("Make haste! The future of the whole continent may depend on it!", "Elder", DialogueStep.Emotion.Angry);
+        }
+        //it'd be best to not get bored on your journey
+        //and it will be quite the long journey indeed! i shouldn't keep you any longer
+        //make haste! the future of the whole continent may depend on it!
+        else if (++i == cutsceneStep){
+            AdvanceConditionDialogue_PlayerTalking("You're right! I'd better get going!", DialogueStep.Emotion.Surprised);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_NobodyTalking();

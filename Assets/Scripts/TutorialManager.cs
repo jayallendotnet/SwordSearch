@@ -462,10 +462,10 @@ public class TutorialManager : BattleManager {
             DisplayText("If you make a word with the <healing>power of healing<>, your health will be restored.");
             advanceCondition = Cond.Click;
         }
-        else if (++i == tutorialStep){
-            DisplayText("The powerup does not have to be in the first letter of the word to take effect.");
-            advanceCondition = Cond.Click;
-        }
+        //else if (++i == tutorialStep){
+        //    DisplayText("The powerup does not have to be in the first letter of the word to take effect.");
+        //    advanceCondition = Cond.Click;
+        //}
         else if (++i == tutorialStep){
             DisplayText("Try making a word that includes the <healing>power of healing<>.");
             advanceCondition = Cond.SubmitHealingWord;
