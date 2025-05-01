@@ -282,8 +282,11 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("ROOOOOOOAR!!!!", "Red Dragon", DialogueStep.Emotion.Mystery, "???");
         }
+        else if (++i == cutsceneStep) {
+            AdvanceConditionDialogue_NobodyTalking(true);
+        }
         else if (++i == cutsceneStep){
-            DisplayNobodyTalking();
+            //DisplayNobodyTalking();
             PlayAnimation("Red Dragon", "Fly");
             MoveObject("Red Dragon", 1200, 1377, 2f);
             AdvanceConditionWait(1f);
@@ -687,15 +690,15 @@ public class CutsceneManager : MonoBehaviour{
         else if (++i == cutsceneStep){
             GetAnimatorFromName("Player").transform.parent.GetChild(2).gameObject.SetActive(false);
             AdvanceConditionDialogue_EnemyTalking("Hey! Don't start throwing magic at people!", "Redhead Guy", DialogueStep.Emotion.Angry);
-            FlipDirection("Short Black Man");
+            FlipDirection("Redhead Guy");
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("Yeah, if you want to sling spells, go to the Academy!", "Blond Lady", DialogueStep.Emotion.Angry);
-            FlipDirection("Yellowhead Woman");
+            FlipDirection("Blond Lady");
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("It's been a long time since anyone used magic around here.", "Redhead Lady", DialogueStep.Emotion.Normal);
-            PlayAnimation("Redhead Woman", "Idle");
+            PlayAnimation("Redhead Lady", "Idle");
         }
         //else if (++i == cutsceneStep){
         //    AdvanceConditionDialogue_EnemyTalking("The last person was who, old man Eldric? ", "Redhead Guy", DialogueStep.Emotion.Normal);
@@ -899,7 +902,7 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_PlayerTalking("Or should I call you \"The Spell-Book\"?", DialogueStep.Emotion.Questioning);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_PlayerTalking("How about just Spellbook, for short?", DialogueStep.Emotion.Questioning);
+            AdvanceConditionDialogue_PlayerTalking("How about just \"Spellbook\", for short?", DialogueStep.Emotion.Questioning);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("Can you even understand me?", DialogueStep.Emotion.Questioning);
@@ -914,7 +917,7 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_PlayerTalking("Okay, well your pages fill with random letters when it's magic time. Can you say something to me with them?", DialogueStep.Emotion.Questioning);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("The book's pages remain empty.", "Magic Book", DialogueStep.Emotion.Normal);
+            AdvanceConditionDialogue_EnemyTalking("The book's pages are empty.", "Magic Book", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("It'd be nice to have a picnic in the warm grass, reading a book full of magical secrets. Doesn't that sound fun?", DialogueStep.Emotion.Happy);

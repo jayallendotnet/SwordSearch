@@ -531,7 +531,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("Keep using powerups to defeat the goblin general!");
+            DisplayText("Keep using powerups to defeat the goblin!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
