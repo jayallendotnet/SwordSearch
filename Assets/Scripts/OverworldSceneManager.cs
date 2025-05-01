@@ -16,8 +16,9 @@ public class OverworldSceneManager : MonoBehaviour{
 
 
     [Header("Timing Configurations")]
-    public float playerWalkSpeed = 500f;
-    public float minTimeToMove = 1f;
+    public float playerStepDuration = 0.2f; //time it takes to move 1 overworld space step
+    //public float playerWalkSpeed = 500f;
+    //public float minTimeToMove = 1f;
 
     [Header("Overworld Settings")]
     public int thisWorldNum; // 0 means this is the atlas/map scene
@@ -40,7 +41,8 @@ public class OverworldSceneManager : MonoBehaviour{
     public InteractOverlayManager interactOverlayManager;
     public DialogueManager dialogueManager;
     private List<GameObject> stepsToNextSpace;
-    private bool changePlayerDirectionAtNextStep = false;
+    //private bool changePlayerDirectionAtNextStep = false;
+    //private bool playerDestinationIsNextStep = false;
 
 
     void Start(){
@@ -121,6 +123,7 @@ public class OverworldSceneManager : MonoBehaviour{
         for (int i = 0; i < overworldSpaces.Length; i++){
             OverworldSpace space = overworldSpaces[i];
             space.overworldSceneManager = this;
+            space.originalSiblingIndex = space.transform.GetSiblingIndex();
 
             float startTime = (StaticVariables.rand.Next(0, 100)) / 100f;
             //print(startTime);
@@ -174,71 +177,73 @@ public class OverworldSceneManager : MonoBehaviour{
         if (reverse)
             stepsToNextSpace.Reverse();
 
-        stepsToNextSpace.RemoveAt(0);
-        //if (stepsToNextSpace.Count > 0) //do this part later
         playerAnimator.SetTrigger("WalkStart");
         isPlayerMoving = true;
         currentPlayerSpace.transform.GetChild(2).GetChild(0).gameObject.SetActive(true);
         MovePlayerToNextStep();
-        PointPlayerTowardNextEnemy();
+        PointPlayerTowardNextDestination();
     }
 
     private void MovePlayerToNextStep(){
-        if (stepsToNextSpace.Count == 0){
+        if (stepsToNextSpace.Count <= 1){
             EndPlayerWalk();
             return;
         }
-        GameObject space = stepsToNextSpace[0];
+
+        GameObject currentStep = stepsToNextSpace[0]; //the step or destination that the player is currently on
+        OverworldSpace overworldSpaceForCurrentStep = GetSpaceThatStepBelongsTo(currentStep);
+        //nt currentStepSiblingIndex = overworldSpaceForCurrentStep.GetSiblingIndex();
+
         stepsToNextSpace.RemoveAt(0);
 
-        playerParent.DOMove(space.transform.position, 0.3f).OnComplete(MovePlayerToNextStep);
+        GameObject nextStep = stepsToNextSpace[0]; //the step or destination that the player will move toward during this iteration
+        OverworldSpace overworldSpaceForNextStep = GetSpaceThatStepBelongsTo(nextStep);
+        //int nextStepSiblingIndex = overworldSpaceForNextStep.GetSiblingIndex();
 
-        if (changePlayerDirectionAtNextStep){
-            PointPlayerTowardNextEnemy();
-            changePlayerDirectionAtNextStep = false;
-        }
-        //when at a new overworld space, move the player in front of it in the hierarchy
-        if (space.transform.parent.GetComponent<OverworldSpace>() == null){
-            int x = space.transform.parent.parent.GetSiblingIndex();
-            playerParent.transform.SetSiblingIndex(x + 1);
-        }
-        //when not at an overworld space, change the player to face toward the next enemy?
-        else
-            changePlayerDirectionAtNextStep = true;
+        PointPlayerTowardNextDestination();
+        playerParent.DOMove(nextStep.transform.position, playerStepDuration).OnComplete(MovePlayerToNextStep);
+
+        OverworldSpace spacePlayerShouldBeOnTopOf = overworldSpaceForNextStep;
+        if (overworldSpaceForCurrentStep.originalSiblingIndex > overworldSpaceForNextStep.originalSiblingIndex)
+            spacePlayerShouldBeOnTopOf = overworldSpaceForCurrentStep;
+        playerParent.SetSiblingIndex(spacePlayerShouldBeOnTopOf.originalSiblingIndex + 1);
+
+
+
 
         
     }
 
-    private void PointPlayerTowardNextEnemy(){
-        foreach (GameObject space in stepsToNextSpace){
-            if (space.transform.parent.GetComponent<OverworldSpace>() != null){
-                Vector3 s = playerParent.localScale;
-                s.x = 1;
-                if (space.transform.position.x < playerParent.position.x)
-                    s.x = -1;
-                playerParent.localScale = s;
-                return;
-            }
-        }
-    }
-
-    public void MovePlayerToPosition(GameObject destination){
-        Vector2 vectorToMove = destination.transform.position - playerParent.position;
-        float distanceToMove = vectorToMove.magnitude;
-        float timeToMove = distanceToMove / playerWalkSpeed;
-        if (timeToMove < minTimeToMove)
-            timeToMove = minTimeToMove;
-
-        playerParent.DOMove(destination.transform.position, timeToMove).OnComplete(EndPlayerWalk);
-        playerAnimator.SetTrigger("WalkStart");
-        isPlayerMoving = true;
-        if (destination.transform.position.x < playerParent.position.x){
+    private void PointPlayerTowardNextDestination(){
+        GameObject space = GetNextPlayerDestination();
+        if (space != null) {
             Vector3 s = playerParent.localScale;
-            s.x = -1;
+            s.x = 1;
+            if (space.transform.position.x < playerParent.position.x)
+                s.x = -1;
             playerParent.localScale = s;
+            return;
         }
     }
 
+    private GameObject GetNextPlayerDestination() {
+        foreach (GameObject space in stepsToNextSpace) {
+            if (space.name == "Player Destination")
+                return space;
+        }
+        print("there is no next enemy space");
+        return null;
+    }
+
+    private OverworldSpace GetSpaceThatStepBelongsTo(GameObject step) {
+        OverworldSpace parent = step.transform.parent.GetComponent<OverworldSpace>();
+        OverworldSpace grandparent = step.transform.parent.parent.GetComponent<OverworldSpace>();
+        if (parent != null)
+            return parent;
+        else if (grandparent != null)
+            return grandparent;
+        return null;
+    }
 
     private void PlacePlayerAtPosition(int stageNum){
         if (stageNum == 0)
@@ -255,7 +260,8 @@ public class OverworldSceneManager : MonoBehaviour{
     public void PlayerArrivedAtDestination(){
         isPlayerMoving = false;
         currentPlayerSpace.transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
-        Vector3 s = playerParent.localScale;
+        playerParent.SetSiblingIndex(currentPlayerSpace.originalSiblingIndex + 1);
+         Vector3 s = playerParent.localScale;
         s.x = 1;
         playerParent.localScale = s;
 

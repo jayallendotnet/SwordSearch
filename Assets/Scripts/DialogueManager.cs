@@ -248,6 +248,9 @@ public class DialogueManager : MonoBehaviour{
             }
             else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.OtherTalking)
                 ShowEnemyTalking(dialogueSteps[currentStep].talker, dialogueSteps[currentStep].emotion);
+            else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.OtherTalkingNameOverride) {
+                ShowEnemyTalking(dialogueSteps[currentStep].talker, dialogueSteps[currentStep].emotion, dialogueSteps[currentStep].name);
+            }
             else if (dialogueSteps[currentStep].type == DialogueStep.DialogueType.Event)
                 if (dialogueSteps[currentStep].description == "Healing flash"){
                     ShowNobodyTalking();

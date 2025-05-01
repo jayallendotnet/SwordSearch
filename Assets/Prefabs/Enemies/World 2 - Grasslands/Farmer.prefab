@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBattleable: 1
-  nameOverride: Groats
+  nameOverride: 
   startingHealth: 55
   attackOrder:
     Value:
@@ -154,12 +154,13 @@ MonoBehaviour:
   mystery: {fileID: 0}
   custom1: {fileID: 0}
   custom2: {fileID: 0}
+  custom3: {fileID: 0}
   overworldDialogueSteps:
   - type: 1
     talker: {fileID: 0}
     name: 
     emotion: 1
-    description: Hey! What are ye doin' in my village!
+    description: Hey! What are ye doin' on my farm!
   - type: 1
     talker: {fileID: 0}
     name: 
@@ -223,9 +224,9 @@ MonoBehaviour:
     emotion: 4
     description: Well why didn't'cha  say so? It's nice to have a stranger 'round
       here every now and again!
-  - type: 1
+  - type: 4
     talker: {fileID: 0}
-    name: 
+    name: Groats
     emotion: 0
     description: The name's Groats! Now what can I do ye for?
   - type: 0
@@ -234,20 +235,20 @@ MonoBehaviour:
     emotion: 2
     description: I need to get to the Sunscorched Desert, on the other side of the
       Enchanted Forest.
-  - type: 1
+  - type: 4
     talker: {fileID: 0}
-    name: 
+    name: Groats
     emotion: 0
     description: They have some talkin' critters in that there forest, but it looks
       like ye can handle yerself just fine, miss.
-  - type: 1
+  - type: 4
     talker: {fileID: 0}
-    name: 
+    name: Groats
     emotion: 0
-    description: The forest is down a ravine on the other side of the village.
-  - type: 1
+    description: The forest is down this here ravine.
+  - type: 4
     talker: {fileID: 0}
-    name: 
+    name: Groats
     emotion: 4
     description: Let me take ye a ways closer! It's the least I can do after fightin'
       ye like that!

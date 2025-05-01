@@ -77,6 +77,7 @@ ScriptedImporter:
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
@@ -89,6 +90,7 @@ ScriptedImporter:
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
@@ -510,6 +512,7 @@ ScriptedImporter:
     cells:
     - name: Buff_Frame_0
       frameIndex: 0
+      additiveSortOrder: 0
       cellRect:
         x: 11
         y: 2
@@ -518,6 +521,7 @@ ScriptedImporter:
       spriteId: 612bce537fb082e44990eb8f2d9f0bb4
     - name: Buff_Frame_1
       frameIndex: 1
+      additiveSortOrder: 0
       cellRect:
         x: 10
         y: 1
@@ -526,6 +530,7 @@ ScriptedImporter:
       spriteId: 114b92bdc6e7db04a833b6d9a7a7581b
     - name: Buff_Frame_2
       frameIndex: 2
+      additiveSortOrder: 0
       cellRect:
         x: 9
         y: 0
@@ -534,6 +539,7 @@ ScriptedImporter:
       spriteId: 5d43faaa49888e64d80822bc9392ca40
     - name: Buff_Frame_3
       frameIndex: 3
+      additiveSortOrder: 0
       cellRect:
         x: 9
         y: 0
@@ -542,6 +548,7 @@ ScriptedImporter:
       spriteId: 35450bd92dbd57b4f968079d39b74f09
     - name: Buff_Frame_4
       frameIndex: 4
+      additiveSortOrder: 0
       cellRect:
         x: 9
         y: 0
@@ -550,6 +557,7 @@ ScriptedImporter:
       spriteId: f38804829de9b754b8cf8b977d5945c2
     - name: Buff_Frame_5
       frameIndex: 5
+      additiveSortOrder: 0
       cellRect:
         x: 9
         y: 0
@@ -558,6 +566,7 @@ ScriptedImporter:
       spriteId: 8d16bd0bfdc84ee4c9c5600eae2b3b28
     - name: Buff_Frame_6
       frameIndex: 6
+      additiveSortOrder: 0
       cellRect:
         x: 9
         y: 8
@@ -566,6 +575,7 @@ ScriptedImporter:
       spriteId: cdcbdd03c632d3041ad585adf4fbeead
     - name: Buff_Frame_7
       frameIndex: 7
+      additiveSortOrder: 0
       cellRect:
         x: 9
         y: 16
@@ -574,6 +584,7 @@ ScriptedImporter:
       spriteId: 43e4894e9b705f140b532f7cef00a94d
     - name: Buff_Frame_8
       frameIndex: 8
+      additiveSortOrder: 0
       cellRect:
         x: 9
         y: 16
@@ -582,6 +593,7 @@ ScriptedImporter:
       spriteId: 3a5fa8abbe6caeb4a8eef3266108c72e
     - name: Buff_Frame_9
       frameIndex: 9
+      additiveSortOrder: 0
       cellRect:
         x: 9
         y: 22
@@ -590,6 +602,7 @@ ScriptedImporter:
       spriteId: cf2e6437cc1ec95438eef0962d6a84a4
     - name: Buff_Frame_10
       frameIndex: 10
+      additiveSortOrder: 0
       cellRect:
         x: 9
         y: 29
@@ -598,6 +611,7 @@ ScriptedImporter:
       spriteId: 10867a8bc849ee940b7a2923312c4a26
     - name: Buff_Frame_11
       frameIndex: 11
+      additiveSortOrder: 0
       cellRect:
         x: 9
         y: 32
@@ -606,6 +620,7 @@ ScriptedImporter:
       spriteId: 57be9a0b434a37d4d9a334dc8f89a8b1
     - name: Buff_Frame_12
       frameIndex: 12
+      additiveSortOrder: 0
       cellRect:
         x: 15
         y: 38
@@ -614,6 +629,7 @@ ScriptedImporter:
       spriteId: 9c84efc3c34fedc4aa611d7b37897455
     - name: Buff_Frame_13
       frameIndex: 13
+      additiveSortOrder: 0
       cellRect:
         x: 18
         y: 40
@@ -622,6 +638,7 @@ ScriptedImporter:
       spriteId: 78f131ecb0c31344db6cf4591569a7a9
     - name: Buff_Frame_14
       frameIndex: 14
+      additiveSortOrder: 0
       cellRect:
         x: 20
         y: 41
@@ -630,6 +647,7 @@ ScriptedImporter:
       spriteId: f23ef7e3051869343a01ea898d863af8
     - name: Buff_Frame_15
       frameIndex: 15
+      additiveSortOrder: 0
       cellRect:
         x: 22
         y: 42
@@ -638,6 +656,7 @@ ScriptedImporter:
       spriteId: 5307e047bf4419f44a96c5d3f4f3a498
     - name: Buff_Frame_16
       frameIndex: 16
+      additiveSortOrder: 0
       cellRect:
         x: 22
         y: 42
@@ -646,6 +665,7 @@ ScriptedImporter:
       spriteId: 139e670ebd11e904b82e699c08bf9679
     - name: Buff_Frame_17
       frameIndex: 17
+      additiveSortOrder: 0
       cellRect:
         x: 22
         y: 42
@@ -654,6 +674,7 @@ ScriptedImporter:
       spriteId: 2416288e85e263e48897bfb87b23f8ec
     - name: Buff_Frame_18
       frameIndex: 18
+      additiveSortOrder: 0
       cellRect:
         x: 22
         y: 42
@@ -663,6 +684,7 @@ ScriptedImporter:
     linkedCells: []
     parentIndex: -1
   platformSettings: []
+  generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 48, y: 64}

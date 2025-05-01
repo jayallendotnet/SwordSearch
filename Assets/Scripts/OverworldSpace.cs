@@ -13,6 +13,8 @@ public class OverworldSpace : MonoBehaviour{
     private List<Image> enemyImages = new List<Image>();
     private int pathFadeIndex = 0;
     private float timeBetweenPathFadeSteps = 0.5f;
+    [HideInInspector]
+    public int originalSiblingIndex;
     [Header("Scene references")]
     public GameObject playerDestination;
     public Transform pathFromLastSpace;
