@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8068f26cd91a3eb41849adc77cbe7a93
+guid: 15e0cc83eb7c0ba4e8c2c1338c6d8fcc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,118 +110,55 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Variant 1 Normal
+      name: Variant 1 normal
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 32
+        width: 17
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dce90c03cc2f5148bb3404acba0a6db
+      internalID: 1152398375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Variant 2 normal
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 16
+        width: 17
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 983599b8fc70585439c5e79a2164a371
+      internalID: 737377023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Horde normal
       rect:
         serializedVersion: 2
         x: 0
-        y: 42
-        width: 13
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5c9163800da2cdd4386e7ecd85865933
-      internalID: -1406740002
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Variant 2 Normal
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 42
-        width: 13
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 04df5733ab7bcb44087f9eca037683dd
-      internalID: -1116304966
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Variant 3 Normal
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 42
-        width: 13
-        height: 13
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d561f0d63217b4942972feb19af78c99
-      internalID: 727591529
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Variant 3 w mouth Talking
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 28
-        width: 13
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 773cb64c0dd754846ada6d201f0c2c6b
-      internalID: 309166100
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Variant 3 w mouth Normal
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 14
-        width: 13
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dec2ba533d70425448f4eb8b61c79dbe
-      internalID: -868944376
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Variant 3 w mouth Happy
-      rect:
-        serializedVersion: 2
-        x: 32
         y: 0
-        width: 13
-        height: 13
+        width: 26
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b51c20102bed784192ffea7b9bc9578
-      internalID: 1744080147
+      spriteID: ba12cc6c9cfa5694c8d6d0f41b135d7c
+      internalID: 84875531
       vertices: []
       indices: 
       edges: []
@@ -246,12 +183,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Variant 1 Normal: -1406740002
-      Variant 2 Normal: -1116304966
-      Variant 3 Normal: 727591529
-      Variant 3 w mouth Happy: 1744080147
-      Variant 3 w mouth Normal: -868944376
-      Variant 3 w mouth Talking: 309166100
+      Horde normal: 84875531
+      Variant 1 normal: 1152398375
+      Variant 2 normal: 737377023
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
