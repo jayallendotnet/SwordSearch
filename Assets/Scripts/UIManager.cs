@@ -32,6 +32,14 @@ public class UIManager : MonoBehaviour {
     public Image wordStrengthImageTens;
     public GameObject wordStrengthDivider;
     public List<GameObject> wordStrengthIconGameObjects;
+
+    public GameObject waterPowerupBackground;
+    public GameObject healPowerupBackground;
+    public GameObject earthPowerupBackground;
+    public GameObject firePowerupBackground;
+    public GameObject lightningPowerupBackground;
+    public GameObject darkPowerupBackground;
+    public GameObject swordPowerupBackground;
     //public GameObject wordStrengthIconSingle;
     //public GameObject wordStrengthIconDouble;
     //public GameObject wordStrengthIconTriple;
@@ -272,11 +280,14 @@ public class UIManager : MonoBehaviour {
     public void UpdateColorsForWord(string word, BattleManager.PowerupTypes type){
         if (word.Length == 0)
             return;
+        //ShowPowerupBackground(type);
         foreach (PowerupDisplayData d in powerupDisplayDataList){
             if (d.type == type){
                 textColorForWord = d.textColor;
                 backgroundColorForWord = d.backgroundColor;
             }
+            //if(d.type == BattleManager.PowerupTypes.None)
+            //    textColorForWord = d.textColor;
         }
     }
 
@@ -633,6 +644,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void SetAllAnimationStates(bool state){
+        //to add, elemental powerup backgrounds
         ChangeAnimationStateIfObjectIsActive(burnDisplay1, state);
         ChangeAnimationStateIfObjectIsActive(burnDisplay2, state);
         ChangeAnimationStateIfObjectIsActive(burnDisplay3, state);
@@ -804,6 +816,41 @@ public class UIManager : MonoBehaviour {
     public void PageTurnEnded(){
         turningPage = false;
         battleManager.TurnPageEnded();
+    }
+
+    public void ShowPowerupBackground(BattleManager.PowerupTypes type) {
+        waterPowerupBackground.SetActive(false);
+        healPowerupBackground.SetActive(false);
+        earthPowerupBackground.SetActive(false);
+        firePowerupBackground.SetActive(false);
+        lightningPowerupBackground.SetActive(false);
+        darkPowerupBackground.SetActive(false);
+        swordPowerupBackground.SetActive(false);
+        switch (type) {
+            case (BattleManager.PowerupTypes.Water):
+                waterPowerupBackground.SetActive(true);
+                break;
+            case (BattleManager.PowerupTypes.Heal):
+                healPowerupBackground.SetActive(true);
+                break;
+            case (BattleManager.PowerupTypes.Earth):
+                earthPowerupBackground.SetActive(true);
+                break;
+            case (BattleManager.PowerupTypes.Fire):
+                firePowerupBackground.SetActive(true);
+                break;
+            case (BattleManager.PowerupTypes.Lightning):
+                lightningPowerupBackground.SetActive(true);
+                break;
+            case (BattleManager.PowerupTypes.Dark):
+                darkPowerupBackground.SetActive(true);
+                break;
+            case (BattleManager.PowerupTypes.Sword):
+                swordPowerupBackground.SetActive(true);
+                break;
+            default: //PowerupTypes.None
+                break;
+        }
     }
     
 }
