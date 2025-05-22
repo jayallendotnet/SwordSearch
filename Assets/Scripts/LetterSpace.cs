@@ -51,6 +51,15 @@ public class LetterSpace : MonoBehaviour{
     public GameObject leftConnector;
     public GameObject topLeftConnector;
 
+    [Header("Powerup Icons")]
+    public Sprite waterIcon;
+    public Sprite healingIcon;
+    public Sprite earthIcon;
+    public Sprite fireIcon;
+    public Sprite lightningIcon;
+    public Sprite darkIcon;
+    public Sprite swordIcon;
+
     public void UpdateLetter(char letter){
         this.letter = letter;
         text.text = "" + letter;
@@ -62,6 +71,7 @@ public class LetterSpace : MonoBehaviour{
         HidePowerupIcon();
         text.color = textColor;
         UpdateBackgroundColors(backgroundColor);
+        ColorLetter(true);
         if (battleManager.powerupTypeForWord == BattleManager.PowerupTypes.None){
             selectedSignifierAnimator.enabled = false;
             selectedSignifier.transform.localScale = Vector3.one;
@@ -153,8 +163,10 @@ public class LetterSpace : MonoBehaviour{
     }
 
     public void ShowPowerup(){
-        if (powerupType == BattleManager.PowerupTypes.None)
+        if (powerupType == BattleManager.PowerupTypes.None){
             powerupIcon.SetActive(false);
+            ColorLetter(false);
+        }
         else{
             powerupIcon.SetActive(true);
             PowerupDisplayData d = battleManager.uiManager.GetPowerupDisplayDataWithType(powerupType);
@@ -163,8 +175,47 @@ public class LetterSpace : MonoBehaviour{
             text.color = t;
             powerupIcon.GetComponent<Image>().color = b;
             battleManager.uiManager.SynchronizePulse(powerupIconAnimator);
+            ColorLetter(true);
+
+            Sprite icon = waterIcon;
+            switch (powerupType){
+                case BattleManager.PowerupTypes.Water:
+                    icon = waterIcon;
+                    break;
+                case BattleManager.PowerupTypes.Heal:
+                    icon = healingIcon;
+                    break;
+                case BattleManager.PowerupTypes.Earth:
+                    icon = earthIcon;
+                    break;
+                case BattleManager.PowerupTypes.Fire:
+                    icon = fireIcon;
+                    break;
+                case BattleManager.PowerupTypes.Lightning:
+                    icon = lightningIcon;
+                    break;
+                case BattleManager.PowerupTypes.Dark:
+                    icon = darkIcon;
+                    break;
+                case BattleManager.PowerupTypes.Sword:
+                    icon = swordIcon;
+                    break;
+
+            }
+            powerupIcon.GetComponent<Image>().sprite = icon;
         }
 
+    }
+
+    private void ColorLetter(bool isInPowerupOrWord){
+        if (isInPowerupOrWord){
+            text.color = Color.white;
+            text.GetComponent<Outline>().enabled = true;
+        }
+        else {
+            text.color = Color.black;
+            text.GetComponent<Outline>().enabled = false;
+        }
     }
 
     public void SetPowerup(BattleManager.PowerupTypes type){

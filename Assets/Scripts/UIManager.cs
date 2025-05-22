@@ -6,8 +6,10 @@ using DG.Tweening;
 using System.Dynamic;
 
 public class UIManager : MonoBehaviour {
-    private Color textColorForWord = Color.black;
-    private Color backgroundColorForWord = Color.grey;
+    private Color textColorForValidWord = Color.white;
+    private Color textColorForInvalidWord = Color.gray;
+    //private Color textColorForWord = Color.black;
+    //private Color backgroundColorForWord = Color.grey;
     private Transform enemyObject;
     [HideInInspector] public Animator enemyAnimator;
     [HideInInspector] public List<Animator> enemyHordeAnimators;
@@ -24,7 +26,7 @@ public class UIManager : MonoBehaviour {
 
     [Header("Submit Word Button")]
     public Text wordDisplay;
-    public Image submitWordButtonImage;
+    //public Image submitWordButtonImage;
     public Image countdownNumber;
     public GameObject countdownDivider;
     public Image wordStrengthImageSingle;
@@ -125,6 +127,8 @@ public class UIManager : MonoBehaviour {
     public DialogueManager dialogueManager;
     public Transform boulderGroupsParent;
     
+    [HideInInspector]
+    public BattleManager.PowerupTypes powerupType;
 
 
     public void SetStartingValues(){
@@ -277,20 +281,36 @@ public class UIManager : MonoBehaviour {
         playerAnimator.SetTrigger("StartSword");
     }
 
+    
+    /*
     public void UpdateColorsForWord(string word, BattleManager.PowerupTypes type){
         if (word.Length == 0)
             return;
         //ShowPowerupBackground(type);
+        //textColorForWord = BattleManager.PowerupTypes.None.
         foreach (PowerupDisplayData d in powerupDisplayDataList){
             if (d.type == type){
-                textColorForWord = d.textColor;
+                //textColorForWord = d.textColor;
                 backgroundColorForWord = d.backgroundColor;
             }
             //if(d.type == BattleManager.PowerupTypes.None)
             //    textColorForWord = d.textColor;
         }
     }
+    */
 
+    public Color GetPowerupBackgroundColor(){
+        foreach (PowerupDisplayData d in powerupDisplayDataList){
+            if (d.type == powerupType){
+                return d.backgroundColor;
+            }
+        }
+        return Color.yellow; //definitely wrong and gross
+    }
+    
+
+
+    /*
     public void UpdatePowerupIcon(BattleManager.PowerupTypes type, int powerupLevel){
         PowerupDisplayData d =GetPowerupDisplayDataWithType(type);
         foreach (Image im in wordStrengthIconImages)
@@ -305,18 +325,19 @@ public class UIManager : MonoBehaviour {
         wordStrengthIconGameObjects[numToShow].SetActive(true);
         //wordStrengthIcon.sprite = d.icon;
     }
+    */
 
     public void UpdateVisualsForLettersInWord(List<LetterSpace> letterSpacesForWord){
         foreach (LetterSpace ls in letterSpacesForWord){
-            ls.ShowAsPartOfWord(textColorForWord, backgroundColorForWord);
+            ls.ShowAsPartOfWord(textColorForValidWord, GetPowerupBackgroundColor());
         }
     }
 
     public void DisplayWord(string word, bool isValidWord, int countdown, int strength){
         if (isValidWord){
             wordDisplay.text = word;
-            wordDisplay.color = textColorForWord;
-            submitWordButtonImage.color = backgroundColorForWord;
+            wordDisplay.color = textColorForValidWord;
+            //submitWordButtonImage.color = backgroundColorForWord;
             wordStrengthDivider.SetActive(true);
             countdownDivider.SetActive(true);
             UpdateWordStrengthDisplay(strength);
@@ -324,7 +345,8 @@ public class UIManager : MonoBehaviour {
         }
         else if ((countdown == 0) && (word.Length == 0)){
             wordDisplay.text = "TURN PAGE";
-            wordDisplay.color = turnPageWordColor;
+            //wordDisplay.color = turnPageWordColor;
+            wordDisplay.color = textColorForInvalidWord;
             //submitWordButtonImage.color = canRefreshPuzzleColor;
             wordStrengthDivider.SetActive(true);
             countdownDivider.SetActive(true);
@@ -334,7 +356,7 @@ public class UIManager : MonoBehaviour {
         else {
             wordDisplay.text = word;
             wordDisplay.color = invalidWordColor;
-            submitWordButtonImage.color = invalidButtonColor;
+            //submitWordButtonImage.color = invalidButtonColor;
             wordStrengthDivider.SetActive(false);
             countdownDivider.SetActive(false);
             UpdateWordStrengthDisplay(strength);
@@ -819,38 +841,42 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowPowerupBackground(BattleManager.PowerupTypes type) {
-        waterPowerupBackground.SetActive(false);
-        healPowerupBackground.SetActive(false);
-        earthPowerupBackground.SetActive(false);
-        firePowerupBackground.SetActive(false);
-        lightningPowerupBackground.SetActive(false);
-        darkPowerupBackground.SetActive(false);
-        swordPowerupBackground.SetActive(false);
         switch (type) {
             case (BattleManager.PowerupTypes.Water):
-                waterPowerupBackground.SetActive(true);
+                SetBackgroundAsActive(waterPowerupBackground);
                 break;
             case (BattleManager.PowerupTypes.Heal):
-                healPowerupBackground.SetActive(true);
+                SetBackgroundAsActive(healPowerupBackground);
                 break;
             case (BattleManager.PowerupTypes.Earth):
-                earthPowerupBackground.SetActive(true);
+                SetBackgroundAsActive(earthPowerupBackground);
                 break;
             case (BattleManager.PowerupTypes.Fire):
-                firePowerupBackground.SetActive(true);
+                SetBackgroundAsActive(firePowerupBackground);
                 break;
             case (BattleManager.PowerupTypes.Lightning):
-                lightningPowerupBackground.SetActive(true);
+                SetBackgroundAsActive(lightningPowerupBackground);
                 break;
             case (BattleManager.PowerupTypes.Dark):
-                darkPowerupBackground.SetActive(true);
+                SetBackgroundAsActive(darkPowerupBackground);
                 break;
             case (BattleManager.PowerupTypes.Sword):
-                swordPowerupBackground.SetActive(true);
+                SetBackgroundAsActive(swordPowerupBackground);
                 break;
             default: //PowerupTypes.None
+                SetBackgroundAsActive(null);
                 break;
         }
+    }
+
+    private void SetBackgroundAsActive(GameObject choice){
+        waterPowerupBackground.SetActive(choice == waterPowerupBackground);
+        healPowerupBackground.SetActive(choice == healPowerupBackground);
+        earthPowerupBackground.SetActive(choice == earthPowerupBackground);
+        firePowerupBackground.SetActive(choice == firePowerupBackground);
+        darkPowerupBackground.SetActive(choice == darkPowerupBackground);
+        lightningPowerupBackground.SetActive(choice == lightningPowerupBackground);
+        swordPowerupBackground.SetActive(choice == swordPowerupBackground);
     }
     
 }

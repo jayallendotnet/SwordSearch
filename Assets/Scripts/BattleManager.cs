@@ -456,10 +456,12 @@ public class BattleManager : MonoBehaviour {
 
     public virtual void UpdateSubmitVisuals(){
         UpdatePowerupTypeAndLevel();
-        uiManager.UpdateColorsForWord(word, powerupTypeForWord);
-        uiManager.UpdatePowerupIcon(powerupTypeForWord, powerupLevel);
+        uiManager.powerupType = powerupTypeForWord;
+        //uiManager.SetPowerupBackgroundColor(powerupTypeForWord);
+        //uiManager.UpdatePowerupIcon(powerupTypeForWord, powerupLevel);
         uiManager.UpdateVisualsForLettersInWord(letterSpacesForWord);
         uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
+        uiManager.ShowPowerupBackground(powerupTypeForWord);
     }
 
 

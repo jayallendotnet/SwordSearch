@@ -499,6 +499,13 @@ MonoBehaviour:
   bottomLeftConnector: {fileID: 5752658751015400776}
   leftConnector: {fileID: 140747478356605236}
   topLeftConnector: {fileID: 7929768446612135558}
+  waterIcon: {fileID: 21300000, guid: 3dbbd7e17c60f20478074aa09837f376, type: 3}
+  healingIcon: {fileID: 21300000, guid: 3dbbd7e17c60f20478074aa09837f376, type: 3}
+  earthIcon: {fileID: 21300000, guid: 3dbbd7e17c60f20478074aa09837f376, type: 3}
+  fireIcon: {fileID: 21300000, guid: 3dbbd7e17c60f20478074aa09837f376, type: 3}
+  lightningIcon: {fileID: 21300000, guid: 3dbbd7e17c60f20478074aa09837f376, type: 3}
+  darkIcon: {fileID: 21300000, guid: 3dbbd7e17c60f20478074aa09837f376, type: 3}
+  swordIcon: {fileID: 21300000, guid: 3dbbd7e17c60f20478074aa09837f376, type: 3}
 --- !u!1 &3335471626438067588
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,6 +860,7 @@ GameObject:
   - component: {fileID: 1508916612262677759}
   - component: {fileID: 2817873248132916850}
   - component: {fileID: 481033620212373773}
+  - component: {fileID: 2741096459361596050}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -869,7 +877,7 @@ RectTransform:
   m_GameObject: {fileID: 7194837718632078614}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6747228974919254350}
@@ -877,7 +885,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2817873248132916850
 CanvasRenderer:
@@ -909,7 +917,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1689cc2955a3cc74a8f76a3e718bfcd7, type: 3}
-    m_FontSize: 60
+    m_FontSize: 120
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
@@ -921,6 +929,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: A
+--- !u!114 &2741096459361596050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7194837718632078614}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 8, y: -8}
+  m_UseGraphicAlpha: 1
 --- !u!1 &7262505682851406401
 GameObject:
   m_ObjectHideFlags: 0
