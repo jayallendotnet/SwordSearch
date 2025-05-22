@@ -147,6 +147,7 @@ public class BattleManager : MonoBehaviour {
             stopNextAttack = true;
             uiManager.PauseEnemyAttackBar();
             uiManager.PauseWaterDrain();
+            //uiManager.FadeOutWaterOverlay();
             uiManager.PauseBoulderDebuff();
             uiManager.PausePageTurn();
             //uiManager.SetAllAnimationStates(false);
@@ -174,6 +175,10 @@ public class BattleManager : MonoBehaviour {
         uiManager.DisplayHealths(playerHealth, enemyHealth);
         if (playerHealth == 0){
             uiManager.PauseEnemyAttackBar();
+            uiManager.PauseWaterDrain();
+            //uiManager.FadeOutWaterOverlay();
+            uiManager.PauseBoulderDebuff();
+            uiManager.PausePageTurn();
             ClearWord(false);
         }      
     }
@@ -329,6 +334,8 @@ public class BattleManager : MonoBehaviour {
     }
 
     private void ApplyBuffForWaterAttack(int powerupLevel){
+        if ((enemyHealth <= 0) || (playerHealth <= 0))
+            StaticVariables.WaitTimeThenCallFunction(0.6f, uiManager.FadeOutWaterOverlay);
         isWaterInPuzzleArea = true;
         float duration = powerupLevel * waterFloodDuration;
         uiManager.FillPuzzleAreaWithWater(duration);

@@ -60,16 +60,20 @@ public class LetterSpace : MonoBehaviour{
     public Sprite darkIcon;
     public Sprite swordIcon;
 
-    public void UpdateLetter(char letter){
+    [Header("Colors")]
+    public Color normalLetterColor;
+    public Color powerupOrWordLetterColor;
+
+    public void UpdateLetter(char letter) {
         this.letter = letter;
         text.text = "" + letter;
     }
 
-    public void ShowAsPartOfWord(Color textColor, Color backgroundColor){
+    public void ShowAsPartOfWord(Color backgroundColor){
         selectedSignifier.SetActive(true);
         ShowDirectionsToNeighbors();
         HidePowerupIcon();
-        text.color = textColor;
+        //text.color = textColor;
         UpdateBackgroundColors(backgroundColor);
         ColorLetter(true);
         if (battleManager.powerupTypeForWord == BattleManager.PowerupTypes.None){
@@ -85,6 +89,7 @@ public class LetterSpace : MonoBehaviour{
     public void ShowAsNotPartOfWord(){
         selectedSignifier.SetActive(false);
         HideAllDirectionLines();
+        text.GetComponent<Outline>().enabled = false;
         if (hasBeenUsedInAWordAlready){
             text.color = battleManager.uiManager.usedLetterColor;
             HidePowerupIcon();
@@ -209,11 +214,11 @@ public class LetterSpace : MonoBehaviour{
 
     private void ColorLetter(bool isInPowerupOrWord){
         if (isInPowerupOrWord){
-            text.color = Color.white;
+            text.color = powerupOrWordLetterColor;
             text.GetComponent<Outline>().enabled = true;
         }
         else {
-            text.color = Color.black;
+            text.color = normalLetterColor;
             text.GetComponent<Outline>().enabled = false;
         }
     }

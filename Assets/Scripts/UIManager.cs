@@ -6,8 +6,6 @@ using DG.Tweening;
 using System.Dynamic;
 
 public class UIManager : MonoBehaviour {
-    private Color textColorForValidWord = Color.white;
-    private Color textColorForInvalidWord = Color.gray;
     //private Color textColorForWord = Color.black;
     //private Color backgroundColorForWord = Color.grey;
     private Transform enemyObject;
@@ -51,11 +49,13 @@ public class UIManager : MonoBehaviour {
 
 
     [Header("Colors")]
+    public Color textColorForValidWord = Color.white;
+    public Color textColorForInvalidWord = Color.gray;
     public Color usedLetterColor;
-    public Color invalidWordColor;
-    public Color invalidButtonColor;
-    public Color canRefreshPuzzleColor;
-    public Color turnPageWordColor;
+    //public Color invalidWordColor;
+    //public Color invalidButtonColor;
+    //public Color canRefreshPuzzleColor;
+    //public Color turnPageWordColor;
     public List<PowerupDisplayData> powerupDisplayDataList;
     [Header("Numbers")]
     public Sprite[] numberSprites;
@@ -218,7 +218,9 @@ public class UIManager : MonoBehaviour {
         else
             playerAnimator.SetTrigger("Die");
     }
-    public void ShowPlayerGettingHealed(int amount){
+    
+    public void ShowPlayerGettingHealed(int amount)
+    {
         ShowNumbersAsChild(playerHealSingleDigitPrefab, playerHealDoubleDigitPrefab, playerObject, amount);
     }
 
@@ -329,7 +331,8 @@ public class UIManager : MonoBehaviour {
 
     public void UpdateVisualsForLettersInWord(List<LetterSpace> letterSpacesForWord){
         foreach (LetterSpace ls in letterSpacesForWord){
-            ls.ShowAsPartOfWord(textColorForValidWord, GetPowerupBackgroundColor());
+            //ls.ShowAsPartOfWord(textColorForValidWord, GetPowerupBackgroundColor());
+            ls.ShowAsPartOfWord(GetPowerupBackgroundColor());
         }
     }
 
@@ -355,7 +358,7 @@ public class UIManager : MonoBehaviour {
         }
         else {
             wordDisplay.text = word;
-            wordDisplay.color = invalidWordColor;
+            wordDisplay.color = textColorForInvalidWord;
             //submitWordButtonImage.color = invalidButtonColor;
             wordStrengthDivider.SetActive(false);
             countdownDivider.SetActive(false);
@@ -800,6 +803,7 @@ public class UIManager : MonoBehaviour {
     public void ShowVictoryPage(){
         battleManager.ClearDebuffs();
         ShowPageTurn(true);
+        //FadeOutWaterOnBattleEnd();
         endGameDisplay.SetActive(true);
         endGameTitleText.text = "VICTORY";
         endGameButtonText.text = "CONTINUE";
@@ -808,13 +812,27 @@ public class UIManager : MonoBehaviour {
     public void ShowDefeatPage(){
         battleManager.ClearDebuffs();
         ShowPageTurn(true);
+        //FadeOutWaterOnBattleEnd();
         endGameDisplay.SetActive(true);
         endGameTitleText.text = "DEFEAT";
         endGameButtonText.text = "BACK TO MAP";
+        
+        
+    }
+
+    public void FadeOutWaterOverlay(){
+        Image bot = waterBuffBottom.GetComponent<Image>();
+        Image top = waterBuffTop.GetComponent<Image>();
+        Color botColor = bot.color;
+        Color topColor = top.color;
+        botColor.a = 0;
+        topColor.a = 0;
+        bot.DOColor(botColor, 0.5f);
+        top.DOColor(topColor, 0.5f);
     }
 
     
-    public float GetSynchronizedLetterAnimationFrame(){
+    public float GetSynchronizedLetterAnimationFrame() {
         return pulseAnimatorClock.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
 
