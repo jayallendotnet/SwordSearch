@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 735349418133202733}
   - component: {fileID: 657464872013090767}
   - component: {fileID: 4581239066908400464}
+  - component: {fileID: 7799668899153279795}
   m_Layer: 0
   m_Name: Water background
   m_TagString: Untagged
@@ -97,3 +98,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7799668899153279795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041195060393821691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a6b9290287ba60439a2ed07aac8daf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 657464872013090767}
+  powerupType: 1
+  transitionDuration: 0.5

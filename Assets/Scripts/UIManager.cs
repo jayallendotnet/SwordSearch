@@ -24,7 +24,6 @@ public class UIManager : MonoBehaviour {
 
     [Header("Submit Word Button")]
     public Text wordDisplay;
-    //public Image submitWordButtonImage;
     public Image countdownNumber;
     public GameObject countdownDivider;
     public Image wordStrengthImageSingle;
@@ -33,13 +32,7 @@ public class UIManager : MonoBehaviour {
     public GameObject wordStrengthDivider;
     public List<GameObject> wordStrengthIconGameObjects;
 
-    public GameObject waterPowerupBackground;
-    public GameObject healPowerupBackground;
-    public GameObject earthPowerupBackground;
-    public GameObject firePowerupBackground;
-    public GameObject lightningPowerupBackground;
-    public GameObject darkPowerupBackground;
-    public GameObject swordPowerupBackground;
+    public List<AnimatedPowerupBackground> animatedPowerupBackgrounds;
     //public GameObject wordStrengthIconSingle;
     //public GameObject wordStrengthIconDouble;
     //public GameObject wordStrengthIconTriple;
@@ -126,41 +119,44 @@ public class UIManager : MonoBehaviour {
     public GameObject enemyParentPrefab;
     public DialogueManager dialogueManager;
     public Transform boulderGroupsParent;
-    
+
     [HideInInspector]
     public BattleManager.PowerupTypes powerupType;
 
 
-    public void SetStartingValues(){
+    public void SetStartingValues() {
         puzzlePage.SetActive(true);
         endGameDisplay.SetActive(false);
         //defeatPage.SetActive(false);
         pageTurnGameObject.SetActive(false);
         waterPowerupStrengthColor = GetPowerupDisplayDataWithType(BattleManager.PowerupTypes.Water).backgroundColor;
         floodHeight = waterBuffTop.anchoredPosition.y;
-        waterBuffTop.anchoredPosition = new Vector2(waterBuffTop.anchoredPosition.x, waterBuffBottom.anchoredPosition.y); 
+        waterBuffTop.anchoredPosition = new Vector2(waterBuffTop.anchoredPosition.x, waterBuffBottom.anchoredPosition.y);
         enemyTimerBarImage = enemyTimerBar.GetComponent<Image>();
         defaultEnemyTimerBarColor = enemyTimerBarImage.color;
 
         SetupStrengthIcons();
+        SetOriginalPowerupBackgroundTransparencies();
+        //ActivateOnlyPowerupsOnPage();
+        //MakeAllPowerupBackgroundsTransparent();
     }
 
-    private void SetupStrengthIcons(){
-        foreach (GameObject go in wordStrengthIconGameObjects){
+    private void SetupStrengthIcons() {
+        foreach (GameObject go in wordStrengthIconGameObjects) {
             foreach (Transform t in go.transform)
                 wordStrengthIconImages.Add(t.GetComponent<Image>());
         }
     }
 
 
-    public void DisplayHealths(int playerHealth, int enemyHealth){
-        if (playerHealth < 10){
+    public void DisplayHealths(int playerHealth, int enemyHealth) {
+        if (playerHealth < 10) {
             playerHP1DigitOnes.sprite = numberSprites[playerHealth];
             playerHP1DigitOnes.transform.parent.gameObject.SetActive(true);
             playerHP2DigitOnes.transform.parent.gameObject.SetActive(false);
             playerHP3DigitOnes.transform.parent.gameObject.SetActive(false);
         }
-        else if (playerHealth < 100){
+        else if (playerHealth < 100) {
             Vector2 hp = GetTensAndOnes(playerHealth);
             playerHP2DigitOnes.sprite = numberSprites[(int)hp[1]];
             playerHP2DigitTens.sprite = numberSprites[(int)hp[0]];
@@ -168,7 +164,7 @@ public class UIManager : MonoBehaviour {
             playerHP2DigitOnes.transform.parent.gameObject.SetActive(true);
             playerHP3DigitOnes.transform.parent.gameObject.SetActive(false);
         }
-        else{
+        else {
             Vector3 hp = GetHundredsTensAndOnes(playerHealth);
             playerHP3DigitOnes.sprite = numberSprites[(int)hp[2]];
             playerHP3DigitTens.sprite = numberSprites[(int)hp[1]];
@@ -178,13 +174,13 @@ public class UIManager : MonoBehaviour {
             playerHP3DigitOnes.transform.parent.gameObject.SetActive(true);
         }
 
-        if (enemyHealth < 10){
+        if (enemyHealth < 10) {
             enemyHP1DigitOnes.sprite = numberSprites[enemyHealth];
             enemyHP1DigitOnes.transform.parent.gameObject.SetActive(true);
             enemyHP2DigitOnes.transform.parent.gameObject.SetActive(false);
             enemyHP3DigitOnes.transform.parent.gameObject.SetActive(false);
         }
-        else if (enemyHealth < 100){
+        else if (enemyHealth < 100) {
             Vector2 hp = GetTensAndOnes(enemyHealth);
             enemyHP2DigitOnes.sprite = numberSprites[(int)hp[1]];
             enemyHP2DigitTens.sprite = numberSprites[(int)hp[0]];
@@ -192,7 +188,7 @@ public class UIManager : MonoBehaviour {
             enemyHP2DigitOnes.transform.parent.gameObject.SetActive(true);
             enemyHP3DigitOnes.transform.parent.gameObject.SetActive(false);
         }
-        else{
+        else {
             Vector3 hp = GetHundredsTensAndOnes(enemyHealth);
             enemyHP3DigitOnes.sprite = numberSprites[(int)hp[2]];
             enemyHP3DigitTens.sprite = numberSprites[(int)hp[1]];
@@ -203,7 +199,7 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public void ShowPlayerTakingDamage(int amount, bool stillAlive, bool showDamageAnimation = true, bool showZeroDamage = false){
+    public void ShowPlayerTakingDamage(int amount, bool stillAlive, bool showDamageAnimation = true, bool showZeroDamage = false) {
         //if (amount < 1)
         //    return;
         if (showZeroDamage)
@@ -218,20 +214,19 @@ public class UIManager : MonoBehaviour {
         else
             playerAnimator.SetTrigger("Die");
     }
-    
-    public void ShowPlayerGettingHealed(int amount)
-    {
+
+    public void ShowPlayerGettingHealed(int amount) {
         ShowNumbersAsChild(playerHealSingleDigitPrefab, playerHealDoubleDigitPrefab, playerObject, amount);
     }
 
-    public void ShowEnemyTakingDamage(int amount, bool stillAlive){
+    public void ShowEnemyTakingDamage(int amount, bool stillAlive) {
         ShowNumbersAsChild(enemyDamageSingleDigitPrefab, enemyDamageDoubleDigitPrefab, enemyParentParent, amount);
-        if (battleManager.enemyData.isHorde){
+        if (battleManager.enemyData.isHorde) {
             int i = 0;
-            foreach (Animator anim in enemyHordeAnimators){
-                if (anim.gameObject.activeSelf){
-                    if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Die")){
-                        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage")){
+            foreach (Animator anim in enemyHordeAnimators) {
+                if (anim.gameObject.activeSelf) {
+                    if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Die")) {
+                        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage")) {
                             if (i < battleManager.currentHordeEnemyCount)
                                 anim.SetTrigger("TakeDamage");
                             else
@@ -243,7 +238,7 @@ public class UIManager : MonoBehaviour {
                 i++;
             }
         }
-        else{
+        else {
             if (!stillAlive)
                 enemyAnimator.Play("Die");
             else if (!enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("TakeDamage"))
@@ -252,17 +247,17 @@ public class UIManager : MonoBehaviour {
     }
 
 
-    public void ShowEnemyGettingHealed(int amount){
+    public void ShowEnemyGettingHealed(int amount) {
         ShowNumbersAsChild(enemyHealSingleDigitPrefab, enemyHealDoubleDigitPrefab, enemyObject, amount);
-        
+
     }
 
-    private void ShowNumbersAsChild(GameObject singleDigitPrefab, GameObject doubleDigitPrefab, Transform parent, int amount){
-        if (amount < 10){
+    private void ShowNumbersAsChild(GameObject singleDigitPrefab, GameObject doubleDigitPrefab, Transform parent, int amount) {
+        if (amount < 10) {
             GameObject obj = Instantiate(singleDigitPrefab, parent);
             obj.transform.Find("Ones").GetComponent<Image>().sprite = numberSprites[amount];
         }
-        else{
+        else {
             Vector2 temp = GetTensAndOnes(amount);
             GameObject obj = Instantiate(doubleDigitPrefab, parent);
             obj.transform.Find("Ones").GetComponent<Image>().sprite = numberSprites[(int)temp[1]];
@@ -271,45 +266,26 @@ public class UIManager : MonoBehaviour {
     }
 
 
-    public void StartPlayerCastAnimation(){
+    public void StartPlayerCastAnimation() {
         playerAnimator.SetTrigger("StartCast");
     }
 
-    public void StartPlayerHealAnimation(){
+    public void StartPlayerHealAnimation() {
         playerAnimator.SetTrigger("StartHeal");
     }
 
-    public void StartPlayerSwordAnimation(){
+    public void StartPlayerSwordAnimation() {
         playerAnimator.SetTrigger("StartSword");
     }
 
-    
-    /*
-    public void UpdateColorsForWord(string word, BattleManager.PowerupTypes type){
-        if (word.Length == 0)
-            return;
-        //ShowPowerupBackground(type);
-        //textColorForWord = BattleManager.PowerupTypes.None.
-        foreach (PowerupDisplayData d in powerupDisplayDataList){
-            if (d.type == type){
-                //textColorForWord = d.textColor;
-                backgroundColorForWord = d.backgroundColor;
-            }
-            //if(d.type == BattleManager.PowerupTypes.None)
-            //    textColorForWord = d.textColor;
-        }
-    }
-    */
-
-    public Color GetPowerupBackgroundColor(){
-        foreach (PowerupDisplayData d in powerupDisplayDataList){
-            if (d.type == powerupType){
+    public Color GetPowerupBackgroundColor() {
+        foreach (PowerupDisplayData d in powerupDisplayDataList) {
+            if (d.type == powerupType)
                 return d.backgroundColor;
-            }
         }
         return Color.yellow; //definitely wrong and gross
     }
-    
+
 
 
     /*
@@ -329,26 +305,22 @@ public class UIManager : MonoBehaviour {
     }
     */
 
-    public void UpdateVisualsForLettersInWord(List<LetterSpace> letterSpacesForWord){
-        foreach (LetterSpace ls in letterSpacesForWord){
-            //ls.ShowAsPartOfWord(textColorForValidWord, GetPowerupBackgroundColor());
+    public void UpdateVisualsForLettersInWord(List<LetterSpace> letterSpacesForWord) {
+        foreach (LetterSpace ls in letterSpacesForWord)
             ls.ShowAsPartOfWord(GetPowerupBackgroundColor());
-        }
     }
 
-    public void DisplayWord(string word, bool isValidWord, int countdown, int strength){
-        if (isValidWord){
+    public void DisplayWord(string word, bool isValidWord, int countdown, int strength) {
+        if (isValidWord) {
             wordDisplay.text = word;
             wordDisplay.color = textColorForValidWord;
-            //submitWordButtonImage.color = backgroundColorForWord;
             wordStrengthDivider.SetActive(true);
             countdownDivider.SetActive(true);
             UpdateWordStrengthDisplay(strength);
             UpdateCountdownDisplay(countdown);
         }
-        else if ((countdown == 0) && (word.Length == 0)){
+        else if ((countdown == 0) && (word.Length == 0)) {
             wordDisplay.text = "TURN PAGE";
-            //wordDisplay.color = turnPageWordColor;
             wordDisplay.color = textColorForInvalidWord;
             //submitWordButtonImage.color = canRefreshPuzzleColor;
             wordStrengthDivider.SetActive(true);
@@ -359,7 +331,6 @@ public class UIManager : MonoBehaviour {
         else {
             wordDisplay.text = word;
             wordDisplay.color = textColorForInvalidWord;
-            //submitWordButtonImage.color = invalidButtonColor;
             wordStrengthDivider.SetActive(false);
             countdownDivider.SetActive(false);
             UpdateWordStrengthDisplay(strength);
@@ -367,14 +338,14 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public void UpdateWordStrengthDisplay(int strength){
-        if (strength < 10){
+    public void UpdateWordStrengthDisplay(int strength) {
+        if (strength < 10) {
             wordStrengthImageSingle.sprite = numberSprites[strength];
             wordStrengthImageSingle.gameObject.SetActive(true);
             wordStrengthImageOnes.gameObject.SetActive(false);
             wordStrengthImageTens.gameObject.SetActive(false);
         }
-        else{
+        else {
             Vector2 str = GetTensAndOnes(strength);
             wordStrengthImageOnes.sprite = numberSprites[(int)str[1]];
             wordStrengthImageTens.sprite = numberSprites[(int)str[0]];
@@ -390,21 +361,21 @@ public class UIManager : MonoBehaviour {
         wordStrengthImageTens.color = numberColor;
     }
 
-    private Vector2 GetTensAndOnes(int val){
+    private Vector2 GetTensAndOnes(int val) {
         int tens = (val / 10);
         int ones = val - (tens * 10);
-        if (val > 99){
+        if (val > 99) {
             ones = 9;
             tens = 9;
         }
         return new Vector2(tens, ones);
-    }    
-    
-    private Vector3 GetHundredsTensAndOnes(int val){
+    }
+
+    private Vector3 GetHundredsTensAndOnes(int val) {
         int hundreds = val / 100;
         int tens = (val - (hundreds * 100)) / 10;
         int ones = val - ((hundreds * 100) + (tens * 10));
-        if (val > 999){
+        if (val > 999) {
             ones = 9;
             tens = 9;
             hundreds = 9;
@@ -412,42 +383,42 @@ public class UIManager : MonoBehaviour {
         return new Vector3(hundreds, tens, ones);
     }
 
-    public void UpdateCountdownDisplay(int countdown){
+    public void UpdateCountdownDisplay(int countdown) {
         if (countdown > 9)
             countdown = 9;
         countdownNumber.sprite = numberSprites[countdown];
     }
 
 
-    public PowerupDisplayData GetPowerupDisplayDataWithType(BattleManager.PowerupTypes t){
-        foreach (PowerupDisplayData d in powerupDisplayDataList){
+    public PowerupDisplayData GetPowerupDisplayDataWithType(BattleManager.PowerupTypes t) {
+        foreach (PowerupDisplayData d in powerupDisplayDataList) {
             if (d.type == t)
                 return d;
         }
         return null;
     }
 
-    public void StopEnemyAttackTimer(){
+    public void StopEnemyAttackTimer() {
         enemyTimerBar.localScale = Vector3.one;
         DOTween.Kill(enemyTimerBar);
     }
 
-    public void ActivateEnemyStunBar(float duration){
+    public void ActivateEnemyStunBar(float duration) {
         enemyStunBar.gameObject.SetActive(true);
         enemyStunBarAnimation.gameObject.SetActive(true);
         enemyStunBar.localScale = Vector3.one;
         DOTween.Kill(enemyStunBar);
-        enemyStunBar.DOScale(new Vector3(0,1,1), duration).SetEase(Ease.Linear).OnComplete(battleManager.EnemyStunWearsOff);
+        enemyStunBar.DOScale(new Vector3(0, 1, 1), duration).SetEase(Ease.Linear).OnComplete(battleManager.EnemyStunWearsOff);
     }
 
-    public void DeactivateEnemyStunBar(){
+    public void DeactivateEnemyStunBar() {
         enemyStunBar.gameObject.SetActive(false);
         enemyStunBarAnimation.SetTrigger("End");
     }
 
-    public void StartEnemyAttackTimer(float duration, Color? c = null){
+    public void StartEnemyAttackTimer(float duration, Color? c = null) {
         enemyTimerBar.localScale = Vector3.one;
-        enemyTimerBar.DOScale(new Vector3(0,1,1), duration).SetEase(Ease.Linear).OnComplete(battleManager.TriggerEnemyAttack);
+        enemyTimerBar.DOScale(new Vector3(0, 1, 1), duration).SetEase(Ease.Linear).OnComplete(battleManager.TriggerEnemyAttack);
         if (c == null)
             enemyTimerBarImage.color = defaultEnemyTimerBarColor;
         else
@@ -455,8 +426,8 @@ public class UIManager : MonoBehaviour {
     }
 
 
-    public void AnimateEnemyAttackBarDisappearing(){
-        foreach (Transform t in enemyTimerBarImageParent){
+    public void AnimateEnemyAttackBarDisappearing() {
+        foreach (Transform t in enemyTimerBarImageParent) {
             Image im = t.GetComponent<Image>();
             Color newColor = im.color;
             newColor.a = 0;
@@ -464,27 +435,26 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public void StartEnemyAttackAnimation(){
-        if (battleManager.enemyData.isHorde){
+    public void StartEnemyAttackAnimation() {
+        if (battleManager.enemyData.isHorde) {
             foreach (Animator anim in enemyHordeAnimators)
                 anim.SetTrigger("Attack");
         }
-        else{
+        else
             enemyAnimator.SetTrigger("Attack");
-        }
         enemyTimerBar.DOScale(Vector3.one, 1f).SetEase(Ease.Linear);
         enemyTimerBarImage.color = defaultEnemyTimerBarColor;
     }
 
-    public void AddEnemyToScene(GameObject enemyPrefab){
+    public void AddEnemyToScene(GameObject enemyPrefab) {
         GameObject enemyParent = Instantiate(enemyParentPrefab, enemyParentParent);
         enemyParent.name = enemyPrefab.name;
         GameObject newEnemy = Instantiate(enemyPrefab, enemyParent.transform);
         newEnemy.name = enemyPrefab.name;
         enemyObject = newEnemy.transform;
         battleManager.enemyData = newEnemy.GetComponent<EnemyData>();
-        if (battleManager.enemyData.isHorde){
-            foreach (Transform t in battleManager.enemyData.GetComponent<HordeOrder>().order){
+        if (battleManager.enemyData.isHorde) {
+            foreach (Transform t in battleManager.enemyData.GetComponent<HordeOrder>().order) {
                 enemyHordeAnimators.Add(t.GetChild(0).GetComponent<Animator>());
                 EnemyAttackAnimatorFunctions temp = t.GetChild(0).GetComponent<EnemyAttackAnimatorFunctions>();
                 battleManager.enemyHordeAttackAnimatorFunctions.Add(temp);
@@ -492,7 +462,7 @@ public class UIManager : MonoBehaviour {
                 temp.data = temp.GetComponent<EnemyData>();
             }
         }
-        else{
+        else {
             enemyAnimator = newEnemy.GetComponent<Animator>();
             battleManager.enemyAttackAnimatorFunctions = enemyObject.GetComponent<EnemyAttackAnimatorFunctions>();
             battleManager.enemyAttackAnimatorFunctions.battleManager = battleManager;
@@ -500,7 +470,7 @@ public class UIManager : MonoBehaviour {
 
     }
 
-    public void ApplyBackground(GameObject backgroundPrefab){
+    public void ApplyBackground(GameObject backgroundPrefab) {
         //print(backgroundPrefab.name);
         animatedObjectsInWindow = new List<GameObject>();
         Transform background = backgroundPrefab.transform.GetChild(0).transform;
@@ -509,26 +479,24 @@ public class UIManager : MonoBehaviour {
             GameObject.Destroy(t.gameObject);
         foreach (Transform t in foregroundParent)
             GameObject.Destroy(t.gameObject);
-        foreach(Transform t in background){
+        foreach (Transform t in background) {
             GameObject go = Instantiate(t.gameObject, backgroundParent);
             if (go.GetComponent<Animator>() != null)
                 animatedObjectsInWindow.Add(go);
         }
-        foreach(Transform t in foreground){
+        foreach (Transform t in foreground) {
             GameObject go = Instantiate(t.gameObject, foregroundParent);
             if (go.GetComponent<Animator>() != null)
                 animatedObjectsInWindow.Add(go);
         }
     }
 
-    public void ShowBurnCount(){
+    public void ShowBurnCount() {
         int burns = 0;
-        if (battleManager.enemyData.isHorde){
+        if (battleManager.enemyData.isHorde)
             burns = battleManager.enemyHordeAttackAnimatorFunctions[0].burnDamageQueue.Count;
-        }
-        else{
+        else
             burns = battleManager.enemyAttackAnimatorFunctions.burnDamageQueue.Count;
-        }
 
         burnDisplay1.SetActive(false);
         burnDisplay2.SetActive(false);
@@ -547,7 +515,7 @@ public class UIManager : MonoBehaviour {
             burnDisplay5.SetActive(true);
     }
 
-    public void ShowPebbleCount(){
+    public void ShowPebbleCount() {
         int pebbles = battleManager.playerAnimatorFunctions.pebblesInQueue.Count;
 
         pebbleDisplay1.SetActive(false);
@@ -567,13 +535,13 @@ public class UIManager : MonoBehaviour {
             pebbleDisplay5.SetActive(true);
     }
 
-    public void ThrowPebble(int damage){
+    public void ThrowPebble(int damage) {
         battleManager.playerAnimatorFunctions.pebblesInQueue.RemoveAt(0);
         ShowPebbleCount();
         battleManager.playerAnimatorFunctions.CreateAttackAnimation(BattleManager.PowerupTypes.Pebble, damage, 0);
     }
 
-    public void CoverPageWithBoulders(){
+    public void CoverPageWithBoulders() {
         //pick a random boulder from the children
         int r = StaticVariables.rand.Next(boulderGroupsParent.childCount);
         GameObject selection = boulderGroupsParent.GetChild(r).gameObject;
@@ -583,29 +551,29 @@ public class UIManager : MonoBehaviour {
         selection.SetActive(true);
         shownBoulders.ResetBouldersColor();
         shownBoulders.MoveBouldersIntoPosition();
-        
+
         //boulders only persist for X seconds. do the tween on the first child, so that the timer can be paused by other functions
         shownBoulders.transform.GetChild(0).GetComponent<Image>().DOColor(Color.white, 17f).OnComplete(ClearBouldersOnPage);
     }
 
-    public void ClearBouldersOnPage(){
+    public void ClearBouldersOnPage() {
         if (shownBoulders == null)
             return;
-        foreach(Transform t in shownBoulders.transform){
+        foreach (Transform t in shownBoulders.transform) {
             Color c = Color.white;
             c.a = 0;
             t.GetComponent<Image>().DOColor(c, 0.5f).OnComplete(FinishClearingBoulders);
         }
     }
 
-    private void FinishClearingBoulders(){
+    private void FinishClearingBoulders() {
         if (shownBoulders == null)
             return;
         shownBoulders.gameObject.SetActive(false);
         shownBoulders = null;
     }
 
-    public void FillPuzzleAreaWithWater(float totalDuration){
+    public void FillPuzzleAreaWithWater(float totalDuration) {
         CancelWaterDrain();
         waterDrainDuration = totalDuration - waterFillDuration - waterFloatDuration;
         waterBuffBottom.DOSizeDelta(new Vector2(waterBuffBottom.sizeDelta.x, (floodHeight - waterBuffBottom.anchoredPosition.y)), waterFillDuration);
@@ -613,62 +581,62 @@ public class UIManager : MonoBehaviour {
         waterBuffBottom.gameObject.SetActive(true);
         waterBuffTop.gameObject.SetActive(true);
     }
-    
-    private void FloatWater(){
+
+    private void FloatWater() {
         battleManager.WaterReachedTopOfPage();
         if (waterFloatDuration == -1)
             return;
         StaticVariables.WaitTimeThenCallFunction(waterFloatDuration, StartDrainingWater);
     }
 
-    public void StartDrainingWaterSmallerPage(){
+    public void StartDrainingWaterSmallerPage() {
         float offset = 650f;
         waterBuffBottom.DOSizeDelta(new Vector2(waterBuffBottom.sizeDelta.x, offset), waterDrainDuration).SetEase(Ease.Linear);
         waterBuffTop.DOAnchorPos(new Vector2(0, (-waterBuffBottom.sizeDelta.y + waterBuffTop.anchoredPosition.y + offset)), waterDrainDuration).SetEase(Ease.Linear).OnComplete(DrainingComplete);
     }
 
-    public void StartDrainingWater(){
+    public void StartDrainingWater() {
         waterBuffBottom.DOSizeDelta(new Vector2(waterBuffBottom.sizeDelta.x, 0), waterDrainDuration).SetEase(Ease.Linear);
         waterBuffTop.DOAnchorPos(new Vector2(0, (-waterBuffBottom.sizeDelta.y + waterBuffTop.anchoredPosition.y)), waterDrainDuration).SetEase(Ease.Linear).OnComplete(DrainingComplete);
     }
 
-    private void DrainingComplete(){
+    private void DrainingComplete() {
         waterBuffBottom.gameObject.SetActive(false);
         waterBuffTop.gameObject.SetActive(false);
         battleManager.WaterDrainComplete();
     }
 
-    private void CancelWaterDrain(){
+    private void CancelWaterDrain() {
         DOTween.Kill(waterBuffBottom);
         DOTween.Kill(waterBuffTop);
     }
 
-    public void PushedPauseButton(){
+    public void PushedPauseButton() {
         if ((movingBook) || (turningPage) || (battleManager.playerHealth == 0) || (battleManager.enemyHealth == 0))
             return;
         movingBook = true;
-        if (IsPuzzlePageShowing()){
+        if (IsPuzzlePageShowing()) {
             book.DOLocalMoveX((book.localPosition.x + book.rect.width), 0.5f).OnComplete(MovingBookEnded);
             pauseButton.DOAnchorPosY(350f, 0.5f);
             battleManager.PauseEverything();
         }
-        else{
+        else {
             book.DOLocalMoveX((book.localPosition.x - book.rect.width), 0.5f).OnComplete(MovingBookEnded);
             pauseButton.DOAnchorPosY(0, 0.5f);
         }
     }
 
-    private void MovingBookEnded(){
+    private void MovingBookEnded() {
         movingBook = false;
         if (IsPuzzlePageShowing())
             battleManager.ResumeEverything();
     }
 
-    private bool IsPuzzlePageShowing(){
+    private bool IsPuzzlePageShowing() {
         return (book.localPosition.x < book.rect.width);
     }
 
-    public void SetAllAnimationStates(bool state){
+    public void SetAllAnimationStates(bool state) {
         //to add, elemental powerup backgrounds
         ChangeAnimationStateIfObjectIsActive(burnDisplay1, state);
         ChangeAnimationStateIfObjectIsActive(burnDisplay2, state);
@@ -685,96 +653,99 @@ public class UIManager : MonoBehaviour {
         ChangeAnimationStateIfObjectIsActive(battleManager.playerAnimatorFunctions.deathBubble, state);
         ChangeAnimationStateIfObjectIsActive(pulseAnimatorClock, state);
         ChangeAnimationStateIfObjectIsActive(pageTurnAnimator, state);
-        foreach(Transform t in playerAttackAnimationParent)
+        foreach (Transform t in playerAttackAnimationParent)
             ChangeAnimationStateIfObjectIsActive(t.gameObject, state);
-        foreach(Transform t in playerAnimator.transform.parent)
+        foreach (Transform t in playerAnimator.transform.parent)
             ChangeAnimationStateIfObjectIsActive(t.gameObject, state);
         foreach (GameObject go in animatedObjectsInWindow)
             ChangeAnimationStateIfObjectIsActive(go, state);
-        foreach(LetterSpace ls in battleManager.puzzleGenerator.letterSpaces){
+        foreach (LetterSpace ls in battleManager.puzzleGenerator.letterSpaces) {
             ChangeAnimationStateIfObjectIsActive(ls.powerupIconAnimator, state);
             ChangeAnimationStateIfObjectIsActive(ls.selectedSignifierAnimator, state);
         }
-        foreach(Transform t in enemyParentParent){
+        foreach (Transform t in enemyParentParent) {
             if (t.GetComponent<Animator>() != null)
                 ChangeAnimationStateIfObjectIsActive(t.gameObject, state);
-        }   
-        if (battleManager.enemyData.isHorde){
+        }
+        foreach (AnimatedPowerupBackground apb in animatedPowerupBackgrounds)
+            ChangeAnimationStateIfObjectIsActive(apb.gameObject, state);
+        if (battleManager.enemyData.isHorde) {
             foreach (Animator anim in enemyHordeAnimators)
                 ChangeAnimationStateIfObjectIsActive(anim, state);
         }
-        else{
+        else 
             ChangeAnimationStateIfObjectIsActive(enemyAnimator, state);
-        }
         if (state)
             UpdateVisualsForLettersInWord(battleManager.letterSpacesForWord);
     }
 
-    public void PauseEnemyAttackBar(){
+    public void PauseEnemyAttackBar() {
         if (enemyStunBar.gameObject.activeSelf)
             DOTween.Pause(enemyStunBar);
         else
             DOTween.Pause(enemyTimerBar);
     }
 
-    public void ResumeEnemyAttackBar(){
+    public void ResumeEnemyAttackBar() {
         if (enemyStunBar.gameObject.activeSelf)
             DOTween.Play(enemyStunBar);
         else
             DOTween.Play(enemyTimerBar);
     }
 
-    public void PauseWaterDrain(){
-        if (waterBuffTop.gameObject.activeSelf){
+    public void PauseWaterDrain() {
+        if (waterBuffTop.gameObject.activeSelf) {
             DOTween.Pause(waterBuffBottom);
             DOTween.Pause(waterBuffTop);
         }
     }
 
-    public void ResumeWaterDrain(){
-        if (waterBuffTop.gameObject.activeSelf){
+    public void ResumeWaterDrain() {
+        if (waterBuffTop.gameObject.activeSelf) {
             DOTween.Play(waterBuffBottom);
             DOTween.Play(waterBuffTop);
         }
     }
-    
-    public void PauseBoulderDebuff(){
-        if (shownBoulders != null){
-            foreach(Transform t in shownBoulders.transform)
+
+    public void PauseBoulderDebuff() {
+        if (shownBoulders != null)
+        {
+            foreach (Transform t in shownBoulders.transform)
                 DOTween.Pause(t.GetComponent<Image>());
         }
 
     }
 
-    public void ResumeBoulderDebuff(){
-        if (shownBoulders != null){
-            foreach(Transform t in shownBoulders.transform)
+    public void ResumeBoulderDebuff() {
+        if (shownBoulders != null)
+        {
+            foreach (Transform t in shownBoulders.transform)
                 DOTween.Play(t.GetComponent<Image>());
         }
 
     }
 
-    private void ChangeAnimationStateIfObjectIsActive(Animator anim, bool state){
+    private void ChangeAnimationStateIfObjectIsActive(Animator anim, bool state) {
         if (anim.gameObject.activeSelf)
             anim.enabled = state;
     }
 
-    private void ChangeAnimationStateIfObjectIsActive(GameObject go, bool state){
-        if(go.activeSelf)
+    private void ChangeAnimationStateIfObjectIsActive(GameObject go, bool state) {
+        if (go.activeSelf)
             go.GetComponent<Animator>().enabled = state;
     }
 
-    private void ChangeChildAnimationStateIfObjectIsActive(GameObject go, bool state){
-        if(go.activeSelf)
+    private void ChangeChildAnimationStateIfObjectIsActive(GameObject go, bool state) {
+        if (go.activeSelf)
             go.transform.GetChild(0).GetComponent<Animator>().enabled = state;
     }
 
-    public void PushedResumeButton(){
+    public void PushedResumeButton() {
         //shows up while paused
         PushedPauseButton();
     }
 
-    public void PushedQuitButton(){
+    public void PushedQuitButton() {
         //shows up while paused
         StaticVariables.hasCompletedStage = false;
         //StaticVariables.beatCurrentBattle = false;
@@ -782,17 +753,18 @@ public class UIManager : MonoBehaviour {
         //StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
     }
 
-    public void PushedEndGameButton(){
+    public void PushedEndGameButton() {
         //the button that appears after victory or defeat. its function varies depending on if you won or lost
         if (battleManager.enemyHealth <= 0) //you won, proceed through the victory dialogue
             dialogueManager.Setup(battleManager.enemyData.victoryDialogueSteps, StaticVariables.battleData);
-        else{ //you lost, quit
+        else
+        { //you lost, quit
             StaticVariables.hasCompletedStage = false;
             StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
         }
     }
 
-    public void EndDialogue(){
+    public void EndDialogue() {
         StaticVariables.hasCompletedStage = true;
         StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
         //StaticVariables.beatCurrentBattle = true;
@@ -800,7 +772,7 @@ public class UIManager : MonoBehaviour {
         //StaticVariables.FadeOutThenLoadScene(StaticVariables.GetCurrentWorldName());
     }
 
-    public void ShowVictoryPage(){
+    public void ShowVictoryPage() {
         battleManager.ClearDebuffs();
         ShowPageTurn(true);
         //FadeOutWaterOnBattleEnd();
@@ -809,18 +781,16 @@ public class UIManager : MonoBehaviour {
         endGameButtonText.text = "CONTINUE";
     }
 
-    public void ShowDefeatPage(){
+    public void ShowDefeatPage() {
         battleManager.ClearDebuffs();
         ShowPageTurn(true);
         //FadeOutWaterOnBattleEnd();
         endGameDisplay.SetActive(true);
         endGameTitleText.text = "DEFEAT";
         endGameButtonText.text = "BACK TO MAP";
-        
-        
     }
 
-    public void FadeOutWaterOverlay(){
+    public void FadeOutWaterOverlay() {
         Image bot = waterBuffBottom.GetComponent<Image>();
         Image top = waterBuffTop.GetComponent<Image>();
         Color botColor = bot.color;
@@ -831,16 +801,16 @@ public class UIManager : MonoBehaviour {
         top.DOColor(topColor, 0.5f);
     }
 
-    
+
     public float GetSynchronizedLetterAnimationFrame() {
         return pulseAnimatorClock.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
 
-    public void SynchronizePulse(Animator animator){
+    public void SynchronizePulse(Animator animator) {
         animator.Play(animator.name, 0, GetSynchronizedLetterAnimationFrame());
     }
 
-    public void ShowPageTurn(bool hideLetters = false){
+    public void ShowPageTurn(bool hideLetters = false) {
         if (pageTurnGameObject.activeSelf)
             pageTurnAnimator.Play("Book Turn", 0, 0);
         pageTurnGameObject.SetActive(true);
@@ -849,54 +819,24 @@ public class UIManager : MonoBehaviour {
         turningPage = true;
     }
 
-    public void PausePageTurn(){
+    public void PausePageTurn() {
         DOTween.Pause(pageTurnAnimator);
     }
 
-    public void PageTurnEnded(){
+    public void PageTurnEnded() {
         turningPage = false;
         battleManager.TurnPageEnded();
     }
 
     public void ShowPowerupBackground(BattleManager.PowerupTypes type) {
-        switch (type) {
-            case (BattleManager.PowerupTypes.Water):
-                SetBackgroundAsActive(waterPowerupBackground);
-                break;
-            case (BattleManager.PowerupTypes.Heal):
-                SetBackgroundAsActive(healPowerupBackground);
-                break;
-            case (BattleManager.PowerupTypes.Earth):
-                SetBackgroundAsActive(earthPowerupBackground);
-                break;
-            case (BattleManager.PowerupTypes.Fire):
-                SetBackgroundAsActive(firePowerupBackground);
-                break;
-            case (BattleManager.PowerupTypes.Lightning):
-                SetBackgroundAsActive(lightningPowerupBackground);
-                break;
-            case (BattleManager.PowerupTypes.Dark):
-                SetBackgroundAsActive(darkPowerupBackground);
-                break;
-            case (BattleManager.PowerupTypes.Sword):
-                SetBackgroundAsActive(swordPowerupBackground);
-                break;
-            default: //PowerupTypes.None
-                SetBackgroundAsActive(null);
-                break;
-        }
+        foreach (AnimatedPowerupBackground apb in animatedPowerupBackgrounds)
+            apb.ShowIfMatchesType(type);
     }
 
-    private void SetBackgroundAsActive(GameObject choice){
-        waterPowerupBackground.SetActive(choice == waterPowerupBackground);
-        healPowerupBackground.SetActive(choice == healPowerupBackground);
-        earthPowerupBackground.SetActive(choice == earthPowerupBackground);
-        firePowerupBackground.SetActive(choice == firePowerupBackground);
-        darkPowerupBackground.SetActive(choice == darkPowerupBackground);
-        lightningPowerupBackground.SetActive(choice == lightningPowerupBackground);
-        swordPowerupBackground.SetActive(choice == swordPowerupBackground);
+    private void SetOriginalPowerupBackgroundTransparencies() {
+        foreach (AnimatedPowerupBackground apb in animatedPowerupBackgrounds)
+            apb.SetOriginalTransparencyThenHide();
     }
-    
 }
 
 [System.Serializable]
