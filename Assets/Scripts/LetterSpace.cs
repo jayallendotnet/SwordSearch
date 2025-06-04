@@ -33,8 +33,8 @@ public class LetterSpace : MonoBehaviour{
     public Text text;
     public GameObject selectedSignifier;
     public Animator selectedSignifierAnimator;
-    public GameObject powerupIcon;
-    public Animator powerupIconAnimator;
+    //public GameObject powerupIcons;
+    //public Animator powerupIconAnimator;
     public Image[] colorableBackgroundImages = new Image[9];
     public GameObject tutorialSelector;
     public GameObject touchDetection1;
@@ -52,13 +52,20 @@ public class LetterSpace : MonoBehaviour{
     public GameObject topLeftConnector;
 
     [Header("Powerup Icons")]
-    public Sprite waterIcon;
-    public Sprite healingIcon;
-    public Sprite earthIcon;
-    public Sprite fireIcon;
-    public Sprite lightningIcon;
-    public Sprite darkIcon;
-    public Sprite swordIcon;
+    public GameObject waterIcon;
+    public Animator waterIconAnimator;
+    public GameObject healingIcon;
+    public Animator healingIconAnimator;
+    public GameObject earthIcon;
+    public Animator earthIconAnimator;
+    public GameObject fireIcon;
+    public Animator fireIconAnimator;
+    public GameObject lightningIcon;
+    public Animator lightningIconAnimator;
+    public GameObject darkIcon;
+    public Animator darkIconAnimator;
+    public GameObject swordIcon;
+    public Animator swordIconAnimator;
 
     [Header("Colors")]
     public Color normalLetterColor;
@@ -72,7 +79,7 @@ public class LetterSpace : MonoBehaviour{
     public void ShowAsPartOfWord(Color backgroundColor){
         selectedSignifier.SetActive(true);
         ShowDirectionsToNeighbors();
-        HidePowerupIcon();
+        HidePowerupIcons();
         //text.color = textColor;
         UpdateBackgroundColors(backgroundColor);
         ColorLetter(true);
@@ -92,7 +99,7 @@ public class LetterSpace : MonoBehaviour{
         text.GetComponent<Outline>().enabled = false;
         if (hasBeenUsedInAWordAlready){
             text.color = battleManager.uiManager.usedLetterColor;
-            HidePowerupIcon();
+            HidePowerupIcons();
         }
         else{
             text.color = Color.black;
@@ -100,14 +107,63 @@ public class LetterSpace : MonoBehaviour{
         }
     }
 
-    private void HidePowerupIcon(){
-        powerupIcon.SetActive(false);
+    private void HidePowerupIcons(){
+        waterIcon.SetActive(false);
+        healingIcon.SetActive(false);
+        earthIcon.SetActive(false);
+        fireIcon.SetActive(false);
+        lightningIcon.SetActive(false);
+        darkIcon.SetActive(false);
+        swordIcon.SetActive(false);
+        //powerupIcons.SetActive(false);
     }
 
-    private void UpdateBackgroundColors(Color c){
-        foreach (Image im in colorableBackgroundImages){
-            im.color = c;
+    private void ShowPowerupIcon(BattleManager.PowerupTypes powerupType) {
+        GameObject icon = waterIcon;
+        Animator animator = waterIconAnimator;
+        switch (powerupType) {
+            case BattleManager.PowerupTypes.Water:
+                icon = waterIcon;
+                animator = waterIconAnimator;
+                break;
+            case BattleManager.PowerupTypes.Heal:
+                icon = healingIcon;
+                animator = healingIconAnimator;
+                break;
+            case BattleManager.PowerupTypes.Earth:
+                icon = earthIcon;
+                animator = earthIconAnimator;
+                break;
+            case BattleManager.PowerupTypes.Fire:
+                icon = fireIcon;
+                animator = fireIconAnimator;
+                break;
+            case BattleManager.PowerupTypes.Lightning:
+                icon = lightningIcon;
+                animator = lightningIconAnimator;
+                break;
+            case BattleManager.PowerupTypes.Dark:
+                icon = darkIcon;
+                animator = darkIconAnimator;
+                break;
+            case BattleManager.PowerupTypes.Sword:
+                icon = swordIcon;
+                animator = swordIconAnimator;
+                break;
         }
+        waterIcon.SetActive(icon == waterIcon);
+        healingIcon.SetActive(icon == healingIcon);
+        earthIcon.SetActive(icon == earthIcon);
+        fireIcon.SetActive(icon == fireIcon);
+        lightningIcon.SetActive(icon == lightningIcon);
+        darkIcon.SetActive(icon == darkIcon);
+        swordIcon.SetActive(icon == swordIcon);
+        battleManager.uiManager.SynchronizePulse(animator);
+    }
+
+    private void UpdateBackgroundColors(Color c) {
+        foreach (Image im in colorableBackgroundImages)
+            im.color = c;
     }
 
     private void HideAllDirectionLines(){
@@ -169,45 +225,56 @@ public class LetterSpace : MonoBehaviour{
 
     public void ShowPowerup(){
         if (powerupType == BattleManager.PowerupTypes.None){
-            powerupIcon.SetActive(false);
+            HidePowerupIcons();
+            //powerupIcons.SetActive(false);
             ColorLetter(false);
         }
         else{
-            powerupIcon.SetActive(true);
+            //powerupIcons.SetActive(true);
             PowerupDisplayData d = battleManager.uiManager.GetPowerupDisplayDataWithType(powerupType);
             Color t = d.textColor;
-            Color b = d.backgroundColor;
+            //Color b = d.backgroundColor;
             text.color = t;
-            powerupIcon.GetComponent<Image>().color = b;
-            battleManager.uiManager.SynchronizePulse(powerupIconAnimator);
+            ShowPowerupIcon(powerupType);
+            //powerupIcon.GetComponent<Image>().color = b;
+            //battleManager.uiManager.SynchronizePulse(powerupIconAnimator);
             ColorLetter(true);
 
-            Sprite icon = waterIcon;
+            /*
+            GameObject choice = waterIcon;
             switch (powerupType){
                 case BattleManager.PowerupTypes.Water:
-                    icon = waterIcon;
+                    choice = waterIcon;
                     break;
                 case BattleManager.PowerupTypes.Heal:
-                    icon = healingIcon;
+                    choice = healingIcon;
                     break;
                 case BattleManager.PowerupTypes.Earth:
-                    icon = earthIcon;
+                    choice = earthIcon;
                     break;
                 case BattleManager.PowerupTypes.Fire:
-                    icon = fireIcon;
+                    choice = fireIcon;
                     break;
                 case BattleManager.PowerupTypes.Lightning:
-                    icon = lightningIcon;
+                    choice = lightningIcon;
                     break;
                 case BattleManager.PowerupTypes.Dark:
-                    icon = darkIcon;
+                    choice = darkIcon;
                     break;
                 case BattleManager.PowerupTypes.Sword:
-                    icon = swordIcon;
+                    choice = swordIcon;
                     break;
-
             }
-            powerupIcon.GetComponent<Image>().sprite = icon;
+            waterIcon.SetActive(choice == waterIcon);
+            healingIcon.SetActive(choice == healingIcon);
+            earthIcon.SetActive(choice == earthIcon);
+            fireIcon.SetActive(choice == fireIcon);
+            lightningIcon.SetActive(choice == lightningIcon);
+            darkIcon.SetActive(choice == darkIcon);
+            swordIcon.SetActive(choice == swordIcon);
+            //icon.SetActive(true);
+            //powerupIcon.GetComponent<Image>().sprite = icon;
+            */
         }
 
     }
@@ -239,7 +306,7 @@ public class LetterSpace : MonoBehaviour{
     }
 
     public void HideVisuals(){
-        HidePowerupIcon();
+        HidePowerupIcons();
         text.gameObject.SetActive(false);
         selectedSignifier.SetActive(false);
         HideAllDirectionLines();

@@ -660,7 +660,13 @@ public class UIManager : MonoBehaviour {
         foreach (GameObject go in animatedObjectsInWindow)
             ChangeAnimationStateIfObjectIsActive(go, state);
         foreach (LetterSpace ls in battleManager.puzzleGenerator.letterSpaces) {
-            ChangeAnimationStateIfObjectIsActive(ls.powerupIconAnimator, state);
+            ChangeAnimationStateIfObjectIsActive(ls.waterIconAnimator, state);
+            ChangeAnimationStateIfObjectIsActive(ls.healingIconAnimator, state);
+            ChangeAnimationStateIfObjectIsActive(ls.earthIconAnimator, state);
+            ChangeAnimationStateIfObjectIsActive(ls.fireIconAnimator, state);
+            ChangeAnimationStateIfObjectIsActive(ls.lightningIconAnimator, state);
+            ChangeAnimationStateIfObjectIsActive(ls.darkIconAnimator, state);
+            ChangeAnimationStateIfObjectIsActive(ls.swordIconAnimator, state);
             ChangeAnimationStateIfObjectIsActive(ls.selectedSignifierAnimator, state);
         }
         foreach (Transform t in enemyParentParent) {
