@@ -286,6 +286,7 @@ public class TutorialManager : BattleManager {
             highlightAttackStrength.SetActive(true);
             canShowStrength = true;
             UpdateSubmitVisuals();
+            uiManager.wordStrengthIconGameObjects[0].SetActive(true);
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
@@ -305,7 +306,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.EnemyTakesDamage;
         }
         else if (++i == tutorialStep){
-            DisplayText("While you are making words, your enemies can attack you!");
+            DisplayText("While you're making words, the enemies can attack you too!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
@@ -512,7 +513,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("For the next 20 seconds, every attack you make does an extra <damage>+2 damage<>!");
+            DisplayText("For the next 20 seconds, every attack you make does an extra\n<damage>+2 damage<>!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
@@ -584,7 +585,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("From now on, <earth>earth powerups<> will appear!.");
+            DisplayText("From now on, <earth>earth powerups<> will appear!");
             puzzleGenerator.letterSpaces[0,1].ToggleTutorialSelector(true);
             puzzleGenerator.letterSpaces[3,3].ToggleTutorialSelector(true);
             advanceCondition = Cond.Click;

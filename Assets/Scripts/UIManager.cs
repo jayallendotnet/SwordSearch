@@ -812,8 +812,11 @@ public class UIManager : MonoBehaviour {
         return pulseAnimatorClock.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
 
-    public void SynchronizePulse(Animator animator) {
-        animator.Play(animator.name, 0, GetSynchronizedLetterAnimationFrame());
+    public void SynchronizePulse(Animator animator, string nameOverride="") {
+        string animationName = animator.name;
+        if (nameOverride != "")
+            animationName = nameOverride;
+        animator.Play(animationName, 0, GetSynchronizedLetterAnimationFrame());
     }
 
     public void ShowPageTurn(bool hideLetters = false) {

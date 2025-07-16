@@ -67,6 +67,8 @@ public class LetterSpace : MonoBehaviour{
     public GameObject swordIcon;
     public Animator swordIconAnimator;
 
+    public Animator highlightAnimator;
+
     [Header("Colors")]
     public Color normalLetterColor;
     public Color powerupOrWordLetterColor;
@@ -158,7 +160,7 @@ public class LetterSpace : MonoBehaviour{
         lightningIcon.SetActive(icon == lightningIcon);
         darkIcon.SetActive(icon == darkIcon);
         swordIcon.SetActive(icon == swordIcon);
-        battleManager.uiManager.SynchronizePulse(animator);
+        battleManager.uiManager.SynchronizePulse(animator, "PowerupIcon");
     }
 
     private void UpdateBackgroundColors(Color c) {
@@ -226,55 +228,14 @@ public class LetterSpace : MonoBehaviour{
     public void ShowPowerup(){
         if (powerupType == BattleManager.PowerupTypes.None){
             HidePowerupIcons();
-            //powerupIcons.SetActive(false);
             ColorLetter(false);
         }
         else{
-            //powerupIcons.SetActive(true);
             PowerupDisplayData d = battleManager.uiManager.GetPowerupDisplayDataWithType(powerupType);
             Color t = d.textColor;
-            //Color b = d.backgroundColor;
             text.color = t;
             ShowPowerupIcon(powerupType);
-            //powerupIcon.GetComponent<Image>().color = b;
-            //battleManager.uiManager.SynchronizePulse(powerupIconAnimator);
             ColorLetter(true);
-
-            /*
-            GameObject choice = waterIcon;
-            switch (powerupType){
-                case BattleManager.PowerupTypes.Water:
-                    choice = waterIcon;
-                    break;
-                case BattleManager.PowerupTypes.Heal:
-                    choice = healingIcon;
-                    break;
-                case BattleManager.PowerupTypes.Earth:
-                    choice = earthIcon;
-                    break;
-                case BattleManager.PowerupTypes.Fire:
-                    choice = fireIcon;
-                    break;
-                case BattleManager.PowerupTypes.Lightning:
-                    choice = lightningIcon;
-                    break;
-                case BattleManager.PowerupTypes.Dark:
-                    choice = darkIcon;
-                    break;
-                case BattleManager.PowerupTypes.Sword:
-                    choice = swordIcon;
-                    break;
-            }
-            waterIcon.SetActive(choice == waterIcon);
-            healingIcon.SetActive(choice == healingIcon);
-            earthIcon.SetActive(choice == earthIcon);
-            fireIcon.SetActive(choice == fireIcon);
-            lightningIcon.SetActive(choice == lightningIcon);
-            darkIcon.SetActive(choice == darkIcon);
-            swordIcon.SetActive(choice == swordIcon);
-            //icon.SetActive(true);
-            //powerupIcon.GetComponent<Image>().sprite = icon;
-            */
         }
 
     }
@@ -317,7 +278,11 @@ public class LetterSpace : MonoBehaviour{
         touchDetection3.SetActive(false);
     }
 
-    public void ToggleTutorialSelector(bool value){
+
+    public void ToggleTutorialSelector(bool value) {
         tutorialSelector.SetActive(value);
+        if (value)
+            battleManager.uiManager.SynchronizePulse(highlightAnimator, "SelectedSignifier");
+
     }
 }
