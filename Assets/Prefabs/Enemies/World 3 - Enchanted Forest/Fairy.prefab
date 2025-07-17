@@ -128,9 +128,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBattleable: 1
   nameOverride: Fairy
-  startingHealth: 20
+  startingHealth: 100
   attackOrder:
-    Value: []
+    Value:
+    - attackSpeed: 6
+      attackDamage: 5
+      isSpecial: 1
+      specialType: 1
+      specialColor: {r: 0.49019608, g: 0.23921569, b: 0.08627451, a: 1}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
@@ -138,6 +143,7 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
+  isCopycat: 1
   normal: {fileID: -1247256924, guid: 3e6795e51b8fdce48ae51e2b5f3c047b, type: 3}
   angry: {fileID: -967131540, guid: 3e6795e51b8fdce48ae51e2b5f3c047b, type: 3}
   defeated: {fileID: -1732052002, guid: 3e6795e51b8fdce48ae51e2b5f3c047b, type: 3}
@@ -149,6 +155,7 @@ MonoBehaviour:
   mystery: {fileID: 0}
   custom1: {fileID: 371964636, guid: 3e6795e51b8fdce48ae51e2b5f3c047b, type: 3}
   custom2: {fileID: 0}
+  custom3: {fileID: 0}
   overworldDialogueSteps:
   - type: 1
     talker: {fileID: 0}

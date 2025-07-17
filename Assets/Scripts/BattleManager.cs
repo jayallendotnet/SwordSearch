@@ -49,6 +49,8 @@ public class BattleManager : MonoBehaviour {
     public bool isWaterInPuzzleArea = false;
     private bool isGamePaused = false;
     private int enemyAttackIndex = 0;
+    [HideInInspector]
+    public int copycatBuildup = 0;
 
 
     [Header("Game Variables")]
@@ -258,8 +260,13 @@ public class BattleManager : MonoBehaviour {
             return;
         if (enemyData.isHorde)
             ApplyEnemyAttackDamage(ea.attackDamage * currentHordeEnemyCount);
+        else if (enemyData.isCopycat){
+            int newDamage = ea.attackDamage * (copycatBuildup + 1);
+            ApplyEnemyAttackDamage(newDamage);
+            print("copycat is attacking! base damage is " + ea.attackDamage + ", buildup is " + copycatBuildup + ", so total damage is " + newDamage);
+        }
         else
-            ApplyEnemyAttackDamage(ea.attackDamage);
+                ApplyEnemyAttackDamage(ea.attackDamage);
 
 
         if (ea.isSpecial){
@@ -296,37 +303,43 @@ public class BattleManager : MonoBehaviour {
 
 
     public void ApplyAttackToEnemy(PowerupTypes type, int strength, int powerupLevel){
-        if (powerupLevel < 1)
-            DamageEnemyHealth(strength);
-        else{
-            switch (type){
-                case PowerupTypes.Water:
-                    DamageEnemyHealth(strength);
-                    ApplyBuffForWaterAttack(powerupLevel);
-                    break;
-                case PowerupTypes.Fire:
-                    ApplyBurnForFireAttack(powerupLevel);
-                    DamageEnemyHealth(strength);
-                    break;
-                case PowerupTypes.Lightning:
-                    ApplyEnemyAttackTimeDebuffFromLightning(powerupLevel);
-                    DamageEnemyHealth(strength);
-                    break;
-                case PowerupTypes.Dark:
-                    DoDarkAttack(strength, powerupLevel);
-                    break;
-                case PowerupTypes.Earth:
-                    DamageEnemyHealth(strength);
-                    ApplyPebblesForEarthAttack(powerupLevel);
-                    break;
-                case PowerupTypes.Pebble:
-                    DamageEnemyHealth(strength);
-                    break;
-                case PowerupTypes.Sword:
-                    DoSwordAttack(strength, powerupLevel);
-                    break;
-            }
+        if (enemyData.isCopycat && type != PowerupTypes.Heal && copycatBuildup < 5 && type != PowerupTypes.Pebble){
+            copycatBuildup ++;
+            uiManager.ShowCopycatBuildup();
         }
+        if (powerupLevel < 1)
+                DamageEnemyHealth(strength);
+            else
+            {
+                switch (type)
+                {
+                    case PowerupTypes.Water:
+                        DamageEnemyHealth(strength);
+                        ApplyBuffForWaterAttack(powerupLevel);
+                        break;
+                    case PowerupTypes.Fire:
+                        ApplyBurnForFireAttack(powerupLevel);
+                        DamageEnemyHealth(strength);
+                        break;
+                    case PowerupTypes.Lightning:
+                        ApplyEnemyAttackTimeDebuffFromLightning(powerupLevel);
+                        DamageEnemyHealth(strength);
+                        break;
+                    case PowerupTypes.Dark:
+                        DoDarkAttack(strength, powerupLevel);
+                        break;
+                    case PowerupTypes.Earth:
+                        DamageEnemyHealth(strength);
+                        ApplyPebblesForEarthAttack(powerupLevel);
+                        break;
+                    case PowerupTypes.Pebble:
+                        DamageEnemyHealth(strength);
+                        break;
+                    case PowerupTypes.Sword:
+                        DoSwordAttack(strength, powerupLevel);
+                        break;
+                }
+            }
     }
 
     private void DoSwordAttack(int strength, int powerupLevel){
@@ -418,6 +431,12 @@ public class BattleManager : MonoBehaviour {
     public void ClearDebuffs(){
         if (uiManager.shownBoulders != null)
             uiManager.ClearBouldersOnPage();
+        if (enemyData.isCopycat) {
+            copycatBuildup -= 2;
+            if (copycatBuildup < -1)
+                copycatBuildup = -1; //its ok to set to -1, because a normal damaging attack happens right after, bringing the buildup back to 0.
+            //uiManager.ShowCopycatBuildup();
+        }
     }
 
     private void HealPlayerHealth(int amount){

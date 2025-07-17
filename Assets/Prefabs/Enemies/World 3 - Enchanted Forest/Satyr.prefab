@@ -128,9 +128,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBattleable: 1
   nameOverride: 
-  startingHealth: 50
+  startingHealth: 100
   attackOrder:
-    Value: []
+    Value:
+    - attackSpeed: 2
+      attackDamage: 2
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
+    - attackSpeed: 2
+      attackDamage: 4
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
+    - attackSpeed: 2
+      attackDamage: 6
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
+    - attackSpeed: 2
+      attackDamage: 8
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
@@ -138,6 +158,7 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
+  isCopycat: 0
   normal: {fileID: -1263339810, guid: 46136d168396fa94d9458afb067582fb, type: 3}
   angry: {fileID: 1557689056, guid: 46136d168396fa94d9458afb067582fb, type: 3}
   defeated: {fileID: 1954471166, guid: 46136d168396fa94d9458afb067582fb, type: 3}

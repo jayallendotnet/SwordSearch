@@ -127,10 +127,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBattleable: 1
-  nameOverride: 
-  startingHealth: 100
+  nameOverride: Beast
+  startingHealth: 115
   attackOrder:
-    Value: []
+    Value:
+    - attackSpeed: 20
+      attackDamage: 30
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
@@ -138,6 +143,7 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
+  isCopycat: 0
   normal: {fileID: -1520053554, guid: aca850570a9ec8f47bca487609dca46b, type: 3}
   angry: {fileID: -948306812, guid: aca850570a9ec8f47bca487609dca46b, type: 3}
   defeated: {fileID: -387346830, guid: aca850570a9ec8f47bca487609dca46b, type: 3}
@@ -149,6 +155,7 @@ MonoBehaviour:
   mystery: {fileID: 0}
   custom1: {fileID: 0}
   custom2: {fileID: 0}
+  custom3: {fileID: 0}
   overworldDialogueSteps:
   - type: 0
     talker: {fileID: 0}

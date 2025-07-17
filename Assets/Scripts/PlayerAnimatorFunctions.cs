@@ -87,6 +87,8 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
 
 
     public void StartNextAttackAnimation(){
+        if (attacksInProgress.Count == 0)
+            return;
         GameObject go = attacksInProgress[0];
         go.SetActive(true);
         attacksInProgress.RemoveAt(0);

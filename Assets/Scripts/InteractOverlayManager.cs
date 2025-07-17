@@ -329,6 +329,12 @@ public class InteractOverlayManager : MonoBehaviour{
             
             }
         }  
+        if (enemy.isCopycat){
+            summary.Add("This enemy gets stronger with every attack you make.");
+            details.Add("The enemy's <damage>damage<> builds every time you make an <damage>attack<>. Using the <healing>power of healing<> reduces the buildup.");
+            //details.Add("The enemy attack bar fills every time you make an attack. The enemy's <damage>attack damage<> scales with how full the bar is. Using the <healing>power of healing<> drains the bar.");
+            //details.Add("Every time you hit the enemy, their <damage>attacks get stronger<>. Using the <healing>power of healing<> reduces this effect.");
+        }
 
         summary = TextFormatter.FormatStringList(summary);
         details = TextFormatter.FormatStringList(details);

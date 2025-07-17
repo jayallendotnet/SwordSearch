@@ -276,6 +276,7 @@ public class OverworldSceneManager : MonoBehaviour{
         //StaticVariables.FadeOutThenLoadScene(StaticVariables.lastVisitedStage.worldName);
         }
 
+        SetLastWorldStageVisited(currentPlayerSpace);
         interactOverlayManager.ShowInteractOverlay();
         if (currentPlayerSpace.type == OverworldSpace.OverworldSpaceType.Cutscene)
             return;    
@@ -414,8 +415,10 @@ public class OverworldSceneManager : MonoBehaviour{
     }
 
     public void FinishedTalking(){
-        if (IsCurrentEnemyNewestEnemy())
+        if (IsCurrentEnemyNewestEnemy()) {
             StaticVariables.hasTalkedToNewestEnemy = true;
+            SaveSystem.SaveGame();
+        }
     }
 
     public void HideSceneHeader(float duration){

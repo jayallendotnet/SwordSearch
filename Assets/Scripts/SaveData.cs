@@ -11,8 +11,11 @@ public class SaveData{
 
     public int worldProgress;
     public int stageProgress;
+    //public int lastVisitedWorld;
+    //public int lastVisitedStage;
     public string playerName;
     public string difficultyMode;
+    public bool hasTalkedToNewestEnemy;
     public float gameVersionNumber;
 
     // ---------------------------------------------------
@@ -22,6 +25,9 @@ public class SaveData{
     public SaveData() {
         worldProgress = StaticVariables.highestBeatenStage.world;
         stageProgress = StaticVariables.highestBeatenStage.stage;
+        //lastVisitedWorld = StaticVariables.lastVisitedStage.world;
+        //lastVisitedStage = StaticVariables.lastVisitedStage.stage;
+        hasTalkedToNewestEnemy = StaticVariables.hasTalkedToNewestEnemy;
         playerName = StaticVariables.playerName;
         switch (StaticVariables.difficultyMode) {
             case (StaticVariables.DifficultyMode.Normal):
@@ -43,6 +49,7 @@ public class SaveData{
 
     public void LoadData() {
         StaticVariables.highestBeatenStage = StaticVariables.GetStage(worldProgress, stageProgress);
+        //StaticVariables.lastVisitedStage = StaticVariables.GetStage(lastVisitedWorld, lastVisitedStage);
         StaticVariables.playerName = playerName;
         switch (difficultyMode) {
             case ("normal"):
@@ -55,6 +62,7 @@ public class SaveData{
                 StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Puzzle;
                 break;
         }
+        StaticVariables.hasTalkedToNewestEnemy = hasTalkedToNewestEnemy;
         StaticVariables.gameVersionNumber = gameVersionNumber; //if there is no saved version number, it defaults to 0
     }
 }

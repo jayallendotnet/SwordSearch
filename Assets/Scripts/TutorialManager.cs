@@ -614,15 +614,20 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("When you make another attack, a crystal will strike the enemy and deal <damage>extra damage<>!");
+            DisplayText("When you make another attack, a crystal will strike the enemy and deal <damage>+33% extra damage<>!");
             highlightPlayerHealth.SetActive(false);
             advanceCondition = Cond.Click;
         }
-        else if (++i == tutorialStep){
+        //else if (++i == tutorialStep){
+        //    DisplayText("When you make another attack, a crystal will strike the enemy and deal <damage>extra damage<>!");
+        //    highlightPlayerHealth.SetActive(false);
+        //    advanceCondition = Cond.Click;
+        //}
+        //else if (++i == tutorialStep){
             //DisplayText("The crystal damage is a fixed portion of your attack's damage.");
-            DisplayText("The crystal's damage is <damage>one third<> of your attack's damage.");
-            advanceCondition = Cond.Click;
-        }
+        //    DisplayText("The crystal's damage is <damage>one third<> of your attack's damage.");
+        //    advanceCondition = Cond.Click;
+        //}
         else if (++i == tutorialStep){
             DisplayText("This means you should make longer words to get the most damage from each crystal!");
             advanceCondition = Cond.Click;

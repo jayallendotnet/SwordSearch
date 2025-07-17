@@ -22,6 +22,7 @@ public class EnemyData : MonoBehaviour{
     [ConditionalField(nameof(isBattleable))]    public bool isNearWater = false;
     [ConditionalField(nameof(isBattleable))]    public bool canApplyDebuff = false;
     [ConditionalField(nameof(isBattleable))]    public bool isWaterDangerous = false;
+    [ConditionalField(nameof(isBattleable))]    public bool isCopycat = false;
 
     [Header("Chatheads")]
     public Sprite normal;
@@ -65,7 +66,7 @@ public class DialogueStep{
 
 [System.Serializable]
 public class EnemyAttack{
-    public enum EnemyAttackTypes{ThrowRocks}
+    public enum EnemyAttackTypes{ThrowRocks, Copycat}
 
     public float attackSpeed = 2f;
     public int attackDamage = 6;

@@ -128,9 +128,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBattleable: 1
   nameOverride: 
-  startingHealth: 20
+  startingHealth: 85
   attackOrder:
-    Value: []
+    Value:
+    - attackSpeed: 3
+      attackDamage: 1
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
+    - attackSpeed: 3
+      attackDamage: 1
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
+    - attackSpeed: 10
+      attackDamage: 10
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
