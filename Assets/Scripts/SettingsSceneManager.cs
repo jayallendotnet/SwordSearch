@@ -85,7 +85,7 @@ public class SettingsSceneManager : MonoBehaviour{
         if (playerNameInput.text == "")
             DisplayPlayerName();
         else{
-        StaticVariables.playerName = playerNameInput.text.ToUpper();
+        StaticVariables.playerName = playerNameInput.text;
             DisplayPlayerName();
         }
         SaveSystem.SaveGame();

@@ -131,7 +131,12 @@ MonoBehaviour:
   nameOverride: 
   startingHealth: 110
   attackOrder:
-    Value: []
+    Value:
+    - attackSpeed: 8
+      attackDamage: 12
+      isSpecial: 0
+      specialType: 0
+      specialColor: {r: 0, g: 0, b: 0, a: 0}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
@@ -139,6 +144,7 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
+  isCopycat: 0
   normal: {fileID: 2017393597, guid: 9a58c55c356e6924095bbcb28bff80d9, type: 3}
   angry: {fileID: 13977396, guid: 9a58c55c356e6924095bbcb28bff80d9, type: 3}
   defeated: {fileID: 1032791035, guid: 9a58c55c356e6924095bbcb28bff80d9, type: 3}
@@ -150,6 +156,7 @@ MonoBehaviour:
   mystery: {fileID: 0}
   custom1: {fileID: 0}
   custom2: {fileID: 0}
+  custom3: {fileID: 0}
   overworldDialogueSteps:
   - type: 1
     talker: {fileID: 0}

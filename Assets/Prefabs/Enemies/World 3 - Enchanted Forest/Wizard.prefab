@@ -129,7 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBattleable: 1
   nameOverride: Mustrum
-  startingHealth: 110
+  startingHealth: 170
   attackOrder:
     Value: []
   isDraconic: 0
@@ -139,6 +139,8 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
+  isCopycat: 0
+  healsSelf: 0
   normal: {fileID: 1533119839, guid: 7b59be55b5f032247834f7751b972971, type: 3}
   angry: {fileID: -992699603, guid: 7b59be55b5f032247834f7751b972971, type: 3}
   defeated: {fileID: 921222851, guid: 7b59be55b5f032247834f7751b972971, type: 3}
@@ -148,8 +150,8 @@ MonoBehaviour:
   worried: {fileID: 731866683, guid: 7b59be55b5f032247834f7751b972971, type: 3}
   surprised: {fileID: 0}
   mystery: {fileID: -1930171580, guid: 7b59be55b5f032247834f7751b972971, type: 3}
-  custom1: {fileID: 21300000, guid: 61a543caf63d34a44b317e1659268fca, type: 3}
-  custom2: {fileID: 21300000, guid: 78dc9d13672af4f4db8120a955ee3075, type: 3}
+  custom1: {fileID: 21300000, guid: 78dc9d13672af4f4db8120a955ee3075, type: 3}
+  custom2: {fileID: 21300000, guid: 61a543caf63d34a44b317e1659268fca, type: 3}
   custom3: {fileID: 0}
   overworldDialogueSteps:
   - type: 1
@@ -191,7 +193,7 @@ MonoBehaviour:
     talker: {fileID: 0}
     name: Some Kind of Microscope
     emotion: 1
-    description: Okay, Rebecca! You want a fight, you've got one!
+    description: Okay, <playername>! You want a fight, you've got one!
   victoryDialogueSteps:
   - type: 1
     talker: {fileID: 0}

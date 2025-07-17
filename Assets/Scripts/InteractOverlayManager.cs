@@ -335,6 +335,12 @@ public class InteractOverlayManager : MonoBehaviour{
             //details.Add("The enemy attack bar fills every time you make an attack. The enemy's <damage>attack damage<> scales with how full the bar is. Using the <healing>power of healing<> drains the bar.");
             //details.Add("Every time you hit the enemy, their <damage>attacks get stronger<>. Using the <healing>power of healing<> reduces this effect.");
         }
+        if (enemy.healsSelf){
+            summary.Add("The enemy <damage>steals<> your health.");
+            details.Add("Whenever this enemy deals <damage>damage<> to you, it <healing>heals<> an equal amount.");
+            //details.Add("The enemy attack bar fills every time you make an attack. The enemy's <damage>attack damage<> scales with how full the bar is. Using the <healing>power of healing<> drains the bar.");
+            //details.Add("Every time you hit the enemy, their <damage>attacks get stronger<>. Using the <healing>power of healing<> reduces this effect.");
+        }
 
         summary = TextFormatter.FormatStringList(summary);
         details = TextFormatter.FormatStringList(details);

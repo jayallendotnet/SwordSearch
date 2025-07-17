@@ -256,7 +256,7 @@ public class UIManager : MonoBehaviour {
 
 
     public void ShowEnemyGettingHealed(int amount) {
-        ShowNumbersAsChild(enemyHealSingleDigitPrefab, enemyHealDoubleDigitPrefab, enemyObject, amount);
+        ShowNumbersAsChild(enemyHealSingleDigitPrefab, enemyHealDoubleDigitPrefab, enemyParentParent, amount);
 
     }
 

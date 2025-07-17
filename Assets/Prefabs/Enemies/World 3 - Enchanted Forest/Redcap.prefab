@@ -128,9 +128,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBattleable: 1
   nameOverride: 
-  startingHealth: 20
+  startingHealth: 50
   attackOrder:
-    Value: []
+    Value:
+    - attackSpeed: 6
+      attackDamage: 5
+      isSpecial: 1
+      specialType: 2
+      specialColor: {r: 0.49019608, g: 0.23921569, b: 0.08627451, a: 1}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
@@ -138,6 +143,8 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
+  isCopycat: 0
+  healsSelf: 1
   normal: {fileID: -717315776, guid: ea5a1e3963d0f3d499abc3aea2757606, type: 3}
   angry: {fileID: 1514397899, guid: ea5a1e3963d0f3d499abc3aea2757606, type: 3}
   defeated: {fileID: -2011158322, guid: ea5a1e3963d0f3d499abc3aea2757606, type: 3}
@@ -149,6 +156,7 @@ MonoBehaviour:
   mystery: {fileID: 0}
   custom1: {fileID: 0}
   custom2: {fileID: 0}
+  custom3: {fileID: 0}
   overworldDialogueSteps:
   - type: 0
     talker: {fileID: 0}
@@ -251,7 +259,7 @@ MonoBehaviour:
     talker: {fileID: 0}
     name: 
     emotion: 2
-    description: You <playername>s are stupid, running straight into trouble.
+    description: You <playername> creatures are stupid, running straight into trouble.
   - type: 1
     talker: {fileID: 0}
     name: 

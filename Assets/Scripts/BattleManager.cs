@@ -260,13 +260,21 @@ public class BattleManager : MonoBehaviour {
             return;
         if (enemyData.isHorde)
             ApplyEnemyAttackDamage(ea.attackDamage * currentHordeEnemyCount);
-        else if (enemyData.isCopycat){
+        else if (enemyData.isCopycat) {
             int newDamage = ea.attackDamage * (copycatBuildup + 1);
             ApplyEnemyAttackDamage(newDamage);
             print("copycat is attacking! base damage is " + ea.attackDamage + ", buildup is " + copycatBuildup + ", so total damage is " + newDamage);
         }
+        else if (ea.isSpecial && ea.specialType == EnemyAttack.EnemyAttackTypes.HealsSelf) {
+            int amount = playerHealth;
+            ApplyEnemyAttackDamage(ea.attackDamage);
+            amount -= playerHealth;
+            if (amount > 0)
+                HealEnemyHealth(amount);
+        }
+
         else
-                ApplyEnemyAttackDamage(ea.attackDamage);
+            ApplyEnemyAttackDamage(ea.attackDamage);
 
 
         if (ea.isSpecial){
