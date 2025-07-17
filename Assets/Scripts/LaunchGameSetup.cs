@@ -7,7 +7,8 @@ using MyBox;
 using DG.Tweening;
 using Unity.VisualScripting;
 
-public class LaunchGameSetup : MonoBehaviour{
+public class LaunchGameSetup : MonoBehaviour
+{
 
     [Header("Powerup Colors")]
     public Color waterColor;
@@ -27,7 +28,7 @@ public class LaunchGameSetup : MonoBehaviour{
     public List<GameObject> frostlandsEnemies;
     public List<GameObject> cavernsEnemies;
     public List<GameObject> dragonsDenEnemies;
-    
+
     [Header("Book Lists")]
     public TextAsset waterBookList;
     public TextAsset healingBookList;
@@ -48,19 +49,23 @@ public class LaunchGameSetup : MonoBehaviour{
     //just used for generating the list of all stages
     private StageData previousStage;
 
-    void Start(){
+    void Start()
+    {
         SetupColors();
         SetupBookLists();
         SetupStageList();
         SetupLibraries();
+        SaveSystem.LoadGame();
+        CheckForVersionUpdate();
         //this is where we load the player's progress data, in the future from the game save data
         //StaticVariables.highestBeatenStage = StaticVariables.GetStage(1, 4);
-        StaticVariables.highestBeatenStage = StaticVariables.GetStage(3, 12); //end of forest
+        //StaticVariables.highestBeatenStage = StaticVariables.GetStage(3, 12); //end of forest
         //StaticVariables.storyMode = true;
         SceneManager.LoadScene(StaticVariables.mainMenuName);
     }
 
-    private void SetupColors(){
+    private void SetupColors()
+    {
         StaticVariables.waterPowerupColor = waterColor;
         StaticVariables.healingPowerupColor = healingColor;
         StaticVariables.earthPowerupColor = earthColor;
@@ -70,14 +75,16 @@ public class LaunchGameSetup : MonoBehaviour{
         StaticVariables.swordPowerupColor = swordColor;
     }
 
-    private void SetupLibraries(){
-        StaticVariables.wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");        
+    private void SetupLibraries()
+    {
+        StaticVariables.wordLibraryForChecking = wordLibraryForCheckingFile.text.Split("\r\n");
         StaticVariables.wordLibraryForGeneration = wordLibraryForGenerationFile.text.Split("\r\n");
-        StaticVariables.randomLetterPool = randomLetterPoolFile.text.ToCharArray();  
+        StaticVariables.randomLetterPool = randomLetterPoolFile.text.ToCharArray();
         StaticVariables.wordLibraryForGeneratingSmallerPuzzles = wordLibraryForGeneratingSmallerPuzzlesFile.text.Split("\r\n");
     }
 
-    private void SetupBookLists(){
+    private void SetupBookLists()
+    {
         StaticVariables.readingWaterBooks = GenerateBookList(waterBookList);
         StaticVariables.readingHealBooks = GenerateBookList(healingBookList);
         StaticVariables.readingEarthBooks = GenerateBookList(earthBookList);
@@ -87,19 +94,21 @@ public class LaunchGameSetup : MonoBehaviour{
         StaticVariables.readingSwordBooks = GenerateBookList(swordBookList);
     }
 
-    private BookData[] GenerateBookList(TextAsset list){
+    private BookData[] GenerateBookList(TextAsset list)
+    {
         string[] elements = list.text.Split("\r\n");
         BookData[] bookDatas = new BookData[elements.Length];
-        for (int i = 0; i < elements.Length; i++) 
+        for (int i = 0; i < elements.Length; i++)
             bookDatas[i] = new BookData(elements[i]);
         return bookDatas;
     }
 
-    private void SetupStageList(){
+    private void SetupStageList()
+    {
         allStages = new List<StageData>();
 
         //create a dummy stage to represent "has not beaten any stages yet"
-        StageData dummyStage = new (-1, "has not started", -1, null);
+        StageData dummyStage = new(-1, "has not started", -1, null);
         dummyStage.previousStage = null;
         previousStage = dummyStage;
         allStages.Add(dummyStage);
@@ -124,9 +133,11 @@ public class LaunchGameSetup : MonoBehaviour{
         //StaticVariables.grasslandsStages = grasslandsStages;
     }
 
-    private void CreateStagesForEnemiesInWorld(int worldNum, List<GameObject> enemiesInWorld){
+    private void CreateStagesForEnemiesInWorld(int worldNum, List<GameObject> enemiesInWorld)
+    {
         int stageNum = 0;
-        string worldName = worldNum switch {
+        string worldName = worldNum switch
+        {
             1 => StaticVariables.world1Name,
             2 => StaticVariables.world2Name,
             3 => StaticVariables.world3Name,
@@ -137,15 +148,39 @@ public class LaunchGameSetup : MonoBehaviour{
             8 => StaticVariables.world8Name,
             _ => StaticVariables.world1Name,
         };
-        foreach (GameObject enemyPrefab in enemiesInWorld){
-            stageNum ++;
+        foreach (GameObject enemyPrefab in enemiesInWorld)
+        {
+            stageNum++;
             StageData newStage = new(worldNum, worldName, stageNum, enemyPrefab);
             newStage.previousStage = previousStage;
-            if (previousStage !=  null)
+            if (previousStage != null)
                 previousStage.nextStage = newStage;
             previousStage = newStage;
             allStages.Add(newStage);
         }
+    }
+    
+        private void CheckForVersionUpdate(){
+        if (StaticVariables.gameVersionNumber == 0){
+            //this happens when the save data has no version number recorded
+            //update to 0.1 immediately, then keep checking version numbers after that
+            //UpdateToVersion0_1();
+        }
+        //if (StaticVariables.gameVersionNumber == 0.1f)
+        //    ChangeVersionNumber(0.2f);
+        //if (StaticVariables.gameVersionNumber == 0.2f)
+        //    ChangeVersionNumber(0.3f);
+    }
+
+    //private void UpdateToVersion0_1(){
+        //this is here for a placeholder if there ever needs to be a version update
+        //ChangeVersionNumber(0.1f);
+        //SaveSystem.SaveGame();
+    //}
+
+    private void ChangeVersionNumber(float newVersionNum){
+        print("updating version number! Old version " + StaticVariables.gameVersionNumber + ", new version " + newVersionNum);
+        StaticVariables.gameVersionNumber = newVersionNum;
     }
 
 }

@@ -72,6 +72,7 @@ public class OverworldSceneManager : MonoBehaviour{
                     ImmediatelyStartNextWorld();
                 else
                     UnlockNextEnemy();
+                SaveSystem.SaveGame();
             }
         }
         StaticVariables.hasCompletedStage = false;

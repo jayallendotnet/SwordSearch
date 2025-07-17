@@ -50,6 +50,7 @@ public class SettingsSceneManager : MonoBehaviour{
         StageData stage = StaticVariables.GetStage(newWorld, newStage);
         StaticVariables.highestBeatenStage = stage.previousStage;
         DisplayProgress();
+        SaveSystem.SaveGame();
     }
 
     public void WorldUp(){        
@@ -60,43 +61,34 @@ public class SettingsSceneManager : MonoBehaviour{
         StageData stage = StaticVariables.GetStage(newWorld, newStage);
         StaticVariables.highestBeatenStage = stage.previousStage;
         DisplayProgress(); 
+        SaveSystem.SaveGame();
     }
     public void StageDown(){
         if (StaticVariables.highestBeatenStage.previousStage != null)
             StaticVariables.highestBeatenStage = StaticVariables.highestBeatenStage.previousStage;
         DisplayProgress();
+        SaveSystem.SaveGame();
     }
 
     public void StageUp(){
         if ((StaticVariables.highestBeatenStage.nextStage != null) && (StaticVariables.highestBeatenStage.nextStage.nextStage != null))
             StaticVariables.highestBeatenStage = StaticVariables.highestBeatenStage.nextStage;
         DisplayProgress();
+        SaveSystem.SaveGame();
     }
 
     private void DisplayPlayerName(){
         playerNameInput.text = StaticVariables.playerName;
     }
 
-    //public void ToggleStoryMode(){
-    //    StaticVariables.storyMode = !StaticVariables.storyMode;
-    //    DisplayStoryMode();
-    //}
-
-    //private void DisplayStoryMode(){
-    //    if (StaticVariables.storyMode)
-    //        storyModeDisplay.text = "ENABLED";
-    //    else
-    //        storyModeDisplay.text = "DISABLED"//;
-//
-    //}
-
     public void UpdatePlayerName(){
         if (playerNameInput.text == "")
             DisplayPlayerName();
         else{
-        StaticVariables.playerName = playerNameInput.text;
+        StaticVariables.playerName = playerNameInput.text.ToUpper();
             DisplayPlayerName();
         }
+        SaveSystem.SaveGame();
     }
     
     public void NextDifficultyMode(){
@@ -113,6 +105,7 @@ public class SettingsSceneManager : MonoBehaviour{
                 break;
         }
         DisplayDifficultyMode();
+        SaveSystem.SaveGame();
     }
     
     public void PreviousDifficultyMode(){ 
@@ -129,6 +122,7 @@ public class SettingsSceneManager : MonoBehaviour{
                 break;
         }
         DisplayDifficultyMode();
+        SaveSystem.SaveGame();
     }
     
     public void DisplayDifficultyMode(){
