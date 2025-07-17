@@ -131,7 +131,12 @@ MonoBehaviour:
   nameOverride: Mustrum
   startingHealth: 170
   attackOrder:
-    Value: []
+    Value:
+    - attackSpeed: 7
+      attackDamage: 8
+      isSpecial: 1
+      specialType: 3
+      specialColor: {r: 0.98039216, g: 0.3254902, b: 0.1254902, a: 1}
   isDraconic: 0
   isHorde: 0
   isHoly: 0
@@ -141,6 +146,7 @@ MonoBehaviour:
   isWaterDangerous: 0
   isCopycat: 0
   healsSelf: 0
+  canBurn: 1
   normal: {fileID: 1533119839, guid: 7b59be55b5f032247834f7751b972971, type: 3}
   angry: {fileID: -992699603, guid: 7b59be55b5f032247834f7751b972971, type: 3}
   defeated: {fileID: 921222851, guid: 7b59be55b5f032247834f7751b972971, type: 3}

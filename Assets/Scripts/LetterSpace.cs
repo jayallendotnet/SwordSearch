@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +28,8 @@ public class LetterSpace : MonoBehaviour{
     public char nextLetter;
     [HideInInspector]
     public BattleManager.PowerupTypes nextPowerupType = BattleManager.PowerupTypes.None;
+    [HideInInspector]
+    public bool isBurned = false;
 
 
     [Header("GameObjects")]
@@ -67,7 +70,9 @@ public class LetterSpace : MonoBehaviour{
     public GameObject swordIcon;
     public Animator swordIconAnimator;
 
+    [Header("Other Icons")]
     public Animator highlightAnimator;
+    public Transform burnIcon;
 
     [Header("Colors")]
     public Color normalLetterColor;
@@ -284,5 +289,20 @@ public class LetterSpace : MonoBehaviour{
         if (value)
             battleManager.uiManager.SynchronizePulse(highlightAnimator, "SelectedSignifier");
 
+    }
+
+    public void ApplyBurn() {
+        isBurned = true;
+        burnIcon.gameObject.SetActive(true);
+        float originalScale = burnIcon.localScale.x;
+        burnIcon.localScale = Vector2.zero;
+        burnIcon.DOScale(originalScale, 0.2f);
+        battleManager.puzzleGenerator.burnedLetters.Add(this);
+    }
+    
+    public void RemoveBurn(){
+        isBurned = false;
+        burnIcon.gameObject.SetActive(false);
+        battleManager.puzzleGenerator.burnedLetters.Remove(this);
     }
 }

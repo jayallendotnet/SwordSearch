@@ -17,6 +17,9 @@ public class PuzzleGenerator : MonoBehaviour {
     private char[,] smallerLayout = {{'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'-', '-', '-', '-', '-'}, {'=', '=', '=', '=', '='}, {'=', '=', '=', '=', '='}, {'=', '=', '=', '=', '='}};
     List<BattleManager.PowerupTypes> powerupTypeSelection;
     private bool hasPickedBuffedTypeYet = false;
+    [HideInInspector]
+    public List<LetterSpace> burnedLetters = new();
+    //private List<LetterSpace> unburnedLetters = new();
 
     [Header("Puzle Generation Rules")]
     public int wordCount = 3;
@@ -463,22 +466,61 @@ public class PuzzleGenerator : MonoBehaviour {
             PickRandomSpaceForPowerup(i == StaticVariables.powerupsPerPuzzle - 1);
     }
 
-    private void PickRandomSpaceForPowerup(bool finalSpace){
+    private void PickRandomSpaceForPowerup(bool isFinalSpace) {
+        
+        /*
         int t1 = StaticVariables.rand.Next(letters.GetLength(0));
         int t2 = StaticVariables.rand.Next(letters.GetLength(1));
         if (useSmallerLayout)
             t1 = StaticVariables.rand.Next(4);
-        if (powerupTypes[t1, t2] != BattleManager.PowerupTypes.None)
-            PickRandomSpaceForPowerup(finalSpace);
+        //if (powerupTypes[t1, t2] != BattleManager.PowerupTypes.None)
+        if (powerupTypes[t1, t2] != BattleManager.PowerupTypes.None || letterSpaces[t1, t2].isBurned)
+            PickRandomSpaceForPowerup(isFinalSpace);
         else{
-            powerupTypes[t1, t2] = PickRandomPowerupType(finalSpace);
+            powerupTypes[t1, t2] = PickRandomPowerupType(isFinalSpace);
         }  
+        */
+        
+        List<Vector2> allSpaces = GetListOfAllSpaces();
+        List<Vector2> viableSpaces = new(allSpaces);
+        foreach (Vector2 space in allSpaces) {
+            int row = (int)space[0];
+            int col = (int)space[1];
+            if (useSmallerLayout && row > 3)
+                viableSpaces.Remove(space);
+            if ((powerupTypes[row, col] != BattleManager.PowerupTypes.None) || letterSpaces[row, col].isBurned)
+                viableSpaces.Remove(space);
+        }
+        if (viableSpaces.Count > 0) {
+            Vector2 choice = viableSpaces[StaticVariables.rand.Next(viableSpaces.Count)];
+            //print("chosen space for powerup is " + choice[0] + ", " + choice[1]);
+            powerupTypes[(int)choice[0], (int)choice[1]] = PickRandomPowerupType(isFinalSpace);
+        }
+        //    powerupTypes[
+
+        //int rowCount = letters.GetLength(0);
+        //int colCount = letters.GetLength(1);
+        //if (useSmallerLayout)
+        //    rowCount = 4;
+        //List<Vector2> viablesSpaces = new();
+
+        //foreach (Vector2 s in allSpaces) {
+        //    LetterSpace ls = letterSpaces[(int)s[0], (int)s[1]];
+        //    if ((ls.powerupType == BattleManager.PowerupTypes.None) && !ls.isBurned)
+        //        viablesSpaces.Add(s);
+        //}
+
+        //if (viablesSpaces.Count > 0) {
+        //    Vector2 coords = viablesSpaces[StaticVariables.rand.Next(viablesSpaces.Count)];
+        //    powerupTypes[(int)coords[0], (int)coords[1]] = PickRandomPowerupType(finalSpace);
+        //}
+        
     }
     
-    private BattleManager.PowerupTypes PickRandomPowerupType(bool finalSpace){
+    private BattleManager.PowerupTypes PickRandomPowerupType(bool isFinalspace){
         //randomly picks a powerup type. also takes buffed type into account!
         if (StaticVariables.buffedType != BattleManager.PowerupTypes.None){
-            if (finalSpace && !hasPickedBuffedTypeYet) //if last powerup, and the buffed type has not been picked yet, guarantee it is the buffed type
+            if (isFinalspace && !hasPickedBuffedTypeYet) //if last powerup, and the buffed type has not been picked yet, guarantee it is the buffed type
                 return StaticVariables.buffedType;
             int r = StaticVariables.rand.Next(0,100); //otherwise, pick a random number, with a sizable chance to pick the buffed type
             if (r <= 40){
@@ -489,6 +531,7 @@ public class PuzzleGenerator : MonoBehaviour {
         //if the buffed type was not selected, pick a random type from the remaining (non-buffed) types
         int range = powerupTypeSelection.Count;
         int i = StaticVariables.rand.Next(0,range);
+        //print("powerup type selection is " + powerupTypeSelection[i]);
         return powerupTypeSelection[i];
     }
 
@@ -515,5 +558,28 @@ public class PuzzleGenerator : MonoBehaviour {
         
         if (StaticVariables.buffedType != BattleManager.PowerupTypes.None)//remove the buffed type from the list, its prescence is determined separately
             powerupTypeSelection.Remove(StaticVariables.buffedType);
+    }
+
+    public LetterSpace PickRandomSpaceWithoutPowerupOrBurn() {
+        List<Vector2> allSpaces = GetListOfAllSpaces();
+        List<Vector2> viablesSpaces = new();
+
+        foreach (Vector2 s in allSpaces) {
+            LetterSpace space = letterSpaces[(int)s[0], (int)s[1]];
+            if (!space.isBurned && (space.powerupType == BattleManager.PowerupTypes.None) && !battleManager.letterSpacesForWord.Contains(space))
+                viablesSpaces.Add(s);
+        }
+
+        if (viablesSpaces.Count > 0) {
+            Vector2 space = viablesSpaces[StaticVariables.rand.Next(viablesSpaces.Count)];
+            return letterSpaces[(int)space[0], (int)space[1]];
+        }
+        return null;
+    }
+
+    public LetterSpace PickRandomBurnedSpace() {
+        if (burnedLetters.Count > 0)
+            return burnedLetters[StaticVariables.rand.Next(burnedLetters.Count)];
+        return null;
     }
 }

@@ -51,6 +51,7 @@ public class BattleManager : MonoBehaviour {
     private int enemyAttackIndex = 0;
     [HideInInspector]
     public int copycatBuildup = 0;
+    private int maxBurnedLetters = 20;
 
 
     [Header("Game Variables")]
@@ -70,6 +71,7 @@ public class BattleManager : MonoBehaviour {
     public float swordPowerupDamageMultiplier = 2f;
     public float swordPowerupDamageMultiplierVsDragons = 5f;
     public BattleData defaultBattleData;
+    public int selfDamageFromBurnedLetters = 2;
 
     [Header("Scripts")]
     public UIManager uiManager;
@@ -283,6 +285,9 @@ public class BattleManager : MonoBehaviour {
                     uiManager.CoverPageWithBoulders();
                     //print("rocks should now cover some of the screen.");
                     break;
+                case EnemyAttack.EnemyAttackTypes.BurnLetters:
+                    BurnRandomLetters(3);
+                    break;
             }
 
         }
@@ -435,6 +440,30 @@ public class BattleManager : MonoBehaviour {
             healAmount /= 2;
         HealPlayerHealth(healAmount);
     }
+        
+    public void BurnRandomLetters(int amount){
+        for (int i = 0; i < amount; i++){
+            if (puzzleGenerator.burnedLetters.Count >= maxBurnedLetters)
+                return;
+            LetterSpace toBurn = puzzleGenerator.PickRandomSpaceWithoutPowerupOrBurn();
+            if(toBurn != null)
+                toBurn.ApplyBurn();
+        }
+    }
+    
+    public void ClearRandomBurnedLetters(int amount){
+        for (int i = 0; i < amount; i++){
+            LetterSpace toClear = puzzleGenerator.PickRandomBurnedSpace();
+            if (toClear != null)
+                toClear.RemoveBurn();
+        }
+    }
+
+    private void ClearAllBurnedLetters() {
+        List<LetterSpace> letters = new(puzzleGenerator.burnedLetters); //we dont want to modify the list as we are iterating on it, so we make a copy
+        foreach (LetterSpace ls in letters)
+            ls.RemoveBurn();
+    }
 
     public void ClearDebuffs(){
         if (uiManager.shownBoulders != null)
@@ -443,11 +472,19 @@ public class BattleManager : MonoBehaviour {
             copycatBuildup -= 2;
             if (copycatBuildup < -1)
                 copycatBuildup = -1; //its ok to set to -1, because a normal damaging attack happens right after, bringing the buildup back to 0.
-            //uiManager.ShowCopycatBuildup();
         }
+        if (puzzleGenerator.burnedLetters.Count > 0)
+            ClearRandomBurnedLetters(5);
+    }
+    
+    public void HideAllDebuffVisuals(){
+        if (uiManager.shownBoulders != null)
+            uiManager.ClearBouldersOnPage();
+        if (puzzleGenerator.burnedLetters.Count > 0)
+            ClearAllBurnedLetters();
     }
 
-    private void HealPlayerHealth(int amount){
+    private void HealPlayerHealth(int amount) {
         playerHealth += amount;
         if (playerHealth > maxHealth)
             playerHealth = maxHealth;
@@ -469,17 +506,20 @@ public class BattleManager : MonoBehaviour {
             countdownToRefresh = 0;
     }
 
-    public virtual void AddLetter(LetterSpace ls){
+    public virtual void AddLetter(LetterSpace ls) {
         word += ls.letter;
         SetIsValidWord();
         CalcWordStrength();
         letterSpacesForWord.Add(ls);
-        if (lastLetterSpace != null){
+        if (lastLetterSpace != null) {
             lastLetterSpace.nextLetterSpace = ls;
             ls.previousLetterSpace = lastLetterSpace;
         }
         SetLastTwoLetterSpaces();
         UpdateSubmitVisuals();
+        if (ls.isBurned)
+            DamagePlayerHealth(selfDamageFromBurnedLetters);
+
     }
 
     public void RemoveLetter(LetterSpace ls){

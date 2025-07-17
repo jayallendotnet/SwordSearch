@@ -341,6 +341,11 @@ public class InteractOverlayManager : MonoBehaviour{
             //details.Add("The enemy attack bar fills every time you make an attack. The enemy's <damage>attack damage<> scales with how full the bar is. Using the <healing>power of healing<> drains the bar.");
             //details.Add("Every time you hit the enemy, their <damage>attacks get stronger<>. Using the <healing>power of healing<> reduces this effect.");
         }
+        if (enemy.canBurn){
+            summary.Add("This enemy can <fire>burn<> the spellbook!");
+            //details.Add("The enemy's <fire>fire attack<> will scorch 3 letters. You can still use a burned letter, but you get hurt in the process. Using the <healing>power of healing<> or <water>power of water<> will repair some letters.");
+            details.Add("The enemy's <fire>fire attack<> will <fire>scorch<> 3 letters. You can still use a <fire>burned letter<>, but you get hurt in the process. Using the <healing>power of healing<> will repair some letters.");
+        }
 
         summary = TextFormatter.FormatStringList(summary);
         details = TextFormatter.FormatStringList(details);

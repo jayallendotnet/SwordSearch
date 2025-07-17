@@ -589,6 +589,8 @@ public class UIManager : MonoBehaviour {
         copycatBar4.SetActive(battleManager.copycatBuildup == 4);
         copycatBar5.SetActive(battleManager.copycatBuildup > 4);
     }
+    
+
 
     public void FillPuzzleAreaWithWater(float totalDuration) {
         CancelWaterDrain();
@@ -731,8 +733,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void PauseBoulderDebuff() {
-        if (shownBoulders != null)
-        {
+        if (shownBoulders != null) {
             foreach (Transform t in shownBoulders.transform)
                 DOTween.Pause(t.GetComponent<Image>());
         }
@@ -740,8 +741,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ResumeBoulderDebuff() {
-        if (shownBoulders != null)
-        {
+        if (shownBoulders != null) {
             foreach (Transform t in shownBoulders.transform)
                 DOTween.Play(t.GetComponent<Image>());
         }
@@ -796,7 +796,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowVictoryPage() {
-        battleManager.ClearDebuffs();
+        battleManager.HideAllDebuffVisuals();
         ShowPageTurn(true);
         //FadeOutWaterOnBattleEnd();
         endGameDisplay.SetActive(true);
@@ -805,7 +805,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowDefeatPage() {
-        battleManager.ClearDebuffs();
+        battleManager.HideAllDebuffVisuals();
         ShowPageTurn(true);
         //FadeOutWaterOnBattleEnd();
         endGameDisplay.SetActive(true);
