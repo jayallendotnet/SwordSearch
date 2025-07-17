@@ -8,9 +8,18 @@ public class SettingsSceneManager : MonoBehaviour{
 
     public Text worldNameDisplay;
     public Text stageNumberDisplay;
-    public Text storyModeDisplay;
-
     public InputField playerNameInput;
+    //public Text storyModeDisplay;
+    [Header("Difficulty Modes")]
+    public Text difficultyModeDisplay;
+    public Text difficultyModeDescription;
+    [TextArea(2,5)]
+    public string normalModeDescription;
+    [TextArea(2,5)]
+    public string storyModeDescription;
+    [TextArea(2,5)]
+    public string puzzleModeDescription;
+
     //public BattleData JustBattleOpponent;
 
     void Start(){
@@ -20,6 +29,7 @@ public class SettingsSceneManager : MonoBehaviour{
     public void Setup(){
         DisplayProgress();
         DisplayPlayerName();
+        DisplayDifficultyMode();
     }
 
     public void HitBackButton(){
@@ -67,18 +77,18 @@ public class SettingsSceneManager : MonoBehaviour{
         playerNameInput.text = StaticVariables.playerName;
     }
 
-    public void ToggleStoryMode(){
-        StaticVariables.storyMode = !StaticVariables.storyMode;
-        DisplayStoryMode();
-    }
+    //public void ToggleStoryMode(){
+    //    StaticVariables.storyMode = !StaticVariables.storyMode;
+    //    DisplayStoryMode();
+    //}
 
-    private void DisplayStoryMode(){
-        if (StaticVariables.storyMode)
-            storyModeDisplay.text = "ENABLED";
-        else
-            storyModeDisplay.text = "DISABLED";
-
-    }
+    //private void DisplayStoryMode(){
+    //    if (StaticVariables.storyMode)
+    //        storyModeDisplay.text = "ENABLED";
+    //    else
+    //        storyModeDisplay.text = "DISABLED"//;
+//
+    //}
 
     public void UpdatePlayerName(){
         if (playerNameInput.text == "")
@@ -86,6 +96,55 @@ public class SettingsSceneManager : MonoBehaviour{
         else{
         StaticVariables.playerName = playerNameInput.text;
             DisplayPlayerName();
+        }
+    }
+    
+    public void NextDifficultyMode(){
+        //normal > puzzle > story > normal
+        switch (StaticVariables.difficultyMode){
+            case StaticVariables.DifficultyMode.Normal:
+                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Puzzle;
+                break;
+            case StaticVariables.DifficultyMode.Puzzle:
+                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Story;
+                break;
+            case StaticVariables.DifficultyMode.Story:
+                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Normal;
+                break;
+        }
+        DisplayDifficultyMode();
+    }
+    
+    public void PreviousDifficultyMode(){ 
+        //same as above but reversed       
+        switch (StaticVariables.difficultyMode){
+            case StaticVariables.DifficultyMode.Normal:
+                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Story;
+                break;
+            case StaticVariables.DifficultyMode.Story:
+                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Puzzle;
+                break;
+            case StaticVariables.DifficultyMode.Puzzle:
+                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Normal;
+                break;
+        }
+        DisplayDifficultyMode();
+    }
+    
+    public void DisplayDifficultyMode(){
+        switch (StaticVariables.difficultyMode){
+            case StaticVariables.DifficultyMode.Normal:
+                difficultyModeDisplay.text = "NORMAL";
+                difficultyModeDescription.text = normalModeDescription;
+                break;
+            case StaticVariables.DifficultyMode.Story:
+                difficultyModeDisplay.text = "STORY";
+                difficultyModeDescription.text = storyModeDescription;
+                break;
+            case StaticVariables.DifficultyMode.Puzzle:
+                difficultyModeDisplay.text = "PUZZLE";
+                difficultyModeDescription.text = puzzleModeDescription;
+                break;
         }
     }
 }

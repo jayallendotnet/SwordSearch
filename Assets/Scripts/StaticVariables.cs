@@ -69,10 +69,13 @@ public class StaticVariables
     static public Color swordPowerupColor;
 
     static public bool storyMode = false;
+    static public DifficultyMode difficultyMode = DifficultyMode.Normal;
+    public enum DifficultyMode{Normal, Story, Puzzle};
 
 
 
-    static public void WaitTimeThenCallFunction(float delay, TweenCallback function) {
+    static public void WaitTimeThenCallFunction(float delay, TweenCallback function)
+    {
         tweenDummy.DOLocalMove(tweenDummy.transform.localPosition, delay, false).OnComplete(function);
     }    
     static public void WaitTimeThenCallFunction(float delay, TweenCallback<string> function, string param) {

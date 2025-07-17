@@ -93,8 +93,10 @@ public class BattleManager : MonoBehaviour {
         else{
             enemyHealth = enemyData.startingHealth;
         }
-        if (StaticVariables.storyMode)
+        if (StaticVariables.difficultyMode == StaticVariables.DifficultyMode.Story)
             enemyHealth = 1;
+        else if (StaticVariables.difficultyMode == StaticVariables.DifficultyMode.Puzzle)
+            enemyHealth *= 10;
         playerHealth = startingPlayerHealth;
         uiManager.ApplyBackground(StaticVariables.battleData.backgroundPrefab);
 
@@ -167,20 +169,30 @@ public class BattleManager : MonoBehaviour {
         }
     }
 
-    public virtual void DamagePlayerHealth(int amount){
+    public virtual void ApplyEnemyAttackDamage(int amount) {
+        if (StaticVariables.difficultyMode == StaticVariables.DifficultyMode.Story)
+            DamagePlayerHealth(1);
+        else if (StaticVariables.difficultyMode == StaticVariables.DifficultyMode.Puzzle)
+            DamagePlayerHealth(0);
+        else
+            DamagePlayerHealth(amount);
+    }
+
+    public virtual void DamagePlayerHealth(int amount) {
         playerHealth -= amount;
         if (playerHealth < 0)
             playerHealth = 0;
         uiManager.ShowPlayerTakingDamage(amount, playerHealth > 0);
         uiManager.DisplayHealths(playerHealth, enemyHealth);
-        if (playerHealth == 0){
+        if (playerHealth == 0)
+        {
             uiManager.PauseEnemyAttackBar();
             uiManager.PauseWaterDrain();
             //uiManager.FadeOutWaterOverlay();
             uiManager.PauseBoulderDebuff();
             uiManager.PausePageTurn();
             ClearWord(false);
-        }      
+        }
     }
 
     public void PauseEverything(){
@@ -245,9 +257,9 @@ public class BattleManager : MonoBehaviour {
         if (ea == null)
             return;
         if (enemyData.isHorde)
-            DamagePlayerHealth(ea.attackDamage * currentHordeEnemyCount);
+            ApplyEnemyAttackDamage(ea.attackDamage * currentHordeEnemyCount);
         else
-            DamagePlayerHealth(ea.attackDamage);
+            ApplyEnemyAttackDamage(ea.attackDamage);
 
 
         if (ea.isSpecial){
