@@ -44,7 +44,7 @@ public class ReadingOption : MonoBehaviour{
         RectTransform t = bookDescription.GetComponent<RectTransform>();
         t.SetSiblingIndex(transform.GetSiblingIndex() + 1);
         t.GetChild(0).GetComponent<Text>().text = bookData.description.ToUpper().Replace(" ", "  ");
-        t.GetChild(2).GetComponent<Text>().text = GetPowerupSummary();
+        t.GetChild(2).GetComponent<Text>().text = TextFormatter.FormatString(GetPowerupSummary());
 
         //start the description small then grow to full size
         float width = t.sizeDelta.x;
@@ -94,12 +94,12 @@ public class ReadingOption : MonoBehaviour{
     }
 
     private string GetPowerupSummary(){
-        string powerupName = powerupType + "";
+        string powerupName = (powerupType + "").ToLower();
         if (powerupType == BattleManager.PowerupTypes.Heal)
-            powerupName = "Healing";
+            powerupName = "healing";
         else if (powerupType == BattleManager.PowerupTypes.Dark)
-            powerupName = "Darkness";
-        return ("The power of " + powerupName + " will now appear much more frequently in battle!");
+            powerupName = "darkness";
+        return ("The <" + powerupName + ">power of " + powerupName + "<> will now appear much more frequently in battle!");
     }
 
 }
