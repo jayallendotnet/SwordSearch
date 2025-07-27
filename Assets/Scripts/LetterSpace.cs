@@ -96,7 +96,7 @@ public class LetterSpace : MonoBehaviour{
         }
         else{
             selectedSignifierAnimator.enabled = true;
-            battleManager.uiManager.SynchronizePulse(selectedSignifierAnimator);
+            battleManager.uiManager.SynchronizePulse(selectedSignifierAnimator, "SelectedLetterSignifier");
         }
     }
 
@@ -287,7 +287,7 @@ public class LetterSpace : MonoBehaviour{
     public void ToggleTutorialSelector(bool value) {
         tutorialSelector.SetActive(value);
         if (value)
-            battleManager.uiManager.SynchronizePulse(highlightAnimator, "SelectedSignifier");
+            battleManager.uiManager.SynchronizePulse(highlightAnimator, "TutorialHighlight_LetterSpace");
 
     }
 

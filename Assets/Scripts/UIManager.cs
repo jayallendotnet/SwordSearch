@@ -95,12 +95,13 @@ public class UIManager : MonoBehaviour {
     public GameObject pebbleDisplay3;
     public GameObject pebbleDisplay4;
     public GameObject pebbleDisplay5;
-    public GameObject copycatBar0;
-    public GameObject copycatBar1;
-    public GameObject copycatBar2;
-    public GameObject copycatBar3;
-    public GameObject copycatBar4;
-    public GameObject copycatBar5;
+    public RectTransform copycatBar;
+    //public GameObject copycatBar0;
+    //public GameObject copycatBar1;
+    //public GameObject copycatBar2;
+    //public GameObject copycatBar3;
+    //public GameObject copycatBar4;
+    //public GameObject copycatBar5;
 
     [Header("Misc")]
     public BattleManager battleManager;
@@ -582,12 +583,18 @@ public class UIManager : MonoBehaviour {
     }
     
     public void ShowCopycatBuildup(){
-        copycatBar0.SetActive(battleManager.copycatBuildup < 1);
-        copycatBar1.SetActive(battleManager.copycatBuildup == 1);
-        copycatBar2.SetActive(battleManager.copycatBuildup == 2);
-        copycatBar3.SetActive(battleManager.copycatBuildup == 3);
-        copycatBar4.SetActive(battleManager.copycatBuildup == 4);
-        copycatBar5.SetActive(battleManager.copycatBuildup > 4);
+        print("copycat buildup is " + battleManager.copycatBuildup);
+        float frac = (float)battleManager.copycatBuildup / (float)battleManager.maxCopycatStacks;
+        if (frac < 0)
+            frac = 0;
+        copycatBar.localScale = new Vector2(1, frac);
+        copycatBar.gameObject.SetActive(true);
+        //copycatBar0.SetActive(battleManager.copycatBuildup < 1);
+        //copycatBar1.SetActive(battleManager.copycatBuildup == 1);
+        //copycatBar2.SetActive(battleManager.copycatBuildup == 2);
+        //copycatBar3.SetActive(battleManager.copycatBuildup == 3);
+        //copycatBar4.SetActive(battleManager.copycatBuildup == 4);
+        //copycatBar5.SetActive(battleManager.copycatBuildup > 4);
     }
     
 

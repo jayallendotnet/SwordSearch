@@ -72,6 +72,7 @@ public class BattleManager : MonoBehaviour {
     public float swordPowerupDamageMultiplierVsDragons = 5f;
     public BattleData defaultBattleData;
     public int selfDamageFromBurnedLetters = 2;
+    public int maxCopycatStacks = 5;
 
     [Header("Scripts")]
     public UIManager uiManager;
@@ -216,7 +217,7 @@ public class BattleManager : MonoBehaviour {
         uiManager.SetAllAnimationStates(true);
     }
 
-    private void StartPlayingPlayerAttackAnimation(PowerupTypes type){
+    private void StartPlayingPlayerAttackAnimation(PowerupTypes type) {
         uiManager.PauseEnemyAttackBar();
         if (type == PowerupTypes.Heal)
             uiManager.StartPlayerHealAnimation();
@@ -240,7 +241,7 @@ public class BattleManager : MonoBehaviour {
         switch (type){
             case PowerupTypes.Heal:
                 ApplyHealToSelf(strength, powerupLevel);
-                ClearDebuffs();
+                ClearDebuffsViaHealing();
                 break;
             default:
                 ApplyAttackToEnemy(type, strength, powerupLevel);
@@ -263,7 +264,9 @@ public class BattleManager : MonoBehaviour {
         if (enemyData.isHorde)
             ApplyEnemyAttackDamage(ea.attackDamage * currentHordeEnemyCount);
         else if (enemyData.isCopycat) {
-            int newDamage = ea.attackDamage * (copycatBuildup + 1);
+            int newDamage = ea.attackDamage * copycatBuildup; //at 0 stacks, copycat does 0 damage
+            if (newDamage < 0)
+                newDamage = 0;
             ApplyEnemyAttackDamage(newDamage);
             print("copycat is attacking! base damage is " + ea.attackDamage + ", buildup is " + copycatBuildup + ", so total damage is " + newDamage);
         }
@@ -316,16 +319,16 @@ public class BattleManager : MonoBehaviour {
 
 
     public void ApplyAttackToEnemy(PowerupTypes type, int strength, int powerupLevel){
-        if (enemyData.isCopycat && type != PowerupTypes.Heal && copycatBuildup < 5 && type != PowerupTypes.Pebble){
-            copycatBuildup ++;
-            uiManager.ShowCopycatBuildup();
+        if (enemyData.isCopycat){
+            if ((copycatBuildup < maxCopycatStacks) && (type != PowerupTypes.Heal) && (type != PowerupTypes.Pebble)){
+                copycatBuildup ++;
+                uiManager.ShowCopycatBuildup();
+            }
         }
         if (powerupLevel < 1)
                 DamageEnemyHealth(strength);
-            else
-            {
-                switch (type)
-                {
+            else {
+                switch (type){
                     case PowerupTypes.Water:
                         DamageEnemyHealth(strength);
                         ApplyBuffForWaterAttack(powerupLevel);
@@ -465,16 +468,16 @@ public class BattleManager : MonoBehaviour {
             ls.RemoveBurn();
     }
 
-    public void ClearDebuffs(){
+    public void ClearDebuffsViaHealing(){
         if (uiManager.shownBoulders != null)
             uiManager.ClearBouldersOnPage();
         if (enemyData.isCopycat) {
-            copycatBuildup -= 2;
+            copycatBuildup -= 3;
             if (copycatBuildup < -1)
                 copycatBuildup = -1; //its ok to set to -1, because a normal damaging attack happens right after, bringing the buildup back to 0.
         }
-        if (puzzleGenerator.burnedLetters.Count > 0)
-            ClearRandomBurnedLetters(5);
+        //if (puzzleGenerator.burnedLetters.Count > 0)
+        //    ClearRandomBurnedLetters(5);
     }
     
     public void HideAllDebuffVisuals(){
@@ -690,6 +693,9 @@ public class BattleManager : MonoBehaviour {
             SetCurrentAttackData();
             DecrementRefreshPuzzleCountdown();
             ClearWord(true);
+
+            if (isWaterInPuzzleArea && enemyData.canBurn)
+                ClearRandomBurnedLetters(2);
         }
     }
 

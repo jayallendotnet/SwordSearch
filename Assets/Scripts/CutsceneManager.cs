@@ -84,10 +84,10 @@ public class CutsceneManager : MonoBehaviour{
         cutsceneID = StaticVariables.cutsceneID;
     }
 
-    private void SetupHometown1()
-    {
+    private void SetupHometown1(){
         SetCutsceneBackground(hometown1);
         ToggleObject("Player", false);
+        //cutsceneStep = 50; //for testing goblin walking
         //cutsceneStep = 79; //for testing the water spray
     }
 
@@ -257,23 +257,23 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionWait(0.2f);
         }
         else if (++i == cutsceneStep){
-            PlayAnimationAndMoveThenIdle("Blacksmith", "Walk", -172, 64, 1.3f);
-            AdvanceConditionWaitThenClick(1.5f);
+            PlayAnimationAndMoveThenIdle("Blacksmith", "Walk", -110, 11, 1.4f);
+            AdvanceConditionWaitThenClick(1.6f);
         }   
         else if (++i == cutsceneStep){
             DisplayEnemyTalking("My daughter lives in Duskvale!", "Brown Hair Lady No Hat", DialogueStep.Emotion.Angry);
             AdvanceConditionWait(0.2f);
         }
         else if (++i == cutsceneStep){
-            PlayAnimationAndMoveThenIdle("Brown Hair Lady No Hat", "Walk", -419, 244, 1.3f);
-            AdvanceConditionWaitThenClick(1.5f);
+            PlayAnimationAndMoveThenIdle("Brown Hair Lady No Hat", "Walk", -227, 244, 1.7f);
+            AdvanceConditionWaitThenClick(1.9f);
         } 
         else if (++i == cutsceneStep){
             DisplayEnemyTalking("I hate the Lich King!", "Redhead Lady", DialogueStep.Emotion.Angry);
             AdvanceConditionWait(0.2f);
         }
         else if (++i == cutsceneStep){
-            PlayAnimationAndMoveThenIdle("Redhead Lady", "Walk", 58, 334, 2f);
+            PlayAnimationAndMoveThenIdle("Redhead Lady", "Walk", 177, 334, 2f);
             AdvanceConditionWaitThenClick(2.2f);
         }  
         else if (++i == cutsceneStep){
@@ -393,7 +393,7 @@ public class CutsceneManager : MonoBehaviour{
         }
         else if (++i == cutsceneStep){
             //DisplayNobodyTalking();
-            PlayAnimationAndMoveThenIdle("Goblin 1", "Walk", 70, -64, 2.2f);
+            PlayAnimationAndMoveThenIdle("Goblin 1", "Walk", 70, -96, 2.2f);
             PlayAnimationAndMoveThenIdle("Goblin 2", "Walk", 514, 310, 2f);
             PlayAnimationAndMoveThenIdle("Goblin 3", "Walk", 446, 489, 2f);
             PlayAnimationAndMoveThenIdle("Goblin General", "Walk", 240, 183, 1.5f);
@@ -423,17 +423,53 @@ public class CutsceneManager : MonoBehaviour{
             HideEnemyChathead();
             AdvanceConditionWait(0.2f);
         }
+        /*
         else if (++i == cutsceneStep){
-            PlayAnimationAndMoveThenIdle("Blacksmith", "Walk", 29, 130, 0.5f);
+            //PlayAnimationAndMoveThenIdle("Blacksmith", "Walk", 29, 130, 0.5f);
             PlayAnimationAndMoveThenIdle("Redhead Lady", "Walk", 274, 535, 1f);
+            //PlayAnimationAndMoveThenIdle("Brown Hair Lady No Hat", "Walk", -419, 244, 0.6f);
+            PlayAnimationAndMoveThenIdle("Blacksmith", "Walk", -110, 21, 0.2f);
+            PlayAnimationAndMoveThenIdle("Brown Hair Lady No Hat", "Walk", 29, 130, 0.5f);
             AdvanceConditionWait(0.3f);
-        }          
+        }    
+        */
+        else if (++i == cutsceneStep){
+            PlayAnimation("Redhead Lady", "Walk");
+            MoveObject("Redhead Lady", 274, 535, 1f);
+            AdvanceConditionWait(0.1f);
+        }       
+        else if (++i == cutsceneStep){
+            PlayAnimation("Blacksmith", "Walk");
+            MoveObject("Blacksmith", -110, -48, 0.2f);
+            AdvanceConditionWait(0.1f);
+        }     
+        else if (++i == cutsceneStep){
+            PlayAnimation("Brown Hair Lady No Hat", "Walk");
+            MoveObject("Brown Hair Lady No Hat", 29, 130, 0.5f);
+            AdvanceConditionWait(0.1f);
+        }     
+        else if (++i == cutsceneStep){
+            PlayAnimation("Goblin 1", "Walk");
+            PlayAnimationAndMoveThenIdle("Goblin 2", "Walk", 575, 310, 0.5f);
+            FlipDirection("Goblin 2");
+            AdvanceConditionWait(0.4f);
+        }     
+        else if (++i == cutsceneStep){
+            PlayAnimation("Goblin General", "Walk");
+            AdvanceConditionWait(0.4f);
+        }     
+        else if (++i == cutsceneStep){
+            PlayAnimation("Goblin 3", "Walk");
+            AdvanceConditionWait(0.4f);
+        }  
+        /*
         else if (++i == cutsceneStep){
             PlayAnimationAndMoveThenIdle("Goblin 2", "Walk", 575, 310, 0.5f);
-            PlayAnimationAndMoveThenIdle("Goblin 1", "Walk", -244, 191, 1f);
+            //PlayAnimationAndMoveThenIdle("Goblin 1", "Walk", -244, 191, 1f);
             FlipDirection("Goblin 2");
             AdvanceConditionWait(1.5f);
-        }   
+        }
+        */   
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_PlayerTalking("I don't know anything about fighting...", DialogueStep.Emotion.Worried);
         }        
