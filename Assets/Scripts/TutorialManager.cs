@@ -639,6 +639,8 @@ public class TutorialManager : BattleManager {
         else if (++i == tutorialStep){
             canEnemyDie = true;
             StaticVariables.powerupsPerPuzzle = 3;
+            StaticVariables.healActive = true;
+            puzzleGenerator.SetPowerupTypeList();
             TurnToSmallerPage();
             UpdateSubmitVisuals();
             canQueueAttack = true;

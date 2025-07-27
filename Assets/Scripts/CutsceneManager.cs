@@ -386,7 +386,7 @@ public class CutsceneManager : MonoBehaviour{
             AdvanceConditionDialogue_EnemyTalking("Well of course you'll be paying taxes to your new draconic rulers!", "Red Dragon", DialogueStep.Emotion.Happy);
         }
         else if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("But it appears this commotion drew the attention of some local golbins.", "Red Dragon", DialogueStep.Emotion.Normal);
+            AdvanceConditionDialogue_EnemyTalking("But it appears this commotion drew the attention of some local goblins.", "Red Dragon", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_NobodyTalking(true);
@@ -597,7 +597,7 @@ public class CutsceneManager : MonoBehaviour{
     private void DoHometown2Step(){
         int i = 0;
         if (++i == cutsceneStep){
-            AdvanceConditionDialogue_EnemyTalking("I saw you shooting some magic water at those goblis!", "Blacksmith", DialogueStep.Emotion.Normal);
+            AdvanceConditionDialogue_EnemyTalking("I saw you shooting some magic water at those goblins!", "Blacksmith", DialogueStep.Emotion.Normal);
         }
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("I didn't know you had that fighting spirit in you!", "Blacksmith", DialogueStep.Emotion.Happy);
@@ -764,7 +764,10 @@ public class CutsceneManager : MonoBehaviour{
             PlayAnimationAndMoveThenIdle("Shopkeeper", "Walk", -156, 129, 2.3f);
             FlipDirection("Blue-haired Lady");
             PlayAnimationAndMoveThenIdle("Blue-haired Lady", "Walk", 106, 114, 2f);
-            PlayAnimationAndMoveThenIdle("Child 2", "Walk", 268, 172, 2.2f);
+            
+            PlayAnimation("Child 2", "Walk");
+            MoveObject("Child 2", 268, 172, 2.1f);
+            //PlayAnimationAndMoveThenIdle("Child 2", "Walk", 268, 172, 2.2f);
             PlayAnimationAndMoveThenIdle("Child 1", "Walk", 361, 370, 1.6f);
             PlayAnimationAndMoveThenIdle("Chef", "Walk", -284, 254, 1.6f);
             AdvanceConditionWait(0.8f);
@@ -787,8 +790,12 @@ public class CutsceneManager : MonoBehaviour{
         }
         else if (++i == cutsceneStep){
             FlipDirection("Blacksmith");
+            PlayAnimation("Child 2", "Idle Not Holding Newspaper");
             AdvanceConditionWait(0.5f);
         }
+        //else if (++i == cutsceneStep){
+        //    AdvanceConditionWait(0.4f);
+        //}
         else if (++i == cutsceneStep){
             AdvanceConditionDialogue_EnemyTalking("Allow me to be blunt here... If that dragon comes by again, we're toast!", "Elder", DialogueStep.Emotion.Worried);
         }

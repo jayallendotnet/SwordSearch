@@ -3271,7 +3271,7 @@ Animator:
   m_GameObject: {fileID: 233560399}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 06099b8cef48c9a46a44c2c36d7233c3, type: 2}
+  m_Controller: {fileID: 9100000, guid: b6f2b20d78590e94b967462a2656c3d8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4142,6 +4142,7 @@ MonoBehaviour:
   enemyAttackAnimatorFunctions: {fileID: 0}
   enemyHordeAttackAnimatorFunctions: []
   isWaterInPuzzleArea: 0
+  copycatBuildup: 0
   startingPlayerHealth: 30
   maxHealth: 999
   minCheckingWordLength: 3
@@ -4160,6 +4161,7 @@ MonoBehaviour:
   defaultBattleData:
     enemyPrefab: {fileID: 815226952419649516, guid: 64130cfc7da6c1543b5edfeca3c3e781, type: 3}
     backgroundPrefab: {fileID: 7543067620809557234, guid: fec775bdc71b8c2498d11818db96003c, type: 3}
+  selfDamageFromBurnedLetters: 2
   uiManager: {fileID: 380147764}
   puzzleGenerator: {fileID: 400925337}
   playerAnimatorFunctions: {fileID: 485298768}
@@ -5904,6 +5906,12 @@ MonoBehaviour:
   pebbleDisplay3: {fileID: 639363630}
   pebbleDisplay4: {fileID: 1567243447}
   pebbleDisplay5: {fileID: 1347722387}
+  copycatBar0: {fileID: 0}
+  copycatBar1: {fileID: 0}
+  copycatBar2: {fileID: 0}
+  copycatBar3: {fileID: 0}
+  copycatBar4: {fileID: 0}
+  copycatBar5: {fileID: 0}
   battleManager: {fileID: 289338882}
   playerAttackAnimationParent: {fileID: 2094803069}
   waterBuffBottom: {fileID: 45494302}
@@ -6333,6 +6341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useSmallerLayout: 0
+  burnedLetters: []
   wordCount: 3
   maxAttemptsPerPuzzle: 3
   minGenerationWordLength: 3
@@ -9943,7 +9952,7 @@ Animator:
   m_GameObject: {fileID: 595742385}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 06099b8cef48c9a46a44c2c36d7233c3, type: 2}
+  m_Controller: {fileID: 9100000, guid: b6f2b20d78590e94b967462a2656c3d8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -12730,7 +12739,7 @@ Animator:
   m_GameObject: {fileID: 766964834}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 06099b8cef48c9a46a44c2c36d7233c3, type: 2}
+  m_Controller: {fileID: 9100000, guid: b6f2b20d78590e94b967462a2656c3d8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -15440,7 +15449,7 @@ Animator:
   m_GameObject: {fileID: 965585735}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 06099b8cef48c9a46a44c2c36d7233c3, type: 2}
+  m_Controller: {fileID: 9100000, guid: f6ae89ebe4fda624a83dd031e65d4145, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -18051,7 +18060,7 @@ Animator:
   m_GameObject: {fileID: 1172979450}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 06099b8cef48c9a46a44c2c36d7233c3, type: 2}
+  m_Controller: {fileID: 9100000, guid: b6f2b20d78590e94b967462a2656c3d8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -18699,7 +18708,7 @@ Animator:
   m_GameObject: {fileID: 1224629290}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 06099b8cef48c9a46a44c2c36d7233c3, type: 2}
+  m_Controller: {fileID: 9100000, guid: f6ae89ebe4fda624a83dd031e65d4145, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -19596,7 +19605,7 @@ Animator:
   m_GameObject: {fileID: 1306857297}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 06099b8cef48c9a46a44c2c36d7233c3, type: 2}
+  m_Controller: {fileID: 9100000, guid: f6ae89ebe4fda624a83dd031e65d4145, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -22642,7 +22651,7 @@ Animator:
   m_GameObject: {fileID: 1559733408}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 06099b8cef48c9a46a44c2c36d7233c3, type: 2}
+  m_Controller: {fileID: 9100000, guid: f6ae89ebe4fda624a83dd031e65d4145, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -29352,7 +29361,7 @@ Animator:
   m_GameObject: {fileID: 2042127426}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 06099b8cef48c9a46a44c2c36d7233c3, type: 2}
+  m_Controller: {fileID: 9100000, guid: f6ae89ebe4fda624a83dd031e65d4145, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

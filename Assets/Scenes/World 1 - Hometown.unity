@@ -7090,6 +7090,81 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1107962101534003458, guid: 556a26fc90dea8d43b444ff8af39cbbd, type: 3}
   m_PrefabInstance: {fileID: 265887675}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &265998033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 265998034}
+  - component: {fileID: 265998036}
+  - component: {fileID: 265998035}
+  m_Layer: 5
+  m_Name: Seat (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &265998034
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265998033}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.7469012, y: 0.7469012, z: 0.7469012}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1253131954}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -696.9702, y: -380.00012}
+  m_SizeDelta: {x: 206.1, y: 168.43}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &265998035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265998033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 46c16aaf4062bdf48b157d3f0a646763, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 0.1
+--- !u!222 &265998036
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265998033}
+  m_CullTransparentMesh: 1
 --- !u!1 &266373950
 GameObject:
   m_ObjectHideFlags: 0
@@ -21904,7 +21979,7 @@ PrefabInstance:
     - target: {fileID: 2708877614081805339, guid: d1cf0ee7e00470f469a438f7c19f7c40, type: 3}
       propertyPath: battleData.backgroundPrefab
       value: 
-      objectReference: {fileID: 7543067620809557234, guid: fec775bdc71b8c2498d11818db96003c, type: 3}
+      objectReference: {fileID: 7543067620809557234, guid: 768669b137662e844879539684a0f46b, type: 3}
     - target: {fileID: 8331165739053312393, guid: d1cf0ee7e00470f469a438f7c19f7c40, type: 3}
       propertyPath: m_Name
       value: Tutorial 1
@@ -31802,8 +31877,7 @@ MonoBehaviour:
   - {fileID: 2595863967861342857}
   - {fileID: 743201769844318053}
   sceneHeader: {fileID: 1552474486}
-  playerWalkSpeed: 1000
-  minTimeToMove: 1
+  playerStepDuration: 0.2
   thisWorldNum: 1
   powerupsPerPuzzle: 3
   healActive: 1
@@ -35580,6 +35654,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2801006556927816363, guid: cf2d9822dd24b354e9dba0d126591c7c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4156615483372691043}
+    - targetCorrespondingSourceObject: {fileID: 2801006556927816363, guid: cf2d9822dd24b354e9dba0d126591c7c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 265998034}
+    - targetCorrespondingSourceObject: {fileID: 2801006556927816363, guid: cf2d9822dd24b354e9dba0d126591c7c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2049083565}
     - targetCorrespondingSourceObject: {fileID: 2801006556927816363, guid: cf2d9822dd24b354e9dba0d126591c7c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 539822465}
@@ -44923,7 +45003,7 @@ PrefabInstance:
     - target: {fileID: 2708877614081805339, guid: d1cf0ee7e00470f469a438f7c19f7c40, type: 3}
       propertyPath: battleData.backgroundPrefab
       value: 
-      objectReference: {fileID: 7543067620809557234, guid: fd97ec0cd58ae254ea64c3173e3d12b1, type: 3}
+      objectReference: {fileID: 7543067620809557234, guid: e10f7a5d3299cf44fb63eaf6a40b6362, type: 3}
     - target: {fileID: 8331165739053312393, guid: d1cf0ee7e00470f469a438f7c19f7c40, type: 3}
       propertyPath: m_Name
       value: Tutorial 4
@@ -49710,7 +49790,7 @@ PrefabInstance:
     - target: {fileID: 2708877614081805339, guid: 6b52574c2b70ce84e81c748699aa6b72, type: 3}
       propertyPath: battleData.backgroundPrefab
       value: 
-      objectReference: {fileID: 7543067620809557234, guid: 82de66d106698784980f0d5bd60d2894, type: 3}
+      objectReference: {fileID: 7543067620809557234, guid: c445d12f3c4a61842aecc4cbe23db71a, type: 3}
     - target: {fileID: 8331165739053312393, guid: 6b52574c2b70ce84e81c748699aa6b72, type: 3}
       propertyPath: m_Name
       value: Enemy 5
@@ -55012,7 +55092,7 @@ PrefabInstance:
     - target: {fileID: 2708877614081805339, guid: d1cf0ee7e00470f469a438f7c19f7c40, type: 3}
       propertyPath: battleData.backgroundPrefab
       value: 
-      objectReference: {fileID: 7543067620809557234, guid: 7481930c89d900a4599c2edfbb7571d5, type: 3}
+      objectReference: {fileID: 7543067620809557234, guid: c48971a9ecf25d4428fea3155925dd4a, type: 3}
     - target: {fileID: 8331165739053312393, guid: d1cf0ee7e00470f469a438f7c19f7c40, type: 3}
       propertyPath: m_Name
       value: Tutorial 2
@@ -61199,7 +61279,7 @@ PrefabInstance:
     - target: {fileID: 2708877614081805339, guid: d1cf0ee7e00470f469a438f7c19f7c40, type: 3}
       propertyPath: battleData.backgroundPrefab
       value: 
-      objectReference: {fileID: 7543067620809557234, guid: c2c0c31d8878f3440a2f9bd16ff5e11c, type: 3}
+      objectReference: {fileID: 7543067620809557234, guid: bc3a2fd6d370db449baacb3234012d77, type: 3}
     - target: {fileID: 8331165739053312393, guid: d1cf0ee7e00470f469a438f7c19f7c40, type: 3}
       propertyPath: m_Name
       value: Enemy 3 - No Powerups
@@ -61924,6 +62004,81 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1107962101534003458, guid: d3733c80436c5ea4c8e0e4ede7230fb9, type: 3}
   m_PrefabInstance: {fileID: 2045569604}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2049083564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2049083565}
+  - component: {fileID: 2049083567}
+  - component: {fileID: 2049083566}
+  m_Layer: 5
+  m_Name: Seat (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2049083565
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049083564}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.7469012, y: 0.7469012, z: 0.7469012}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1253131954}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -757.2198, y: -380.00012}
+  m_SizeDelta: {x: 206.1, y: 168.43}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2049083566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049083564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 46c16aaf4062bdf48b157d3f0a646763, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 0.1
+--- !u!222 &2049083567
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049083564}
+  m_CullTransparentMesh: 1
 --- !u!1 &2053702167
 GameObject:
   m_ObjectHideFlags: 0
@@ -66613,7 +66768,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &409569183909727338
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -69596,11 +69751,22 @@ MonoBehaviour:
   isDark: 0
   isNearWater: 0
   canApplyDebuff: 0
+  isWaterDangerous: 0
+  isCopycat: 0
+  healsSelf: 0
+  canBurn: 0
   normal: {fileID: 21300000, guid: b49f52f681ca8704b9065f3f0de87512, type: 3}
   angry: {fileID: 21300000, guid: 33625fcaa087dba40a24db45a1603313, type: 3}
   defeated: {fileID: 21300000, guid: 683176d32c9b98648872384ea1a3f732, type: 3}
   excited: {fileID: 0}
+  happy: {fileID: 0}
   questioning: {fileID: 0}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
+  custom3: {fileID: 0}
   overworldDialogueSteps: []
   victoryDialogueSteps: []
 --- !u!222 &988472894394287199
@@ -72167,26 +72333,41 @@ MonoBehaviour:
   isDark: 0
   isNearWater: 0
   canApplyDebuff: 0
+  isWaterDangerous: 0
+  isCopycat: 0
+  healsSelf: 0
+  canBurn: 0
   normal: {fileID: 21300000, guid: 4c631392dddfa5747a099a279bdf5479, type: 3}
   angry: {fileID: 21300000, guid: 8654e1b0a98668a44a45cc07c910ebd4, type: 3}
   defeated: {fileID: 21300000, guid: 527c10aa04cb1c64e8e3939c337c952f, type: 3}
   excited: {fileID: 0}
+  happy: {fileID: 0}
   questioning: {fileID: 0}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
+  custom3: {fileID: 0}
   overworldDialogueSteps:
   - type: 1
     talker: {fileID: 0}
+    name: 
     emotion: 0
     description: Test Normal
   - type: 0
     talker: {fileID: 0}
+    name: 
     emotion: 1
     description: Test Player Angry
   - type: 1
     talker: {fileID: 0}
+    name: 
     emotion: 1
     description: Test Angry
   - type: 1
     talker: {fileID: 0}
+    name: 
     emotion: 2
     description: Test Defeated
   victoryDialogueSteps: []
@@ -74444,11 +74625,22 @@ MonoBehaviour:
   isDark: 0
   isNearWater: 0
   canApplyDebuff: 0
+  isWaterDangerous: 0
+  isCopycat: 0
+  healsSelf: 0
+  canBurn: 0
   normal: {fileID: 0}
   angry: {fileID: 0}
   defeated: {fileID: 0}
   excited: {fileID: 0}
+  happy: {fileID: 0}
   questioning: {fileID: 0}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
+  custom3: {fileID: 0}
   overworldDialogueSteps: []
   victoryDialogueSteps: []
 --- !u!224 &1969009436558767648
@@ -86258,26 +86450,41 @@ MonoBehaviour:
   isDark: 0
   isNearWater: 0
   canApplyDebuff: 0
+  isWaterDangerous: 0
+  isCopycat: 0
+  healsSelf: 0
+  canBurn: 0
   normal: {fileID: 21300000, guid: 4c631392dddfa5747a099a279bdf5479, type: 3}
   angry: {fileID: 21300000, guid: 8654e1b0a98668a44a45cc07c910ebd4, type: 3}
   defeated: {fileID: 21300000, guid: 527c10aa04cb1c64e8e3939c337c952f, type: 3}
   excited: {fileID: 0}
+  happy: {fileID: 0}
   questioning: {fileID: 0}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
+  custom3: {fileID: 0}
   overworldDialogueSteps:
   - type: 1
     talker: {fileID: 0}
+    name: 
     emotion: 0
     description: Test Normal
   - type: 0
     talker: {fileID: 0}
+    name: 
     emotion: 1
     description: Test Player Angry
   - type: 1
     talker: {fileID: 0}
+    name: 
     emotion: 1
     description: Test Angry
   - type: 1
     talker: {fileID: 0}
+    name: 
     emotion: 2
     description: Test Defeated
   victoryDialogueSteps: []
@@ -109714,26 +109921,41 @@ MonoBehaviour:
   isDark: 0
   isNearWater: 0
   canApplyDebuff: 0
+  isWaterDangerous: 0
+  isCopycat: 0
+  healsSelf: 0
+  canBurn: 0
   normal: {fileID: 21300000, guid: 4c631392dddfa5747a099a279bdf5479, type: 3}
   angry: {fileID: 21300000, guid: 8654e1b0a98668a44a45cc07c910ebd4, type: 3}
   defeated: {fileID: 21300000, guid: 527c10aa04cb1c64e8e3939c337c952f, type: 3}
   excited: {fileID: 0}
+  happy: {fileID: 0}
   questioning: {fileID: 0}
+  worried: {fileID: 0}
+  surprised: {fileID: 0}
+  mystery: {fileID: 0}
+  custom1: {fileID: 0}
+  custom2: {fileID: 0}
+  custom3: {fileID: 0}
   overworldDialogueSteps:
   - type: 1
     talker: {fileID: 0}
+    name: 
     emotion: 0
     description: Test Normal
   - type: 0
     talker: {fileID: 0}
+    name: 
     emotion: 1
     description: Test Player Angry
   - type: 1
     talker: {fileID: 0}
+    name: 
     emotion: 1
     description: Test Angry
   - type: 1
     talker: {fileID: 0}
+    name: 
     emotion: 2
     description: Test Defeated
   victoryDialogueSteps: []

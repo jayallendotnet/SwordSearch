@@ -536,11 +536,17 @@ public class PuzzleGenerator : MonoBehaviour {
     }
 
     public void SetPowerupTypeList(){
-        powerupTypeSelection = new List<BattleManager.PowerupTypes> {BattleManager.PowerupTypes.Water, BattleManager.PowerupTypes.Heal}; //these are always included
-        if (StaticVariables.fireActive)
-            powerupTypeSelection.Add(BattleManager.PowerupTypes.Fire);
+        //powerupTypeSelection = new List<BattleManager.PowerupTypes> {BattleManager.PowerupTypes.Water, BattleManager.PowerupTypes.Heal}; //these are always included
+        powerupTypeSelection = new(); //these are always included
+
+        if (StaticVariables.waterActive && !battleManager.enemyData.isWaterDangerous)
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Water);
+        if (StaticVariables.healActive)
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Heal);
         if (StaticVariables.earthActive)
             powerupTypeSelection.Add(BattleManager.PowerupTypes.Earth);
+        if (StaticVariables.fireActive)
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Fire);
         if (StaticVariables.lightningActive)
             powerupTypeSelection.Add(BattleManager.PowerupTypes.Lightning);
         if (StaticVariables.darkActive)
@@ -549,15 +555,19 @@ public class PuzzleGenerator : MonoBehaviour {
             powerupTypeSelection.Add(BattleManager.PowerupTypes.Sword);
 
         //if we are in a tutorial where another powerup type should be exclusively used, then disable water and heal
-        if (powerupTypeSelection.Count > 2){
-            if (!StaticVariables.waterActive)
-                powerupTypeSelection.Remove(BattleManager.PowerupTypes.Water);
-            if (!StaticVariables.healActive)
-                powerupTypeSelection.Remove(BattleManager.PowerupTypes.Heal);
+        //if (powerupTypeSelection.Count > 2){
+        //    if (!StaticVariables.waterActive)
+        //        powerupTypeSelection.Remove(BattleManager.PowerupTypes.Water);
+        //    if (!StaticVariables.healActive)
+        //        powerupTypeSelection.Remove(BattleManager.PowerupTypes.Heal);
+        //}
+        if(powerupTypeSelection.Count == 0){
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Water);
+            powerupTypeSelection.Add(BattleManager.PowerupTypes.Heal);
         }
         
         if (StaticVariables.buffedType != BattleManager.PowerupTypes.None)//remove the buffed type from the list, its prescence is determined separately
-            powerupTypeSelection.Remove(StaticVariables.buffedType);
+                powerupTypeSelection.Remove(StaticVariables.buffedType);
     }
 
     public LetterSpace PickRandomSpaceWithoutPowerupOrBurn() {
