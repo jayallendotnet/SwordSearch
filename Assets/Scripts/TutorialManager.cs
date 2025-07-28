@@ -44,16 +44,29 @@ public class TutorialManager : BattleManager {
     public GameObject highlightEnemyTimer;
     public GameObject highlightPlayerHealth;
     public GameObject highlightCountdown;
+    public Image tutorialShadow;
+    public Image tutorialShadowForLetters;
     private float enemyTimerBarRemainder = 0f;
-    
+    private Color tutorialShadowOriginalColor;
+    //private Color tutorialShadowTransparentColor;
+
 
     public override void Start() {
         puzzleGenerator.wordCount = 4;
         puzzleGenerator.useSmallerLayout = true;
+
         
+
+        tutorialShadowOriginalColor = tutorialShadow.color;
+        //print(tutorialShadowOriginalColor.a);
+        //tutorialShadowTransparentColor = tutorialShadow.color;
+        //tutorialShadowTransparentColor.a = 0;
+        //print(tutorialShadowTransparentColor.a);
+        //print(tutorialShadowOriginalColor.a);
+
         base.Start();
         SetTutorialNumber();
-        switch (tutorialNumber){
+        switch (tutorialNumber) {
             case (1):
                 SetupTutorial1();
                 break;
@@ -75,15 +88,15 @@ public class TutorialManager : BattleManager {
         uiManager.pauseButton.gameObject.SetActive(false);
     }
 
-    private void SetTutorialNumber(){
-        string name = enemyData.name;
-        string[] split = name.Split(" ");
-        string n = split[1];
-        tutorialNumber = int.Parse(n);
-        //print(tutorialNumber);
-        if ((tutorialNumber > 4) || (tutorialNumber < 1))
-            print("tutorial number is wrong! number is " + tutorialNumber + ", retrieved from enemy name " + name);
-    }
+    private void SetTutorialNumber() {
+    string name = enemyData.name;
+    string[] split = name.Split(" ");
+    string n = split[1];
+    tutorialNumber = int.Parse(n);
+    //print(tutorialNumber);
+    if ((tutorialNumber > 4) || (tutorialNumber < 1))
+        print("tutorial number is wrong! number is " + tutorialNumber + ", retrieved from enemy name " + name);
+}
 
     private void SetupTutorial1(){
         StaticVariables.powerupsPerPuzzle = 0;
@@ -200,6 +213,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.EnemyTakesDamage;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayPlayerTalking("Whoa! The book shot a blast of water at the goblin!", DialogueStep.Emotion.Happy);
             advanceCondition = Cond.Click;
         }
@@ -213,6 +227,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
+            HideTutorialShadow();
             DisplayText("Try to make the word 'BUMPY' and attack the goblin.");
             advanceCondition = Cond.SubmitWord;
             requiredWord = new char[] {'B', 'U', 'M', 'P', 'Y'};
@@ -224,6 +239,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.EnemyTakesDamage;
         }        
         else if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayText("Letters don't have to be in all in one row to make a word!");
             advanceCondition = Cond.Click;
         }
@@ -232,6 +248,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
+            HideTutorialShadow();
             DisplayText("Try to make the word 'CHALK'.");
             advanceCondition = Cond.SubmitWord;
             requiredWord = new char[] {'C', 'H', 'A', 'L', 'K'};
@@ -247,6 +264,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.EnemyDies;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayPlayerTalking("I managed to defeat one of the invading goblins!", DialogueStep.Emotion.Happy);
             advanceCondition = Cond.Click;
         }
@@ -263,12 +281,14 @@ public class TutorialManager : BattleManager {
         tutorialStep ++;
         int i = 0;
         if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayText("An enemy's health is shown above, in red.");
             LoadCustomPuzzle(startingLayout2);
             highlightEnemyHealth.SetActive(true);
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
+            HideTutorialShadow();
             DisplayText("Find a word and attack with it to damage the enemy's health!");
             highlightEnemyHealth.SetActive(false);
             advanceCondition = Cond.SubmitAnyWord;
@@ -278,6 +298,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.EnemyTakesDamage;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayText("A word has to be at least 3 letters long to be used for an attack.");
             advanceCondition = Cond.Click;
         }
@@ -294,6 +315,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
+            HideTutorialShadow();
             DisplayText("Keep making attacks to damage the goblin!");
             highlightAttackStrength.SetActive(false);
             advanceCondition = Cond.SubmitAnyWord;
@@ -306,6 +328,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.EnemyTakesDamage;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayText("While you're making words, the enemies can attack you too!");
             advanceCondition = Cond.Click;
         }
@@ -339,11 +362,13 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.EnemyAttacks;
         }
         else if (++i == tutorialStep){
+            HideTutorialShadow();
             DisplayText("");
             highlightEnemyTimer.SetActive(false);
             advanceCondition = Cond.PlayerTakesDamage;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayPlayerTalking("Ouch! That hurt!", DialogueStep.Emotion.Angry);
             highlightEnemyTimer.SetActive(false);
             advanceCondition = Cond.Click;
@@ -353,6 +378,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
+            HideTutorialShadow();
             DisplayText("Try to get the enemy's health to 0 before your health gets depleted.");
             TurnToPredefinedPage(startingLayout3);
             canQueueAttack = true;
@@ -366,6 +392,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.SubmitAnyWord;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayText("It looks like you are running out of letters!");
             advanceCondition = Cond.Click;
             canQueueAttack = false;
@@ -382,12 +409,14 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.TurnPage;
         }
         else if (++i == tutorialStep){
+            HideTutorialShadow();
             DisplayText("");
             UpdateSubmitVisuals();
             highlightWordArea.SetActive(false);
             advanceCondition = Cond.TurnPageEnds;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayText("This new page has a brand new set of letters, with the potential to make completely different words!");
             advanceCondition = Cond.Click;
         }
@@ -412,6 +441,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
+            HideTutorialShadow();
             DisplayText("Keep battling the goblin, and don't forget to turn the page when you need to.");
             highlightCountdown.SetActive(false);
             canEnemyDie = true;
@@ -443,6 +473,7 @@ public class TutorialManager : BattleManager {
         tutorialStep ++;
         int i = 0;
         if (++i == tutorialStep){
+            ShowTutorialShadowForLetters();
             DisplayText("The true magic within the book has awakened!");
             LoadCustomPuzzle(startingLayout4);
             puzzleGenerator.SetCustomPowerups(startingPowerups1);
@@ -468,6 +499,7 @@ public class TutorialManager : BattleManager {
         //    advanceCondition = Cond.Click;
         //}
         else if (++i == tutorialStep){
+            HideTutorialShadowForLetters();
             DisplayText("Try making a word that includes the <healing>power of healing<>.");
             advanceCondition = Cond.SubmitHealingWord;
         }
@@ -477,6 +509,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.PlayerGetsHealed;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadowForLetters();
             DisplayPlayerTalking("Wow! I feel so refreshed!", DialogueStep.Emotion.Happy);
             advanceCondition = Cond.Click;
         }
@@ -498,6 +531,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
+            HideTutorialShadowForLetters();
             DisplayText("Try making a word that includes the <water>power of water<>.");
             advanceCondition = Cond.SubmitWaterWord;
         }
@@ -509,6 +543,7 @@ public class TutorialManager : BattleManager {
             uiManager.waterFloatDuration = -1;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayText("After making an attack with the <water>power of water<>, the book's pages are <water>flooded<>!");
             advanceCondition = Cond.Click;
         }
@@ -522,11 +557,13 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
+            HideTutorialShadow();
             DisplayText("Attack!!");
             uiManager.StartDrainingWaterSmallerPage();
             advanceCondition = Cond.WaterDrains;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayText("From now on, both <healing>healing<> and <water>water<> powerups will appear!");
             ButtonText("CONTINUE");
             advanceCondition = Cond.Click;
@@ -536,6 +573,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
+            HideTutorialShadow();
             canEnemyDie = true;
             StaticVariables.powerupsPerPuzzle = 3;
             TurnToSmallerPage();
@@ -585,12 +623,14 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadowForLetters();
             DisplayText("From now on, <earth>earth powerups<> will appear!");
             puzzleGenerator.letterSpaces[0,1].ToggleTutorialSelector(true);
             puzzleGenerator.letterSpaces[3,3].ToggleTutorialSelector(true);
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
+            HideTutorialShadowForLetters();
             DisplayText("Try making an attack with one of the <earth>earth powerups<>!");
             puzzleGenerator.letterSpaces[0,1].ToggleTutorialSelector(false);
             puzzleGenerator.letterSpaces[3,3].ToggleTutorialSelector(false);
@@ -601,6 +641,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.EnemyTakesDamage;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayText("After using the <earth>power of earth<>, magic crystals surround you.");
             advanceCondition = Cond.Click;
         }
@@ -637,6 +678,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
+            HideTutorialShadow();
             canEnemyDie = true;
             StaticVariables.powerupsPerPuzzle = 3;
             StaticVariables.healActive = true;
@@ -1012,5 +1054,52 @@ public class TutorialManager : BattleManager {
                 break;
         }
     }
+    
+    private void ShowTutorialShadow(){
+        tutorialShadow.gameObject.SetActive(true);
+        Color c = tutorialShadowOriginalColor;
+        c.a = 0;
+        tutorialShadow.color = c;
+        tutorialShadow.DOFade(tutorialShadowOriginalColor.a, 0.5f);
+    }
+    
+    private void HideTutorialShadow(){
+        tutorialShadow.color = tutorialShadowOriginalColor;
+        //tutorialShadow.DOFade(0, 0.5f).OnComplete(DisableTutorialShadow);
+        tutorialShadow.DOFade(0, 0.5f);
+    }
+
+    //private void DisableTutorialShadow(){
+    //    if (tutorialShadow.color.a == 0)
+    //        tutorialShadow.gameObject.SetActive(false);
+    //}
+    private void ShowTutorialShadowForLetters(){
+        tutorialShadowForLetters.gameObject.SetActive(true);
+        Color c = tutorialShadowOriginalColor;
+        c.a = 0;
+        tutorialShadow.color = c;
+        tutorialShadowForLetters.DOFade(tutorialShadowOriginalColor.a, 0.5f);
+        
+    }
+    
+    private void HideTutorialShadowForLetters(){
+        tutorialShadowForLetters.color = tutorialShadowOriginalColor;
+        tutorialShadowForLetters.DOFade(0, 0.5f);
+    }
+
+    //private void DisableTutorialShadowForLetters(){
+    //    if (tutorialShadowForLetters.color == tutorialShadowTransparentColor)
+    //        tutorialShadowForLetters.gameObject.SetActive(false);
+    //}
+    //private void ShowTutorialShadowForLetters()
+    //{
+    //    tutorialShadowForLetters.SetActive(true);
+
+    //}
+    
+    //private void HideTutorialShadowForLetters(){
+    //    tutorialShadowForLetters.SetActive(false);
+        
+    //}
 }
  
