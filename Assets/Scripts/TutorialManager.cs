@@ -281,7 +281,7 @@ public class TutorialManager : BattleManager {
         tutorialStep ++;
         int i = 0;
         if (++i == tutorialStep){
-            ShowTutorialShadow();
+            ShowTutorialShadow(true);
             DisplayText("An enemy's health is shown above, in red.");
             LoadCustomPuzzle(startingLayout2);
             highlightEnemyHealth.SetActive(true);
@@ -400,6 +400,7 @@ public class TutorialManager : BattleManager {
             enemyTimerBarRemainder = uiManager.enemyTimerBar.localScale.x;
         }
         else if (++i == tutorialStep){
+            HideTutorialShadow();
             DisplayText("Tapping the big space at the top of the page will turn to another page in the book.");
             highlightWordArea.SetActive(true);
             countdownToRefresh = 0;
@@ -409,7 +410,6 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.TurnPage;
         }
         else if (++i == tutorialStep){
-            HideTutorialShadow();
             DisplayText("");
             UpdateSubmitVisuals();
             highlightWordArea.SetActive(false);
@@ -456,6 +456,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.EnemyDies;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayEnemyTalking("Human, I don't like your weird magic!", enemyData, DialogueStep.Emotion.Defeated);
             advanceCondition = Cond.Click;
         }
@@ -473,7 +474,7 @@ public class TutorialManager : BattleManager {
         tutorialStep ++;
         int i = 0;
         if (++i == tutorialStep){
-            ShowTutorialShadowForLetters();
+            ShowTutorialShadowForLetters(true);
             DisplayText("The true magic within the book has awakened!");
             LoadCustomPuzzle(startingLayout4);
             puzzleGenerator.SetCustomPowerups(startingPowerups1);
@@ -588,6 +589,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.EnemyDies;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayPlayerTalking("Look, Fido is alive, over there!", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
         }
@@ -609,6 +611,7 @@ public class TutorialManager : BattleManager {
         tutorialStep ++;
         int i = 0;
         if (++i == tutorialStep){
+            ShowTutorialShadowForLetters(true);
             DisplayPlayerTalking("I really shouldn't use the <water>power of water<> here.", DialogueStep.Emotion.Normal);
             LoadCustomPuzzle(startingLayout5);
             puzzleGenerator.SetCustomPowerups(startingPowerups2);
@@ -623,7 +626,6 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            ShowTutorialShadowForLetters();
             DisplayText("From now on, <earth>earth powerups<> will appear!");
             puzzleGenerator.letterSpaces[0,1].ToggleTutorialSelector(true);
             puzzleGenerator.letterSpaces[3,3].ToggleTutorialSelector(true);
@@ -694,6 +696,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.EnemyDies;
         }
         else if (++i == tutorialStep){
+            ShowTutorialShadow();
             DisplayEnemyTalking("Is she using <earth>earth magic<>?", enemyData, DialogueStep.Emotion.Custom1, "Hopsy");
             advanceCondition = Cond.Click;
         }
@@ -1055,8 +1058,10 @@ public class TutorialManager : BattleManager {
         }
     }
     
-    private void ShowTutorialShadow(){
+    private void ShowTutorialShadow(bool immediately = false){
         tutorialShadow.gameObject.SetActive(true);
+        if (immediately)
+            return;
         Color c = tutorialShadowOriginalColor;
         c.a = 0;
         tutorialShadow.color = c;
@@ -1073,8 +1078,10 @@ public class TutorialManager : BattleManager {
     //    if (tutorialShadow.color.a == 0)
     //        tutorialShadow.gameObject.SetActive(false);
     //}
-    private void ShowTutorialShadowForLetters(){
+    private void ShowTutorialShadowForLetters(bool immediately = false){
         tutorialShadowForLetters.gameObject.SetActive(true);
+        if (immediately)
+            return;
         Color c = tutorialShadowOriginalColor;
         c.a = 0;
         tutorialShadow.color = c;
