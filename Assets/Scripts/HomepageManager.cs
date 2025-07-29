@@ -10,6 +10,7 @@ using Unity.VisualScripting;
 public class HomepageManager : MonoBehaviour{
 
     //continue adventure display
+    public Text hometownContinueAdventureText;
     public GameObject continueHometown;
     public GameObject continueGrasslands;
     public GameObject continueForest;
@@ -116,7 +117,8 @@ public class HomepageManager : MonoBehaviour{
         ShowNextEndlessModeEnemy(endlessModePosition4, endlessModeMoveDuration);
     }
 
-    private void DisplayProgress(){
+    private void DisplayProgress()
+    {
         int nextEnemyWorldNum = StaticVariables.highestBeatenStage.nextStage.world;
         continueHometown.SetActive(nextEnemyWorldNum == 1);
         continueGrasslands.SetActive(nextEnemyWorldNum == 2);
@@ -128,7 +130,8 @@ public class HomepageManager : MonoBehaviour{
         continueDragonsDen.SetActive(nextEnemyWorldNum == 8);
 
         GameObject enemyPrefab = StaticVariables.highestBeatenStage.nextStage.enemyPrefab;
-        Transform enemySpace = nextEnemyWorldNum switch {
+        Transform enemySpace = nextEnemyWorldNum switch
+        {
             1 => hometownEnemySpace,
             2 => grasslandsEnemySpace,
             3 => forestEnemySpace,
@@ -143,5 +146,8 @@ public class HomepageManager : MonoBehaviour{
         GameObject enemyParent = GameObject.Instantiate(emptyGameObject, enemySpace.parent);
         enemyParent.transform.localPosition = enemySpace.localPosition;
         GameObject enemy = GameObject.Instantiate(enemyPrefab, enemyParent.transform);
+
+        if ((nextEnemyWorldNum == 1) && (StaticVariables.highestBeatenStage.nextStage.stage == 1))
+            hometownContinueAdventureText.text = "BEGIN\nADVENTURE";
     }
 }

@@ -411,6 +411,9 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
+  isCopycat: 0
+  healsSelf: 0
+  canBurn: 0
   normal: {fileID: 0}
   angry: {fileID: 0}
   defeated: {fileID: 0}
@@ -1211,6 +1214,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1180779013326617383, guid: 9e34c6ec711c987428290fc17ca42c0f, type: 3}
   m_PrefabInstance: {fileID: 260186188}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &260186192 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 198343152607118536, guid: 9e34c6ec711c987428290fc17ca42c0f, type: 3}
+  m_PrefabInstance: {fileID: 260186188}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &275959887
 GameObject:
   m_ObjectHideFlags: 0
@@ -2082,6 +2096,9 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
+  isCopycat: 0
+  healsSelf: 0
+  canBurn: 0
   normal: {fileID: 0}
   angry: {fileID: 0}
   defeated: {fileID: 0}
@@ -2234,6 +2251,9 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
+  isCopycat: 0
+  healsSelf: 0
+  canBurn: 0
   normal: {fileID: 0}
   angry: {fileID: 0}
   defeated: {fileID: 0}
@@ -2704,6 +2724,9 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
+  isCopycat: 0
+  healsSelf: 0
+  canBurn: 0
   normal: {fileID: 0}
   angry: {fileID: 0}
   defeated: {fileID: 0}
@@ -5672,6 +5695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f931e61897de922488efb27034a43fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hometownContinueAdventureText: {fileID: 260186192}
   continueHometown: {fileID: 260186189}
   continueGrasslands: {fileID: 349394600}
   continueForest: {fileID: 1202547746}
@@ -9051,6 +9075,9 @@ MonoBehaviour:
   isNearWater: 0
   canApplyDebuff: 0
   isWaterDangerous: 0
+  isCopycat: 0
+  healsSelf: 0
+  canBurn: 0
   normal: {fileID: 0}
   angry: {fileID: 0}
   defeated: {fileID: 0}
