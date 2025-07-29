@@ -515,7 +515,7 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("The <healing>power of healing<> heals you for 3 times the strength of the attack.");
+            DisplayText("The <healing>power of healing<> heals you for " + StaticVariables.healMultiplier + " times the strength of the attack.");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
@@ -549,11 +549,11 @@ public class TutorialManager : BattleManager {
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("For the next 20 seconds, every attack you make does an extra\n<damage>+2 damage<>!");
+            DisplayText("For the next " + StaticVariables.waterFloodDuration + " seconds, every attack you make does an extra <damage>+" + StaticVariables.waterFloodDamageBonus + " damage<>!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("To make the most of this powerup, make as many words as you can in the next 20 seconds.");
+            DisplayText("To make the most of the <water>power of water<>, make as many words as you can in the next " + StaticVariables.waterFloodDuration + " seconds.");
             ButtonText("READY!");
             advanceCondition = Cond.Click;
         }

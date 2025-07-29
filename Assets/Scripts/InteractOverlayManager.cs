@@ -275,7 +275,7 @@ public class InteractOverlayManager : MonoBehaviour{
             }
             if ((StaticVariables.waterActive) && (!enemy.isWaterDangerous)){                
                 summary.Add("Horde enemies are hit harder from <water>flooded attacks<>.");
-                details.Add("While the book is <water>flooded<> by the <water>power of water<>, attacks do <damage>+2 damage<> for each enemy in the horde.");
+                details.Add("The usual <damage>+" + StaticVariables.waterFloodDamageBonus + " damage bonus<> while the book is <water>flooded<> is dealt to every enemy remaining in the horde.");
             }
             if (StaticVariables.lightningActive){
                 summary.Add("Horde enemies are <lightning>stunned<> for less time from <lightning>lightning spells<>.");
@@ -311,7 +311,7 @@ public class InteractOverlayManager : MonoBehaviour{
         if (enemy.isNearWater){
             if ((StaticVariables.waterActive) && (!enemy.isWaterDangerous)){
                 summary.Add("The nearby river empowers <water>flooded attacks<>.");
-                details.Add("While the book is <water>flooded<> by the <water>power of water<>, attacks do <damage>+4 damage<>.");
+                details.Add("While the book is <water>flooded<> by the <water>power of water<>, attacks do an additional <damage>+" + StaticVariables.riverDamageBonus + " damage<>.");
             
             }
         }  

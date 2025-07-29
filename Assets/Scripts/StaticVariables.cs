@@ -73,9 +73,17 @@ public class StaticVariables
     public enum DifficultyMode{Normal, Story, Puzzle};
     static public float gameVersionNumber = 0.1f;
 
+    //powerup stats
+    static public readonly int waterFloodDuration = 30;
+    static public readonly int waterFloodDamageBonus = 4;
+    static public readonly int healMultiplier = 3;
+    static public readonly int riverDamageBonus = 3;
+    
 
 
-    static public void WaitTimeThenCallFunction(float delay, TweenCallback function){
+
+    static public void WaitTimeThenCallFunction(float delay, TweenCallback function)
+    {
         tweenDummy.DOLocalMove(tweenDummy.transform.localPosition, delay, false).OnComplete(function);
     }    
     static public void WaitTimeThenCallFunction(float delay, TweenCallback<string> function, string param) {

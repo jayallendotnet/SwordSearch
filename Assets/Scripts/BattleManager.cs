@@ -55,7 +55,7 @@ public class BattleManager : MonoBehaviour {
 
 
     [Header("Game Variables")]
-    public int startingPlayerHealth = 30;
+    private readonly int startingPlayerHealth = 100;
     public int maxHealth = 999; //for display purposes
     public int minCheckingWordLength = 3;
     public int maxPuzzleCountdown = 3;
@@ -66,8 +66,6 @@ public class BattleManager : MonoBehaviour {
     public float pebbleDamageMultiplier = 0.33f;
     public float lightningStunDuration = 15f;
     public float darkPowerupDamageMultiplier = 2.5f;
-    public float waterFloodDuration = 10f;
-    public int waterFloodDamageBonus = 1;
     public float swordPowerupDamageMultiplier = 2f;
     public float swordPowerupDamageMultiplierVsDragons = 5f;
     public BattleData defaultBattleData;
@@ -133,11 +131,11 @@ public class BattleManager : MonoBehaviour {
             wordStrength =  Mathf.FloorToInt(Mathf.Pow((word.Length - 2), 2));
             if (isWaterInPuzzleArea){
                 if (enemyData.isHorde)
-                    wordStrength += (waterFloodDamageBonus * currentHordeEnemyCount);
+                    wordStrength += (StaticVariables.waterFloodDamageBonus * currentHordeEnemyCount);
                 else
-                    wordStrength += waterFloodDamageBonus;
+                    wordStrength += StaticVariables.waterFloodDamageBonus;
                 if (enemyData.isNearWater) //if near water add +1x to the water flood bonus. added at the end to work with hordes near water
-                    wordStrength += waterFloodDamageBonus;
+                    wordStrength += StaticVariables.riverDamageBonus;
                     
             }
         }
@@ -378,7 +376,7 @@ public class BattleManager : MonoBehaviour {
         if ((enemyHealth <= 0) || (playerHealth <= 0))
             StaticVariables.WaitTimeThenCallFunction(0.6f, uiManager.FadeOutWaterOverlay);
         isWaterInPuzzleArea = true;
-        float duration = powerupLevel * waterFloodDuration;
+        float duration = powerupLevel * StaticVariables.waterFloodDuration;
         uiManager.FillPuzzleAreaWithWater(duration);
         CalcWordStrength();
         UpdateSubmitVisuals();
@@ -436,7 +434,7 @@ public class BattleManager : MonoBehaviour {
     }
 
     public virtual void ApplyHealToSelf(int strength, int powerupLevel){
-        int healAmount = strength * 3;
+        int healAmount = strength * StaticVariables.healMultiplier;
         if (enemyData.isHoly)
             healAmount *= 2;
         if (enemyData.isDark)
