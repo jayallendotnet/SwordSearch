@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class LetterSpace : MonoBehaviour{
 
@@ -33,7 +34,7 @@ public class LetterSpace : MonoBehaviour{
 
 
     [Header("GameObjects")]
-    public Text text;
+    public TextMeshProUGUI text;
     public GameObject selectedSignifier;
     public Animator selectedSignifierAnimator;
     //public GameObject powerupIcons;
@@ -77,6 +78,11 @@ public class LetterSpace : MonoBehaviour{
     [Header("Colors")]
     public Color normalLetterColor;
     public Color powerupOrWordLetterColor;
+    [Header("Fonts")]
+    public TMP_FontAsset fontWithOutline;
+    public TMP_FontAsset fontNoOutline;
+    public TMP_FontAsset fontUsed;
+
 
     public void UpdateLetter(char letter) {
         this.letter = letter;
@@ -89,7 +95,8 @@ public class LetterSpace : MonoBehaviour{
         HidePowerupIcons();
         //text.color = textColor;
         UpdateBackgroundColors(backgroundColor);
-        ColorLetter(true);
+        text.font = fontWithOutline;
+        //ColorLetter(true);
         if (battleManager.powerupTypeForWord == BattleManager.PowerupTypes.None){
             selectedSignifierAnimator.enabled = false;
             selectedSignifier.transform.localScale = Vector3.one;
@@ -103,13 +110,15 @@ public class LetterSpace : MonoBehaviour{
     public void ShowAsNotPartOfWord(){
         selectedSignifier.SetActive(false);
         HideAllDirectionLines();
-        text.GetComponent<Outline>().enabled = false;
+        //text.GetComponent<Outline>().enabled = false;
         if (hasBeenUsedInAWordAlready){
-            text.color = battleManager.uiManager.usedLetterColor;
+            text.font = fontUsed;
+            //text.color = battleManager.uiManager.usedLetterColor;
             HidePowerupIcons();
         }
         else{
-            text.color = Color.black;
+            text.font = fontNoOutline;
+            //text.color = Color.black;
             ShowPowerup();
         }
     }
@@ -233,28 +242,34 @@ public class LetterSpace : MonoBehaviour{
     public void ShowPowerup(){
         if (powerupType == BattleManager.PowerupTypes.None){
             HidePowerupIcons();
-            ColorLetter(false);
+            text.font = fontNoOutline;
+            //ColorLetter(false);
         }
         else{
             PowerupDisplayData d = battleManager.uiManager.GetPowerupDisplayDataWithType(powerupType);
             Color t = d.textColor;
-            text.color = t;
+            //text.color = t;
             ShowPowerupIcon(powerupType);
-            ColorLetter(true);
+            text.font = fontWithOutline;
+            //ColorLetter(true);
         }
 
     }
 
+    /*
     private void ColorLetter(bool isInPowerupOrWord){
         if (isInPowerupOrWord){
-            text.color = powerupOrWordLetterColor;
-            text.GetComponent<Outline>().enabled = true;
+            text.font = fontWithOutline;
+            //text.color = powerupOrWordLetterColor;
+            //text.GetComponent<Outline>().enabled = true;
         }
         else {
-            text.color = normalLetterColor;
-            text.GetComponent<Outline>().enabled = false;
+            text.font = fontNoOutline;
+            //text.color = normalLetterColor;
+            //text.GetComponent<Outline>().enabled = false;
         }
     }
+    */
 
     public void SetPowerup(BattleManager.PowerupTypes type){
         powerupType = type;

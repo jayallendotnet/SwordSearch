@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Dynamic;
+using TMPro;
 
 public class UIManager : MonoBehaviour {
     //private Color textColorForWord = Color.black;
@@ -23,7 +24,8 @@ public class UIManager : MonoBehaviour {
     [HideInInspector] public BoulderGroup shownBoulders = null;
 
     [Header("Submit Word Button")]
-    public Text wordDisplay;
+    //public Text wordDisplay;
+    public TextMeshProUGUI wordDisplay;
     public Image countdownNumber;
     public GameObject countdownDivider;
     public Image wordStrengthImageSingle;
@@ -329,7 +331,7 @@ public class UIManager : MonoBehaviour {
             UpdateCountdownDisplay(countdown);
         }
         else if ((countdown == 0) && (word.Length == 0)) {
-            wordDisplay.text = "TURN PAGE";
+            wordDisplay.text = "TURN  PAGE";
             wordDisplay.color = textColorForInvalidWord;
             //submitWordButtonImage.color = canRefreshPuzzleColor;
             wordStrengthDivider.SetActive(true);
