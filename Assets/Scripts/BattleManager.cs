@@ -596,7 +596,7 @@ public class BattleManager : MonoBehaviour {
             return false;
         if (letterSpacesForWord.Count == 0)
             return true;
-        if (letterSpacesForWord.Count > 8) //decide on some limit, based on screen / text size?
+        if (letterSpacesForWord.Count >= 15) //hard limit of 15 letters per word, for UI reasons
             return false;
         if (letterSpace.IsAdjacentToLetterSpace(lastLetterSpace))
             return true;
