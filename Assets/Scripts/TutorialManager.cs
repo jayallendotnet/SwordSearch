@@ -644,21 +644,27 @@ public class TutorialManager : BattleManager {
         }
         else if (++i == tutorialStep){
             ShowTutorialShadow();
-            DisplayText("After using the <earth>power of earth<>, magic crystals surround you.");
+            DisplayText("After using the <earth>power of earth<>, the book's page is surrounded by rocks.");
+            //DisplayText("After using the <earth>power of earth<>, magic crystals surround you.");
             advanceCondition = Cond.Click;
         }
+        //else if (++i == tutorialStep){
+        //    DisplayText("These magical crystals glow purple and appear above your health.");
+        //    highlightPlayerHealth.SetActive(true);
+        //    advanceCondition = Cond.Click;
+        //}
+        //else if (++i == tutorialStep){
+        //    DisplayText("Currently, there are 3 crystals around you.");
+        //    advanceCondition = Cond.Click;
+        //}
+        //else if (++i == tutorialStep){
+        //    DisplayText("When you make another attack, a crystal will strike the enemy and deal <damage>+33% extra damage<>!");
+        //    highlightPlayerHealth.SetActive(false);
+        //    advanceCondition = Cond.Click;
+        //}
         else if (++i == tutorialStep){
-            DisplayText("These magical crystals glow purple and appear above your health.");
-            highlightPlayerHealth.SetActive(true);
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == tutorialStep){
-            DisplayText("Currently, there are 3 crystals around you.");
-            advanceCondition = Cond.Click;
-        }
-        else if (++i == tutorialStep){
-            DisplayText("When you make another attack, a crystal will strike the enemy and deal <damage>+33% extra damage<>!");
-            highlightPlayerHealth.SetActive(false);
+            DisplayText("The rocks empower your next word, acting as if it was <damage>2 letters longer<>!");
+            //highlightPlayerHealth.SetActive(false);
             advanceCondition = Cond.Click;
         }
         //else if (++i == tutorialStep){
@@ -672,11 +678,12 @@ public class TutorialManager : BattleManager {
         //    advanceCondition = Cond.Click;
         //}
         else if (++i == tutorialStep){
-            DisplayText("This means you should make longer words to get the most damage from each crystal!");
+            DisplayText("Longer words get <damage>exponentially<> more benefit from the <earth>rocks'<> effect!");
+            //DisplayText("This means you should make longer words to get the most damage from each crystal!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
-            DisplayText("Use the <earth>power of earth<> and the magical crystals to defeat the rabbits!");
+            DisplayText("Use the <earth>power of earth<> and some long words to defeat the rabbits!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
