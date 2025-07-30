@@ -78,6 +78,7 @@ public class StaticVariables
     static public readonly int waterFloodDamageBonus = 4;
     static public readonly int healMultiplier = 3;
     static public readonly int riverDamageBonus = 3;
+    static public readonly int earthExtraLetters = 2;
     
 
 

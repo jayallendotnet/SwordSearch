@@ -26,10 +26,10 @@ public class EnemyAttackAnimatorFunctions : MonoBehaviour{
     }
 
     public void ReturnedToIdle(){
-        if (battleManager != null){ //allows the enemy to be used in non-battle scenes
-            battleManager.EnemyReturnedToIdle();
-            DecrementBurnCounter();
-        }
+    //    if (battleManager != null){ //allows the enemy to be used in non-battle scenes
+    //        battleManager.EnemyReturnedToIdle();
+    //        DecrementBurnCounter();
+    //    }
     }
 
     public void AddBurnDamageToQueue(int damage, int count){

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Dynamic;
 using TMPro;
+using MyBox;
 
 public class UIManager : MonoBehaviour {
     private Transform enemyObject;
@@ -97,6 +98,10 @@ public class UIManager : MonoBehaviour {
     public Transform playerAttackAnimationParent;
     public RectTransform waterBuffBottom;
     public RectTransform waterBuffTop;
+    public RectTransform earthBuffLeft;
+    public RectTransform earthBuffRight;
+    public RectTransform earthBuffTop;
+    public RectTransform earthBuffBottom;
     public float waterFillDuration = 2f;
     public float waterFloatDuration = 3f;
     public Transform backgroundParent;
@@ -539,6 +544,37 @@ public class UIManager : MonoBehaviour {
         waterBuffTop.DOAnchorPos(new Vector2(0, floodHeight), waterFillDuration).OnComplete(FloatWater);
         waterBuffBottom.gameObject.SetActive(true);
         waterBuffTop.gameObject.SetActive(true);
+    }
+    
+    public void AddRocksToEdgeOfPuzzle(){
+        //earthBuffBottom.parent.gameObject.SetActive(true);
+        float temp = earthBuffBottom.rect.height;
+        earthBuffBottom.SetPositionY(-temp);
+        earthBuffBottom.DOAnchorPosY(0, 0.5f);
+        temp = earthBuffTop.rect.height;
+        earthBuffTop.SetPositionY(temp);
+        earthBuffTop.DOAnchorPosY(0, 0.5f);
+        temp = earthBuffLeft.rect.width;
+        earthBuffLeft.SetPositionX(-temp);
+        earthBuffLeft.DOAnchorPosX(0, 0.5f);
+        temp = earthBuffRight.rect.width;
+        earthBuffRight.SetPositionX(temp);
+        earthBuffRight.DOAnchorPosX(0, 0.5f);
+    }
+    
+    public void RemoveRocksFromEdgeOfPuzzle(){
+        float temp = earthBuffBottom.rect.height;
+        //earthBuffBottom.SetPositionY(-temp);
+        earthBuffBottom.DOAnchorPosY(-temp, 0.5f);
+        temp = earthBuffTop.rect.height;
+        //earthBuffTop.SetPositionY(temp);
+        earthBuffTop.DOAnchorPosY(temp, 0.5f);
+        temp = earthBuffLeft.rect.width;
+        //earthBuffLeft.SetPositionX(-temp);
+        earthBuffLeft.DOAnchorPosX(-temp, 0.5f);
+        temp = earthBuffRight.rect.width;
+        //earthBuffRight.SetPositionX(temp);
+        earthBuffRight.DOAnchorPosX(temp, 0.5f);
     }
 
     private void FloatWater() {

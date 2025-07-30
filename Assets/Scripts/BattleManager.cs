@@ -56,6 +56,7 @@ public class BattleManager : MonoBehaviour {
     [HideInInspector]
     public int copycatBuildup = 0;
     private int maxBurnedLetters = 20;
+    private bool hasEarthBuff = false;
 
 
     [Header("Game Variables")]
@@ -294,6 +295,7 @@ public class BattleManager : MonoBehaviour {
                 break;
             case PowerupTypes.Earth:
                 DamageEnemyHealth(attackData.strength);
+                ApplyEarthBuff();
                 //ApplyPebblesForEarthAttack();
                 break;
             case PowerupTypes.Sword:
@@ -303,6 +305,22 @@ public class BattleManager : MonoBehaviour {
                 DamageEnemyHealth(attackData.strength);
                 break;
         }
+    }
+
+    private void ApplyEarthBuff() {
+        if (hasEarthBuff)
+            return;
+        hasEarthBuff = true;
+        inProgressWord.AddEarthBuff();
+        uiManager.AddRocksToEdgeOfPuzzle();
+    }
+
+    private void RemoveEarthBuff() {
+        if (!hasEarthBuff)
+            return;
+        hasEarthBuff = false;
+        inProgressWord.RemoveEarthBuff();
+        uiManager.RemoveRocksFromEdgeOfPuzzle();
     }
 
     private void DoSwordAttack(int strength){
@@ -588,32 +606,41 @@ public class BattleManager : MonoBehaviour {
             inProgressWord = new(this);
             DecrementRefreshPuzzleCountdown();
             ClearWord(true);
+            RemoveEarthBuff();
             if (isWaterInPuzzleArea && enemyData.canBurn)
                 ClearRandomBurnedLetters(2);
-            CheckToUseQueuedAttack();
+            CheckToUseQueuedAttack(false, false);
         }
     }
     
-    public void CheckToUseQueuedAttack(){
-        if (CanQueuedAttackBeUsed())
+    public void CheckToUseQueuedAttack(bool ignorePlayerState, bool ignoreEnemyState){
+        print(attackQueue.Count + " attacks in the queue");
+        if (CanQueuedAttackBeUsed(ignorePlayerState, ignoreEnemyState))
             AttackWithFirstWordInQueue();
     }
     
-    public bool CanQueuedAttackBeUsed(){
+    public bool CanQueuedAttackBeUsed(bool ignorePlayerState, bool ignoreEnemyState){
         if (attackQueue.Count == 0)
             return false;
         if (enemyHealth <= 0)
             return false;
         if (playerHealth <= 0)
             return false;
-        if (enemyData.isHorde) {
+        if (!ignoreEnemyState){
+            if (enemyData.isHorde) {
                 if (!uiManager.enemyHordeAnimators[0].GetCurrentAnimatorStateInfo(0).IsName("Idle"))
                     return false;
             }
             else if (!uiManager.enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
                 return false;
-        return uiManager.playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
+        }
+        if (!ignorePlayerState)
+            return uiManager.playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
+        return true;
     }
+        //int numberOfAttacksStillActive = uiManager.playerAttackAnimationParent.childCount;
+        //return (numberOfAttacksStillActive == 0);
+        
 
     private void AttackWithFirstWordInQueue() {
         if (attackQueue.Count == 0)
@@ -646,6 +673,7 @@ public class BattleManager : MonoBehaviour {
 
     public virtual void QueueEnemyAttack(){
         if (playerHealth != 0){
+            EnemyReturnedToIdle();
             EnemyAttack ea;
             if (enemyData.isHorde)
                 ea = firstEnemyInHorde.attackOrder.Value[enemyAttackIndex];    
@@ -659,18 +687,20 @@ public class BattleManager : MonoBehaviour {
     }
 
     public void EnemyReturnedToIdle(){
-        CheckToUseQueuedAttack();
+        //print("here");
+        CheckToUseQueuedAttack(false, true);
     }
-    
-    public void PlayerAttackAnimationFinished(GameObject attackObject){
+
+    public void PlayerAttackAnimationFinished(GameObject attackObject) {
         //destroys the gameobject, then resumes the enemy attack timer
         Destroy(attackObject);
         if (enemyHealth < 1)
             return;
+        uiManager.ResumeEnemyAttackBar();
         if (attackQueue.Count > 0)
-            CheckToUseQueuedAttack();
-        else
-            uiManager.ResumeEnemyAttackBar();
+            CheckToUseQueuedAttack(true, true);
+        //StaticVariables.WaitTimeThenCallFunction(0.1f, CheckToUseQueuedAttack);
+        //else
     }
 
     public virtual void TriggerEnemyAttack(){
