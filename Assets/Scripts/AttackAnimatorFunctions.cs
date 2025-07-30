@@ -4,36 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class AttackAnimatorFunctions : MonoBehaviour{
-
-    [HideInInspector]
-    public BattleManager.PowerupTypes type;
-    private int strength;
-    private int powerupLevel;
     private BattleManager battleManager;
+    private AttackData attackData;
 
-    public void SetStats(BattleManager.PowerupTypes type, int strength, int powerupLevel, BattleManager battleManager){
-        this.type = type;
-        this.strength = strength;
-        this.powerupLevel = powerupLevel;
+    public void SetStats(AttackData attackData, BattleManager battleManager) {
+        this.attackData = attackData;
         this.battleManager = battleManager;
     }
 
-    public void DestroySelf(){
+    public void DestroySelf() {
         battleManager.PlayerAttackAnimationFinished(this.gameObject);
     }
 
-    public void DoAttackEffect(){
-        print("do attack effect, strength " + strength);
-        print("type " + type);
-        battleManager.DoAttackEffect(type, strength, powerupLevel);
+    public void DoAttackEffect() {
+        battleManager.AttackHitsEnemy(attackData);
     }
 
-    public void DamagePlayerForDarkAttack(){
+    public void DamagePlayerForDarkAttack() {
         battleManager.DamagePlayerForDarkAttack();
     }
-
-    public void ThrowPebble(){
-        battleManager.ThrowPebbleIfPossible(strength);
-    }
-
 }

@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class PlayerAnimatorFunctions : MonoBehaviour{
 
     [HideInInspector]
-    public List<GameObject> attacksInProgress = new List<GameObject>();
-    [HideInInspector]
-    public List<float> pebblesInQueue = new List<float>();
+    public AttackData attackInProgress = null;
     private List<GameObject> powerupTypeNoneOptions = new List<GameObject>();
 
     public BattleManager battleManager;
@@ -36,62 +34,24 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
         SetPowerupTypeNoneOptions();
     }
 
-    public void CreateAttackAnimation(BattleManager.PowerupTypes type, int strength, int powerupLevel){
-        //strength = 6;
-        //powerupLevel = StaticVariables.rand.Next(1,3);
-        //powerupLevel = 1;
-        //type = BattleManager.PowerupTypes.Water;
-
+    public void StartAttackProjectile() {
+        //creates the attackanimatorfunctions object and immediately launches the attack
         GameObject o = basicFirePrefab;
-        switch (type){
-            case BattleManager.PowerupTypes.Fire:
-                o = powerFirePrefab;
-                break;
-            case BattleManager.PowerupTypes.Water:
-                o = powerWaterPrefab;
-                break;
-            case BattleManager.PowerupTypes.Heal:
-                o = powerHealPrefab;
-                break;
-            case BattleManager.PowerupTypes.Dark:
-                o = powerDarkPrefab;
-                break;
-            case BattleManager.PowerupTypes.Earth:
-                o = powerEarthPrefab;
-                break;
-            case BattleManager.PowerupTypes.Lightning:
-                o = powerLightningPrefab;
-                break;
-            case BattleManager.PowerupTypes.Pebble:
-                o = powerEarthPebblePrefab;
-                break;
-            case BattleManager.PowerupTypes.Sword:
-                o = powerSwordPrefab;
-                break;
-            default:
-                //print("no powerup type");
-                o = ChooseAnimationForPowerupTypeNone();
-                break;
-        }
-
+        o = attackInProgress.type switch  {
+            BattleManager.PowerupTypes.Fire => powerFirePrefab,
+            BattleManager.PowerupTypes.Water => powerWaterPrefab,
+            //BattleManager.PowerupTypes.Heal => powerHealPrefab,
+            BattleManager.PowerupTypes.Dark => powerDarkPrefab,
+            BattleManager.PowerupTypes.Earth => powerEarthPrefab,
+            BattleManager.PowerupTypes.Lightning => powerLightningPrefab,
+            BattleManager.PowerupTypes.Pebble => powerEarthPebblePrefab,
+            BattleManager.PowerupTypes.Sword => powerSwordPrefab,
+            //none and heal
+            _ => ChooseAnimationForPowerupTypeNone(),
+        };
         GameObject newAttack = Instantiate(o, battleManager.uiManager.playerAttackAnimationParent);
-        newAttack.GetComponent<AttackAnimatorFunctions>().SetStats(type, strength, powerupLevel, battleManager);
-        if (type == BattleManager.PowerupTypes.Pebble){
-            newAttack.SetActive(true);
-        }
-        else{
-            newAttack.SetActive(false);
-            attacksInProgress.Add(newAttack);
-        }
-    }
-
-
-    public void StartNextAttackAnimation(){
-        if (attacksInProgress.Count == 0)
-            return;
-        GameObject go = attacksInProgress[0];
-        go.SetActive(true);
-        attacksInProgress.RemoveAt(0);
+        newAttack.GetComponent<AttackAnimatorFunctions>().SetStats(attackInProgress, battleManager);
+        newAttack.SetActive(true);
     }
 
     private GameObject ChooseAnimationForPowerupTypeNone(){    
@@ -117,13 +77,9 @@ public class PlayerAnimatorFunctions : MonoBehaviour{
         deathBubble.SetActive(true);
         battleManager.uiManager.ShowDefeatPage();
     }
-
-    public void AddPebblesToQueue(float multiplier, int count){
-        for (int i =0; i<count; i++){
-            pebblesInQueue.Add(multiplier);
-            pebblesInQueue.Sort();
-            pebblesInQueue.Reverse();
-        }
+    
+    public void ApplyHealToSelf(){
+        if (attackInProgress.type == BattleManager.PowerupTypes.Heal)
+            battleManager.ApplyHealToSelf(attackInProgress);
     }
-
 }

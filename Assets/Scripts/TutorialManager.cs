@@ -888,7 +888,7 @@ public class TutorialManager : BattleManager {
             return false;
         switch (advanceCondition){
             case (Cond.SubmitWord):
-                if (word == new string(requiredWord))
+                if (inProgressWord.word == new string(requiredWord))
                     return false;
                 return true;
             case (Cond.ReleaseFinger):
@@ -902,7 +902,7 @@ public class TutorialManager : BattleManager {
 
         switch (advanceCondition){
             case (Cond.CompleteWord):
-                if (word == new string(requiredWord))
+                if (inProgressWord.word == new string(requiredWord))
                     AdvanceTutorialStep();
                 break;
         }
@@ -915,7 +915,7 @@ public class TutorialManager : BattleManager {
                 AdvanceTutorialStep();
                 break;
             case (Cond.SubmitWord):
-                if (word == new string(requiredWord)){
+                if (inProgressWord.word == new string(requiredWord)){
                     base.ProcessFingerRelease();
                     AdvanceTutorialStep();
                 }
@@ -926,7 +926,7 @@ public class TutorialManager : BattleManager {
                 ClearWord(false);
                 break;
             case (Cond.SubmitAnyWord):
-                if (isValidWord){
+                if (inProgressWord.isValidWord){
                     base.ProcessFingerRelease();
                     AdvanceTutorialStep();
                 }
@@ -937,7 +937,7 @@ public class TutorialManager : BattleManager {
                     base.ProcessFingerRelease();
                 break;   
             case (Cond.SubmitHealingWord):
-                if((isValidWord) && (powerupTypeForWord == BattleManager.PowerupTypes.Heal)){
+                if((inProgressWord.isValidWord) && (inProgressWord.type == BattleManager.PowerupTypes.Heal)){
                     base.ProcessFingerRelease();
                     AdvanceTutorialStep();
                 }
@@ -945,7 +945,7 @@ public class TutorialManager : BattleManager {
                     ClearWord(false);
                 break;   
             case (Cond.SubmitWaterWord):
-                if((isValidWord) && (powerupTypeForWord == BattleManager.PowerupTypes.Water)){
+                if((inProgressWord.isValidWord) && (inProgressWord.type == BattleManager.PowerupTypes.Water)){
                     base.ProcessFingerRelease();
                     AdvanceTutorialStep();
                 }
@@ -953,7 +953,7 @@ public class TutorialManager : BattleManager {
                     ClearWord(false);
                 break;  
             case (Cond.SubmitEarthWord):
-                if((isValidWord) && (powerupTypeForWord == BattleManager.PowerupTypes.Earth)){
+                if((inProgressWord.isValidWord) && (inProgressWord.type == BattleManager.PowerupTypes.Earth)){
                     base.ProcessFingerRelease();
                     AdvanceTutorialStep();
                 }
@@ -1040,8 +1040,8 @@ public class TutorialManager : BattleManager {
             countdownToRefresh ++;
     }
 
-    public override void ApplyHealToSelf(int strength, int powerupLevel){
-        base.ApplyHealToSelf(strength, powerupLevel);
+    public override void ApplyHealToSelf(AttackData attackData){
+        base.ApplyHealToSelf(attackData);
         switch (advanceCondition){
             case (Cond.PlayerGetsHealed):
                 AdvanceTutorialStep();

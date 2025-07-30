@@ -37,8 +37,6 @@ public class LetterSpace : MonoBehaviour{
     public TextMeshProUGUI text;
     public GameObject selectedSignifier;
     public Animator selectedSignifierAnimator;
-    //public GameObject powerupIcons;
-    //public Animator powerupIconAnimator;
     public Image[] colorableBackgroundImages = new Image[9];
     public GameObject tutorialSelector;
     public GameObject touchDetection1;
@@ -93,11 +91,9 @@ public class LetterSpace : MonoBehaviour{
         selectedSignifier.SetActive(true);
         ShowDirectionsToNeighbors();
         HidePowerupIcons();
-        //text.color = textColor;
         UpdateBackgroundColors(backgroundColor);
         text.font = fontWithOutline;
-        //ColorLetter(true);
-        if (battleManager.powerupTypeForWord == BattleManager.PowerupTypes.None){
+        if (battleManager.inProgressWord.type == BattleManager.PowerupTypes.None){
             selectedSignifierAnimator.enabled = false;
             selectedSignifier.transform.localScale = Vector3.one;
         }
@@ -110,15 +106,12 @@ public class LetterSpace : MonoBehaviour{
     public void ShowAsNotPartOfWord(){
         selectedSignifier.SetActive(false);
         HideAllDirectionLines();
-        //text.GetComponent<Outline>().enabled = false;
         if (hasBeenUsedInAWordAlready){
             text.font = fontUsed;
-            //text.color = battleManager.uiManager.usedLetterColor;
             HidePowerupIcons();
         }
         else{
             text.font = fontNoOutline;
-            //text.color = Color.black;
             ShowPowerup();
         }
     }
@@ -131,7 +124,6 @@ public class LetterSpace : MonoBehaviour{
         lightningIcon.SetActive(false);
         darkIcon.SetActive(false);
         swordIcon.SetActive(false);
-        //powerupIcons.SetActive(false);
     }
 
     private void ShowPowerupIcon(BattleManager.PowerupTypes powerupType) {
@@ -243,33 +235,15 @@ public class LetterSpace : MonoBehaviour{
         if (powerupType == BattleManager.PowerupTypes.None){
             HidePowerupIcons();
             text.font = fontNoOutline;
-            //ColorLetter(false);
         }
         else{
             PowerupDisplayData d = battleManager.uiManager.GetPowerupDisplayDataWithType(powerupType);
             Color t = d.textColor;
-            //text.color = t;
             ShowPowerupIcon(powerupType);
             text.font = fontWithOutline;
-            //ColorLetter(true);
         }
 
     }
-
-    /*
-    private void ColorLetter(bool isInPowerupOrWord){
-        if (isInPowerupOrWord){
-            text.font = fontWithOutline;
-            //text.color = powerupOrWordLetterColor;
-            //text.GetComponent<Outline>().enabled = true;
-        }
-        else {
-            text.font = fontNoOutline;
-            //text.color = normalLetterColor;
-            //text.GetComponent<Outline>().enabled = false;
-        }
-    }
-    */
 
     public void SetPowerup(BattleManager.PowerupTypes type){
         powerupType = type;

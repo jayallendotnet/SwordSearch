@@ -6,18 +6,22 @@ using UnityEngine.UI;
 public class BattleManager : MonoBehaviour {
 
     [HideInInspector]
-    public string word = "";
-    
+    public AttackData inProgressWord;
+    [HideInInspector]
+    public List<AttackData> attackQueue = new();
+    //[HideInInspector]
+    //public string word = "";
+
     [HideInInspector]
     public List<LetterSpace> letterSpacesForWord = new List<LetterSpace>(){};
 
     private LetterSpace lastLetterSpace = null;
     private LetterSpace secondToLastLetterSpace = null;
 
-    [HideInInspector]
-    public BattleManager.PowerupTypes powerupTypeForWord;
-    [HideInInspector]
-    public int powerupLevel;
+    //[HideInInspector]
+    //public BattleManager.PowerupTypes powerupTypeForWord;
+    //[HideInInspector]
+    //public int powerupLevel;
     [HideInInspector]
     public int enemyHealth = 0;
     [HideInInspector]
@@ -33,11 +37,11 @@ public class BattleManager : MonoBehaviour {
     [HideInInspector]
     public int countdownToRefresh;
     public enum PowerupTypes{None, Water, Fire, Heal, Dark, Earth, Lightning, Pebble, Sword};
-    [HideInInspector]
-    public bool isValidWord = false;
-    private int wordStrength = 0;
+    //[HideInInspector]
+    //public bool isValidWord = false;
+    //private int wordStrength = 0;
     private bool hasSwipedOffALetter = false;
-    private bool waitingForEnemyAttackToFinish = false;
+    //private bool waitingForEnemyAttackToFinish = false;
     private bool stopNextAttack = false;
     [HideInInspector]
     public EnemyData enemyData;
@@ -103,42 +107,13 @@ public class BattleManager : MonoBehaviour {
         playerHealth = startingPlayerHealth;
         uiManager.ApplyBackground(StaticVariables.battleData.backgroundPrefab);
 
+        inProgressWord = new(this);
         uiManager.SetStartingValues();
         uiManager.DisplayHealths(playerHealth, enemyHealth);
-        uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
+        uiManager.DisplayWord(inProgressWord, countdownToRefresh);
         StaticVariables.FadeIntoScene();
         StaticVariables.WaitTimeThenCallFunction(StaticVariables.sceneFadeDuration, QueueEnemyAttack);
         puzzleGenerator.Setup();
-    }
-    
-    public void SetIsValidWord(){
-        if (word.Length < minCheckingWordLength)
-            isValidWord = false;
-        else
-            isValidWord = SearchLibraryForWord(word);
-    }
-
-    private bool SearchLibraryForWord(string word){
-        //returns true if the library contains the word
-        int result = System.Array.BinarySearch<string>(StaticVariables.wordLibraryForChecking, word.ToLower());
-        return (result > -1);
-    }
-
-    public void CalcWordStrength(){
-        if (word.Length < minCheckingWordLength)
-            wordStrength = 0;
-        else{
-            wordStrength =  Mathf.FloorToInt(Mathf.Pow((word.Length - 2), 2));
-            if (isWaterInPuzzleArea){
-                if (enemyData.isHorde)
-                    wordStrength += (StaticVariables.waterFloodDamageBonus * currentHordeEnemyCount);
-                else
-                    wordStrength += StaticVariables.waterFloodDamageBonus;
-                if (enemyData.isNearWater) //if near water add +1x to the water flood bonus. added at the end to work with hordes near water
-                    wordStrength += StaticVariables.riverDamageBonus;
-                    
-            }
-        }
     }
 
     public virtual void DamageEnemyHealth(int amount){
@@ -225,28 +200,6 @@ public class BattleManager : MonoBehaviour {
             uiManager.StartPlayerCastAnimation();
     }
 
-    private void PlayPlayerAttackAnimationAfterEnemyFinishes(){
-        waitingForEnemyAttackToFinish = true;
-    }
-
-    private void SetCurrentAttackData(){
-        playerAnimatorFunctions.CreateAttackAnimation(powerupTypeForWord, wordStrength, powerupLevel);
-        if (powerupTypeForWord == PowerupTypes.Heal)
-            playerAnimatorFunctions.CreateAttackAnimation(PowerupTypes.None, wordStrength, 0);
-    }
-
-    public void DoAttackEffect(PowerupTypes type, int strength, int powerupLevel){
-        switch (type){
-            case PowerupTypes.Heal:
-                ApplyHealToSelf(strength, powerupLevel);
-                ClearDebuffsViaHealing();
-                break;
-            default:
-                ApplyAttackToEnemy(type, strength, powerupLevel);
-                break;
-        }
-    }
-
     public void DoEnemyAttackEffect(EnemyAttackAnimatorFunctions enemy){
         EnemyAttack ea = null;
         if (enemyData.isHorde){
@@ -316,102 +269,82 @@ public class BattleManager : MonoBehaviour {
     }
 
 
-    public void ApplyAttackToEnemy(PowerupTypes type, int strength, int powerupLevel){
+    public void AttackHitsEnemy(AttackData attackData){
         if (enemyData.isCopycat){
-            if ((copycatBuildup < maxCopycatStacks) && (type != PowerupTypes.Heal) && (type != PowerupTypes.Pebble)){
+            if ((copycatBuildup < maxCopycatStacks) && (attackData.type != PowerupTypes.Heal)){
                 copycatBuildup ++;
                 uiManager.ShowCopycatBuildup();
             }
         }
-        if (powerupLevel < 1)
-                DamageEnemyHealth(strength);
-            else {
-                switch (type){
-                    case PowerupTypes.Water:
-                        DamageEnemyHealth(strength);
-                        ApplyBuffForWaterAttack(powerupLevel);
-                        break;
-                    case PowerupTypes.Fire:
-                        ApplyBurnForFireAttack(powerupLevel);
-                        DamageEnemyHealth(strength);
-                        break;
-                    case PowerupTypes.Lightning:
-                        ApplyEnemyAttackTimeDebuffFromLightning(powerupLevel);
-                        DamageEnemyHealth(strength);
-                        break;
-                    case PowerupTypes.Dark:
-                        DoDarkAttack(strength, powerupLevel);
-                        break;
-                    case PowerupTypes.Earth:
-                        DamageEnemyHealth(strength);
-                        ApplyPebblesForEarthAttack(powerupLevel);
-                        break;
-                    case PowerupTypes.Pebble:
-                        DamageEnemyHealth(strength);
-                        break;
-                    case PowerupTypes.Sword:
-                        DoSwordAttack(strength, powerupLevel);
-                        break;
-                }
-            }
+        switch (attackData.type){
+            case PowerupTypes.Water:
+                DamageEnemyHealth(attackData.strength);
+                ApplyBuffForWaterAttack();
+                break;
+            case PowerupTypes.Fire:
+                DamageEnemyHealth(attackData.strength);
+                //ApplyBurnForFireAttack();
+                break;
+            case PowerupTypes.Lightning:
+                DamageEnemyHealth(attackData.strength);
+                ApplyEnemyAttackTimeDebuffFromLightning();
+                break;
+            case PowerupTypes.Dark:
+                DoDarkAttack(attackData.strength);
+                break;
+            case PowerupTypes.Earth:
+                DamageEnemyHealth(attackData.strength);
+                //ApplyPebblesForEarthAttack();
+                break;
+            case PowerupTypes.Sword:
+                DoSwordAttack(attackData.strength);
+                break;
+            default: //poweruptypes.heal and none
+                DamageEnemyHealth(attackData.strength);
+                break;
+        }
     }
 
-    private void DoSwordAttack(int strength, int powerupLevel){
+    private void DoSwordAttack(int strength){
         float mult = swordPowerupDamageMultiplier;
         //if (enemyData.isHorde && firstEnemyInHorde.isDraconic)
         //    mult = swordPowerupDamageMultiplierVsDragons;
         if (enemyData.isDraconic)
             mult = swordPowerupDamageMultiplierVsDragons;
-        int enemyDamage = (int)(strength * (powerupLevel * mult));
+        int enemyDamage = (int)(strength * mult);
         DamageEnemyHealth(enemyDamage);
     }
 
     public virtual void WaterDrainComplete(){
         isWaterInPuzzleArea = false;
-        CalcWordStrength();
+        inProgressWord.RemoveWaterBuff();
         UpdateSubmitVisuals();
     }
 
-    private void ApplyBuffForWaterAttack(int powerupLevel){
+    private void ApplyBuffForWaterAttack(){
         if ((enemyHealth <= 0) || (playerHealth <= 0))
             StaticVariables.WaitTimeThenCallFunction(0.6f, uiManager.FadeOutWaterOverlay);
         isWaterInPuzzleArea = true;
-        float duration = powerupLevel * StaticVariables.waterFloodDuration;
-        uiManager.FillPuzzleAreaWithWater(duration);
-        CalcWordStrength();
+        uiManager.FillPuzzleAreaWithWater(StaticVariables.waterFloodDuration);
+        inProgressWord.AddWaterBuff();
         UpdateSubmitVisuals();
     }
 
-    public void ThrowPebbleIfPossible(int attackStrength){
-        if (playerAnimatorFunctions.pebblesInQueue.Count > 0){
-            float multiplier = playerAnimatorFunctions.pebblesInQueue[0];
-            int pebbleDamage = ((int)(attackStrength * multiplier));
-            if (pebbleDamage < 1)
-                pebbleDamage = 1;
-            uiManager.ThrowPebble(pebbleDamage);
-        }
-    }
-
-    private void ApplyPebblesForEarthAttack(int powerupLevel){
-        playerAnimatorFunctions.AddPebblesToQueue((pebbleDamageMultiplier * powerupLevel), pebbleCountFromEarthAttack);
-        uiManager.ShowPebbleCount();
-    }
-
-    private void ApplyEnemyAttackTimeDebuffFromLightning(int powerupLevel){
+    private void ApplyEnemyAttackTimeDebuffFromLightning(){
         uiManager.StopEnemyAttackTimer();
-        float stunTime = lightningStunDuration * powerupLevel;
+        float stunTime = lightningStunDuration;
         if (enemyData.isHorde)
             stunTime /= currentHordeEnemyCount;
         uiManager.ActivateEnemyStunBar(stunTime);
     }
 
-    private void ApplyBurnForFireAttack(int powerupLevel){
-        if (enemyData.isHorde)
-            enemyHordeAttackAnimatorFunctions[0].AddBurnDamageToQueue(powerupLevel, burnDurationFromFireAttack);
-        else
-            enemyAttackAnimatorFunctions.AddBurnDamageToQueue(powerupLevel, burnDurationFromFireAttack);
-        uiManager.ShowBurnCount();
-    }
+    //private void ApplyBurnForFireAttack(int powerupLevel){
+    //    if (enemyData.isHorde)
+    //        enemyHordeAttackAnimatorFunctions[0].AddBurnDamageToQueue(powerupLevel, burnDurationFromFireAttack);
+    //    else
+    //        enemyAttackAnimatorFunctions.AddBurnDamageToQueue(powerupLevel, burnDurationFromFireAttack);
+    //    uiManager.ShowBurnCount();
+    //}
 
     public void DamagePlayerForDarkAttack(){
         //doesn't play animation for self damage
@@ -424,8 +357,8 @@ public class BattleManager : MonoBehaviour {
         uiManager.DisplayHealths(playerHealth, enemyHealth);
     }
 
-    private void DoDarkAttack(int strength, int powerupLevel){
-        int enemyDamage = (int)(strength * (powerupLevel * darkPowerupDamageMultiplier));
+    private void DoDarkAttack(int strength){
+        int enemyDamage = (int)(strength * darkPowerupDamageMultiplier);
         if (enemyData.isHoly)
             enemyDamage /= 2;
         if (enemyData.isDark)
@@ -433,8 +366,8 @@ public class BattleManager : MonoBehaviour {
         DamageEnemyHealth(enemyDamage);
     }
 
-    public virtual void ApplyHealToSelf(int strength, int powerupLevel){
-        int healAmount = strength * StaticVariables.healMultiplier;
+    public virtual void ApplyHealToSelf(AttackData attackData){
+        int healAmount = attackData.strength * StaticVariables.healMultiplier;
         if (enemyData.isHoly)
             healAmount *= 2;
         if (enemyData.isDark)
@@ -508,10 +441,8 @@ public class BattleManager : MonoBehaviour {
     }
 
     public virtual void AddLetter(LetterSpace ls) {
-        word += ls.letter;
-        SetIsValidWord();
-        CalcWordStrength();
         letterSpacesForWord.Add(ls);
+        inProgressWord.AddLetter(ls.letter);
         if (lastLetterSpace != null) {
             lastLetterSpace.nextLetterSpace = ls;
             ls.previousLetterSpace = lastLetterSpace;
@@ -525,13 +456,8 @@ public class BattleManager : MonoBehaviour {
 
     public void RemoveLetter(LetterSpace ls){
         //assumes the last letter in the list is the provided letter
-        if (word.Length < 2)
-            word = "";
-        else
-            word = word.Substring(0, (word.Length - 1));
-        SetIsValidWord();
-        CalcWordStrength();
         letterSpacesForWord.Remove(ls);
+        inProgressWord.RemoveLastLetter();
         ls.ShowAsNotPartOfWord();
         if (secondToLastLetterSpace != null){
             secondToLastLetterSpace.nextLetterSpace = null;
@@ -542,29 +468,10 @@ public class BattleManager : MonoBehaviour {
     }
 
     public virtual void UpdateSubmitVisuals(){
-        UpdatePowerupTypeAndLevel();
-        uiManager.powerupType = powerupTypeForWord;
-        //uiManager.SetPowerupBackgroundColor(powerupTypeForWord);
-        //uiManager.UpdatePowerupIcon(powerupTypeForWord, powerupLevel);
+        uiManager.powerupType = inProgressWord.type;
         uiManager.UpdateVisualsForLettersInWord(letterSpacesForWord);
-        uiManager.DisplayWord(word, isValidWord, countdownToRefresh, wordStrength);
-        uiManager.ShowPowerupBackground(powerupTypeForWord);
-    }
-
-
-    private void UpdatePowerupTypeAndLevel(){
-        powerupTypeForWord = BattleManager.PowerupTypes.None;
-        powerupLevel = 0;        
-        if (letterSpacesForWord.Count == 0)
-            return;
-        foreach (LetterSpace ls in letterSpacesForWord){
-            if (ls.powerupType != BattleManager.PowerupTypes.None){
-                powerupLevel++;
-                if (powerupLevel == 1)
-                    powerupTypeForWord = ls.powerupType;
-            }
-
-        }
+        uiManager.DisplayWord(inProgressWord, countdownToRefresh);
+        uiManager.ShowPowerupBackground(inProgressWord.type);
     }
 
     private void SetLastTwoLetterSpaces(){
@@ -617,9 +524,7 @@ public class BattleManager : MonoBehaviour {
         }
         letterSpacesForWord = new List<LetterSpace>();
         SetLastTwoLetterSpaces();
-        word = "";
-        isValidWord = false;
-        CalcWordStrength();
+        inProgressWord.UpdateWord("");
         UpdateSubmitVisuals();
     }
 
@@ -659,7 +564,7 @@ public class BattleManager : MonoBehaviour {
     public void ProcessSwipeReleaseOnLetterSpace(LetterSpace space){
         if ((space.wasActiveBeforeFingerDown) && (CanRemoveLetter(space)) && (!hasSwipedOffALetter))
             RemoveLetter(space);
-        else if ((word.Length == 1) && (hasSwipedOffALetter) && (CanRemoveLetter(space)))
+        else if ((inProgressWord.word.Length == 1) && (hasSwipedOffALetter) && (CanRemoveLetter(space)))
             RemoveLetter(space);
     }
 
@@ -669,7 +574,7 @@ public class BattleManager : MonoBehaviour {
     }
 
     public virtual void ProcessFingerRelease(){
-        if (isValidWord)
+        if (inProgressWord.isValidWord)
             SubmitWord();
         else
             ClearWord(false);
@@ -678,31 +583,54 @@ public class BattleManager : MonoBehaviour {
     public void SubmitWord(){
         if ((playerHealth == 0) || (enemyHealth == 0) || (isGamePaused))
             return;
-        if (isValidWord){
-            bool startNow = false;
-            if (enemyData.isHorde)
-                startNow = uiManager.enemyHordeAnimators[0].GetCurrentAnimatorStateInfo(0).IsName("Idle");
-            else
-                startNow = uiManager.enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
-            if (startNow)
-                StartPlayingPlayerAttackAnimation(powerupTypeForWord);
-            else
-                PlayPlayerAttackAnimationAfterEnemyFinishes();
-            SetCurrentAttackData();
+        if (inProgressWord.isValidWord) {
+            attackQueue.Add(inProgressWord);
+            inProgressWord = new(this);
             DecrementRefreshPuzzleCountdown();
             ClearWord(true);
-
             if (isWaterInPuzzleArea && enemyData.canBurn)
                 ClearRandomBurnedLetters(2);
+            CheckToUseQueuedAttack();
         }
     }
+    
+    public void CheckToUseQueuedAttack(){
+        if (CanQueuedAttackBeUsed())
+            AttackWithFirstWordInQueue();
+    }
+    
+    public bool CanQueuedAttackBeUsed(){
+        if (attackQueue.Count == 0)
+            return false;
+        if (enemyHealth <= 0)
+            return false;
+        if (playerHealth <= 0)
+            return false;
+        if (enemyData.isHorde) {
+                if (!uiManager.enemyHordeAnimators[0].GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                    return false;
+            }
+            else if (!uiManager.enemyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                return false;
+        return uiManager.playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
+    }
 
-    public virtual void PressWordArea(){
-        if ((word.Length == 0) && (countdownToRefresh == 0)){
+    private void AttackWithFirstWordInQueue() {
+        if (attackQueue.Count == 0)
+            return;
+        AttackData attackData = attackQueue[0];
+        attackQueue.RemoveAt(0);
+        playerAnimatorFunctions.attackInProgress = attackData;
+        StartPlayingPlayerAttackAnimation(attackData.type);
+    }
+
+    public virtual void PressWordArea() {
+        if ((inProgressWord.word.Length == 0) && (countdownToRefresh == 0))
+        {
             puzzleGenerator.GenerateNewPuzzle();
             countdownToRefresh = maxPuzzleCountdown;
-            ClearWord(true);  
-            uiManager.ShowPageTurn();         
+            ClearWord(true);
+            uiManager.ShowPageTurn();
         }
     }
 
@@ -731,49 +659,17 @@ public class BattleManager : MonoBehaviour {
     }
 
     public void EnemyReturnedToIdle(){
-        if (waitingForEnemyAttackToFinish){
-            waitingForEnemyAttackToFinish = false;
-            if (playerAnimatorFunctions.attacksInProgress.Count == 1){
-                StartPlayingPlayerAttackAnimation(playerAnimatorFunctions.attacksInProgress[0].GetComponent<AttackAnimatorFunctions>().type);
-            }
-                
-            else if (playerAnimatorFunctions.attacksInProgress.Count > 1){
-                StartPlayingPlayerAttackAnimation(playerAnimatorFunctions.attacksInProgress[0].GetComponent<AttackAnimatorFunctions>().type);
-                PlayNextAttackAfterBriefPause();
-            }
-        }
-    }
-
-    private void PlayNextAttackAfterBriefPause(){
-        StaticVariables.WaitTimeThenCallFunction(0.5f, PlayNextAttack);
-    }
-
-    private void PlayNextAttack(){
-        if (enemyHealth == 0)
-            return;
-        if (playerAnimatorFunctions.attacksInProgress.Count == 1){
-                StartPlayingPlayerAttackAnimation(playerAnimatorFunctions.attacksInProgress[0].GetComponent<AttackAnimatorFunctions>().type);
-        }
-        else if (playerAnimatorFunctions.attacksInProgress.Count > 1){
-            StartPlayingPlayerAttackAnimation(playerAnimatorFunctions.attacksInProgress[0].GetComponent<AttackAnimatorFunctions>().type);
-            PlayNextAttackAfterBriefPause();
-        }
+        CheckToUseQueuedAttack();
     }
     
     public void PlayerAttackAnimationFinished(GameObject attackObject){
-        //destroys the gameobject
-        //then resumes the enemy attack timer, if there are no non-pebble animations left
+        //destroys the gameobject, then resumes the enemy attack timer
         Destroy(attackObject);
         if (enemyHealth < 1)
             return;
-        bool anyAnimationsInProgress = false;
-        foreach (Transform t in uiManager.playerAttackAnimationParent){
-            if (t.gameObject != attackObject){
-                if (!t.name.Contains("Pebble"))
-                    anyAnimationsInProgress = true;
-            }
-        }
-        if (!anyAnimationsInProgress)
+        if (attackQueue.Count > 0)
+            CheckToUseQueuedAttack();
+        else
             uiManager.ResumeEnemyAttackBar();
     }
 
@@ -817,5 +713,112 @@ public class BattleManager : MonoBehaviour {
 
     }
 
+    public int GetNumberOfEnemies() {
+        if (enemyData.isHorde)
+            return currentHordeEnemyCount;
+        return 1;
+    }
+
 }
- 
+public class AttackData {
+    public BattleManager.PowerupTypes type = BattleManager.PowerupTypes.None;
+    public string word = "";
+    public bool hasEarthBuff = false;
+    public bool hasWaterBuff = false;
+    public bool isValidWord = false;
+    public int strength = 0;
+    private readonly BattleManager battleManager;
+
+    public AttackData(BattleManager battleManager) {
+        this.battleManager = battleManager;
+        if (battleManager.isWaterInPuzzleArea)
+            AddWaterBuff();
+        //UpdateWord("");
+    }
+
+    public void AddLetter(char letter) {
+        UpdateWord(word + letter);
+    }
+
+    public void RemoveLastLetter() {
+        if (word.Length < 2)
+            UpdateWord("");
+        else
+            UpdateWord(word[..^1]);
+
+    }
+
+    public void UpdateWord(string newWord) {
+        word = newWord;
+        SetIsValidWord();
+        SetPowerupType();
+        SetWordStrength();
+        //PrintAttackData();
+    }
+
+    public void AddWaterBuff() {
+        hasWaterBuff = true;
+        SetWordStrength();
+    }
+
+    public void RemoveWaterBuff() {
+        hasWaterBuff = false;
+        SetWordStrength();
+    }
+
+    public void AddEarthBuff() {
+        hasEarthBuff = true;
+        SetWordStrength();
+    }
+
+    public void RemoveEarthBuff() {
+        hasEarthBuff = false;
+        SetWordStrength();
+    }
+
+    public void SetIsValidWord() {
+        if (word.Length < battleManager.minCheckingWordLength)
+            isValidWord = false;
+        else
+            isValidWord = SearchLibraryForWord(word);
+    }
+
+    private bool SearchLibraryForWord(string word) {
+        //returns true if the library contains the word
+        int result = System.Array.BinarySearch<string>(StaticVariables.wordLibraryForChecking, word.ToLower());
+        return (result > -1);
+    }
+
+    public void SetWordStrength() {
+        if (word.Length < battleManager.minCheckingWordLength) {
+            strength = 0;
+            return;
+        }
+        int len = word.Length;
+        if (hasEarthBuff)
+            len += 2;
+        int str = Mathf.FloorToInt(Mathf.Pow((len - 2), 2));
+        if (hasWaterBuff) {
+            str += (StaticVariables.waterFloodDamageBonus * battleManager.GetNumberOfEnemies());
+            if (battleManager.enemyData.isNearWater)
+                str += StaticVariables.riverDamageBonus;
+        }
+        strength = str;
+    }
+
+    public void SetPowerupType() {
+        type = BattleManager.PowerupTypes.None;
+        if (battleManager.letterSpacesForWord.Count == 0)
+            return;
+        foreach (LetterSpace ls in battleManager.letterSpacesForWord) {
+            if (ls.powerupType != BattleManager.PowerupTypes.None) {
+                type = ls.powerupType;
+                return;
+            }
+        }
+    }
+
+    private void PrintAttackData() {
+        Debug.Log("attack data- type(" + type + ") str(" + strength + ") length(" + word.Length + ") flooded(" + hasWaterBuff + ") rocked(" + hasEarthBuff + ")");
+    }
+}

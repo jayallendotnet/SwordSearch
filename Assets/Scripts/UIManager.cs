@@ -7,8 +7,6 @@ using System.Dynamic;
 using TMPro;
 
 public class UIManager : MonoBehaviour {
-    //private Color textColorForWord = Color.black;
-    //private Color backgroundColorForWord = Color.grey;
     private Transform enemyObject;
     [HideInInspector] public Animator enemyAnimator;
     [HideInInspector] public List<Animator> enemyHordeAnimators;
@@ -24,7 +22,6 @@ public class UIManager : MonoBehaviour {
     [HideInInspector] public BoulderGroup shownBoulders = null;
 
     [Header("Submit Word Button")]
-    //public Text wordDisplay;
     public TextMeshProUGUI wordDisplay;
     public Image countdownNumber;
     public GameObject countdownDivider;
@@ -47,10 +44,6 @@ public class UIManager : MonoBehaviour {
     public Color textColorForValidWord = Color.white;
     public Color textColorForInvalidWord = Color.gray;
     public Color usedLetterColor;
-    //public Color invalidWordColor;
-    //public Color invalidButtonColor;
-    //public Color canRefreshPuzzleColor;
-    //public Color turnPageWordColor;
     public List<PowerupDisplayData> powerupDisplayDataList;
     [Header("Numbers")]
     public Sprite[] numberSprites;
@@ -98,12 +91,6 @@ public class UIManager : MonoBehaviour {
     public GameObject pebbleDisplay4;
     public GameObject pebbleDisplay5;
     public RectTransform copycatBar;
-    //public GameObject copycatBar0;
-    //public GameObject copycatBar1;
-    //public GameObject copycatBar2;
-    //public GameObject copycatBar3;
-    //public GameObject copycatBar4;
-    //public GameObject copycatBar5;
 
     [Header("Misc")]
     public BattleManager battleManager;
@@ -136,7 +123,6 @@ public class UIManager : MonoBehaviour {
     public void SetStartingValues() {
         puzzlePage.SetActive(true);
         endGameDisplay.SetActive(false);
-        //defeatPage.SetActive(false);
         pageTurnGameObject.SetActive(false);
         waterPowerupStrengthColor = GetPowerupDisplayDataWithType(BattleManager.PowerupTypes.Water).backgroundColor;
         floodHeight = waterBuffTop.anchoredPosition.y;
@@ -148,8 +134,6 @@ public class UIManager : MonoBehaviour {
         SetOriginalPowerupBackgroundTransparencies();
         if (battleManager.enemyData.isCopycat)
             ShowCopycatBuildup();
-        //ActivateOnlyPowerupsOnPage();
-        //MakeAllPowerupBackgroundsTransparent();
     }
 
     private void SetupStrengthIcons() {
@@ -211,8 +195,6 @@ public class UIManager : MonoBehaviour {
     }
 
     public void ShowPlayerTakingDamage(int amount, bool stillAlive, bool showDamageAnimation = true, bool showZeroDamage = false) {
-        //if (amount < 1)
-        //    return;
         if (showZeroDamage)
             amount = 0;
         else if (amount < 1)
@@ -297,54 +279,35 @@ public class UIManager : MonoBehaviour {
         return Color.yellow; //definitely wrong and gross
     }
 
-
-
-    /*
-    public void UpdatePowerupIcon(BattleManager.PowerupTypes type, int powerupLevel){
-        PowerupDisplayData d =GetPowerupDisplayDataWithType(type);
-        foreach (Image im in wordStrengthIconImages)
-            im.sprite = d.icon;
-        foreach (GameObject go in wordStrengthIconGameObjects)
-            go.SetActive(false);
-        int numToShow = powerupLevel - 1;
-        if (numToShow >= wordStrengthIconGameObjects.Count)
-            numToShow = wordStrengthIconGameObjects.Count - 1;
-        else if (numToShow < 0)
-            numToShow = 0;
-        wordStrengthIconGameObjects[numToShow].SetActive(true);
-        //wordStrengthIcon.sprite = d.icon;
-    }
-    */
-
     public void UpdateVisualsForLettersInWord(List<LetterSpace> letterSpacesForWord) {
         foreach (LetterSpace ls in letterSpacesForWord)
             ls.ShowAsPartOfWord(GetPowerupBackgroundColor());
     }
 
-    public void DisplayWord(string word, bool isValidWord, int countdown, int strength) {
-        if (isValidWord) {
-            wordDisplay.text = word;
+    public void DisplayWord(AttackData wordData, int countdown) {
+        if (wordData.isValidWord) {
+            wordDisplay.text = wordData.word;
             wordDisplay.color = textColorForValidWord;
             wordStrengthDivider.SetActive(true);
             countdownDivider.SetActive(true);
-            UpdateWordStrengthDisplay(strength);
+            UpdateWordStrengthDisplay(wordData.strength);
             UpdateCountdownDisplay(countdown);
         }
-        else if ((countdown == 0) && (word.Length == 0)) {
+        else if ((countdown == 0) && (wordData.word.Length == 0)) {
             wordDisplay.text = "TURN  PAGE";
             wordDisplay.color = textColorForInvalidWord;
             //submitWordButtonImage.color = canRefreshPuzzleColor;
             wordStrengthDivider.SetActive(true);
             countdownDivider.SetActive(true);
-            UpdateWordStrengthDisplay(strength);
+            UpdateWordStrengthDisplay(wordData.strength);
             UpdateCountdownDisplay(countdown);
         }
         else {
-            wordDisplay.text = word;
+            wordDisplay.text = wordData.word;
             wordDisplay.color = textColorForInvalidWord;
             wordStrengthDivider.SetActive(false);
             countdownDivider.SetActive(false);
-            UpdateWordStrengthDisplay(strength);
+            UpdateWordStrengthDisplay(wordData.strength);
             UpdateCountdownDisplay(countdown);
         }
     }
@@ -526,32 +489,6 @@ public class UIManager : MonoBehaviour {
             burnDisplay5.SetActive(true);
     }
 
-    public void ShowPebbleCount() {
-        int pebbles = battleManager.playerAnimatorFunctions.pebblesInQueue.Count;
-
-        pebbleDisplay1.SetActive(false);
-        pebbleDisplay2.SetActive(false);
-        pebbleDisplay3.SetActive(false);
-        pebbleDisplay4.SetActive(false);
-        pebbleDisplay5.SetActive(false);
-        if (pebbles > 0)
-            pebbleDisplay1.SetActive(true);
-        if (pebbles > 1)
-            pebbleDisplay2.SetActive(true);
-        if (pebbles > 2)
-            pebbleDisplay3.SetActive(true);
-        if (pebbles > 3)
-            pebbleDisplay4.SetActive(true);
-        if (pebbles > 4)
-            pebbleDisplay5.SetActive(true);
-    }
-
-    public void ThrowPebble(int damage) {
-        battleManager.playerAnimatorFunctions.pebblesInQueue.RemoveAt(0);
-        ShowPebbleCount();
-        battleManager.playerAnimatorFunctions.CreateAttackAnimation(BattleManager.PowerupTypes.Pebble, damage, 0);
-    }
-
     public void CoverPageWithBoulders() {
         //pick a random boulder from the children
         int r = StaticVariables.rand.Next(boulderGroupsParent.childCount);
@@ -591,12 +528,6 @@ public class UIManager : MonoBehaviour {
             frac = 0;
         copycatBar.localScale = new Vector2(1, frac);
         copycatBar.gameObject.SetActive(true);
-        //copycatBar0.SetActive(battleManager.copycatBuildup < 1);
-        //copycatBar1.SetActive(battleManager.copycatBuildup == 1);
-        //copycatBar2.SetActive(battleManager.copycatBuildup == 2);
-        //copycatBar3.SetActive(battleManager.copycatBuildup == 3);
-        //copycatBar4.SetActive(battleManager.copycatBuildup == 4);
-        //copycatBar5.SetActive(battleManager.copycatBuildup > 4);
     }
     
 
