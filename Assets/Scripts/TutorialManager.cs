@@ -566,11 +566,19 @@ public class TutorialManager : BattleManager {
         else if (++i == tutorialStep){
             ShowTutorialShadow();
             DisplayText("From now on, both <healing>healing<> and <water>water<> powerups will appear!");
-            ButtonText("CONTINUE");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("You only get the magical effects from the first powerup in a word.");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("However, if you make a word using more than one powerup, the extras will increase your <damage>attack's damage<> instead!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
             DisplayText("Keep using powerups to defeat the goblin!");
+            ButtonText("CONTINUE");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){

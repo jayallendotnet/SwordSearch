@@ -827,6 +827,13 @@ public class AttackData {
         int len = word.Length;
         if (hasEarthBuff)
             len += 2;
+        int powerupCount = 0;
+        foreach (LetterSpace ls in battleManager.letterSpacesForWord) {
+            if (ls.powerupType != BattleManager.PowerupTypes.None)
+                powerupCount++;
+        }
+        if (powerupCount > 1)
+            len += (powerupCount - 1);
         int str = Mathf.FloorToInt(Mathf.Pow((len - 2), 2));
         if (hasWaterBuff) {
             str += (StaticVariables.waterFloodDamageBonus * battleManager.GetNumberOfEnemies());
