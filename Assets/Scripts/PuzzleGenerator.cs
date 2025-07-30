@@ -41,7 +41,6 @@ public class PuzzleGenerator : MonoBehaviour {
         GetPuzzleDimensions();
         GenerateNewPuzzle();
         UpdateAllLetterVisuals();
-
     }
 
     public void GenerateNewPuzzle(){
@@ -483,13 +482,21 @@ public class PuzzleGenerator : MonoBehaviour {
         
         List<Vector2> allSpaces = GetListOfAllSpaces();
         List<Vector2> viableSpaces = new(allSpaces);
+        int maxRow = 6;
+        int maxCol = 4;
+        if (useSmallerLayout)
+            maxRow = 3;
         foreach (Vector2 space in allSpaces) {
             int row = (int)space[0];
             int col = (int)space[1];
-            if (useSmallerLayout && row > 3)
+            if (row > maxRow)
                 viableSpaces.Remove(space);
             if ((powerupTypes[row, col] != BattleManager.PowerupTypes.None) || letterSpaces[row, col].isBurned)
                 viableSpaces.Remove(space);
+            //remove corners
+            if (((row == maxRow) || row == 0) && ((col == maxCol) || (col == 0)))
+                viableSpaces.Remove(space);
+
         }
         if (viableSpaces.Count > 0) {
             Vector2 choice = viableSpaces[StaticVariables.rand.Next(viableSpaces.Count)];

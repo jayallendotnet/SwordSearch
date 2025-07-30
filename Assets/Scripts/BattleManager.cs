@@ -614,7 +614,7 @@ public class BattleManager : MonoBehaviour {
     }
     
     public void CheckToUseQueuedAttack(bool ignorePlayerState, bool ignoreEnemyState){
-        print(attackQueue.Count + " attacks in the queue");
+        //print(attackQueue.Count + " attacks in the queue");
         if (CanQueuedAttackBeUsed(ignorePlayerState, ignoreEnemyState))
             AttackWithFirstWordInQueue();
     }
