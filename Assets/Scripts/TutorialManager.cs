@@ -85,7 +85,7 @@ public class TutorialManager : BattleManager {
         ButtonText("CONTINUE");
         AdvanceTutorialStep();
 
-        uiManager.pauseButton.gameObject.SetActive(false);
+        //uiManager.pauseButton.gameObject.SetActive(false);
     }
 
     private void SetTutorialNumber() {
