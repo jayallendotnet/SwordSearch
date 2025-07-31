@@ -391,6 +391,7 @@ public class BattleManager : MonoBehaviour {
         if (enemyData.isDark)
             healAmount /= 2;
         HealPlayerHealth(healAmount);
+        ClearDebuffsViaHealing();
     }
         
     public void BurnRandomLetters(int amount){

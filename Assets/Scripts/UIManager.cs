@@ -502,7 +502,7 @@ public class UIManager : MonoBehaviour {
         //show the boulders on screen
         shownBoulders = selection.GetComponent<BoulderGroup>();
         selection.SetActive(true);
-        shownBoulders.ResetBouldersColor();
+        //hownBoulders.ResetBouldersColor();
         shownBoulders.MoveBouldersIntoPosition();
 
         //boulders only persist for X seconds. do the tween on the first child, so that the timer can be paused by other functions

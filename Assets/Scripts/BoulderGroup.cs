@@ -8,20 +8,44 @@ using DG.Tweening;
 public class BoulderGroup : MonoBehaviour{
 
     public List<LetterSpace> coveredLetters;
+    public List<RectTransform> boulderObjects;
+    public List<RectTransform> startingPositions;
     //public enum EnterDirection{Left, Right};
     //public EnterDirection enterDirection;
 
-    public void MoveBouldersIntoPosition(){
-        foreach (Transform t in transform){
-            Vector2 originalPos = t.transform.position;
-            StartBoulderInRandomPosition(t);
-            float duration = StaticVariables.rand.Next(50, 100) / 100f;
-            t.DOMove(originalPos, duration);
+    public void MoveBouldersIntoPosition() {
+        for (int i = 0; i < boulderObjects.Count; i++) {
+            RectTransform obj = boulderObjects[i];
+            RectTransform startingSpot = startingPositions[i];
+            Vector2 startingPos = startingSpot.localPosition;
+            Vector2 endingPos = obj.localPosition;
+            obj.localPosition = startingPos;
+            obj.GetComponent<Image>().color = Color.white;
+            obj.DOLocalMove(endingPos, 0.5f);
         }
-    }
 
-    public void ResetBouldersColor(){
-        foreach(Transform t in transform)
+
+        //foreach (Transform t in transform)
+        //{
+        //    Vector2 originalPos = t.transform.position;
+        //    StartBoulderInRandomPosition(t);
+        //    float duration = StaticVariables.rand.Next(50, 100) / 100f;
+        //    t.DOMove(originalPos, duration);
+        //}
+    }
+    
+    //public void ClearBoulders(){
+    //    foreach (RectTransform boulder in boulderObjects){
+     //       Color c = Color.white;
+     //       c.a = 0;
+     //       boulder.GetComponent<Image>().DOColor(c, 0.5f);
+     //   }
+    //}
+
+    /*
+    public void ResetBouldersColor()
+    {
+        foreach (Transform t in transform)
             t.GetComponent<Image>().color = Color.white;
     }
 
@@ -56,4 +80,5 @@ public class BoulderGroup : MonoBehaviour{
         boulder.position = startingPos;
 
     }
+    */
 }
