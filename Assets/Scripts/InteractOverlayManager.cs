@@ -288,26 +288,26 @@ public class InteractOverlayManager : MonoBehaviour{
                 details.Add("Dragons take <damage>5x damage<> from the <sword>power of the sword<>.");
             }
         }
-        if (enemy.isHoly){
-            if (StaticVariables.healActive){
-                summary.Add("This creature's holy aura amplifies <healing>healing magic<>.");
-                details.Add("The <healing>health<> gained by the <healing>power of healing<> is <damage>doubled<>.");
-            }
-            if (StaticVariables.darkActive){
-                summary.Add("This creature's holy aura diminishes the <dark>power of darkness<>.");
-                details.Add("The <dark>power of darkness<> deals <damage>half damage<>.");
-            }
-        }        
-        if (enemy.isDark){
-            if (StaticVariables.healActive){
-                summary.Add("This creature's dark aura dampens <healing>healing magic<>.");
-                details.Add("The <healing>health<> gained by the <healing>power of healing<> is <damage>halved<>.");
-            }
-            if (StaticVariables.darkActive){
-                summary.Add("This creature's dark aura bolsters the <dark>power of darkness<>.");
-                details.Add("The <dark>power of darkness<> deals <damage>double damage<>.");
-            }
-        }     
+        //if (enemy.isHoly){
+        //    if (StaticVariables.healActive){
+        //        summary.Add("This creature's holy aura amplifies <healing>healing magic<>.");
+        //        details.Add("The <healing>health<> gained by the <healing>power of healing<> is <damage>doubled<>.");
+        //    }
+        //    if (StaticVariables.darkActive){
+        //        summary.Add("This creature's holy aura diminishes the <dark>power of darkness<>.");
+        //        details.Add("The <dark>power of darkness<> deals <damage>half damage<>.");
+        //    }
+        //}        
+        //if (enemy.isDark){
+        //    if (StaticVariables.healActive){
+        //        summary.Add("This creature's dark aura dampens <healing>healing magic<>.");
+        //        details.Add("The <healing>health<> gained by the <healing>power of healing<> is <damage>halved<>.");
+        //    }
+        //    if (StaticVariables.darkActive){
+        //        summary.Add("This creature's dark aura bolsters the <dark>power of darkness<>.");
+        //        details.Add("The <dark>power of darkness<> deals <damage>double damage<>.");
+        //    }
+        //}     
         if (enemy.isNearWater){
             if ((StaticVariables.waterActive) && (!enemy.isWaterDangerous)){
                 summary.Add("The nearby river empowers <water>flooded attacks<>.");
@@ -315,10 +315,10 @@ public class InteractOverlayManager : MonoBehaviour{
             
             }
         }  
-        if (enemy.canApplyDebuff){
+        if (enemy.throwsRocks){
             if (StaticVariables.healActive){
-                summary.Add("This enemy can inflict a <damage>negative status<>.");
-                details.Add("Some of this enemy's attacks can apply a <damage>debuff<> that will disappear after a short time. Using the <healing>power of healing<> will clear it immediately.");
+                summary.Add("This enemy's attacks cover the spellbook in debris.");
+                details.Add("Some of this enemy's attacks temporarily cover up some letters, reducing your ability to make words! The effect will dissipate over time, or you can use the <healing>power of healing<> to clear it immediately.");
             
             }
         }  
@@ -332,19 +332,14 @@ public class InteractOverlayManager : MonoBehaviour{
         if (enemy.isCopycat){
             summary.Add("This enemy gets stronger with every attack you make.");
             details.Add("The enemy's <damage>damage<> builds every time you make an <damage>attack<>. Using the <healing>power of healing<> reduces the buildup.");
-            //details.Add("The enemy attack bar fills every time you make an attack. The enemy's <damage>attack damage<> scales with how full the bar is. Using the <healing>power of healing<> drains the bar.");
-            //details.Add("Every time you hit the enemy, their <damage>attacks get stronger<>. Using the <healing>power of healing<> reduces this effect.");
         }
         if (enemy.healsSelf){
             summary.Add("The enemy <damage>steals<> your health.");
             details.Add("Whenever this enemy deals <damage>damage<> to you, it <healing>heals<> an equal amount.");
-            //details.Add("The enemy attack bar fills every time you make an attack. The enemy's <damage>attack damage<> scales with how full the bar is. Using the <healing>power of healing<> drains the bar.");
-            //details.Add("Every time you hit the enemy, their <damage>attacks get stronger<>. Using the <healing>power of healing<> reduces this effect.");
         }
         if (enemy.canBurn){
             summary.Add("This enemy can <fire>burn<> the spellbook!");
-            //details.Add("The enemy's <fire>fire attack<> will scorch 3 letters. You can still use a burned letter, but you get hurt in the process. Using the <healing>power of healing<> or <water>power of water<> will repair some letters.");
-            details.Add("The enemy's <fire>fire attack<> will <fire>scorch<> 3 letters. You can still use a <fire>burned letter<>, but you get hurt in the process. Making an attack while the book is <water>flooded<> will <water>douse<> 2 letters.");
+            details.Add("The enemy's attacks will <fire>scorch<> some letters. You can still use a <fire>burned letter<>, but you get hurt in the process. Making an attack while the book is <water>flooded<> will <water>douse<> some flames.");
         }
 
         summary = TextFormatter.FormatStringList(summary);

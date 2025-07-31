@@ -377,19 +377,19 @@ public class BattleManager : MonoBehaviour {
 
     private void DoDarkAttack(int strength){
         int enemyDamage = (int)(strength * darkPowerupDamageMultiplier);
-        if (enemyData.isHoly)
-            enemyDamage /= 2;
-        if (enemyData.isDark)
-            enemyDamage *= 2;
+        //if (enemyData.isHoly)
+        //    enemyDamage /= 2;
+        //if (enemyData.isDark)
+        //    enemyDamage *= 2;
         DamageEnemyHealth(enemyDamage);
     }
 
     public virtual void ApplyHealToSelf(AttackData attackData){
         int healAmount = attackData.strength * StaticVariables.healMultiplier;
-        if (enemyData.isHoly)
-            healAmount *= 2;
-        if (enemyData.isDark)
-            healAmount /= 2;
+        //if (enemyData.isHoly)
+        //    healAmount *= 2;
+        //if (enemyData.isDark)
+        //    healAmount /= 2;
         HealPlayerHealth(healAmount);
         ClearDebuffsViaHealing();
     }

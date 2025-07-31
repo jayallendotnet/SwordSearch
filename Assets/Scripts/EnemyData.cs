@@ -17,10 +17,11 @@ public class EnemyData : MonoBehaviour{
     [ConditionalField(nameof(isBattleable))]    public CollectionWrapper<EnemyAttack> attackOrder;
     [ConditionalField(nameof(isBattleable))]    public bool isDraconic = false;
     [ConditionalField(nameof(isBattleable))]    public bool isHorde = false;
-    [ConditionalField(nameof(isBattleable))]    public bool isHoly = false;
-    [ConditionalField(nameof(isBattleable))]    public bool isDark = false;
+    //[ConditionalField(nameof(isBattleable))]    public bool isHoly = false;
+    //[ConditionalField(nameof(isBattleable))]    public bool isDark = false;
     [ConditionalField(nameof(isBattleable))]    public bool isNearWater = false;
-    [ConditionalField(nameof(isBattleable))]    public bool canApplyDebuff = false;
+    //[ConditionalField(nameof(isBattleable))]    public bool canApplyDebuff = false;
+    [ConditionalField(nameof(isBattleable))]    public bool throwsRocks = false;
     [ConditionalField(nameof(isBattleable))]    public bool isWaterDangerous = false;
     [ConditionalField(nameof(isBattleable))]    public bool isCopycat = false;
     [ConditionalField(nameof(isBattleable))]    public bool healsSelf = false;
