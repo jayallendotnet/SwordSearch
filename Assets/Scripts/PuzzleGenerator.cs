@@ -44,8 +44,10 @@ public class PuzzleGenerator : MonoBehaviour {
     }
 
     public void GenerateNewPuzzle(){
-        foreach (LetterSpace ls in letterSpaces)
-            ls.hasBeenUsedInAWordAlready = false;
+        foreach (LetterSpace ls in letterSpaces) {
+            if (!ls.isCharred) //char removal actually happens as the page turns, when powerups are normally updated
+                ls.hasBeenUsedInAWordAlready = false;
+        }
         ClearPuzzle();
         bool succeeded = false;
         while (!succeeded)
@@ -381,8 +383,7 @@ public class PuzzleGenerator : MonoBehaviour {
         for (int i = 0; i < letterSpaces.GetLength(0); i++){
             for (int j = 0; j < letterSpaces.GetLength(1); j++){
                 LetterSpace ls = letterSpaces[i,j];
-                ls.ApplyNextPuzzleData();
-                ls.ShowAsNotPartOfWord();
+                UpdateLetterVisual(ls);
             }
         }
     }
@@ -404,12 +405,15 @@ public class PuzzleGenerator : MonoBehaviour {
                 break;
         }
         foreach (LetterSpace ls in spaces){
-            ls.ApplyNextPuzzleData();
-            ls.ShowAsNotPartOfWord();
+            UpdateLetterVisual(ls);
         }
     }
 
     public void UpdateLetterVisual(LetterSpace ls){
+        if (ls.isCharred){
+            ls.RemoveChar();
+            return;
+        }
         ls.ApplyNextPuzzleData();
         ls.ShowAsNotPartOfWord();
     }
@@ -491,7 +495,7 @@ public class PuzzleGenerator : MonoBehaviour {
             int col = (int)space[1];
             if (row > maxRow)
                 viableSpaces.Remove(space);
-            if ((powerupTypes[row, col] != BattleManager.PowerupTypes.None) || letterSpaces[row, col].isBurned)
+            if ((powerupTypes[row, col] != BattleManager.PowerupTypes.None) || letterSpaces[row, col].isBurned || letterSpaces[row, col].isCharred)
                 viableSpaces.Remove(space);
             //remove corners
             if (((row == maxRow) || row == 0) && ((col == maxCol) || (col == 0)))
@@ -577,13 +581,13 @@ public class PuzzleGenerator : MonoBehaviour {
                 powerupTypeSelection.Remove(StaticVariables.buffedType);
     }
 
-    public LetterSpace PickRandomSpaceWithoutPowerupOrBurn() {
+    public LetterSpace PickRandomSpaceWithoutPowerupOrBurnOrChar() {
         List<Vector2> allSpaces = GetListOfAllSpaces();
         List<Vector2> viablesSpaces = new();
 
         foreach (Vector2 s in allSpaces) {
             LetterSpace space = letterSpaces[(int)s[0], (int)s[1]];
-            if (!space.isBurned && (space.powerupType == BattleManager.PowerupTypes.None) && !battleManager.letterSpacesForWord.Contains(space))
+            if (!space.isBurned && ! space.isCharred && (space.powerupType == BattleManager.PowerupTypes.None) && !battleManager.letterSpacesForWord.Contains(space))
                 viablesSpaces.Add(s);
         }
 

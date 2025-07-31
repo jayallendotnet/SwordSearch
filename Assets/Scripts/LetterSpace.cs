@@ -31,6 +31,8 @@ public class LetterSpace : MonoBehaviour{
     public BattleManager.PowerupTypes nextPowerupType = BattleManager.PowerupTypes.None;
     [HideInInspector]
     public bool isBurned = false;
+    [HideInInspector]
+    public bool isCharred = false;
 
 
     [Header("GameObjects")]
@@ -72,6 +74,7 @@ public class LetterSpace : MonoBehaviour{
     [Header("Other Icons")]
     public Animator highlightAnimator;
     public Transform burnIcon;
+    public Transform charredIcon;
 
     [Header("Colors")]
     public Color normalLetterColor;
@@ -293,5 +296,20 @@ public class LetterSpace : MonoBehaviour{
         isBurned = false;
         burnIcon.gameObject.SetActive(false);
         battleManager.puzzleGenerator.burnedLetters.Remove(this);
+    }
+    
+    public void ApplyChar() {
+        isCharred = true;
+        charredIcon.gameObject.SetActive(true);
+        float originalScale = charredIcon.localScale.x;
+        charredIcon.localScale = Vector2.zero;
+        charredIcon.DOScale(originalScale, 0.2f);
+        //battleManager.puzzleGenerator.burnedLetters.Add(this);
+    }
+    
+    public void RemoveChar(){
+        isCharred = false;
+        charredIcon.gameObject.SetActive(false);
+        //battleManager.puzzleGenerator.burnedLetters.Remove(this);
     }
 }

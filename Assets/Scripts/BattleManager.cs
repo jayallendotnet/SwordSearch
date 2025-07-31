@@ -284,7 +284,6 @@ public class BattleManager : MonoBehaviour {
                 break;
             case PowerupTypes.Fire:
                 DamageEnemyHealth(attackData.strength);
-                //ApplyBurnForFireAttack();
                 break;
             case PowerupTypes.Lightning:
                 DamageEnemyHealth(attackData.strength);
@@ -398,7 +397,7 @@ public class BattleManager : MonoBehaviour {
         for (int i = 0; i < amount; i++){
             if (puzzleGenerator.burnedLetters.Count >= maxBurnedLetters)
                 return;
-            LetterSpace toBurn = puzzleGenerator.PickRandomSpaceWithoutPowerupOrBurn();
+            LetterSpace toBurn = puzzleGenerator.PickRandomSpaceWithoutPowerupOrBurnOrChar();
             if(toBurn != null)
                 toBurn.ApplyBurn();
         }
@@ -533,12 +532,14 @@ public class BattleManager : MonoBehaviour {
         return (lastLetterSpace == letterSpace);
     }
 
-    public void ClearWord(bool markLettersAsUsed){
+    public void ClearWord(bool markLettersAsUsed, bool applyChar = false){
         foreach (LetterSpace ls in letterSpacesForWord){
             ls.previousLetterSpace = null;
             ls.nextLetterSpace = null;
             if (markLettersAsUsed)
                 ls.hasBeenUsedInAWordAlready = true;
+            if (applyChar)
+                ls.ApplyChar();
             ls.ShowAsNotPartOfWord();
         }
         letterSpacesForWord = new List<LetterSpace>();
@@ -603,10 +604,11 @@ public class BattleManager : MonoBehaviour {
         if ((playerHealth == 0) || (enemyHealth == 0) || (isGamePaused))
             return;
         if (inProgressWord.isValidWord) {
+            bool applyChar = (inProgressWord.type == PowerupTypes.Fire);
             attackQueue.Add(inProgressWord);
             inProgressWord = new(this);
             DecrementRefreshPuzzleCountdown();
-            ClearWord(true);
+            ClearWord(true, applyChar);
             RemoveEarthBuff();
             if (isWaterInPuzzleArea && enemyData.canBurn)
                 ClearRandomBurnedLetters(2);
@@ -653,8 +655,7 @@ public class BattleManager : MonoBehaviour {
     }
 
     public virtual void PressWordArea() {
-        if ((inProgressWord.word.Length == 0) && (countdownToRefresh == 0))
-        {
+        if ((inProgressWord.word.Length == 0) && (countdownToRefresh == 0)) {
             puzzleGenerator.GenerateNewPuzzle();
             countdownToRefresh = maxPuzzleCountdown;
             ClearWord(true);
@@ -841,6 +842,8 @@ public class AttackData {
             if (battleManager.enemyData.isNearWater)
                 str += StaticVariables.riverDamageBonus;
         }
+        if (type == BattleManager.PowerupTypes.Fire)
+            str *= StaticVariables.fireDamageMultiplier;
         strength = str;
     }
 
