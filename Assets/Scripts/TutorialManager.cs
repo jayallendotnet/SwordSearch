@@ -48,7 +48,6 @@ public class TutorialManager : BattleManager {
     public Image tutorialShadowForLetters;
     private float enemyTimerBarRemainder = 0f;
     private Color tutorialShadowOriginalColor;
-    //private Color tutorialShadowTransparentColor;
 
 
     public override void Start() {
@@ -58,11 +57,6 @@ public class TutorialManager : BattleManager {
         
 
         tutorialShadowOriginalColor = tutorialShadow.color;
-        //print(tutorialShadowOriginalColor.a);
-        //tutorialShadowTransparentColor = tutorialShadow.color;
-        //tutorialShadowTransparentColor.a = 0;
-        //print(tutorialShadowTransparentColor.a);
-        //print(tutorialShadowOriginalColor.a);
 
         base.Start();
         SetTutorialNumber();
@@ -496,10 +490,6 @@ public class TutorialManager : BattleManager {
             DisplayText("If you make a word with the <healing>power of healing<>, your health will be restored.");
             advanceCondition = Cond.Click;
         }
-        //else if (++i == tutorialStep){
-        //    DisplayText("The powerup does not have to be in the first letter of the word to take effect.");
-        //    advanceCondition = Cond.Click;
-        //}
         else if (++i == tutorialStep){
             HideTutorialShadowForLetters();
             DisplayText("Try making a word that includes the <healing>power of healing<>.");
@@ -587,16 +577,11 @@ public class TutorialManager : BattleManager {
             HideTutorialShadow();
             canEnemyDie = true;
             StaticVariables.powerupsPerPuzzle = 3;
+            ExpandToFullPuzzle();
             puzzleGenerator.useSmallerLayout = false;
-            uiManager.waterBuffBottom.DOSizeDelta(new Vector2(uiManager.waterBuffBottom.sizeDelta.x, 0), 0);
-            uiManager.waterBuffTop.DOAnchorPos(new Vector2(0, (-uiManager.waterBuffBottom.sizeDelta.y + uiManager.waterBuffTop.anchoredPosition.y)), 0);
-            //uiManager.waterBuffBottom.DOSizeDelta(new Vector2(uiManager.waterBuffBottom.sizeDelta.x, 0), 0).SetEase(Ease.Linear);
-            TurnToNewPage();
-            UpdateSubmitVisuals();
             canQueueAttack = true;
             QueueEnemyAttack();
             uiManager.waterFloatDuration = originalFloatDuration;
-            StaticVariables.WaitTimeThenCallFunction(0.3f, MoveDialogueBoxOffScreen);
             advanceCondition = Cond.NormalBattle;
         }
         else if (++i == tutorialStep){
@@ -661,41 +646,14 @@ public class TutorialManager : BattleManager {
         else if (++i == tutorialStep){
             ShowTutorialShadow();
             DisplayText("After using the <earth>power of earth<>, the book's page is surrounded by rocks.");
-            //DisplayText("After using the <earth>power of earth<>, magic crystals surround you.");
             advanceCondition = Cond.Click;
         }
-        //else if (++i == tutorialStep){
-        //    DisplayText("These magical crystals glow purple and appear above your health.");
-        //    highlightPlayerHealth.SetActive(true);
-        //    advanceCondition = Cond.Click;
-        //}
-        //else if (++i == tutorialStep){
-        //    DisplayText("Currently, there are 3 crystals around you.");
-        //    advanceCondition = Cond.Click;
-        //}
-        //else if (++i == tutorialStep){
-        //    DisplayText("When you make another attack, a crystal will strike the enemy and deal <damage>+33% extra damage<>!");
-        //    highlightPlayerHealth.SetActive(false);
-        //    advanceCondition = Cond.Click;
-        //}
         else if (++i == tutorialStep){
             DisplayText("The rocks empower your next word, acting as if it was <damage>2 letters longer<>!");
-            //highlightPlayerHealth.SetActive(false);
             advanceCondition = Cond.Click;
         }
-        //else if (++i == tutorialStep){
-        //    DisplayText("When you make another attack, a crystal will strike the enemy and deal <damage>extra damage<>!");
-        //    highlightPlayerHealth.SetActive(false);
-        //    advanceCondition = Cond.Click;
-        //}
-        //else if (++i == tutorialStep){
-            //DisplayText("The crystal damage is a fixed portion of your attack's damage.");
-        //    DisplayText("The crystal's damage is <damage>one third<> of your attack's damage.");
-        //    advanceCondition = Cond.Click;
-        //}
         else if (++i == tutorialStep){
             DisplayText("Longer words get <damage>exponentially<> more benefit from the <earth>rocks'<> effect!");
-            //DisplayText("This means you should make longer words to get the most damage from each crystal!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
@@ -708,14 +666,10 @@ public class TutorialManager : BattleManager {
             canEnemyDie = true;
             StaticVariables.powerupsPerPuzzle = 3;
             StaticVariables.healActive = true;
-            puzzleGenerator.useSmallerLayout = false;
+            ExpandToFullPuzzle();
             puzzleGenerator.SetPowerupTypeList();
-            TurnToNewPage();
-            UpdateSubmitVisuals();
             canQueueAttack = true;
             QueueEnemyAttack();
-            StaticVariables.WaitTimeThenCallFunction(0.5f, MoveDialogueBoxOffScreen);
-            MoveEarthBuffBottomToFullSize();
             advanceCondition = Cond.NormalBattle;
         }
         else if (++i == tutorialStep){
@@ -1097,14 +1051,8 @@ public class TutorialManager : BattleManager {
     
     private void HideTutorialShadow(){
         tutorialShadow.color = tutorialShadowOriginalColor;
-        //tutorialShadow.DOFade(0, 0.5f).OnComplete(DisableTutorialShadow);
         tutorialShadow.DOFade(0, 0.5f);
     }
-
-    //private void DisableTutorialShadow(){
-    //    if (tutorialShadow.color.a == 0)
-    //        tutorialShadow.gameObject.SetActive(false);
-    //}
     private void ShowTutorialShadowForLetters(bool immediately = false){
         tutorialShadowForLetters.gameObject.SetActive(true);
         if (immediately)
@@ -1120,33 +1068,46 @@ public class TutorialManager : BattleManager {
         tutorialShadowForLetters.color = tutorialShadowOriginalColor;
         tutorialShadowForLetters.DOFade(0, 0.5f);
     }
-
-    //private void DisableTutorialShadowForLetters(){
-    //    if (tutorialShadowForLetters.color == tutorialShadowTransparentColor)
-    //        tutorialShadowForLetters.gameObject.SetActive(false);
-    //}
-    //private void ShowTutorialShadowForLetters()
-    //{
-    //    tutorialShadowForLetters.SetActive(true);
-
-    //}
-    
-    //private void HideTutorialShadowForLetters(){
-    //    tutorialShadowForLetters.SetActive(false);
-        
-    //}
     
     private void MoveDialogueBoxOffScreen(){
-        uiManager.dialogueManager.transform.DOLocalMoveY(uiManager.dialogueManager.transform.localPosition.y - 900, 0.3f);
+        uiManager.dialogueManager.transform.DOLocalMoveY(uiManager.dialogueManager.transform.localPosition.y - 900, 0.5f);
     }
     
     private void MoveDialogueBoxOnScreen(){
-        uiManager.dialogueManager.transform.DOLocalMoveY(uiManager.dialogueManager.transform.localPosition.y + 900, 0.3f);
+        uiManager.dialogueManager.transform.DOLocalMoveY(uiManager.dialogueManager.transform.localPosition.y + 900, 0.5f);
         
     }
     
     private void MoveEarthBuffBottomToFullSize(){
-        uiManager.earthBuffBottom.GetChild(0).DOLocalMoveY(-87, 0.2f);
+        uiManager.earthBuffBottom.GetChild(0).DOLocalMoveY(-87, 0.3f);
+    }
+
+    public void ClickedBackButtonInTutorial() {
+        if (puzzleGenerator.useSmallerLayout)
+            uiManager.PushedQuitButton();
+        else
+            uiManager.PushedPauseButton();
+    }
+
+    private void FillFakeLettersBehindDialogue() {
+        foreach (LetterSpace ls in puzzleGenerator.letterSpaces)
+            if ((ls.letter == '=') || (ls.letter == ' ')){
+                int index = StaticVariables.rand.Next(StaticVariables.randomLetterPool.Length);
+                char l = StaticVariables.randomLetterPool[index];
+                ls.UpdateLetter(l);
+            }
+    }
+    
+    private void ExpandToFullPuzzle(){
+        //don't call while page is full of water
+        puzzleGenerator.useSmallerLayout = false;
+        FillFakeLettersBehindDialogue();
+        TurnToNewPage();
+        UpdateSubmitVisuals();
+        MoveDialogueBoxOffScreen();
+        MoveEarthBuffBottomToFullSize();
+        uiManager.waterBuffBottom.DOSizeDelta(new Vector2(uiManager.waterBuffBottom.sizeDelta.x, 0), 0);
+        uiManager.waterBuffTop.DOAnchorPos(new Vector2(0, (-uiManager.waterBuffBottom.sizeDelta.y + uiManager.waterBuffTop.anchoredPosition.y)), 0);
     }
 }
  
