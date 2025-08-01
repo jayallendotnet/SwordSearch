@@ -41,9 +41,8 @@ public class SettingsSceneManager : MonoBehaviour{
     }
 
     private void DisplayProgress(){
-        worldNameDisplay.text = StaticVariables.highestBeatenStage.nextStage.worldName;
-        stageNumberDisplay.text = StaticVariables.highestBeatenStage.nextStage.stage + "";
-
+        worldNameDisplay.text = StaticVariables.highestBeatenStage.nextStage.worldName.ToUpper();
+        stageNumberDisplay.text = "STAGE  " + StaticVariables.highestBeatenStage.nextStage.stage;
     }
 
     public void WorldDown(){
