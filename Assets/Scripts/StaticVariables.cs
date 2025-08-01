@@ -70,7 +70,7 @@ public class StaticVariables
 
     static public bool storyMode = false;
     static public DifficultyMode difficultyMode = DifficultyMode.Normal;
-    public enum DifficultyMode{Normal, Story, Puzzle};
+    public enum DifficultyMode{Normal, Story, Puzzle, Easy, Hard};
     static public float gameVersionNumber = 0.1f;
 
     //powerup stats

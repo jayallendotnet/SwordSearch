@@ -98,13 +98,30 @@ public class BattleManager : MonoBehaviour {
             hordeStartingHealth = firstEnemyInHorde.startingHealth * startingHordeEnemyCount;
             enemyHealth = hordeStartingHealth;
         }
-        else{
+        else
             enemyHealth = enemyData.startingHealth;
+        switch (StaticVariables.difficultyMode){
+            case StaticVariables.DifficultyMode.Story:
+                enemyHealth = 1;
+                break;
+            case StaticVariables.DifficultyMode.Puzzle:
+                enemyHealth *= 5;
+                break;
+            case StaticVariables.DifficultyMode.Easy:
+                float a = (enemyHealth * 0.7f);
+                if (a < 1)
+                    a = 1;
+                enemyHealth = (int)a;
+                break;
+            case StaticVariables.DifficultyMode.Hard:
+                float b = enemyHealth * 1.3f;
+                enemyHealth = (int)b;
+                break;
         }
-        if (StaticVariables.difficultyMode == StaticVariables.DifficultyMode.Story)
-            enemyHealth = 1;
-        else if (StaticVariables.difficultyMode == StaticVariables.DifficultyMode.Puzzle)
-            enemyHealth *= 10;
+        //if (StaticVariables.difficultyMode == StaticVariables.DifficultyMode.Story)
+        //    enemyHealth = 1;
+        //else if (StaticVariables.difficultyMode == StaticVariables.DifficultyMode.Puzzle)
+        //    enemyHealth *= 5;
         playerHealth = startingPlayerHealth;
         uiManager.ApplyBackground(StaticVariables.battleData.backgroundPrefab);
 
@@ -149,19 +166,34 @@ public class BattleManager : MonoBehaviour {
     }
 
     public virtual void ApplyEnemyAttackDamage(int amount) {
-        if (StaticVariables.difficultyMode == StaticVariables.DifficultyMode.Story)
-            DamagePlayerHealth(1);
-        else if (StaticVariables.difficultyMode == StaticVariables.DifficultyMode.Puzzle)
-            DamagePlayerHealth(0);
-        else
-            DamagePlayerHealth(amount);
+        switch (StaticVariables.difficultyMode) {
+            case StaticVariables.DifficultyMode.Story:
+                DamagePlayerHealth(1);
+                break;
+            case StaticVariables.DifficultyMode.Puzzle:
+                DamagePlayerHealth(0);
+                break;
+            case StaticVariables.DifficultyMode.Easy:
+                float a = (amount * 0.7f);
+                if (a < 1)
+                    a = 1;
+                DamagePlayerHealth((int)a);
+                break;
+            case StaticVariables.DifficultyMode.Hard:
+                float b = amount * 1.3f;
+                DamagePlayerHealth((int)b);
+                break;
+            default:
+                DamagePlayerHealth(amount);
+                break;
+        }
     }
 
     public virtual void DamagePlayerHealth(int amount) {
         playerHealth -= amount;
         if (playerHealth < 0)
             playerHealth = 0;
-        uiManager.ShowPlayerTakingDamage(amount, playerHealth > 0);
+        uiManager.ShowPlayerTakingDamage(amount, playerHealth > 0, showZeroDamage: amount == 0);
         uiManager.DisplayHealths(playerHealth, enemyHealth);
         if (playerHealth == 0)
         {

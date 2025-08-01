@@ -19,6 +19,10 @@ public class SettingsSceneManager : MonoBehaviour{
     public string storyModeDescription;
     [TextArea(2,5)]
     public string puzzleModeDescription;
+    [TextArea(2,5)]
+    public string easyModeDescription;
+    [TextArea(2,5)]
+    public string hardModeDescription;
 
     //public BattleData JustBattleOpponent;
 
@@ -92,17 +96,26 @@ public class SettingsSceneManager : MonoBehaviour{
     }
     
     public void NextDifficultyMode(){
-        //normal > puzzle > story > normal
+        //easy > normal > hard > puzzle > easy
         switch (StaticVariables.difficultyMode){
+            case StaticVariables.DifficultyMode.Easy:
+                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Normal;
+                break;
             case StaticVariables.DifficultyMode.Normal:
+                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Hard;
+                break;
+            case StaticVariables.DifficultyMode.Hard:
                 StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Puzzle;
                 break;
             case StaticVariables.DifficultyMode.Puzzle:
-                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Story;
+                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Easy;
                 break;
-            case StaticVariables.DifficultyMode.Story:
+            default:
                 StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Normal;
                 break;
+            //case StaticVariables.DifficultyMode.Story:
+            //    StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Normal;
+            //    break;
         }
         DisplayDifficultyMode();
         SaveSystem.SaveGame();
@@ -111,13 +124,19 @@ public class SettingsSceneManager : MonoBehaviour{
     public void PreviousDifficultyMode(){ 
         //same as above but reversed       
         switch (StaticVariables.difficultyMode){
-            case StaticVariables.DifficultyMode.Normal:
-                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Story;
-                break;
-            case StaticVariables.DifficultyMode.Story:
+            case StaticVariables.DifficultyMode.Easy:
                 StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Puzzle;
                 break;
             case StaticVariables.DifficultyMode.Puzzle:
+                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Hard;
+                break;
+            case StaticVariables.DifficultyMode.Hard:
+                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Normal;
+                break;
+            case StaticVariables.DifficultyMode.Normal:
+                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Easy;
+                break;
+            default:
                 StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Normal;
                 break;
         }
@@ -138,6 +157,18 @@ public class SettingsSceneManager : MonoBehaviour{
             case StaticVariables.DifficultyMode.Puzzle:
                 difficultyModeDisplay.text = "PUZZLE";
                 difficultyModeDescription.text = puzzleModeDescription;
+                break;
+            case StaticVariables.DifficultyMode.Easy:
+                difficultyModeDisplay.text = "EASY";
+                difficultyModeDescription.text = easyModeDescription;
+                break;
+            case StaticVariables.DifficultyMode.Hard:
+                difficultyModeDisplay.text = "HARD";
+                difficultyModeDescription.text = hardModeDescription;
+                break;
+            default:
+                difficultyModeDisplay.text = "ERROR";
+                difficultyModeDescription.text = "Attempting to use an invalid difficulty mode.";
                 break;
         }
     }

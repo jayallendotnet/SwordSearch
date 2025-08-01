@@ -39,6 +39,12 @@ public class SaveData{
             case (StaticVariables.DifficultyMode.Puzzle):
                 difficultyMode = "puzzle";
                 break;
+            case (StaticVariables.DifficultyMode.Easy):
+                difficultyMode = "easy";
+                break;
+            case (StaticVariables.DifficultyMode.Hard):
+                difficultyMode = "hard";
+                break;
         }
         gameVersionNumber = StaticVariables.gameVersionNumber;
     }
@@ -60,6 +66,12 @@ public class SaveData{
                 break;
             case ("puzzle"):
                 StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Puzzle;
+                break;
+            case ("easy"):
+                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Easy;
+                break;
+            case ("hard"):
+                StaticVariables.difficultyMode = StaticVariables.DifficultyMode.Hard;
                 break;
         }
         StaticVariables.hasTalkedToNewestEnemy = hasTalkedToNewestEnemy;

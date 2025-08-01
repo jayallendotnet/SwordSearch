@@ -235,7 +235,7 @@ public class TutorialManager : BattleManager {
         }        
         else if (++i == tutorialStep){
             ShowTutorialShadow();
-            DisplayText("Letters don't have to be in all in one row to make a word!");
+            DisplayText("Letters don't have to be all in one row to make a word!");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
@@ -541,6 +541,10 @@ public class TutorialManager : BattleManager {
         }
         else if (++i == tutorialStep){
             DisplayText("For the next " + StaticVariables.waterFloodDuration + " seconds, every attack you make does an extra <damage>+" + StaticVariables.waterFloodDamageBonus + " damage<>!");
+            advanceCondition = Cond.Click;
+        }
+        else if (++i == tutorialStep){
+            DisplayText("Even if you turn to a new page, the <water>flooding<> will persist.");
             advanceCondition = Cond.Click;
         }
         else if (++i == tutorialStep){
