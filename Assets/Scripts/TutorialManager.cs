@@ -149,6 +149,7 @@ public class TutorialManager : BattleManager {
         canShowPlayerHealth = true;
         canShowEnemyHealth = true;
         canEnemyDie = false;
+        uiManager.earthBuffBottom.gameObject.SetActive(true);
     }
 
     public override void QueueEnemyAttack(){
@@ -559,6 +560,7 @@ public class TutorialManager : BattleManager {
         }
         else if (++i == tutorialStep){
             HideTutorialShadow();
+            TurnToNewPage();
             DisplayText("Attack!!");
             uiManager.StartDrainingWaterSmallerPage();
             advanceCondition = Cond.WaterDrains;
@@ -585,11 +587,16 @@ public class TutorialManager : BattleManager {
             HideTutorialShadow();
             canEnemyDie = true;
             StaticVariables.powerupsPerPuzzle = 3;
-            TurnToSmallerPage();
+            puzzleGenerator.useSmallerLayout = false;
+            uiManager.waterBuffBottom.DOSizeDelta(new Vector2(uiManager.waterBuffBottom.sizeDelta.x, 0), 0);
+            uiManager.waterBuffTop.DOAnchorPos(new Vector2(0, (-uiManager.waterBuffBottom.sizeDelta.y + uiManager.waterBuffTop.anchoredPosition.y)), 0);
+            //uiManager.waterBuffBottom.DOSizeDelta(new Vector2(uiManager.waterBuffBottom.sizeDelta.x, 0), 0).SetEase(Ease.Linear);
+            TurnToNewPage();
             UpdateSubmitVisuals();
             canQueueAttack = true;
             QueueEnemyAttack();
             uiManager.waterFloatDuration = originalFloatDuration;
+            StaticVariables.WaitTimeThenCallFunction(0.3f, MoveDialogueBoxOffScreen);
             advanceCondition = Cond.NormalBattle;
         }
         else if (++i == tutorialStep){
@@ -598,6 +605,7 @@ public class TutorialManager : BattleManager {
         }
         else if (++i == tutorialStep){
             ShowTutorialShadow();
+            MoveDialogueBoxOnScreen();
             DisplayPlayerTalking("Look, Fido is alive, over there!", DialogueStep.Emotion.Angry);
             advanceCondition = Cond.Click;
         }
@@ -696,14 +704,18 @@ public class TutorialManager : BattleManager {
         }
         else if (++i == tutorialStep){
             HideTutorialShadow();
+            StaticVariables.buffedType = PowerupTypes.Earth;
             canEnemyDie = true;
             StaticVariables.powerupsPerPuzzle = 3;
             StaticVariables.healActive = true;
+            puzzleGenerator.useSmallerLayout = false;
             puzzleGenerator.SetPowerupTypeList();
-            TurnToSmallerPage();
+            TurnToNewPage();
             UpdateSubmitVisuals();
             canQueueAttack = true;
             QueueEnemyAttack();
+            StaticVariables.WaitTimeThenCallFunction(0.5f, MoveDialogueBoxOffScreen);
+            MoveEarthBuffBottomToFullSize();
             advanceCondition = Cond.NormalBattle;
         }
         else if (++i == tutorialStep){
@@ -712,6 +724,7 @@ public class TutorialManager : BattleManager {
         }
         else if (++i == tutorialStep){
             ShowTutorialShadow();
+            MoveDialogueBoxOnScreen();
             DisplayEnemyTalking("Is she using <earth>earth magic<>?", enemyData, DialogueStep.Emotion.Custom1, "Hopsy");
             advanceCondition = Cond.Click;
         }
@@ -757,12 +770,11 @@ public class TutorialManager : BattleManager {
     }
     
     
-    private void TurnToSmallerPage(){
+    private void TurnToNewPage(){
         ClearWord(true); 
         puzzleGenerator.GenerateNewPuzzle();
         countdownToRefresh = maxPuzzleCountdown; 
         uiManager.ShowPageTurn();  
-
     }
     
     private void ToggleButton(bool value){
@@ -986,7 +998,7 @@ public class TutorialManager : BattleManager {
     public override void PressWordArea(){   
         switch (advanceCondition){
             case (Cond.TurnPage):  
-                TurnToSmallerPage();
+                TurnToNewPage();
                 AdvanceTutorialStep();
                 break;
             case (Cond.NormalBattle):  
@@ -1123,5 +1135,18 @@ public class TutorialManager : BattleManager {
     //    tutorialShadowForLetters.SetActive(false);
         
     //}
+    
+    private void MoveDialogueBoxOffScreen(){
+        uiManager.dialogueManager.transform.DOLocalMoveY(uiManager.dialogueManager.transform.localPosition.y - 900, 0.3f);
+    }
+    
+    private void MoveDialogueBoxOnScreen(){
+        uiManager.dialogueManager.transform.DOLocalMoveY(uiManager.dialogueManager.transform.localPosition.y + 900, 0.3f);
+        
+    }
+    
+    private void MoveEarthBuffBottomToFullSize(){
+        uiManager.earthBuffBottom.GetChild(0).DOLocalMoveY(-87, 0.2f);
+    }
 }
  
